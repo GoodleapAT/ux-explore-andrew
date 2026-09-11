@@ -36,6 +36,13 @@ enclosing folder.
 them minified. They have been inferred from the accent token families. This does not matter while
 `standards/mockup-density.md` forbids badges, but it will matter if that rule is relaxed.
 
+**A correction from Joel's team, 11 Sep 2026.** Their UX factory documentation says the Merlin file is
+a *mirror* of Sol and carries **only the 113 semantic tokens, with no radius, spacing or font scale**,
+and that Sol should be read directly rather than through the mirror. Their own kit vendors Sol's
+`colors_and_type.css`, which they report covered colours, radii, elevation, spacing and type roles in
+one file. **Our extracted stylesheet is that mirror.** It is correct as far as it goes and it is
+missing three scales. Worth re-extracting from Sol before the next round of mockups.
+
 ---
 
 ## Product repositories

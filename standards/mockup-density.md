@@ -23,12 +23,20 @@ This is the rule most often broken, so check it before building and again before
   model works, no captions telling the user what a field means.
 - Suggested copy goes in a **list under the mock**, labelled as a suggestion, so it can be judged
   on its own rather than smuggled in.
+- **No reference codes or record identifiers.** No job numbers, proposal numbers, invoice numbers,
+  permit numbers or change-order numbers. Call the thing by its name: the siding job, the master
+  invoice, the change order. Real names and real values still matter; identifiers do not.
 - **Placeholder anything the current question does not touch**, and label it. A dashed box already
   reads as a placeholder; it does not need a chip saying so.
 - Where a gap in the model has no UI answer, **leave it out rather than drawing it as unavailable**.
   Naming a gap on screen invites somebody to fill it badly.
 
 ## Why
+
+**On reference codes.** They cost horizontal space in a row that is already tight, and they buy
+nothing when the question is structural. Worse, they make a screen look like it is drawn against a
+system of record that exists, which invites a reader to accept the structure rather than argue with
+it. A row that says "Siding" is easier to disagree with than one that says "JOB-3101 Siding".
 
 Colour is a budget, not a palette. Every coloured element spends some of the reader's attention, and
 a page that spends it on twelve status pills has nothing left for the one job that has been stuck at
@@ -50,3 +58,6 @@ block, which makes the one row anyone has to act on the only row that reads as c
   rather than simply deleted, so they can be reconsidered.
 - The contrast reasoning is lifted from the comments in Andrew's own standalone Pros Web screens,
   which reached the same conclusion independently.
+- **11 Sep 2026.** Andrew, reviewing a draft brief for a scenario walkthrough: drop the job and
+  project codes. They had been carried through every memo since August without anyone asking for
+  them.

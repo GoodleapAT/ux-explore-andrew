@@ -33,3 +33,9 @@
 - **2026-09-10** | Equipment as a schedulable resource, like crew, has no entity anywhere | Team scenario S15
 - **2026-09-10** | The home app raising a lead is demand originating on a homeowner surface, and nothing records which surface or which system authored it | Team scenarios S15 and S16
 - **2026-09-11** | Standards, decisions and sources should be generated into a paste-able block for surfaces that cannot read the repository | Setting this folder up
+- **2026-09-11** | One generated entity map shared by every scenario, lit per beat from the beat's own entity list, so the map and the list cannot disagree | Joel's ux-factory, team PR 18 [M-003]
+- **2026-09-11** | Three panes on one view: the beat's words verbatim, the screen, and the lit entity map underneath | Joel's ux-factory, team PR 18 [M-004]
+- **2026-09-11** | A dark entity should render as an empty panel that advertises the adjacent capability, not be absent. Ties the entity overlay to the UI | The board's wedge-first rule, via ux-factory
+- **2026-09-11** | Name an unmatched screen as a gap on the screen itself, with a banner, rather than improvising an archetype | Joel's ux-factory
+- **2026-09-11** | The board has a UX DRAFT section with nine page designs and a nav contract, Joel's, not mine, including a claim that Project is not a nav item. Worth reading one day | Reading team PR 18 [M-005]
+- **2026-09-11** | Our extracted Sol tokens are the Merlin mirror, missing the radius, spacing and font scales. Re-extract from Sol directly | Joel's ux-factory design-sources notes

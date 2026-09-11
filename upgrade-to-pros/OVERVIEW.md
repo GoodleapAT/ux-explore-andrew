@@ -54,7 +54,8 @@ job and service plan.
 |---|---|---|
 | **Entity and object modelling** | `entity-modeling/` | Live. Has its own detailed handoff, `OVERVIEW.md`, which carries the model, the open questions and a file index |
 | **Earlier model work** | `earlier/` | Superseded. The A against B comparison, the customer model proposal, the open decisions list and the convergence one-pager. Kept because the reasoning is still cited |
-| **Claude Design handoff** | `design-handoff/` | Dormant. The prompt and the two memos that produced the standalone Pros Web screens |
+| **Claude Design handoff** | `design-handoff/` | History. The August prompt and the two memos that produced the standalone Pros Web screens. Superseded on structure |
+| **Claude Design context** | `CLAUDE-DESIGN-CONTEXT.md` | Current. The context document for the Claude Design project: where the model landed, the differences remaining, all seventeen scenarios, the UI exploration so far, and the write-back protocol for a surface that can read but not write |
 | **Origin financing page migration** | not started | Parked. Two of the pages were located, the third repository never was. See global sources |
 
 ---

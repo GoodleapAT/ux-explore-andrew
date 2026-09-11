@@ -13,9 +13,13 @@ that corrections compound instead of evaporating at the end of a session.
 
 ## The protocol
 
-### 1. Every surface reads this file first
+### 1. Every surface reads this file and the changelog first
 
-Then reads whichever of the files below the task touches. `SOURCES.md` and the project's own sources
+Read this file, then `CHANGELOG.md`, and **say out loud the date of the newest changelog entry**
+before doing anything else. That one sentence is how Andrew finds out that a surface is working from
+a stale copy.
+
+Then read whichever of the files below the task touches. `SOURCES.md` and the project's own sources
 file are almost always among them, because they say where things are and which of them you can
 actually reach.
 
@@ -50,7 +54,57 @@ Make it paste-able as one message. Do not summarise what should change; write wh
 **If you can neither read nor write** these files: say so at the start rather than working from
 memory, and ask for the relevant ones to be pasted in.
 
-### 4. Rules are never changed silently
+### 4. Prompt Andrew the moment something needs writing, not only at the end
+
+Do not save it all up. When one of these happens, say so in one line: what needs writing, which file
+it goes in, and whether you can write it yourself or need him to carry it.
+
+| Trigger | Where it goes |
+|---|---|
+| **Andrew corrects you**, on anything, however small | A standard. This is the most important trigger and the easiest to miss |
+| **Something gets settled** in conversation | A decision log. The project's for domain, the root's for how the work is done |
+| **A new idea, problem or story appears** | `IDEAS-INBOX.md`, one line |
+| **A source is wrong, moved, or unreachable** | The relevant sources file, changing the access note rather than deleting the row |
+| **You diverge from a standard or a mock** | A standard if the rule was wrong, the changelog either way |
+| **A tool or surface behaves unexpectedly** | The tooling quirks table in `SOURCES.md`, so the next session does not lose the same ten minutes |
+| **Anything above actually gets written** | `CHANGELOG.md`, always |
+
+Then do the two-question sweep at the end of the session regardless, because some of it only becomes
+visible in hindsight.
+
+### 5. What the surfaces are called
+
+Use these short forms everywhere: in the changelog's **From** column, in decision rows, in
+learned-from lines, and in conversation.
+
+| Short | Surface |
+|---|---|
+| **C** | Claude Cowork |
+| **CC** | Claude Code |
+| **CD** | Claude Design |
+
+Changelog rows written before 11 Sep 2026 say "Cowork" and "Claude Code" in full. They stay as they
+are, because that file is append only.
+
+### 6. Telling the other surfaces
+
+**No surface can notify another.** It all routes through Andrew, so when you change something, tell
+him which surfaces are now stale and what to do about each. Put the same thing in the changelog's
+last column.
+
+| Surface | How it picks up a change | What Andrew has to do |
+|---|---|---|
+| **C**, Cowork | Reads the repository fresh at the start of a session, and picks up the read-me-first file automatically | Nothing. A new session is current |
+| **CC**, Claude Code | Same, and re-reads the instructions file on start | Nothing. A new session is current |
+| **Claude chat with a project** | Project knowledge is a synced copy, not a live read | Re-sync the project knowledge, or paste the changed file in |
+| **CD**, Claude Design | Reads the repository if access is granted, but its own project instructions are a stored copy | Point it at the repository again, and if a standard changed, refresh what is stored in the project |
+| **Anything with no access** | It cannot | Paste the changed file in, and say what it replaces |
+
+**A render is a copy, so it goes stale.** Anything in `renders/` is generated from the standards. When
+a standard changes, the render is wrong until it is regenerated, and a wrong render is worse than a
+missing one because it looks authoritative. Regenerate it in the same session, and say so.
+
+### 7. Rules are never changed silently
 
 A standard that turns out to be wrong gets replaced, and the replacement records what it replaced and
 why. A decision that gets reversed becomes a new row in a decision log, never an edit to the old one.
@@ -81,6 +135,7 @@ When it is genuinely both, it is global, and the project file notes the exceptio
 | `START-HERE.md` | This file. Protocol, the global test, the project index | Edited in place |
 | `SOURCES.md` | Sources that outlive any one project: the design system, product repositories, people, tooling quirks | Edited in place, one row per source |
 | `IDEAS-INBOX.md` | Raw capture, **for every project**. One line per idea | **Append only.** Never edit, reorder or delete |
+| `CHANGELOG.md` | What changed, when, from which surface, and who else is now stale. **The only file that answers whether anything has moved since you last looked** | **Append only.** Newest at the bottom |
 | `DECISIONS.md` | Decisions about **how the work is done and where things live**. Not domain decisions | **Append only.** A reversal is a new row |
 | `standards/` | How to work. One short file per topic | New files and in-place edits, each recording what it learned from |
 | `reference/` | Extracted material used across projects, such as the Merlin token stylesheet | Regenerated, not hand edited |

@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The project workspace</title>
+<style>
+/* ============================================================================
+   Merlin / Sol tokens, light only. Lifted verbatim from the standalone Pros Web
+   recreations, which extracted them from Merlin's compiled production
+   stylesheet on 24 Aug 2026. Badge variant mappings are inferred from the
+   accent token families, not lifted, because the design system bundle ships
+   them minified.
+   ========================================================================= */
+:root{
+  color-scheme:light;
+  --sol-actions-button:#161051; --sol-actions-button-secondary:#4b4b58;
+  --sol-actions-interaction:#382ca5; --sol-actions-link:#382ca5;
+  --sol-backgrounds-accent-blue:#f1f7fe; --sol-backgrounds-accent-green:#f0fff5;
+  --sol-backgrounds-accent-pink:#fef0ff; --sol-backgrounds-accent-purple:#e2e1fe;
+  --sol-backgrounds-accent-yellow:#fffaf0;
+  --sol-backgrounds-system-info:#f1f7fe; --sol-backgrounds-system-success:#f0fff5;
+  --sol-backgrounds-system-warning:#fffaf0;
+  --sol-backgrounds-ui-high:#ffffff; --sol-backgrounds-ui-low:#e3e3ed; --sol-backgrounds-ui-medium:#f5f5f9;
+  --sol-borders-accent-blue:#3d78e6; --sol-borders-accent-green:#26df63;
+  --sol-borders-accent-pink:#a915b7; --sol-borders-accent-purple:#6d62d5;
+  --sol-borders-accent-yellow:#f5b638;
+  --sol-borders-ui-default:#c8c8d5; --sol-borders-ui-strong:#a7a7b9; --sol-borders-ui-subtle:#e3e3ed;
+  --sol-elevation-md:0px 1px 12px 0px #0000000f;
+  --sol-icons-accent-blue:#00328f; --sol-icons-accent-green:#008f30;
+  --sol-icons-accent-pink:#a915b7; --sol-icons-accent-purple:#382ca5;
+  --sol-icons-accent-yellow:#8f5f00;
+  --sol-icons-system-success:#008f30; --sol-icons-system-warning:#b88723;
+  --sol-icons-ui-secondary:#4b4b58;
+  --sol-states-background-hover:#f5f5f9; --sol-states-focus:#144eb8; --sol-states-selection:#e2e1fe;
+  --sol-text-info:#144eb8; --sol-text-primary:#14141a; --sol-text-secondary:#4b4b58;
+  --sol-text-success:#008f30; --sol-text-warning:#8f5f00; --sol-text-disabled:#a7a7b9;
+  --pw-ink:#2c1b3c;
+  --pw-shadow-xs:0 1px 2px 0 rgb(0 0 0/.05);
+  --pw-shadow-sm:0 1px 3px 0 rgb(0 0 0/.1),0 1px 2px -1px rgb(0 0 0/.1);
+  --inter:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+  /* editorial frame, deliberately not Merlin */
+  --m-bg:#ffffff; --m-paper:#fbfbfc; --m-bd:#e6e6ea; --m-bds:#d3d3da;
+  --m-tx:#1b1b20; --m-tx2:#55555e; --m-tx3:#86868f;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--m-bg);color:var(--m-tx);font-family:var(--inter);font-size:15px;line-height:1.62;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1360px;margin:0 auto;padding:56px 40px 96px}
+
+/* ---------- editorial frame ---------- */
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.04em;color:var(--m-tx3);margin:0 0 16px;text-transform:uppercase}
+.eyebrow span{margin-right:26px}
+h1{font-size:40px;line-height:1.12;font-weight:500;letter-spacing:-.02em;margin:0 0 18px;max-width:750px}
+.lede{max-width:750px;color:var(--m-tx2);font-size:15.5px;margin:0 0 24px}
+.conv{display:flex;gap:11px;align-items:baseline;background:var(--m-paper);border:1px solid var(--m-bd);border-radius:10px;padding:12px 16px;margin:0 0 26px;font-size:13.5px;color:var(--m-tx2);line-height:1.55;max-width:750px}
+.conv .cm{font-weight:500;color:var(--sol-actions-interaction);flex:0 0 auto}
+.card{background:var(--m-paper);border:1px solid var(--m-bd);border-radius:12px;padding:16px 22px;margin:0 0 18px;max-width:750px}
+.card.last{margin-bottom:52px}
+.card h3{margin:0 0 4px;font-size:15px;font-weight:500}
+.card .sh2{font-size:13px;color:var(--m-tx3);margin:0 0 12px}
+ul.b{margin:0;padding:0 0 0 18px}
+ul.b li{margin:0 0 8px;color:var(--m-tx2);font-size:14.5px;line-height:1.55}
+ul.b li:last-child{margin-bottom:0}
+ul.b li strong{color:var(--m-tx);font-weight:500}
+.sec-head{display:flex;align-items:baseline;gap:11px;padding-bottom:12px;border-bottom:1px solid var(--m-bd);margin-bottom:18px}
+.badge-l{flex:0 0 auto;width:20px;height:20px;border:1px solid var(--sol-borders-accent-purple);border-radius:4px;color:var(--sol-icons-accent-purple);font-family:var(--mono);font-size:10.5px;display:flex;align-items:center;justify-content:center;background:var(--sol-backgrounds-accent-purple);position:relative;top:2px}
+.sec-title{font-size:19px;font-weight:500;margin:0;letter-spacing:-.01em}
+.sec-when{font-size:13px;color:var(--m-tx3);margin-left:auto}
+.cap{font-family:var(--mono);font-size:11px;color:var(--m-tx3);margin:0 0 10px}
+.argrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));gap:26px 30px;margin:30px 0 0;padding-top:26px;border-top:1px solid var(--m-bd)}
+.arg .lab{font-family:var(--mono);font-size:11px;color:#7d7d92;margin:0 0 5px}
+.arg p{margin:0 0 9px;font-size:14px;line-height:1.58;color:var(--m-tx2)}
+.arg p:last-child{margin-bottom:0}
+.arg strong{color:var(--m-tx);font-weight:500}
+.qhead{font-family:var(--mono);font-size:10px;color:var(--m-tx3);text-transform:uppercase;letter-spacing:.03em;margin:34px 0 12px;padding-top:22px;border-top:1px solid var(--m-bd)}
+.qgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px 30px}
+.q{display:flex;gap:10px;align-items:flex-start}
+.qn{flex:0 0 auto;width:17px;height:17px;border-radius:50%;background:var(--sol-actions-button);color:#fff;font-family:var(--mono);font-size:9.5px;display:flex;align-items:center;justify-content:center;margin-top:3px}
+.q p{margin:0;font-size:13.5px;line-height:1.5;color:var(--m-tx2)}
+
+/* ---------- the mockup frame ---------- */
+.frame{border:1px solid var(--m-bds);border-radius:12px;overflow:hidden;background:var(--sol-backgrounds-ui-high)}
+.pw-page{display:flex;flex-direction:column;background:var(--sol-backgrounds-ui-high);padding:32px 40px 40px;font-family:var(--inter);color:var(--pw-ink)}
+.pw-stack{display:flex;flex-direction:column;gap:32px}
+
+/* type */
+.t-h1{font:700 28px/42px var(--inter);margin:0;letter-spacing:normal}
+.t-h6{font:700 16px/24px var(--inter);margin:0}
+.t-l3{font:500 14px/20px var(--inter)}
+.t-l4{font:500 12px/18px var(--inter);white-space:nowrap}
+.t-p2{font:400 14px/20px var(--inter)}
+.t-p4{font:400 12px/18px var(--inter)}
+.muted{color:var(--sol-text-secondary)}
+
+.pw-crumbs{display:flex;align-items:center;gap:8px;font:400 12px/18px var(--inter);color:var(--sol-text-secondary);margin-bottom:16px}
+.pw-crumbs a{color:var(--sol-actions-link);text-decoration:none}
+.pw-crumbs .s{color:var(--sol-borders-ui-strong)}
+.pw-titlerow{display:flex;align-items:center;gap:24px;flex-wrap:wrap}
+.pw-actions{display:flex;gap:12px;flex-wrap:wrap;margin-left:auto;align-items:center}
+.pw-kebab{width:32px;height:32px;border:1px solid var(--sol-borders-ui-default);border-radius:8px;background:var(--sol-backgrounds-ui-high);color:var(--sol-icons-ui-secondary);display:flex;align-items:center;justify-content:center;font-size:15px;line-height:1}
+.pw-btn{border:1px solid var(--sol-borders-ui-default);border-radius:8px;background:var(--sol-backgrounds-ui-high);padding:6px 12px;font:500 13px/18px var(--inter);color:var(--pw-ink)}
+
+/* badges */
+.bdg{display:inline-flex;align-items:center;border-radius:999px;padding:2px 10px;font:500 12px/18px var(--inter);white-space:nowrap;border:1px solid transparent}
+.bdg.tiny{padding:1px 8px;font:500 11px/16px var(--inter)}
+.bdg.success{background:var(--sol-backgrounds-accent-green);border-color:var(--sol-borders-accent-green);color:var(--sol-icons-accent-green)}
+.bdg.info{background:var(--sol-backgrounds-accent-blue);border-color:var(--sol-borders-accent-blue);color:var(--sol-icons-accent-blue)}
+.bdg.warning{background:var(--sol-backgrounds-accent-yellow);border-color:var(--sol-borders-accent-yellow);color:var(--sol-icons-accent-yellow)}
+.bdg.pink{background:var(--sol-backgrounds-accent-pink);border-color:var(--sol-borders-accent-pink);color:var(--sol-icons-accent-pink)}
+.bdg.purple{background:var(--sol-backgrounds-accent-purple);border-color:var(--sol-borders-accent-purple);color:var(--sol-icons-accent-purple)}
+.bdg.secondary{background:var(--sol-backgrounds-ui-low);border-color:var(--sol-borders-ui-subtle);color:var(--sol-text-secondary)}
+
+/* cards, groups, pairs */
+.pw-card{background:var(--sol-backgrounds-ui-high);border:1px solid var(--sol-borders-ui-subtle);border-radius:12px;box-shadow:var(--sol-elevation-md);padding:20px}
+.pw-cardstack{display:flex;flex-direction:column;gap:16px}
+.pw-cardstack h5{margin:0;font:700 16px/24px var(--inter);color:var(--sol-text-primary)}
+.pw-cardhead{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.pw-group{display:flex;flex-direction:column;gap:14px}
+.pw-grouphead{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.pw-grouphead h2{margin:0;font:700 18px/24px var(--inter);color:var(--pw-ink)}
+.pw-pair{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}
+.pw-pair>*{min-width:0}
+.pw-toppair{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:20px;align-items:start}
+.pw-toppair>*{min-width:0}
+
+/* segmented control */
+.pw-seg{display:inline-flex;border:1px solid var(--sol-borders-ui-subtle);border-radius:8px;overflow:hidden;background:var(--sol-backgrounds-ui-medium)}
+.pw-segi{border:0;border-right:1px solid var(--sol-borders-ui-subtle);background:transparent;padding:6px 9px;font:400 13px/20px var(--inter);color:var(--sol-text-secondary);white-space:nowrap}
+.pw-segi:last-child{border-right:0}
+.pw-segi[data-on=true]{background:var(--sol-backgrounds-ui-high);color:var(--sol-text-primary);font-weight:500;box-shadow:var(--pw-shadow-xs)}
+
+/* peer rows */
+.pw-crowlist{display:flex;flex-direction:column}
+.pw-lrow{display:grid;grid-template-columns:minmax(0,1fr) auto;row-gap:6px;column-gap:16px;align-items:center;padding:12px 0;border-bottom:1px solid var(--sol-borders-ui-subtle)}
+.pw-lrow:last-child{border-bottom:0}
+.pw-lrow:first-child{padding-top:0}
+.pw-lname{font:400 14px/20px var(--inter);color:var(--pw-ink);min-width:0}
+.pw-lsub{display:block;font:400 12px/18px var(--inter);color:var(--sol-text-secondary)}
+.pw-lval{font:500 14px/20px var(--inter);color:var(--pw-ink);font-variant-numeric:tabular-nums;white-space:nowrap;text-align:right}
+.pw-lrow>.bdgs{grid-column:1/-1;justify-self:start;display:flex;gap:6px;flex-wrap:wrap}
+.pw-lrow.dim .pw-lname,.pw-lrow.dim .pw-lval{color:var(--sol-text-secondary);font-weight:400}
+.pw-missing{font:italic 400 12px/18px var(--inter);color:var(--sol-text-secondary)}
+
+/* balance rows */
+.pw-cardrows{display:flex;flex-direction:column;gap:14px}
+.pw-crow{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.pw-crow .cl{font:400 14px/20px var(--inter);color:var(--sol-text-secondary)}
+.pw-crow .cv{font:700 16px/24px var(--inter);color:var(--sol-text-primary);font-variant-numeric:tabular-nums}
+.pw-crow.tot .cl{font:700 14px/20px var(--inter);color:var(--sol-text-primary)}
+.pw-crow.tot .cv{font:700 20px/28px var(--inter)}
+.pw-crule{height:1px;background:var(--sol-borders-ui-subtle)}
+.pw-crow .cv.pw-missing{font:italic 400 13px/18px var(--inter);color:var(--sol-text-secondary)}
+
+/* state rail */
+.pw-rail{position:relative;border:1px solid var(--sol-borders-ui-subtle);border-radius:8px;background:var(--sol-backgrounds-ui-high);overflow:hidden}
+.pw-railboard{display:flex;align-items:center;gap:8px;height:28px;padding:0 12px;background:var(--sol-backgrounds-ui-medium);border-bottom:1px solid var(--sol-borders-ui-subtle);font:700 10px/14px var(--inter);letter-spacing:.08em;text-transform:uppercase;color:var(--sol-text-secondary)}
+.pw-railboard .n{margin-left:auto;letter-spacing:0;text-transform:none;font-weight:400;font-size:10px;white-space:nowrap}
+.pw-stg{width:100%;height:36px;display:grid;grid-template-columns:12px minmax(0,1fr) auto;gap:11px;align-items:center;padding:0 12px;border-bottom:1px solid var(--sol-borders-ui-subtle);background:transparent;text-align:left}
+.pw-stg:last-child{border-bottom:0}
+.pw-stg[data-state=now]{background:var(--sol-backgrounds-accent-purple)}
+.pw-stgdot{width:11px;height:11px;border-radius:999px;border:1.5px solid var(--sol-borders-ui-strong);background:var(--sol-backgrounds-ui-high)}
+.pw-stg[data-state=done] .pw-stgdot{background:var(--sol-icons-system-success);border-color:var(--sol-icons-system-success)}
+.pw-stg[data-state=now] .pw-stgdot{background:var(--sol-actions-button);border-color:var(--sol-actions-button);box-shadow:0 0 0 3px var(--sol-states-focus)}
+.pw-stgname{font:400 13px/17px var(--inter);color:var(--sol-text-secondary);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pw-stg[data-state=now] .pw-stgname{color:var(--pw-ink);font-weight:500}
+.pw-stgmeta{font:400 11px/14px var(--inter);color:var(--sol-text-secondary);white-space:nowrap}
+.pw-stg[data-state=now] .pw-stgmeta{color:var(--sol-actions-button);font-weight:500}
+
+/* warning notice */
+.pw-gate{border:1px solid var(--sol-icons-system-warning);border-radius:8px;background:var(--sol-backgrounds-system-warning);overflow:hidden}
+.pw-gate-h{width:100%;display:flex;align-items:center;gap:10px;padding:12px 16px;font:600 14px/20px var(--inter);color:var(--sol-text-warning);text-align:left}
+.pw-gate-h .cv{margin-left:auto;flex:0 0 auto;color:var(--sol-icons-system-warning)}
+.pw-gate-b{padding:0 16px 14px;font:400 14px/20px var(--inter);color:var(--sol-text-warning)}
+.pw-gate-b strong{font-weight:600}
+.pw-gate-b a{color:var(--sol-text-warning);text-decoration:underline;text-underline-offset:2px}
+
+/* info notice, for the derivation */
+.pw-why{border:1px solid var(--sol-borders-accent-blue);border-radius:8px;background:var(--sol-backgrounds-system-info);padding:12px 14px;font:400 13px/19px var(--inter);color:var(--sol-icons-accent-blue)}
+.pw-why b{font-weight:600}
+
+/* synopsis grid */
+.pw-facts{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 8px;margin-top:-6px;font:400 13px/20px var(--inter);color:var(--sol-text-secondary)}
+.pw-facts>*{white-space:nowrap}
+.pw-facts .sep{color:var(--sol-borders-ui-strong)}
+.pw-facts a{color:var(--sol-actions-link);text-decoration:underline;text-underline-offset:2px}
+.pw-syn{display:grid;grid-template-columns:1fr 1fr;gap:10px 16px}
+.pw-synr{min-width:0}
+.pw-synr .k{display:block;font:400 11px/16px var(--inter);color:var(--sol-text-secondary)}
+.pw-synr .v{display:block;font:500 13px/18px var(--inter);color:var(--pw-ink);text-wrap:pretty}
+
+/* sub-status */
+.pw-ss{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid var(--sol-borders-ui-subtle);font:400 14px/20px var(--inter)}
+.pw-ss:last-of-type{border-bottom:0}
+.pw-ss .k{color:var(--sol-text-secondary)}
+.pw-ss .v{font-weight:600;text-align:right}
+.pw-ss[data-reg=done] .v{color:var(--pw-ink)}
+.pw-ss[data-reg=working] .v{color:var(--sol-text-warning);text-decoration:underline;text-decoration-style:dotted;text-underline-offset:3px}
+.pw-ss[data-reg=na] .k,.pw-ss[data-reg=na] .v{color:var(--sol-text-secondary);font-weight:400;font-style:italic}
+.pw-ssnote{margin:8px 0 0;font:400 12px/18px var(--inter);color:var(--sol-text-secondary)}
+
+/* placeholders */
+.pw-ph{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;border:1px dashed var(--sol-borders-ui-strong);border-radius:8px;font:400 14px/20px var(--inter);color:var(--sol-text-secondary)}
+.pw-section{display:flex;flex-direction:column;gap:12px}
+.pw-sectionhead{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.pw-sectionhead h2{margin:0;font:700 18px/24px var(--inter);color:var(--pw-ink)}
+.pw-phlist{display:flex;flex-direction:column;gap:8px}
+.pw-inlink{color:var(--sol-actions-link);text-decoration:underline;text-underline-offset:2px;font:inherit}
+.pw-vall{display:flex;justify-content:space-between;align-items:center;gap:12px;border-top:1px solid var(--sol-borders-ui-subtle);padding-top:10px;font:400 12px/18px var(--inter);color:var(--sol-text-secondary)}
+
+/* annotation, memo only, never product */
+.note{margin:2px 0 0;font:italic 400 12px/17px var(--inter);color:var(--sol-icons-accent-purple)}
+.note::before{content:"[i] ";font-style:normal;font-weight:600}
+
+@media (max-width:1100px){
+  .pw-pair,.pw-toppair{grid-template-columns:1fr}
+  .pw-syn{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<p class="eyebrow"><span>Pros Web</span><span>Statuses across the model</span><span>Mockup, 10 Sep 2026</span></p>
+
+<h1>The project workspace, on the real design language</h1>
+
+<p class="lede">One section, rebuilt. This replaces section B of the statuses memo and tests two things
+at once: whether the status sets hold up, and whether a memo mockup can be built the way the standalone
+Pros Web screens are built, with cards in pairs under group headings rather than a column of full width
+rows. The page is the Thompsons on 9 September, with siding running and windows stuck at a permit desk.</p>
+
+<div class="conv">
+  <span class="cm">[i]</span>
+  <span>Inside the mockup, small purple italic text prefixed with <strong>[i]</strong> is my annotation,
+  not interface copy. Everything else in the frame is intended as real UI, and the colours, type and
+  components are Merlin's own tokens rather than an invented palette.</span>
+</div>
+
+<div class="card last">
+  <h3>Taken as settled for this memo</h3>
+  <p class="sh2">Working assumptions, not decisions anyone has signed off</p>
+  <ul class="b">
+    <li><strong>The project is the spine and mints on pursuit</strong>, so it exists before anything is
+    priced. One lead per trade, and several leads can be pursued into one project.</li>
+    <li><strong>Project status is derived</strong> from the proposal and the jobs. The only project
+    status a person sets is the first one. Lead, proposal and job statuses are authored.</li>
+    <li><strong>Deferred is not lost.</strong> A declined trade keeps its lead open with a reason, a
+    note and a revive date, and keeps its priced option on the proposal.</li>
+    <li><strong>Selling and work are groupings in the experience, not entities.</strong> Here they are
+    the Sales and Operations group headings.</li>
+  </ul>
+</div>
+
+<div class="sec-head">
+  <div class="badge-l">B</div>
+  <h2 class="sec-title">The project, with one lane running and one stuck</h2>
+  <span class="sec-when">Project workspace &middot; 9 Sep</span>
+</div>
+
+<p class="cap">Full page width. Four groups, eight cards, nothing stacked full width except the parked list</p>
+
+<div class="frame">
+<div class="pw-page">
+
+  <div class="pw-crumbs"><a href="#" onclick="return false">Customers</a><span class="s">/</span><a href="#" onclick="return false">Thompson, R. &amp; S.</a><span class="s">/</span><span>Exterior refresh</span></div>
+
+  <div class="pw-stack">
+
+    <div class="pw-titlerow">
+      <div style="min-width:0">
+        <h1 class="t-h1">Exterior refresh for the Thompsons</h1>
+        <p class="t-p2 muted" style="margin:4px 0 0">Thompson, R. &amp; S. &middot; 1428 Maple Ave, Sacramento CA &middot; opened 12 Aug by Priya Raman</p>
+      </div>
+      <div class="pw-actions">
+        <span class="bdg purple">In progress</span>
+        <button class="pw-btn">Add note</button>
+        <span class="pw-kebab">&#8943;</span>
+      </div>
+    </div>
+
+    <!-- top pair: where it is, and what it is -->
+    <div class="pw-toppair">
+      <div class="pw-card">
+        <div class="pw-cardstack">
+          <div class="pw-cardhead">
+            <h5>Where this project is</h5>
+            <span class="t-l4 muted">Derived &middot; cannot be set by hand</span>
+          </div>
+          <div class="pw-why"><b>In progress</b> because one of two jobs has started. It becomes
+          Complete when both jobs are complete, and Paid when the balance clears.</div>
+          <div class="pw-rail">
+            <div class="pw-railboard">Selling<span class="n">from the proposal</span></div>
+            <div class="pw-stg" data-state="done"><span class="pw-stgdot"></span><span class="pw-stgname">Pursuing</span><span class="pw-stgmeta">12 Aug</span></div>
+            <div class="pw-stg" data-state="done"><span class="pw-stgdot"></span><span class="pw-stgname">Quoting</span><span class="pw-stgmeta">13 Aug</span></div>
+            <div class="pw-stg" data-state="done"><span class="pw-stgdot"></span><span class="pw-stgname">Presented</span><span class="pw-stgmeta">18 Aug</span></div>
+            <div class="pw-stg" data-state="done"><span class="pw-stgdot"></span><span class="pw-stgname">Sold</span><span class="pw-stgmeta">18 Aug</span></div>
+            <div class="pw-railboard">Work<span class="n">from the jobs</span></div>
+            <div class="pw-stg" data-state="now"><span class="pw-stgdot"></span><span class="pw-stgname">In progress</span><span class="pw-stgmeta">since 21 Aug</span></div>
+            <div class="pw-stg"><span class="pw-stgdot"></span><span class="pw-stgname">Complete</span><span class="pw-stgmeta">needs both jobs</span></div>
+            <div class="pw-railboard">Money<span class="n">from the master invoice</span></div>
+            <div class="pw-stg"><span class="pw-stgdot"></span><span class="pw-stgname">Paid</span><span class="pw-stgmeta">$23,920 outstanding</span></div>
+          </div>
+          <p class="note">Seven derived states, grouped by what produces them. This is not the
+          contractor's configured pipeline, which is a separate thing and is not drawn.</p>
+          <div class="pw-gate">
+            <div class="pw-gate-h"><span>&#9888;</span><span>One of two jobs is blocked</span><span class="cv">&#9662;</span></div>
+            <div class="pw-gate-b"><strong>JOB&#8209;3102 Windows has been waiting 14 days</strong> on
+            Permit P&#8209;22841. Plan review returned a correction yesterday. Nothing about the job is
+            wrong. <a href="#" onclick="return false">Open the permit</a></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pw-card">
+        <div class="pw-cardstack">
+          <div class="pw-cardhead">
+            <h5>Project overview</h5>
+            <span class="bdg secondary tiny">One&nbsp;property</span>
+          </div>
+          <div class="pw-facts">
+            <a href="#" onclick="return false">3 leads pursued</a>
+            <span class="sep">&middot;</span>
+            <a href="#" onclick="return false">1 proposal, 3 options</a>
+            <span class="sep">&middot;</span>
+            <a href="#" onclick="return false">shared financing</a>
+          </div>
+          <div class="pw-syn">
+            <div class="pw-synr"><span class="k">Trades sold</span><span class="v">Siding, windows</span></div>
+            <div class="pw-synr"><span class="k">Trades deferred</span><span class="v">Roofing, to spring</span></div>
+            <div class="pw-synr"><span class="k">Committed scope</span><span class="v">2 components, 1 job each</span></div>
+            <div class="pw-synr"><span class="k">Contract</span><span class="v">Signed 18 Aug, amended 9 Sep</span></div>
+            <div class="pw-synr"><span class="k">Tender</span><span class="v">GoodLeap loan, 15 yr at 6.99%</span></div>
+            <div class="pw-synr"><span class="k">Milestones</span><span class="v">20 / 40 / 40, first two drawn</span></div>
+            <div class="pw-synr"><span class="k">Property</span><span class="v">1428 Maple Ave, built 1978</span></div>
+            <div class="pw-synr"><span class="k">Owner</span><span class="v">Priya Raman, sales</span></div>
+          </div>
+          <p class="note">Facts about the project rather than a subtitle under the title. A subtitle is
+          where things go when there is nowhere for them.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sales -->
+    <div class="pw-group">
+      <div class="pw-grouphead">
+        <h2>Sales</h2>
+        <span class="t-l4 muted">Selling ran 12 to 18 Aug</span>
+      </div>
+      <div class="pw-pair">
+
+        <div class="pw-card">
+          <div class="pw-cardstack">
+            <div class="pw-cardhead">
+              <h5>Leads</h5>
+              <div class="pw-seg">
+                <button class="pw-segi" data-on="true">Won 2</button>
+                <button class="pw-segi">Deferred 1</button>
+                <button class="pw-segi">Open 0</button>
+                <button class="pw-segi">Lost 0</button>
+              </div>
+            </div>
+            <div class="pw-crowlist">
+              <div class="pw-lrow">
+                <span class="pw-lname">Siding<span class="pw-lsub">Raised by Sara on the intake call, 22 Jul</span></span>
+                <span class="pw-lval">$34,200</span>
+                <span class="bdgs"><span class="bdg success tiny">Won</span><span class="bdg success tiny">Customer interest</span></span>
+              </div>
+              <div class="pw-lrow">
+                <span class="pw-lname">Windows<span class="pw-lsub">Suggested by the system, 21 Jul</span></span>
+                <span class="pw-lval">$18,600</span>
+                <span class="bdgs"><span class="bdg success tiny">Won</span><span class="bdg pink tiny">DeDe identified</span></span>
+              </div>
+              <div class="pw-lrow dim">
+                <span class="pw-lname">Roofing<span class="pw-lsub">Home App, 21 Jul &middot; budget this season &middot; revive Mar 2027</span></span>
+                <span class="pw-lval">est. $38,900</span>
+                <span class="bdgs"><span class="bdg warning tiny">Deferred</span><span class="bdg success tiny">Customer interest</span></span>
+              </div>
+            </div>
+            <p class="note">The deferred lead is shown on the Won segment, not hidden behind its own,
+            because a project that sold two of three has to say so without a click.</p>
+          </div>
+        </div>
+
+        <div class="pw-card">
+          <div class="pw-cardstack">
+            <div class="pw-cardhead">
+              <h5>Proposal</h5>
+              <div class="pw-seg">
+                <button class="pw-segi" data-on="true">Accepted 1</button>
+                <button class="pw-segi">Superseded 2</button>
+                <button class="pw-segi">Declined 0</button>
+              </div>
+            </div>
+            <div class="pw-crowlist">
+              <div class="pw-lrow">
+                <span class="pw-lname">P&#8209;1051&nbsp;&nbsp;Exterior refresh<span class="pw-lsub">Version 3 &middot; 3 options &middot; presented in person 18 Aug</span></span>
+                <span class="pw-lval">$55,600</span>
+                <span class="bdgs"><span class="bdg success tiny">Accepted 18 Aug</span><span class="bdg secondary tiny">Sent</span><span class="bdg warning tiny">Amended by CO&#8209;01</span></span>
+              </div>
+              <div class="pw-lrow dim">
+                <span class="pw-lname">Roofing option<span class="pw-lsub">Priced 13 Aug, offered first, declined in the session</span></span>
+                <span class="pw-lval">$38,900 held</span>
+                <span class="bdgs"><span class="bdg warning tiny">Declined</span><span class="bdg secondary tiny">Price retained</span></span>
+              </div>
+            </div>
+            <div class="pw-vall">
+              <span>Two lifecycle statuses and one delivery status on one document</span>
+              <span class="pw-inlink">Open proposal</span>
+            </div>
+            <p class="note">The declined option stays under the proposal that priced it, linked to its
+            lead. Its number is what makes a March conversation cheap.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Operations -->
+    <div class="pw-group">
+      <div class="pw-grouphead">
+        <h2>Operations</h2>
+        <span class="t-l4 muted">One job per committed scope component</span>
+      </div>
+      <div class="pw-pair">
+
+        <div class="pw-card">
+          <div class="pw-cardstack">
+            <div class="pw-cardhead">
+              <h5>Jobs</h5>
+              <div class="pw-seg">
+                <button class="pw-segi" data-on="true">Active 2</button>
+                <button class="pw-segi">Complete 0</button>
+              </div>
+            </div>
+            <div class="pw-crowlist">
+              <div class="pw-lrow">
+                <span class="pw-lname">JOB&#8209;3101&nbsp;&nbsp;Siding<span class="pw-lsub">Exterior crew &middot; installing, 5 of 8 steps &middot; rot repair under CO&#8209;01</span></span>
+                <span class="pw-lval">$37,000</span>
+                <span class="bdgs"><span class="bdg info tiny">In progress</span></span>
+              </div>
+              <div class="pw-lrow">
+                <span class="pw-lname">JOB&#8209;3102&nbsp;&nbsp;Windows<span class="pw-lsub">Install crew &middot; 2 of 8 steps &middot; units due 23 Sep</span></span>
+                <span class="pw-lval">$18,600</span>
+                <span class="bdgs"><span class="bdg warning tiny">Blocked 14 days</span><span class="bdg secondary tiny">Permit P&#8209;22841</span></span>
+              </div>
+            </div>
+            <p class="note">Blocked is derived from the permit record and clears itself. The elapsed
+            count rides on the badge, because a status without a clock produced 26 days of silence.</p>
+          </div>
+        </div>
+
+        <div class="pw-card">
+          <div class="pw-cardstack">
+            <div class="pw-cardhead">
+              <h5>Waiting on</h5>
+              <span class="t-l4 muted">Five external processes &middot; none ours to speed up</span>
+            </div>
+            <div>
+              <div class="pw-ss" data-reg="working"><span class="k">Permit, windows</span><span class="v">Correction requested</span></div>
+              <div class="pw-ss" data-reg="working"><span class="k">Window units</span><span class="v">Ordered, due 23 Sep</span></div>
+              <div class="pw-ss" data-reg="done"><span class="k">Financing</span><span class="v">NTP</span></div>
+              <div class="pw-ss" data-reg="done"><span class="k">Siding materials</span><span class="v">Delivered</span></div>
+              <div class="pw-ss" data-reg="na"><span class="k">HOA</span><span class="v">Not applicable</span></div>
+            </div>
+            <p class="pw-ssnote">Two rows still to move, one of them held by a city plan reviewer.
+            Amber marks only what somebody has to act on.</p>
+            <p class="note">Lifted from the job view rather than invented. It is the right home for the
+            blocking fact, so the job row above only has to carry the badge.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Financials -->
+    <div class="pw-group">
+      <div class="pw-grouphead">
+        <h2>Financials</h2>
+        <span class="t-l4 muted">Held at the project, not on the jobs</span>
+      </div>
+      <div class="pw-pair">
+
+        <div class="pw-card">
+          <div class="pw-cardstack">
+            <div class="pw-cardhead">
+              <h5>Running balance</h5>
+              <span class="t-l4 muted">MI&#8209;4471</span>
+            </div>
+            <div class="pw-cardrows">
+              <div class="pw-crow"><span class="cl">Original contract</span><span class="cv">$52,800.00</span></div>
+              <div class="pw-crow"><span class="cl">CO&#8209;01, rot behind siding</span><span class="cv">$2,800.00</span></div>
+              <div class="pw-crow"><span class="cl">Drawn to date, 2 of 3 milestones</span><span class="cv">$31,680.00</span></div>
+              <div class="pw-crule"></div>
+              <div class="pw-crow tot"><span class="cl">Balance due</span><span class="cv">$23,920.00</span></div>
+            </div>
+            <p class="t-p4 muted" style="margin:0">One master invoice for the whole project. Both jobs
+            draw against it, and each job's evidence releases its own milestone.</p>
+          </div>
+        </div>
+
+        <div class="pw-card">
+          <div class="pw-cardstack">
+            <div class="pw-cardhead">
+              <h5>Costs and margin</h5>
+              <span class="t-l4 muted">Costs land per job</span>
+            </div>
+            <div class="pw-cardrows">
+              <div class="pw-crow"><span class="cl">JOB&#8209;3101 Siding</span><span class="cv">$21,940.00</span></div>
+              <div class="pw-crow"><span class="cl">JOB&#8209;3102 Windows</span><span class="cv">$1,120.00</span></div>
+              <div class="pw-crule"></div>
+              <div class="pw-crow tot"><span class="cl">Margin, project</span><span class="cv">31%</span></div>
+              <div class="pw-crow"><span class="cl">Margin, per job</span><span class="cv pw-missing">needs an allocation nobody has specified</span></div>
+            </div>
+            <p class="note">Revenue landed on the project and costs land on the jobs, so project margin
+            reads and per job margin does not. Shown as a gap rather than filled with a guess.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- parked -->
+    <div class="pw-section">
+      <div class="pw-sectionhead">
+        <h2>Everything else</h2>
+        <span class="t-l4 muted">Not settled by the status model</span>
+      </div>
+      <div class="pw-phlist">
+        <div class="pw-ph"><span>Stages, tasks and gates as this contractor configured them</span><span class="bdg secondary tiny">Placeholder</span></div>
+        <div class="pw-ph"><span>Documents, photos and the site assessment from 20 Aug</span><span class="bdg secondary tiny">Placeholder</span></div>
+        <div class="pw-ph"><span>Notes and history, one stream filtered twice</span><span class="bdg secondary tiny">Placeholder</span></div>
+        <div class="pw-ph"><span>Measurements, insights and the equipment registry</span><span class="bdg secondary tiny">Placeholder</span></div>
+      </div>
+      <p class="note">Four placeholders, labelled, because each attaches to several objects at once and
+      deciding where they surface is a separate argument.</p>
+    </div>
+
+  </div>
+</div>
+</div>
+
+<!-- ============ argument ============ -->
+<div class="argrow">
+  <div class="arg">
+    <p class="lab">Groups, not a column of rows</p>
+    <p>Sales, Operations and Financials each get a heading over <strong>two cards abreast</strong>,
+    which is how the standalone customer record is built. Eight cards fit in the height that four full
+    width blocks took, and each pair reads as one question rather than two unrelated lists.</p>
+  </div>
+  <div class="arg">
+    <p class="lab">Segments do the work rows were doing</p>
+    <p>Leads shows Won, Deferred, Open and Lost from one card. The counts sit in the segment labels, so
+    the card answers "what happened to demand here" before anything is clicked. My earlier version drew
+    every list open at once, which is why it read as rows forever.</p>
+  </div>
+  <div class="arg">
+    <p class="lab">A derived status has to show its working</p>
+    <p>The rail groups seven derived states by <strong>what produces them</strong>: selling, work, then
+    money. If a person cannot set the status they will not trust it until they can see what it came
+    from, and the blue line above the rail is doing more work than the badge in the header.</p>
+  </div>
+  <div class="arg">
+    <p class="lab">The blocking fact has a home already</p>
+    <p>Waiting on is lifted from the job view rather than invented. Putting the permit correction there
+    means the job row only carries a badge and a day count, and the five external processes read as one
+    list of things nobody here can accelerate.</p>
+  </div>
+  <div class="arg">
+    <p class="lab">Two lifecycle statuses on one row</p>
+    <p>The proposal row carries Accepted, Sent and Amended by CO&#8209;01 as three badges rather than
+    one compound status. That is the two axes argument made in the smallest possible space, and it is
+    the test of whether badges can hold it or whether the row needs a second line.</p>
+  </div>
+  <div class="arg">
+    <p class="lab">The uncomfortable part</p>
+    <p>The page is now dense enough that the deferred roof is a row, inside a card, inside a group,
+    three levels below the title. On the customer record it sits near the top. <strong>Deferred demand
+    gets quieter the further into a project you look</strong>, and no amount of layout fixes that: it is
+    what happens when demand and commitment are separate objects.</p>
+  </div>
+  <div class="arg">
+    <p class="lab">Where this costs something</p>
+    <p>Two cards abreast is unconditional in the standalone screens, so the cards shrink rather than
+    stacking. At memo width the four segment control on Leads is close to clipping, and it only fits
+    because the counts are short. A fifth lead status would not fit.</p>
+  </div>
+</div>
+
+<p class="qhead">Open questions</p>
+<div class="qgrid">
+  <div class="q"><div class="qn">1</div><p>Does a project need a state rail at all, when its status is derived and nobody can move it? A single explained badge might be enough, and the rail invites people to try to drag it.</p></div>
+  <div class="q"><div class="qn">2</div><p>Should Waiting on be one card per project or one per job? Here one job is blocked and the other is not, and the card silently mixes both.</p></div>
+  <div class="q"><div class="qn">3</div><p>Does Leads belong on a project page, or only on the customer record? It is the only card here showing something the project does not own.</p></div>
+  <div class="q"><div class="qn">4</div><p>The rail shows the model's derived states. The configured pipeline shows the contractor's ten stages. Both describe where the work is. Which one belongs in this card, and where does the other go?</p></div>
+  <div class="q"><div class="qn">5</div><p>Three badges on the proposal row, or two badges and a second line? The row is at half width and this is where it starts to matter.</p></div>
+</div>
+
+</div>
+</body>
+</html>

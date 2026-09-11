@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The project is the container</title>
+<style>
+:root{
+  color-scheme: light;
+  --bg:#ffffff; --s1:#faf9f7; --s2:#ffffff; --s3:#f2f1ed;
+  --tx:#1b1b1a; --tx2:#575651; --tx3:#8b8a84;
+  --bd:#e7e5e0; --bds:#d5d3cc;
+  --ac:#185fa5; --acbg:#e9f1fa; --acbd:#a8c9ec;
+  --wn:#a8461f; --wnbg:#fbf0eb; --wnbd:#e2b39d;
+  --gd:#3b6d11; --gdbg:#eef4e4;
+  --pr:#534ab7; --prbg:#eeedfe;
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:var(--sans);font-size:15px;line-height:1.62;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1560px;margin:0 auto;padding:56px 40px 96px}
+.txt{max-width:750px}
+.eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--tx3);margin:0 0 18px}
+.eyebrow span{margin-right:26px}
+h1{font-size:40px;line-height:1.12;font-weight:500;letter-spacing:-.02em;margin:0 0 18px;max-width:750px}
+.lede{max-width:750px;color:var(--tx2);font-size:15.5px;margin:0 0 26px}
+.conv{display:flex;gap:11px;align-items:baseline;background:var(--s1);border:1px solid var(--bd);border-radius:10px;padding:12px 16px;margin:0 0 30px;font-size:13.5px;color:var(--tx2);line-height:1.55;max-width:750px}
+.conv .cm{font-weight:500;color:var(--ac);flex:0 0 auto}
+.card{background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:16px 22px;margin:0 0 18px;max-width:750px}
+.card.last{margin-bottom:56px}
+.mono-label{font-family:var(--mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--tx3);margin:0 0 12px}
+ul.b{margin:0;padding:0 0 0 18px}
+ul.b li{margin:0 0 8px;color:var(--tx2);font-size:14.5px;line-height:1.55}
+ul.b li:last-child{margin-bottom:0}
+ul.b li strong,p strong{color:var(--tx);font-weight:500}
+.card .dbody p{margin:0 0 10px;font-size:14.5px;line-height:1.6;color:var(--tx2)}
+.card .dbody p:last-child{margin-bottom:0}
+details > summary{cursor:pointer;list-style:none;display:flex;align-items:baseline;justify-content:space-between;gap:16px}
+details > summary::-webkit-details-marker{display:none}
+details > summary::marker{content:""}
+summary .sl{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+summary .st{font-size:15px;font-weight:500;color:var(--tx)}
+summary .sh2{font-size:13px;color:var(--tx3)}
+summary .cv{font-size:16px;color:var(--tx3);transition:transform .15s ease;flex:0 0 auto;line-height:1;position:relative;top:2px}
+details[open] > summary .cv{transform:rotate(90deg)}
+details[open] > summary{margin-bottom:14px}
+.sec{margin:0 0 66px}
+.sec-head{display:flex;align-items:center;gap:11px;padding-bottom:12px;border-bottom:1px solid var(--bd);margin-bottom:22px}
+.badge{flex:0 0 auto;width:20px;height:20px;border:1px solid var(--acbd);border-radius:4px;color:var(--ac);font-family:var(--mono);font-size:10.5px;display:flex;align-items:center;justify-content:center;background:var(--acbg)}
+.sec-title{font-size:19px;font-weight:500;margin:0;letter-spacing:-.01em}
+.two{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:40px;align-items:start}
+.cap{font-family:var(--mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--tx3);margin:0 0 10px}
+.argrow{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:30px;margin-top:26px;max-width:1180px}
+.qrow{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:30px;margin-top:8px;max-width:1180px}
+.arg{margin:0 0 22px}
+.argrow .arg{margin:0}
+.arg .lab{font-family:var(--mono);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:#7d8fa3;margin:0 0 6px}
+.arg p{margin:0;font-size:14px;line-height:1.58;color:var(--tx2)}
+.q{display:flex;gap:10px;align-items:flex-start;margin:0 0 11px}
+.qn{flex:0 0 auto;width:17px;height:17px;border-radius:50%;background:var(--ac);color:#fff;font-family:var(--mono);font-size:9.5px;display:flex;align-items:center;justify-content:center;margin-top:2px}
+.q p{margin:0;font-size:13.5px;line-height:1.5;color:var(--tx2)}
+.fig{background:var(--s2);border:1px solid var(--bd);border-radius:12px;padding:18px}
+.fig.mid{max-width:860px}
+.fig svg{display:block;width:100%;height:auto}
+.note{margin:12px 0 0;font-size:12px;line-height:1.45;color:var(--tx3);font-style:italic;max-width:750px}
+.grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;max-width:1180px}
+.g4c{background:var(--s1);border:1px solid var(--bd);border-radius:10px;padding:14px 15px}
+.g4c.acc{background:var(--acbg);border-color:var(--acbd)}
+.g4c h4{margin:0 0 9px;font-size:12.5px;font-weight:500}
+.g4c ul{margin:0;padding:0 0 0 15px}
+.g4c li{font-size:12px;line-height:1.45;color:var(--tx2);margin-bottom:6px}
+.g4c li:last-child{margin-bottom:0}
+.g4c.acc li{color:#22557f}
+.foot{border-top:1px solid var(--bd);padding-top:22px;margin-top:8px}
+.foot p{font-size:14px;color:var(--tx2);max-width:750px;margin:0 0 12px}
+@media (max-width:900px){
+  .two,.argrow,.qrow{grid-template-columns:1fr}
+  .grid4{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<p class="eyebrow"><span>Pros Web</span><span>Model C &mdash; the project</span><span>Memo, 28 Aug 2026</span></p>
+
+<h1>The project is the container</h1>
+
+<p class="lede">A project holds one piece of business end to end: the opportunities that started it,
+the proposal that priced it, the contract and the money, and the jobs that deliver it. Inside the
+project nothing is nested. Opportunities, proposals and jobs sit alongside each other and point at
+one another.</p>
+
+<details class="card">
+  <summary>
+    <span class="sl"><span class="st">Taken as settled for this memo</span><span class="sh2">Eight assumptions, agreed here rather than decided elsewhere</span></span>
+    <span class="cv">&#9656;</span>
+  </summary>
+  <div class="dbody">
+  <ul class="b">
+    <li><strong>A project is always mandatory.</strong> Every sale and every piece of work sits inside one, including a lone payment request at the payments tier. There is no second path for work without a project.</li>
+    <li><strong>One acceptance, one contract, one financing</strong> per bundled sale. Whether that lands on a proposal holding scopes or on a folio holding discrete proposals is an engineering decision, not something a contractor picks.</li>
+    <li><strong>Opportunities, proposals and jobs are peers</strong> inside the project. The proposal is not the parent of jobs.</li>
+    <li><strong>Scopes drive jobs.</strong> A scope carries its own statement of work, estimate and itemisation, and it is what a job traces back to.</li>
+    <li>An opportunity <strong>links into a project rather than moving into it</strong>, so one that is declined survives and can be pursued later.</li>
+    <li><strong>The change order is the boundary test.</strong> If an addition can ride on the existing contract, financing and master invoice it is a change order. If it cannot, it is a new project.</li>
+    <li>Projects can be <strong>linked to one another</strong> where timing, coordination or order of operations matters.</li>
+    <li>Projects get <strong>their own status vocabulary</strong>. Jobs run their own kanban pipeline underneath.</li>
+  </ul>
+  </div>
+</details>
+
+<details class="card last">
+  <summary>
+    <span class="sl"><span class="st">The thing to decide before anything is built</span><span class="sh2">Can a proposal hold scopes?</span></span>
+    <span class="cv">&#9656;</span>
+  </summary>
+  <div class="dbody">
+  <p>Section C draws this as a fork, and it is the only question on this page that changes what gets
+  built rather than how it looks.</p>
+  <p><strong>If the proposal can be extended to hold several scopes</strong>, each with its own price
+  and its own job, the change is contained. Today a proposal holds exactly one scope, so the scope
+  becomes a repeatable unit, but acceptance, contract and financing stay where they already live.</p>
+  <p><strong>If it cannot</strong>, the proposal is left as it is and a folio has to be built above it,
+  given one acceptance, one contract signing and one financing. That is a second object carrying
+  contract semantics, not a presentation wrapper, and it is a materially larger piece of work.</p>
+  <p>Everything after signing is identical either way, so the screens can be designed while this is
+  still open. It does not block design; it blocks build.</p>
+  <p>Worth noting separately: <strong>"project" is already taken in Merlin</strong> as a design
+  artefact carrying a bill of materials and an electricity profile.</p>
+  </div>
+</details>
+
+<div class="sec">
+  <div class="sec-head"><div class="badge">A</div><h2 class="sec-title">One parent, then peers</h2></div>
+  <p class="cap">A project after signing &middot; opportunities live on the customer and link in</p>
+  <div class="fig">
+    <svg viewBox="0 0 1400 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="tA dA">
+      <title id="tA">The project and its contents</title>
+      <desc id="dA">Opportunities sit on the customer, outside the project, each carrying its provenance. They link into the project, where a proposal with two scopes, two jobs and the money sit as peers.</desc>
+      <defs><marker id="mA" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,1 L8,4.5 L0,8 z" fill="#8b8a84"/></marker></defs>
+
+      <rect x="0" y="6" width="250" height="32" rx="6" fill="#faf9f7" stroke="#d5d3cc"/>
+      <text x="14" y="27" font-family="-apple-system,sans-serif" font-size="11.5" fill="#1b1b1a">Customer &middot; R. &amp; S. Thompson</text>
+
+      <text x="0" y="82" font-family="ui-monospace,Menlo,monospace" font-size="9" letter-spacing="1.1" fill="#8b8a84">OPPORTUNITIES &middot; ON THE CUSTOMER</text>
+
+      <rect x="40" y="96" width="250" height="56" rx="6" fill="#ffffff" stroke="#d5d3cc"/>
+      <text x="54" y="118" font-family="-apple-system,sans-serif" font-size="12" font-weight="500" fill="#1b1b1a">Siding</text>
+      <rect x="54" y="126" width="116" height="17" rx="8.5" fill="#eef4e4"/>
+      <text x="112" y="138" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="9.5" fill="#27500a">customer interest</text>
+
+      <rect x="40" y="164" width="250" height="56" rx="6" fill="#ffffff" stroke="#d5d3cc"/>
+      <text x="54" y="186" font-family="-apple-system,sans-serif" font-size="12" font-weight="500" fill="#1b1b1a">Windows</text>
+      <rect x="54" y="194" width="132" height="17" rx="8.5" fill="#e9f1fa"/>
+      <text x="120" y="206" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="9.5" fill="#185fa5">contractor identified</text>
+
+      <rect x="40" y="232" width="250" height="56" rx="6" fill="#ffffff" stroke="#d5d3cc"/>
+      <text x="54" y="254" font-family="-apple-system,sans-serif" font-size="12" font-weight="500" fill="#1b1b1a">Roofing</text>
+      <rect x="54" y="262" width="116" height="17" rx="8.5" fill="#eef4e4"/>
+      <text x="112" y="274" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="9.5" fill="#27500a">customer interest</text>
+
+      <text x="40" y="308" font-family="-apple-system,sans-serif" font-size="10" fill="#8b8a84">Linked into the project, never moved into it.</text>
+
+      <rect x="360" y="60" width="1040" height="322" rx="12" fill="#ffffff" stroke="#185fa5" stroke-width="1.6"/>
+      <text x="382" y="88" font-family="-apple-system,sans-serif" font-size="13.5" font-weight="500" fill="#185fa5">Project &middot; Exterior refresh</text>
+      <rect x="1242" y="70" width="136" height="24" rx="12" fill="#eef4e4"/>
+      <text x="1310" y="86" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="10.5" fill="#27500a">Production</text>
+
+      <text x="382" y="120" font-family="ui-monospace,Menlo,monospace" font-size="9" letter-spacing="1.1" fill="#8b8a84">PROPOSAL &middot; SIGNED</text>
+      <text x="1000" y="120" font-family="ui-monospace,Menlo,monospace" font-size="9" letter-spacing="1.1" fill="#8b8a84">JOBS</text>
+
+      <rect x="382" y="130" width="440" height="132" rx="8" fill="#e9f1fa" stroke="#a8c9ec"/>
+      <rect x="398" y="146" width="408" height="48" rx="6" fill="#ffffff" stroke="#a8c9ec"/>
+      <text x="412" y="166" font-family="-apple-system,sans-serif" font-size="11.5" font-weight="500" fill="#0c447c">Scope &middot; Siding</text>
+      <text x="412" y="182" font-family="-apple-system,sans-serif" font-size="10.5" fill="#22557f">statement of work &middot; itemisation &middot; $34,200</text>
+      <rect x="398" y="202" width="408" height="48" rx="6" fill="#ffffff" stroke="#a8c9ec"/>
+      <text x="412" y="222" font-family="-apple-system,sans-serif" font-size="11.5" font-weight="500" fill="#0c447c">Scope &middot; Windows</text>
+      <text x="412" y="238" font-family="-apple-system,sans-serif" font-size="10.5" fill="#22557f">statement of work &middot; itemisation &middot; $18,600</text>
+
+      <rect x="1000" y="146" width="378" height="48" rx="6" fill="#eef4e4"/>
+      <text x="1014" y="166" font-family="-apple-system,sans-serif" font-size="11.5" font-weight="500" fill="#27500a">Job &middot; Siding</text>
+      <text x="1014" y="182" font-family="-apple-system,sans-serif" font-size="10.5" fill="#3b6d11">exterior crew &middot; own pipeline</text>
+      <rect x="1000" y="202" width="378" height="48" rx="6" fill="#eef4e4"/>
+      <text x="1014" y="222" font-family="-apple-system,sans-serif" font-size="11.5" font-weight="500" fill="#27500a">Job &middot; Windows</text>
+      <text x="1014" y="238" font-family="-apple-system,sans-serif" font-size="10.5" fill="#3b6d11">install crew &middot; own pipeline</text>
+
+      <path d="M290,124 H340 V170 H386" fill="none" stroke="#b4b2a9" stroke-width="1.3" marker-end="url(#mA)"/>
+      <path d="M290,192 H340 V226 H386" fill="none" stroke="#b4b2a9" stroke-width="1.3" marker-end="url(#mA)"/>
+      <path d="M290,260 H322 V300 H354" fill="none" stroke="#d5d3cc" stroke-width="1.3" stroke-dasharray="5 4"/>
+      <text x="300" y="284" font-family="-apple-system,sans-serif" font-size="9.5" fill="#b4b2a9">linked, not sold</text>
+
+      <line x1="822" y1="170" x2="994" y2="170" stroke="#b4b2a9" stroke-width="1.3" marker-end="url(#mA)"/>
+      <line x1="822" y1="226" x2="994" y2="226" stroke="#b4b2a9" stroke-width="1.3" marker-end="url(#mA)"/>
+
+      <rect x="382" y="292" width="996" height="60" rx="8" fill="#faf9f7" stroke="#d5d3cc"/>
+      <text x="398" y="316" font-family="-apple-system,sans-serif" font-size="11.5" fill="#1b1b1a">Contract &nbsp;&middot;&nbsp; Master invoice $52,800 &nbsp;&middot;&nbsp; Financing &nbsp;&middot;&nbsp; Payment requests &nbsp;&middot;&nbsp; Transactions &nbsp;&middot;&nbsp; Cost and profit</text>
+      <text x="398" y="335" font-family="-apple-system,sans-serif" font-size="10" fill="#8b8a84">Project level. Not owned by the proposal, not owned by a job.</text>
+    </svg>
+    <p class="note">The only containment here is the project. Everything inside it is a peer, and
+    every arrow is an association rather than ownership. Roofing was quoted and not bought, so it
+    stays on the customer with its link intact.</p>
+  </div>
+
+  <div class="argrow">
+    <div class="arg">
+      <p class="lab">The container is not a document</p>
+      <p>A project exists before anything is priced and is never sent to anyone. Earlier models tried
+      to make the customer-facing artefact do this job, which is why <strong>financing, the master
+      invoice and the change order kept landing in awkward places</strong>. Separating the workspace
+      from the artefact puts each of them somewhere obvious.</p>
+    </div>
+    <div class="arg">
+      <p class="lab">Opportunities belong to the customer</p>
+      <p>They exist before any project does, they carry their provenance from the moment they are
+      created, and they survive the project ending. Drawing them outside the frame is the honest
+      picture: a project borrows them.</p>
+    </div>
+    <div class="arg">
+      <p class="lab">Depth stops at two</p>
+      <p>Customer, then project, then a flat set of peers. It looks deeper than it is because there
+      are several kinds of thing inside, but nothing is nested under anything except the project, so
+      there is no hierarchy to navigate.</p>
+    </div>
+  </div>
+</div>
+
+<div class="sec">
+  <div class="sec-head"><div class="badge">B</div><h2 class="sec-title">The same project, including the sale</h2></div>
+  <p class="cap">Three opportunities, one proposal that changes twice, two jobs</p>
+  <div class="fig">
+    <svg viewBox="0 0 1500 640" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="tB dB">
+      <title id="tB">The project with the proposal's three states</title>
+      <desc id="dB">Three opportunities on the customer link into a project. Inside, the proposal moves through prepared, in the room, and signed. The signed state produces two jobs, and the money sits at project level.</desc>
+      <defs><marker id="mB" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,1 L8,4.5 L0,8 z" fill="#8b8a84"/></marker></defs>
+
+      <rect x="0" y="6" width="250" height="32" rx="6" fill="#faf9f7" stroke="#d5d3cc"/>
+      <text x="14" y="27" font-family="-apple-system,sans-serif" font-size="11.5" fill="#1b1b1a">Customer &middot; R. &amp; S. Thompson</text>
+
+      <text x="0" y="96" font-family="ui-monospace,Menlo,monospace" font-size="9" letter-spacing="1.1" fill="#8b8a84">OPPORTUNITIES &middot; ON THE CUSTOMER</text>
+
+      <rect x="40" y="110" width="250" height="56" rx="6" fill="#ffffff" stroke="#d5d3cc"/>
+      <text x="54" y="132" font-family="-apple-system,sans-serif" font-size="12" font-weight="500" fill="#1b1b1a">Siding</text>
+      <rect x="54" y="140" width="116" height="17" rx="8.5" fill="#eef4e4"/>
+      <text x="112" y="152" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="9.5" fill="#27500a">customer interest</text>
+
+      <rect x="40" y="178" width="250" height="56" rx="6" fill="#ffffff" stroke="#d5d3cc"/>
+      <text x="54" y="200" font-family="-apple-system,sans-serif" font-size="12" font-weight="500" fill="#1b1b1a">Roofing</text>
+      <rect x="54" y="208" width="116" height="17" rx="8.5" fill="#eef4e4"/>
+      <text x="112" y="220" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="9.5" fill="#27500a">customer interest</text>
+
+      <rect x="40" y="246" width="250" height="56" rx="6" fill="#ffffff" stroke="#d5d3cc"/>
+      <text x="54" y="268" font-family="-apple-system,sans-serif" font-size="12" font-weight="500" fill="#1b1b1a">Windows</text>
+      <rect x="54" y="276" width="132" height="17" rx="8.5" fill="#e9f1fa"/>
+      <text x="120" y="288" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="9.5" fill="#185fa5">contractor identified</text>
+
+      <text x="40" y="322" font-family="-apple-system,sans-serif" font-size="10" fill="#8b8a84">All three link in. Two were asked for,</text>
+      <text x="40" y="337" font-family="-apple-system,sans-serif" font-size="10" fill="#8b8a84">one the contractor will raise while there.</text>
+
+      <rect x="360" y="60" width="1140" height="562" rx="12" fill="#ffffff" stroke="#185fa5" stroke-width="1.6"/>
+      <text x="382" y="88" font-family="-apple-system,sans-serif" font-size="13.5" font-weight="500" fill="#185fa5">Project &middot; Exterior refresh</text>
+      <rect x="1342" y="70" width="136" height="24" rx="12" fill="#eef4e4"/>
+      <text x="1410" y="86" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="10.5" fill="#27500a">Production</text>
+
+      <text x="382" y="118" font-family="ui-monospace,Menlo,monospace" font-size="9" letter-spacing="1.1" fill="#8b8a84">ONE PROPOSAL, THREE MOMENTS</text>
+      <text x="1000" y="118" font-family="ui-monospace,Menlo,monospace" font-size="9" letter-spacing="1.1" fill="#8b8a84">JOBS</text>
+
+      <rect x="382" y="128" width="460" height="122" rx="8" fill="#faf9f7" stroke="#d5d3cc"/>
+      <text x="398" y="149" font-family="-apple-system,sans-serif" font-size="11" font-weight="500" fill="#575651">1 &middot; Prepared before the visit</text>
+      <text x="398" y="171" font-family="-apple-system,sans-serif" font-size="10.5" fill="#1b1b1a">Siding &middot; on</text>
+      <text x="826" y="171" text-anchor="end" font-family="-apple-system,sans-serif" font-size="10.5" fill="#1b1b1a">$34,200</text>
+      <text x="398" y="191" font-family="-apple-system,sans-serif" font-size="10.5" fill="#1b1b1a">Roofing &middot; on</text>
+      <text x="826" y="191" text-anchor="end" font-family="-apple-system,sans-serif" font-size="10.5" fill="#1b1b1a">$38,900</text>
+      <text x="398" y="211" font-family="-apple-system,sans-serif" font-size="10.5" fill="#8b8a84">Windows &middot; off, ready to raise</text>
+      <text x="826" y="211" text-anchor="end" font-family="-apple-system,sans-serif" font-size="10.5" fill="#b4b2a9">$18,600</text>
+      <line x1="398" y1="222" x2="826" y2="222" stroke="#e7e5e0"/>
+      <text x="398" y="240" font-family="-apple-system,sans-serif" font-size="11" font-weight="500" fill="#1b1b1a">Total</text>
+      <text x="826" y="240" text-anchor="end" font-family="-apple-system,sans-serif" font-size="11.5" font-weight="500" fill="#1b1b1a">$73,100</text>
+
+      <line x1="612" y1="250" x2="612" y2="278" stroke="#b4b2a9" stroke-width="1.3" marker-end="url(#mB)"/>
+      <text x="626" y="269" font-family="-apple-system,sans-serif" font-size="10" fill="#8b8a84">toggled in the room</text>
+
+      <rect x="382" y="284" width="460" height="122" rx="8" fill="#ffffff" stroke="#185fa5"/>
+      <text x="398" y="305" font-family="-apple-system,sans-serif" font-size="11" font-weight="500" fill="#185fa5">2 &middot; In the room</text>
+      <text x="398" y="327" font-family="-apple-system,sans-serif" font-size="10.5" fill="#1b1b1a">Siding &middot; on</text>
+      <text x="826" y="327" text-anchor="end" font-family="-apple-system,sans-serif" font-size="10.5" fill="#1b1b1a">$34,200</text>
+      <text x="398" y="347" font-family="-apple-system,sans-serif" font-size="10.5" fill="#a8461f">Roofing &middot; switched off</text>
+      <text x="826" y="347" text-anchor="end" font-family="-apple-system,sans-serif" font-size="10.5" fill="#c99a80">$38,900</text>
+      <text x="398" y="367" font-family="-apple-system,sans-serif" font-size="10.5" fill="#1b1b1a">Windows &middot; switched on</text>
+      <text x="826" y="367" text-anchor="end" font-family="-apple-system,sans-serif" font-size="10.5" fill="#1b1b1a">$18,600</text>
+      <line x1="398" y1="378" x2="826" y2="378" stroke="#e7e5e0"/>
+      <text x="398" y="396" font-family="-apple-system,sans-serif" font-size="11" font-weight="500" fill="#1b1b1a">Total</text>
+      <text x="826" y="396" text-anchor="end" font-family="-apple-system,sans-serif" font-size="11.5" font-weight="500" fill="#1b1b1a">$52,800</text>
+
+      <line x1="612" y1="406" x2="612" y2="434" stroke="#b4b2a9" stroke-width="1.3" marker-end="url(#mB)"/>
+      <text x="626" y="425" font-family="-apple-system,sans-serif" font-size="10" fill="#8b8a84">accepted and signed</text>
+
+      <rect x="382" y="440" width="460" height="122" rx="8" fill="#e9f1fa" stroke="#a8c9ec"/>
+      <text x="398" y="461" font-family="-apple-system,sans-serif" font-size="11" font-weight="500" fill="#0c447c">3 &middot; Signed</text>
+      <text x="398" y="483" font-family="-apple-system,sans-serif" font-size="10.5" fill="#0c447c">Scope &middot; Siding</text>
+      <text x="826" y="483" text-anchor="end" font-family="-apple-system,sans-serif" font-size="10.5" fill="#0c447c">$34,200</text>
+      <text x="398" y="503" font-family="-apple-system,sans-serif" font-size="10.5" fill="#0c447c">Scope &middot; Windows</text>
+      <text x="826" y="503" text-anchor="end" font-family="-apple-system,sans-serif" font-size="10.5" fill="#0c447c">$18,600</text>
+      <text x="398" y="523" font-family="-apple-system,sans-serif" font-size="10.5" fill="#22557f">Loan &middot; 15 yr &middot; selected</text>
+      <line x1="398" y1="534" x2="826" y2="534" stroke="#a8c9ec"/>
+      <text x="398" y="552" font-family="-apple-system,sans-serif" font-size="11" font-weight="500" fill="#0c447c">Contract value</text>
+      <text x="826" y="552" text-anchor="end" font-family="-apple-system,sans-serif" font-size="11.5" font-weight="500" fill="#0c447c">$52,800</text>
+
+      <path d="M290,138 H330 V160 H370" fill="none" stroke="#b4b2a9" stroke-width="1.3" marker-end="url(#mB)"/>
+      <path d="M290,206 H344 V182 H370" fill="none" stroke="#b4b2a9" stroke-width="1.3" marker-end="url(#mB)"/>
+      <path d="M290,274 H356 V204 H370" fill="none" stroke="#b4b2a9" stroke-width="1.3" marker-end="url(#mB)"/>
+
+      <path d="M842,483 H920 V478 H988" fill="none" stroke="#b4b2a9" stroke-width="1.3" marker-end="url(#mB)"/>
+      <path d="M842,503 H920 V536 H988" fill="none" stroke="#b4b2a9" stroke-width="1.3" marker-end="url(#mB)"/>
+
+      <rect x="1000" y="454" width="478" height="48" rx="6" fill="#eef4e4"/>
+      <text x="1014" y="474" font-family="-apple-system,sans-serif" font-size="11.5" font-weight="500" fill="#27500a">Job &middot; Siding</text>
+      <text x="1014" y="490" font-family="-apple-system,sans-serif" font-size="10.5" fill="#3b6d11">exterior crew &middot; own pipeline</text>
+      <rect x="1000" y="512" width="478" height="48" rx="6" fill="#eef4e4"/>
+      <text x="1014" y="532" font-family="-apple-system,sans-serif" font-size="11.5" font-weight="500" fill="#27500a">Job &middot; Windows</text>
+      <text x="1014" y="548" font-family="-apple-system,sans-serif" font-size="10.5" fill="#3b6d11">install crew &middot; own pipeline</text>
+
+      <rect x="1000" y="128" width="478" height="300" rx="8" fill="#faf9f7" stroke="#d5d3cc"/>
+      <text x="1016" y="152" font-family="ui-monospace,Menlo,monospace" font-size="9" letter-spacing="1.1" fill="#8b8a84">PROJECT LEVEL, THROUGHOUT</text>
+      <text x="1016" y="180" font-family="-apple-system,sans-serif" font-size="11.5" fill="#1b1b1a">Contract</text>
+      <text x="1016" y="204" font-family="-apple-system,sans-serif" font-size="11.5" fill="#1b1b1a">Master invoice &middot; $52,800</text>
+      <text x="1016" y="228" font-family="-apple-system,sans-serif" font-size="11.5" fill="#1b1b1a">Financing &middot; loan, 15 yr</text>
+      <text x="1016" y="252" font-family="-apple-system,sans-serif" font-size="11.5" fill="#1b1b1a">Payment requests</text>
+      <text x="1016" y="276" font-family="-apple-system,sans-serif" font-size="11.5" fill="#1b1b1a">Transactions</text>
+      <text x="1016" y="300" font-family="-apple-system,sans-serif" font-size="11.5" fill="#1b1b1a">Cost and profit</text>
+      <line x1="1016" y1="318" x2="1462" y2="318" stroke="#e7e5e0"/>
+      <text x="1016" y="340" font-family="-apple-system,sans-serif" font-size="10.5" fill="#8b8a84">None of this is owned by the proposal</text>
+      <text x="1016" y="356" font-family="-apple-system,sans-serif" font-size="10.5" fill="#8b8a84">or by a job. It arrives when the project</text>
+      <text x="1016" y="372" font-family="-apple-system,sans-serif" font-size="10.5" fill="#8b8a84">moves to Production and stays put.</text>
+    </svg>
+    <p class="note">Amounts are illustrative. Roofing is drawn as an ordinary opportunity with its
+    provenance, because the decline is told by the proposal moving from state one to state two rather
+    than by labelling the opportunity.</p>
+  </div>
+
+  <div class="argrow">
+    <div class="arg">
+      <p class="lab">The toggle is the partial-acceptance mechanism</p>
+      <p>Earlier models had no way to vary an offer before signing, which is why declining half a
+      proposal was so awkward. <strong>Toggling handles variation before the signature and change
+      orders handle it after.</strong> That split is clean and neither earlier model had it.</p>
+    </div>
+    <div class="arg">
+      <p class="lab">A suggested scope is priced but off</p>
+      <p>Windows was never a customer interest. It is on the proposal, costed, and switched off, so
+      raising it in the room costs one tap rather than a rebuild. That is the contractor-identified
+      opportunity earning its place in the flow rather than sitting in a list.</p>
+    </div>
+    <div class="arg">
+      <p class="lab">The money arrives late and then holds still</p>
+      <p>Nothing on the right exists until the proposal is signed, and once it does it belongs to the
+      project rather than to whatever created it. That is what makes the balance answerable at one
+      level instead of three.</p>
+    </div>
+  </div>
+
+  <div class="qrow">
+    <div>
+      <div class="q"><div class="qn">1</div><p>Does the signed proposal keep the toggled-off scopes as a record, or only what was bought?</p></div>
+    </div>
+    <div>
+      <div class="q"><div class="qn">2</div><p>Can a scope be toggled after signing, or is that always a change order?</p></div>
+    </div>
+    <div>
+      <div class="q"><div class="qn">3</div><p>If financing was approved on the larger total and the customer removes a scope, what happens?</p></div>
+    </div>
+  </div>
+</div>
+
+<div class="sec">
+  <div class="sec-head"><div class="badge">C</div><h2 class="sec-title">Two ways to build the bundled sale, only one gets built</h2></div>
+  <div class="two">
+    <div>
+      <p class="cap">An engineering fork, not a contractor-facing choice</p>
+      <div class="fig mid">
+        <svg viewBox="0 0 660 380" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="tC dC">
+          <title id="tC">The implementation fork for a bundled sale</title>
+          <desc id="dC">If a proposal can hold multiple scopes, that is the whole answer. If proposals must stay discrete, a folio has to be invented and must carry one acceptance, one contract signing and one financing.</desc>
+          <defs><marker id="mC" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,1 L8,4.5 L0,8 z" fill="#8b8a84"/></marker></defs>
+
+          <rect x="150" y="0" width="360" height="54" rx="8" fill="#faf9f7" stroke="#d5d3cc"/>
+          <text x="330" y="24" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="500" fill="#1b1b1a">Can a proposal hold several scopes,</text>
+          <text x="330" y="42" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="500" fill="#1b1b1a">each with its own price and job?</text>
+
+          <path d="M250,56 V78 H150 V96" fill="none" stroke="#8b8a84" stroke-width="1.3" marker-end="url(#mC)"/>
+          <path d="M410,56 V78 H510 V96" fill="none" stroke="#8b8a84" stroke-width="1.3" marker-end="url(#mC)"/>
+          <text x="176" y="74" font-family="-apple-system,sans-serif" font-size="10.5" font-weight="500" fill="#3b6d11">Yes</text>
+          <text x="470" y="74" text-anchor="end" font-family="-apple-system,sans-serif" font-size="10.5" font-weight="500" fill="#a8461f">No</text>
+
+          <text x="0" y="90" font-family="ui-monospace,Menlo,monospace" font-size="9" letter-spacing="1.1" fill="#185fa5">PREFERRED</text>
+          <rect x="0" y="100" width="300" height="146" rx="8" fill="#e9f1fa" stroke="#a8c9ec"/>
+          <text x="16" y="122" font-family="-apple-system,sans-serif" font-size="11" font-weight="500" fill="#0c447c">Proposal</text>
+          <rect x="16" y="132" width="268" height="30" rx="5" fill="#ffffff" stroke="#a8c9ec"/>
+          <text x="30" y="151" font-family="-apple-system,sans-serif" font-size="10" fill="#0c447c">Scope &middot; Roofing</text>
+          <rect x="16" y="168" width="268" height="30" rx="5" fill="#ffffff" stroke="#a8c9ec"/>
+          <text x="30" y="187" font-family="-apple-system,sans-serif" font-size="10" fill="#0c447c">Scope &middot; Siding</text>
+          <rect x="16" y="204" width="268" height="30" rx="5" fill="#ffffff" stroke="#a8c9ec"/>
+          <text x="30" y="223" font-family="-apple-system,sans-serif" font-size="10" fill="#0c447c">Scope &middot; Windows</text>
+          <text x="0" y="268" font-family="-apple-system,sans-serif" font-size="10.5" font-weight="500" fill="#1b1b1a">Extends today's proposal.</text>
+          <text x="0" y="284" font-family="-apple-system,sans-serif" font-size="10" fill="#8b8a84">A proposal holds one scope now. It would</text>
+          <text x="0" y="298" font-family="-apple-system,sans-serif" font-size="10" fill="#8b8a84">hold many. Acceptance, contract and</text>
+          <text x="0" y="312" font-family="-apple-system,sans-serif" font-size="10" fill="#8b8a84">financing stay where they are.</text>
+
+          <text x="360" y="90" font-family="ui-monospace,Menlo,monospace" font-size="9" letter-spacing="1.1" fill="#8b8a84">IF PROPOSALS MUST STAY DISCRETE</text>
+          <rect x="360" y="100" width="300" height="146" rx="8" fill="#faf9f7" stroke="#d5d3cc" stroke-dasharray="5 4"/>
+          <text x="376" y="122" font-family="-apple-system,sans-serif" font-size="11" font-weight="500" fill="#575651">Folio &mdash; would need inventing</text>
+          <rect x="376" y="132" width="268" height="30" rx="5" fill="#ffffff" stroke="#d5d3cc"/>
+          <text x="390" y="151" font-family="-apple-system,sans-serif" font-size="10" fill="#575651">Proposal &middot; Roofing</text>
+          <rect x="376" y="168" width="268" height="30" rx="5" fill="#ffffff" stroke="#d5d3cc"/>
+          <text x="390" y="187" font-family="-apple-system,sans-serif" font-size="10" fill="#575651">Proposal &middot; Siding</text>
+          <rect x="376" y="204" width="268" height="30" rx="5" fill="#ffffff" stroke="#d5d3cc"/>
+          <text x="390" y="223" font-family="-apple-system,sans-serif" font-size="10" fill="#575651">Proposal &middot; Windows</text>
+          <text x="360" y="268" font-family="-apple-system,sans-serif" font-size="10.5" font-weight="500" fill="#1b1b1a">The folio would have to carry:</text>
+          <text x="360" y="286" font-family="-apple-system,sans-serif" font-size="10" fill="#1b1b1a">One acceptance</text>
+          <text x="360" y="302" font-family="-apple-system,sans-serif" font-size="10" fill="#1b1b1a">One contract signing</text>
+          <text x="360" y="318" font-family="-apple-system,sans-serif" font-size="10" fill="#1b1b1a">One financing</text>
+          <text x="360" y="342" font-family="-apple-system,sans-serif" font-size="10" fill="#8b8a84">The proposal is untouched, but this is a second</text>
+          <text x="360" y="356" font-family="-apple-system,sans-serif" font-size="10" fill="#8b8a84">object carrying contract semantics.</text>
+        </svg>
+      </div>
+    </div>
+    <div>
+      <div class="arg">
+        <p class="lab">This is a build decision, not a feature</p>
+        <p>A contractor never picks between these. <strong>One of them ships and the other does
+        not.</strong> The reason it is drawn at all is that the choice changes what has to be
+        invented, and the memo should not assume the easier answer is available.</p>
+      </div>
+      <div class="arg">
+        <p class="lab">Both branches are work, and not the same work</p>
+        <p>Today's proposal holds a single scope, so neither branch is free. The preferred one extends
+        an object that already exists. The fallback leaves it alone and creates one that does not, then
+        has to give it acceptance, signing and financing. <strong>The question is where the contract
+        semantics end up</strong>, not whether to build.</p>
+      </div>
+      <div class="arg">
+        <p class="lab">Downstream is identical either way</p>
+        <p>One acceptance, one contract, one financing, and one job per priced unit. Whether that unit
+        is called a scope inside a proposal or a proposal inside a folio, everything after signing
+        behaves the same. That is what makes this safe to defer.</p>
+      </div>
+      <div class="q"><div class="qn">4</div><p>Is there a real constraint stopping a proposal from holding scopes? That question decides this on its own.</p></div>
+      <div class="q"><div class="qn">5</div><p>If the folio has to exist, does anything else attach to it, or only acceptance, signing and financing?</p></div>
+      <div class="q"><div class="qn">6</div><p>Is the answer invisible to the customer, or does the folio version change what they receive?</p></div>
+    </div>
+  </div>
+</div>
+
+<div class="sec">
+  <div class="sec-head"><div class="badge">D</div><h2 class="sec-title">Where one project ends and another begins</h2></div>
+  <div class="two">
+    <div>
+      <p class="cap">The boundary test</p>
+      <div class="fig mid">
+        <svg viewBox="0 0 620 236" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="tD dD">
+          <title id="tD">The project boundary test</title>
+          <desc id="dD">If an addition can ride on the existing contract, financing and master invoice it is a change order. If not, it becomes a new project, optionally linked.</desc>
+          <defs><marker id="mD" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,1 L8,4.5 L0,8 z" fill="#8b8a84"/></marker></defs>
+
+          <rect x="110" y="6" width="400" height="58" rx="8" fill="#faf9f7" stroke="#d5d3cc"/>
+          <text x="310" y="30" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="500" fill="#1b1b1a">Can it ride on the existing contract,</text>
+          <text x="310" y="48" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="500" fill="#1b1b1a">financing and master invoice?</text>
+
+          <path d="M240,66 V96 H150 V124" fill="none" stroke="#b4b2a9" stroke-width="1.3" marker-end="url(#mD)"/>
+          <path d="M380,66 V96 H470 V124" fill="none" stroke="#b4b2a9" stroke-width="1.3" marker-end="url(#mD)"/>
+          <text x="182" y="100" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="10.5" font-weight="500" fill="#3b6d11">Yes</text>
+          <text x="440" y="100" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="10.5" font-weight="500" fill="#a8461f">No</text>
+
+          <rect x="10" y="130" width="280" height="94" rx="8" fill="#eef4e4"/>
+          <text x="26" y="154" font-family="-apple-system,sans-serif" font-size="12" font-weight="500" fill="#27500a">Change order on this project</text>
+          <text x="26" y="174" font-family="-apple-system,sans-serif" font-size="10.5" fill="#3b6d11">Scope value and master invoice move.</text>
+          <text x="26" y="190" font-family="-apple-system,sans-serif" font-size="10.5" fill="#3b6d11">Financing may need re-approval.</text>
+          <text x="26" y="210" font-family="-apple-system,sans-serif" font-size="10.5" fill="#3b6d11">Example: deck rot found mid-install.</text>
+
+          <rect x="330" y="130" width="280" height="94" rx="8" fill="#fbf0eb" stroke="#e2b39d"/>
+          <text x="346" y="154" font-family="-apple-system,sans-serif" font-size="12" font-weight="500" fill="#a8461f">A second project</text>
+          <text x="346" y="174" font-family="-apple-system,sans-serif" font-size="10.5" fill="#8a5636">Own proposal, financing, master invoice</text>
+          <text x="346" y="190" font-family="-apple-system,sans-serif" font-size="10.5" fill="#8a5636">and jobs. Linked where sequence matters.</text>
+          <text x="346" y="210" font-family="-apple-system,sans-serif" font-size="10.5" fill="#8a5636">Example: a bathroom added mid-install.</text>
+        </svg>
+      </div>
+    </div>
+    <div>
+      <div class="arg">
+        <p class="lab">A test, not a judgement</p>
+        <p>"Where does a project end" is the kind of question that gets answered differently by every
+        contractor and then argued about forever. Anchoring it to whether the money can ride along
+        turns it into something <strong>the system can recommend rather than the user having to
+        feel</strong>.</p>
+      </div>
+      <div class="arg">
+        <p class="lab">The contractor still chooses</p>
+        <p>The test produces a recommendation, sometimes a strong one, not a rule. Someone who wants
+        one project per address, or one per year, should be able to work that way and live with the
+        consequences.</p>
+      </div>
+      <div class="arg">
+        <p class="lab">Links are a fourth relationship</p>
+        <p>The model now has customer to project, project to its contents, associations between those
+        contents, and links between projects. Worth writing down, because the fourth one arrived last
+        and is the easiest to lose.</p>
+      </div>
+      <div class="q"><div class="qn">6</div><p>Is a project link directional, meaning this one must finish first, or just a mutual reference?</p></div>
+      <div class="q"><div class="qn">7</div><p>Do linked projects share anything, or is the link purely informational?</p></div>
+    </div>
+  </div>
+</div>
+
+</div>
+</body>
+</html>

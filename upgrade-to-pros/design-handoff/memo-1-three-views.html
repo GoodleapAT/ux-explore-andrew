@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Customer, opportunity, job</title>
+<style>
+:root{
+  color-scheme: light;
+  --bg:#ffffff; --s1:#faf9f7; --s2:#ffffff; --s3:#f2f1ed;
+  --tx:#1b1b1a; --tx2:#575651; --tx3:#8b8a84;
+  --bd:#e7e5e0; --bds:#d5d3cc;
+  --ac:#185fa5; --acbg:#e9f1fa; --acbd:#a8c9ec;
+  --wn:#a8461f; --wnbg:#fbf0eb; --wnbd:#e2b39d;
+  --gd:#3b6d11; --gdbg:#eef4e4;
+  --pr:#534ab7; --prbg:#eeedfe;
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:var(--sans);font-size:15px;line-height:1.62;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1060px;margin:0 auto;padding:56px 32px 96px}
+.eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--tx3);margin:0 0 18px}
+.eyebrow span{margin-right:26px}
+h1{font-size:40px;line-height:1.12;font-weight:500;letter-spacing:-.02em;margin:0 0 18px}
+.lede{max-width:560px;color:var(--tx2);font-size:15.5px;margin:0 0 34px}
+.card{background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:20px 24px;margin:0 0 18px}
+.mono-label{font-family:var(--mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--tx3);margin:0 0 12px}
+ul.b{margin:0;padding:0 0 0 18px}
+ul.b li{margin:0 0 8px;color:var(--tx2);font-size:14.5px;line-height:1.55}
+ul.b li:last-child{margin-bottom:0}
+ul.b li strong,p strong{color:var(--tx);font-weight:500}
+.callout{background:var(--wnbg);border:1px solid var(--wnbd);border-radius:12px;padding:20px 24px;margin:0 0 56px}
+.callout h3{margin:0 0 10px;font-size:15.5px;font-weight:500;color:var(--tx)}
+details.card,details.callout{padding:16px 22px}
+details > summary{cursor:pointer;list-style:none;display:flex;align-items:baseline;justify-content:space-between;gap:16px}
+details > summary::-webkit-details-marker{display:none}
+details > summary::marker{content:""}
+summary .sl{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+summary .st{font-size:15px;font-weight:500;color:var(--tx)}
+.callout summary .st{color:#4f2a17}
+summary .sh2{font-size:13px;color:var(--tx3)}
+.callout summary .sh2{color:#9c6440}
+summary .cv{font-size:16px;color:var(--tx3);transition:transform .15s ease;flex:0 0 auto;line-height:1;position:relative;top:2px}
+.callout summary .cv{color:#9c6440}
+details[open] > summary .cv{transform:rotate(90deg)}
+details[open] > summary{margin-bottom:14px}
+.bal{border:1px solid var(--bd);border-radius:8px;background:var(--s2);padding:13px 14px}
+.bal h6{margin:0 0 10px;font-size:12px;font-weight:500}
+.balr{display:flex;justify-content:space-between;font-size:11.5px;padding:4px 0;color:var(--tx2)}
+.balr .v{font-variant-numeric:tabular-nums;color:var(--tx);font-weight:500}
+.balr.tot{border-top:1px solid var(--bd);margin-top:7px;padding-top:10px;font-size:13px;color:var(--tx);font-weight:500}
+.balr.tot .v{font-size:15px}
+.pillo{display:inline-block;font-size:10px;padding:1px 9px;border-radius:20px;background:transparent;border:1px solid var(--bds);color:var(--tx2);white-space:nowrap}
+.pillo.a{border-color:var(--acbd);color:var(--ac)}
+.pillo.g{border-color:#97c459;color:var(--gd)}
+.pillo.r{border-color:#f09595;color:#a32d2d}
+.frow{display:grid;grid-template-columns:26px 1fr auto auto;gap:11px;align-items:center;padding:9px 0;border-bottom:1px solid var(--bd)}
+.frow:last-child{border-bottom:none}
+.ftile{width:26px;height:26px;border-radius:6px;background:var(--s3);display:flex;align-items:center;justify-content:center}
+.frow .ft{font-size:11.5px;font-weight:500;color:var(--tx);line-height:1.3}
+.frow .fs{font-size:10.5px;color:var(--tx3);line-height:1.3}
+.frow .fa{font-size:11.5px;font-weight:500;color:var(--tx);font-variant-numeric:tabular-nums;min-width:82px;text-align:right}
+.frow .fa.neg{color:var(--wn)}
+.callout p{margin:0 0 10px;font-size:14.5px;color:#6f4028;line-height:1.6}
+.callout p:last-child{margin-bottom:0}
+.callout strong{color:#4f2a17;font-weight:500}
+.sec{margin:0 0 62px}
+.sec-head{display:flex;align-items:center;gap:11px;padding-bottom:12px;border-bottom:1px solid var(--bd);margin-bottom:22px}
+.badge{flex:0 0 auto;width:20px;height:20px;border:1px solid var(--acbd);border-radius:4px;color:var(--ac);font-family:var(--mono);font-size:10.5px;display:flex;align-items:center;justify-content:center;background:var(--acbg)}
+.sec-title{font-size:19px;font-weight:500;margin:0;letter-spacing:-.01em}
+.two{display:grid;grid-template-columns:minmax(0,1fr) 336px;gap:38px;align-items:start}
+.cap{font-family:var(--mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--tx3);margin:0 0 10px}
+.argrow{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px;margin-top:26px}
+.qrow{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px;margin-top:8px}
+.arg{margin:0 0 22px}
+.argrow .arg{margin:0}
+.arg .lab{font-family:var(--mono);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:#7d8fa3;margin:0 0 6px}
+.arg p{margin:0;font-size:14px;line-height:1.58;color:var(--tx2)}
+.q{display:flex;gap:10px;align-items:flex-start;margin:0 0 11px}
+.qn{flex:0 0 auto;width:17px;height:17px;border-radius:50%;background:var(--ac);color:#fff;font-family:var(--mono);font-size:9.5px;display:flex;align-items:center;justify-content:center;margin-top:2px}
+.q p{margin:0;font-size:13.5px;line-height:1.5;color:var(--tx2)}
+.mock{background:var(--s2);border:1px solid var(--bds);border-radius:12px;overflow:hidden}
+.mk-bar{display:flex;align-items:center;justify-content:space-between;padding:11px 14px;border-bottom:1px solid var(--bd);background:var(--s1)}
+.mk-ttl{font-size:13.5px;font-weight:500}
+.mk-sub{font-size:11.5px;color:var(--tx3)}
+.tap{color:var(--ac);text-decoration:underline;text-underline-offset:2px;cursor:pointer}
+.mkrow{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.mkrow .cap{margin:0 0 8px}
+.srow{padding:10px 0;border-bottom:1px solid var(--bd)}
+.srow:last-of-type{border-bottom:none}
+.srow-h{display:flex;align-items:center;gap:8px;margin-bottom:3px}
+.srow .sn{font-size:11.5px;font-weight:500;color:var(--tx)}
+.srow .sd2{font-size:10.5px;color:var(--tx3);line-height:1.45}
+.sact{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--bd);padding-top:10px;margin-top:4px}
+.pill{display:inline-block;font-size:10.5px;padding:2px 8px;border-radius:20px;background:var(--s3);color:var(--tx2);white-space:nowrap}
+.pill.a{background:var(--acbg);color:var(--ac)}
+.pill.g{background:var(--gdbg);color:var(--gd)}
+.pill.w{background:var(--wnbg);color:var(--wn)}
+.pill.p{background:var(--prbg);color:var(--pr)}
+.pill.m{background:var(--s3);color:var(--tx3)}
+.pill.xs{font-size:9.5px;padding:1px 6px}
+table.t{width:100%;border-collapse:collapse;font-size:12px}
+table.t th{text-align:left;font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--tx3);font-weight:400;padding:9px 10px;border-bottom:1px solid var(--bd)}
+table.t td{padding:10px;border-bottom:1px solid var(--bd);color:var(--tx2);vertical-align:top}
+table.t tr:last-child td{border-bottom:none}
+table.t td.n{color:var(--tx);font-weight:500}
+table.t tr.hl td{background:var(--acbg)}
+.num{font-variant-numeric:tabular-nums}
+.mblk{border-top:1px solid var(--bd);padding:14px}
+.mblk-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:11px;gap:12px}
+.mblk-h h5{margin:0;font-size:12px;font-weight:500}
+.seg{display:inline-flex;border:1px solid var(--bd);border-radius:6px;overflow:hidden;background:var(--s1)}
+.seg span{font-size:10.5px;padding:3px 10px;color:var(--tx3);border-right:1px solid var(--bd)}
+.seg span:last-child{border-right:none}
+.seg span.on{background:var(--s2);color:var(--tx);font-weight:500}
+.syn{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.sc{background:var(--s1);border:1px solid var(--bd);border-radius:8px;padding:11px 12px;min-width:0}
+.sc h6{margin:0 0 7px;font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--tx3);font-weight:400}
+.sc .big{font-size:17px;font-weight:500;line-height:1.2;margin:0 0 7px}
+.sc .lin{font-size:11px;color:var(--tx2);line-height:1.45;display:flex;justify-content:space-between;gap:8px}
+.sc .lin span:last-child{color:var(--tx3);font-variant-numeric:tabular-nums;white-space:nowrap}
+.sc .linw{font-size:11px;color:var(--tx2);line-height:1.45;padding:4px 0}
+.sc .linw b{display:block;color:var(--tx);font-weight:500}
+.fin{display:grid;grid-template-columns:210px minmax(0,1fr);gap:12px;align-items:start}
+.actbox{border:1px solid var(--bd);border-radius:8px;background:var(--s2);padding:11px 12px}
+.vall{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--bd);padding-top:9px;margin-top:2px;font-size:11px;color:var(--tx3)}
+.vall .lk2{color:var(--ac);text-decoration:underline;text-underline-offset:2px;cursor:pointer}
+.synn{margin-top:10px;background:var(--s1);border:1px solid var(--bd);border-radius:8px;padding:11px 12px}
+.synn h6{margin:0 0 8px;font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--tx3);font-weight:400}
+.snl{display:flex;gap:9px;align-items:baseline;padding:4px 0;font-size:11.5px;color:var(--tx2)}
+.snl .sd{font-family:var(--mono);font-size:9.5px;color:var(--tx3);flex:0 0 46px}
+.snl .st{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.orow{display:grid;grid-template-columns:1fr auto auto;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid var(--bd);font-size:12px}
+.orow:last-child{border-bottom:none}
+.orow .on2{color:var(--tx)}
+.orow .ov{color:var(--tx2);font-variant-numeric:tabular-nums;white-space:nowrap;font-size:11.5px}
+.prow{border-bottom:1px solid var(--bd)}
+.prow:last-child{border-bottom:none}
+.prow-m{display:grid;grid-template-columns:1fr auto auto auto;gap:12px;align-items:center;padding:9px 0;font-size:12px}
+.prow-m .pt{color:var(--tx)}
+.prow-m .pc{color:var(--tx3);font-size:10.5px;white-space:nowrap}
+.prow-m .pv{color:var(--tx2);font-variant-numeric:tabular-nums;white-space:nowrap;font-size:11.5px}
+.exp{background:var(--acbg);border:1px solid var(--acbd);border-radius:8px;padding:11px 12px;margin:0 0 10px}
+.part{display:grid;grid-template-columns:1fr auto auto;gap:10px;align-items:center;padding:6px 0;border-top:1px solid var(--acbd);font-size:11.5px}
+.part:first-of-type{border-top:none}
+.part .pn{color:var(--tx)}
+.part .pv{color:var(--tx2);font-variant-numeric:tabular-nums;white-space:nowrap}
+.part .po{color:var(--ac);font-size:10.5px;white-space:nowrap}
+.tot{display:flex;justify-content:space-between;padding-top:8px;margin-top:6px;border-top:1px solid var(--acbd);font-size:11.5px;font-weight:500}
+.note{margin:9px 0 0;font-size:11px;line-height:1.45;color:var(--tx3);font-style:italic}
+.note::before,.cdn::before{content:"[i] ";font-style:normal;font-weight:500;color:var(--ac);letter-spacing:.02em}
+.conv{display:flex;gap:11px;align-items:baseline;background:var(--s1);border:1px solid var(--bd);border-radius:10px;padding:12px 16px;margin:0 0 34px;font-size:13.5px;color:var(--tx2);line-height:1.55}
+.conv .cm{font-weight:500;color:var(--ac);flex:0 0 auto}
+.cdrow{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;padding:14px}
+.stgwrap{position:relative;height:246px;overflow:hidden;border:1px solid var(--bd);border-radius:8px;background:var(--s2)}
+.stginner{margin-top:-163px}
+.stgrow{display:grid;grid-template-columns:14px 1fr auto;gap:11px;align-items:center;padding:0 12px;height:44px;border-bottom:1px solid var(--bd)}
+.stgrow:last-child{border-bottom:none}
+.stgrow .dot{width:11px;height:11px;border-radius:50%;border:1.5px solid var(--bds);background:var(--s2)}
+.stgrow.done .dot{background:var(--gd);border-color:var(--gd)}
+.stgrow.now{background:var(--acbg)}
+.stgrow.now .dot{background:var(--ac);border-color:var(--ac);box-shadow:0 0 0 3px rgba(24,95,165,.16)}
+.stgrow .nm{font-size:12px;color:var(--tx2)}
+.stgrow.done .nm{color:var(--tx3)}
+.stgrow.now .nm{color:var(--tx);font-weight:500}
+.stgrow .bd2{font-size:9.5px;color:var(--tx3);display:block}
+.stgrow .mt{font-size:10.5px;color:var(--tx3);white-space:nowrap}
+.stgrow.now .mt{color:var(--ac)}
+.fadeT,.fadeB{position:absolute;left:0;right:0;height:38px;pointer-events:none}
+.fadeT{top:0;background:linear-gradient(to bottom,#fff 20%,rgba(255,255,255,0))}
+.fadeB{bottom:0;background:linear-gradient(to top,#fff 20%,rgba(255,255,255,0))}
+.expl{background:var(--s1);border:1px solid var(--bd);border-radius:10px;padding:14px 16px;margin-top:26px}
+.expl h4{margin:0 0 4px;font-size:13px;font-weight:500}
+.expl p{margin:0 0 10px;font-size:13px;color:var(--tx2);line-height:1.55}
+.expl ul{margin:0;padding:0 0 0 16px}
+.expl li{font-size:12.5px;line-height:1.5;color:var(--tx2);margin-bottom:5px}
+.expl li:last-child{margin-bottom:0}
+.explbox{background:var(--s2);border:1px solid var(--bds);border-radius:10px;padding:12px}
+.expl .cd{background:var(--s1)}
+.tiers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;align-items:start}
+.tsec{display:flex;justify-content:space-between;gap:8px;padding:7px 0;border-bottom:1px solid var(--bd);font-size:11.5px}
+.tsec:last-child{border-bottom:none}
+.tsec .tn{color:var(--tx)}
+.tsec .tv{color:var(--tx3);text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+.tsec.new{background:var(--acbg);margin:0 -14px;padding:7px 14px;border-bottom:1px solid var(--acbd)}
+.tsec.new .tn{color:var(--ac);font-weight:500}
+.tsec.new .tv{color:#22557f}
+.tcount{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--tx3);padding:9px 14px;border-top:1px solid var(--bd);background:var(--s1)}
+.gatestrip{display:flex;align-items:center;gap:9px;background:var(--wnbg);border:1px solid var(--wnbd);border-radius:7px;padding:8px 11px;margin-top:10px;font-size:11px;color:#6f4028}
+.gatestrip b{color:#4f2a17;font-weight:500}
+.sub{display:flex;justify-content:space-between;align-items:baseline;gap:8px;padding:5px 0;font-size:11px;border-bottom:1px solid var(--bd)}
+.sub:last-child{border-bottom:none}
+.sub .sk{color:var(--tx3)}
+.sub .sv{color:var(--tx);font-weight:500;text-align:right}
+.sub .sv.ok{color:var(--gd)}
+.sub .sv.wait{color:var(--wn)}
+.sub.na .sk,.sub.na .sv{color:#b4b2a9;font-weight:400}
+.tk{display:grid;grid-template-columns:13px 1fr;gap:8px;align-items:start;padding:4px 0;font-size:11px;color:var(--tx2);line-height:1.4}
+.tk .bx{width:12px;height:12px;border-radius:3px;border:1px solid var(--bds);margin-top:2px}
+.tk.done .bx{background:var(--gd);border-color:var(--gd)}
+.tk.done span{color:var(--tx3)}
+.tk.blk .bx{border-color:var(--wnbd);background:var(--wnbg)}
+.tk .sub2{display:block;color:var(--tx3);font-size:10px}
+.dn{display:flex;justify-content:space-between;gap:8px;padding:5px 0;font-size:11px;border-bottom:1px solid var(--bd);color:var(--tx2)}
+.dn:last-child{border-bottom:none}
+.dn .dd{color:var(--tx3);font-family:var(--mono);font-size:9.5px;white-space:nowrap}
+.cd{background:var(--s1);border:1px solid var(--bd);border-radius:8px;padding:11px 12px}
+.cd.wn{background:var(--wnbg);border-color:var(--wnbd)}
+.cd h6{margin:0 0 9px;font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--tx3);font-weight:400}
+.cd.wn h6{color:#8a5636}
+.cdi{margin-bottom:8px}
+.cdi:last-of-type{margin-bottom:0}
+.cdl{font-size:9.5px;color:var(--tx3);letter-spacing:.02em;margin:0 0 1px}
+.cd.wn .cdl{color:#9c6440}
+.cdv{font-size:11.5px;color:var(--tx);margin:0;line-height:1.35;font-variant-numeric:tabular-nums}
+.cd.wn .cdv{color:#5c3320}
+.cdv.lk{color:var(--ac)}
+.cdn{margin:10px 0 0;font-size:10.5px;line-height:1.4;color:var(--tx3);font-style:italic}
+.cd.wn .cdn{color:#9c6440}
+.ph{display:flex;align-items:center;justify-content:space-between;border:1px dashed var(--bds);border-radius:6px;padding:9px 11px;margin-bottom:6px;font-size:11.5px;color:var(--tx3);background:var(--s1)}
+.ph:last-child{margin-bottom:0}
+.pin{display:flex;gap:9px;align-items:flex-start;background:var(--s1);border:1px solid var(--bd);border-radius:6px;padding:9px 11px;margin-bottom:6px;font-size:11.5px;color:var(--tx2)}
+.pin .pi{color:var(--tx3);font-size:10px;margin-top:1px}
+.nt{padding:11px 0;border-bottom:1px solid var(--bd)}
+.nt:last-child{border-bottom:none}
+.nt-h{display:flex;align-items:center;gap:7px;margin-bottom:5px;flex-wrap:wrap}
+.nt-d{font-family:var(--mono);font-size:9.5px;color:var(--tx3);letter-spacing:.04em}
+.nt-b{margin:0;font-size:12px;line-height:1.5;color:var(--tx2)}
+.nt-a{font-size:10.5px;color:var(--tx3);margin:4px 0 0}
+.hist{display:grid;grid-template-columns:78px 1fr;gap:0 12px;font-size:11.5px}
+.hist .hd{font-family:var(--mono);font-size:9.5px;color:var(--tx3);padding:6px 0;letter-spacing:.04em}
+.hist .he{color:var(--tx2);padding:6px 0;border-bottom:1px solid var(--bd)}
+.hist .he:last-child{border-bottom:none}
+.grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.g4c{background:var(--s1);border:1px solid var(--bd);border-radius:10px;padding:14px 15px}
+.g4c h4{margin:0 0 9px;font-size:12.5px;font-weight:500}
+.g4c ul{margin:0;padding:0 0 0 15px}
+.g4c li{font-size:12px;line-height:1.45;color:var(--tx2);margin-bottom:6px}
+.g4c li:last-child{margin-bottom:0}
+.foot{border-top:1px solid var(--bd);padding-top:22px;margin-top:8px}
+.foot p{font-size:14px;color:var(--tx2);max-width:640px;margin:0 0 12px}
+@media (max-width:900px){
+  .two,.argrow,.qrow{grid-template-columns:1fr}
+  .grid4{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:760px){
+  .tiers{grid-template-columns:1fr}
+}
+@media (max-width:620px){
+  .cdrow,.fin,.mkrow{grid-template-columns:1fr}
+}
+@media (max-width:460px){
+  .syn{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<p class="eyebrow"><span>Pros Web</span><span>Customer model &mdash; three views</span><span>Mockup, 26 Aug 2026</span></p>
+
+<h1>Customer, opportunity, job</h1>
+
+<p class="lede">Three views to test one claim: that opportunity, proposal and job can be associated
+rather than nested without the interface becoming unreadable. The case that matters is a customer
+with work in three different states at once.</p>
+
+<div class="conv">
+  <span class="cm">[i]</span>
+  <span>Inside a mockup, small grey text prefixed with <strong>[i]</strong> is my annotation, not
+  interface copy. Everything else inside a mockup frame is intended as real UI and should be read as
+  something a contractor would see.</span>
+</div>
+
+<details class="card">
+  <summary>
+    <span class="sl"><span class="st">Settled &mdash; carried into this</span><span class="sh2">Eight things already agreed</span></span>
+    <span class="cv">&#9656;</span>
+  </summary>
+  <div class="dbody">
+  <ul class="b">
+    <li>Opportunity, proposal and job are <strong>associated, not nested</strong>. One proposal can answer several opportunities and produce several jobs.</li>
+    <li>An opportunity is <strong>one element of work</strong>. Siding is one, windows is another, even when they sell together.</li>
+    <li>A proposal contains <strong>additive scopes</strong>. Each scope has its own work, itemisation and value, and produces one job or one service.</li>
+    <li>A proposal with a single scope behaves exactly like today's proposal. <strong>The simple case stays simple.</strong></li>
+    <li>Financing is modelled on the scope and presented at the proposal. <strong>Shared mode is the only mode built.</strong></li>
+    <li>A change order attaches to <strong>one scope</strong>, because the scope is the only level that touches both the money and the work.</li>
+    <li>Notes and history are <strong>one event stream, filtered twice</strong>.</li>
+    <li>There are <strong>three product tiers</strong>: payments only, payments and selling, payments and selling and operations. Views A to C show the fullest.</li>
+  </ul>
+  </div>
+</details>
+
+<details class="callout">
+  <summary>
+    <span class="sl"><span class="st">The thing to decide before anything is built</span><span class="sh2">Peer lists, or a hierarchy</span></span>
+    <span class="cv">&#9656;</span>
+  </summary>
+  <div class="dbody">
+  <p>The customer view has to show three lists that are not a hierarchy. Every comparable product I
+  have looked at resolves this by nesting one inside another, usually jobs under proposals, because
+  nesting is far easier to draw and to scan.</p>
+  <p>Nesting would quietly reimpose the hierarchy the model is trying to avoid. <strong>The moment
+  jobs live under proposals, three opportunities collapsing into two scopes stops being
+  representable</strong> and the interface starts asserting something the data does not.</p>
+  <p>The views below keep the three lists as stacked peers and let the links between them carry the
+  structure. That costs vertical space and asks more of the reader. If it does not survive contact
+  with a real account, the honest conclusion is that <strong>the model needs revisiting, not the
+  layout</strong>.</p>
+  </div>
+</details>
+
+<div class="sec">
+  <div class="sec-head"><div class="badge">A</div><h2 class="sec-title">The customer list</h2></div>
+  <div class="two">
+    <div>
+      <p class="cap">Customer list &middot; default view</p>
+      <div class="mock">
+        <div class="mk-bar">
+          <div><div class="mk-ttl">Customers</div><div class="mk-sub">248 total &middot; 31 with active work</div></div>
+          <span class="pill m">Filter</span>
+        </div>
+        <table class="t">
+          <thead>
+            <tr><th>Customer</th><th>Property</th><th>Open opps</th><th>Proposals</th><th>Jobs</th><th>Value</th></tr>
+          </thead>
+          <tbody>
+            <tr class="hl">
+              <td class="n">Thompson, R. &amp; S.</td>
+              <td>1428 Maple Ave <span style="color:var(--tx3)">+1</span></td>
+              <td>3 open</td>
+              <td>2 open &middot; 1 won</td>
+              <td>2 jobs &middot; 1 service</td>
+              <td class="num">$73,100<br><span style="color:var(--tx3)">+$34/mo</span></td>
+            </tr>
+            <tr><td class="n">Nguyen, L.</td><td>802 Cypress Way</td><td>1 open</td><td>&mdash;</td><td>&mdash;</td><td class="num">&mdash;</td></tr>
+            <tr><td class="n">Bright, K. &amp; T.</td><td>7 Almond Ct</td><td>2 open</td><td>1 open</td><td>&mdash;</td><td class="num">$12,400</td></tr>
+            <tr><td class="n">Okafor, D.</td><td>55 Birchwood Dr</td><td>&mdash;</td><td>1 won</td><td>1 job</td><td class="num">$18,750</td></tr>
+            <tr><td class="n">Castellanos, M.</td><td>210 Rio Vista</td><td>1 open</td><td>1 won</td><td>1 service</td><td class="num"><span style="color:var(--tx3)">$29/mo</span></td></tr>
+            <tr><td class="n">Whitmore, J.</td><td>812 Larkspur Dr <span style="color:var(--tx3)">+1</span></td><td>1 open</td><td>2 won</td><td>3 jobs</td><td class="num">$104,200</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div>
+      <div class="arg">
+        <p class="lab">The row is a person, not an address</p>
+        <p>Today the list is leads, and a lead is an address. Here the row is a customer, so a second
+        property is a "+1" beside the primary address rather than a second, unrelated record. That
+        single change is the largest structural difference on this screen.</p>
+      </div>
+      <div class="arg">
+        <p class="lab">Counts, not a stage</p>
+        <p>A single stage column cannot describe a customer with a job in progress and a live
+        opportunity at the same time. Counts say more and commit to less. <strong>They are also the
+        only place the three granularities appear at this level</strong>, because names do not fit.</p>
+      </div>
+      <div class="arg">
+        <p class="lab">Only open opportunities are counted</p>
+        <p>Won and lost are history and belong on the record, not in a scanning column. What a
+        salesperson wants from this list is where there is something left to pursue.</p>
+      </div>
+      <div class="arg">
+        <p class="lab">Value is two numbers</p>
+        <p>A recurring service has a rate, not a contract value. So the column carries an amount and,
+        where there is one, a rate underneath. Ugly, and honest. Collapsing them into one figure would
+        require inventing a term length.</p>
+      </div>
+      <div class="q"><div class="qn">1</div><p>Is a customer row usable without a stage, or will people demand one anyway?</p></div>
+      <div class="q"><div class="qn">2</div><p>Is the primary address plus "+1" enough, or do people need to search on the second address?</p></div>
+      <div class="q"><div class="qn">3</div><p>Should the value column show signed work only, or include what is still out for decision?</p></div>
+    </div>
+  </div>
+</div>
+
+<div class="sec">
+  <div class="sec-head"><div class="badge">B</div><h2 class="sec-title">The customer detail</h2></div>
+
+  <p class="cap">Customer record &middot; synopsis, then four peer sections</p>
+  <div class="mock">
+    <div class="mk-bar">
+      <div><div class="mk-ttl">Robert &amp; Sara Thompson</div>
+      <div class="mk-sub">1428 Maple Ave, Sacramento CA &middot; <span class="tap">2 contacts</span> &middot; <span class="tap">2 properties</span> &middot; customer since Mar 2024</div></div>
+      <span class="pill g">Active</span>
+    </div>
+
+    <div class="mblk" style="border-top:none;background:var(--s2)">
+      <div class="mblk-h"><h5>Pipeline overview</h5><span class="pill m">Mar 2024 to today</span></div>
+      <div class="syn">
+        <div class="sc">
+          <h6>Opportunities</h6>
+          <p class="big">3 open</p>
+          <div class="lin"><span>Worth pursuing</span><span>$20,300</span></div>
+          <div class="lin"><span>Quoted, awaiting decision</span><span>3</span></div>
+          <div class="lin"><span>Won &middot; lost</span><span>3 &middot; 1</span></div>
+        </div>
+        <div class="sc">
+          <h6>Proposals</h6>
+          <p class="big">2 out</p>
+          <div class="lin"><span>Ready to send</span><span>$14,600</span></div>
+          <div class="lin"><span>Sent, not decided</span><span>$41,900</span></div>
+          <div class="lin"><span>Accepted</span><span>$73,100</span></div>
+        </div>
+        <div class="sc">
+          <h6>Jobs and services</h6>
+          <p class="big">2 active</p>
+          <div class="lin"><span>In flight value</span><span>$73,100</span></div>
+          <div class="linw"><span>Furthest stage</span><b>Installing &middot; 4 of 8 tasks</b></div>
+          <div class="lin"><span>Service active</span><span>$34/mo</span></div>
+        </div>
+      </div>
+      <div class="synn">
+        <h6>Latest notes</h6>
+        <div class="snl"><span class="sd">26 Aug</span><span class="st">Deck rot on the north slope, about 40 sq ft. Documented, change order raised.</span></div>
+        <div class="snl"><span class="sd">12 Aug</span><span class="st">South array shaded by neighbour's oak until 11am. Production revised down 8%.</span></div>
+        <div class="snl"><span class="sd">30 Jul</span><span class="st">Condenser fan motor failing, unit is 19 years old. Robert asked for a quote.</span></div>
+      </div>
+    </div>
+
+    <div class="mblk">
+      <div class="mblk-h">
+        <h5>Financials</h5>
+        <span class="pill m">P&#8209;1042 &middot; the only accepted proposal</span>
+      </div>
+      <div class="fin">
+      <div class="bal">
+        <h6>Running balance</h6>
+        <div class="balr"><span>Total owed</span><span class="v">$73,100.00</span></div>
+        <div class="balr"><span>Paid</span><span class="v">$28,740.00</span></div>
+        <div class="balr tot"><span>Balance due</span><span class="v">$44,360.00</span></div>
+      </div>
+
+      <div class="actbox">
+      <div class="mblk-h">
+        <h5 style="font-size:11.5px">Activity</h5>
+        <div class="seg"><span class="on">All</span><span>Invoices</span><span>Requests</span><span>Transactions</span></div>
+      </div>
+      <div>
+        <div class="frow">
+          <div class="ftile"><svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="#8b8a84" stroke-width="1.3"><rect x="3" y="2" width="10" height="13" rx="1.5"/><line x1="5.5" y1="6" x2="10.5" y2="6"/><line x1="5.5" y1="9" x2="10.5" y2="9"/><line x1="5.5" y1="12" x2="8.5" y2="12"/></svg></div>
+          <div><div class="ft">Master invoice &middot; MI&#8209;1042</div><div class="fs">Master invoice &middot; Aug 22, 2026</div></div>
+          <span class="pillo a">Open</span>
+          <span class="fa">$73,100.00</span>
+        </div>
+        <div class="frow">
+          <div class="ftile"><svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="#8b8a84" stroke-width="1.3"><line x1="3" y1="4.5" x2="13" y2="4.5"/><line x1="3" y1="8" x2="10" y2="8"/><line x1="3" y1="11.5" x2="12" y2="11.5"/></svg></div>
+          <div><div class="ft">Change order CO&#8209;04</div><div class="fs">Payment request &middot; Aug 26, 2026</div></div>
+          <span class="pillo a">Sent</span>
+          <span class="fa">$2,800.00</span>
+        </div>
+        <div class="frow">
+          <div class="ftile"><svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="#8b8a84" stroke-width="1.3"><circle cx="8" cy="8" r="6"/><line x1="8" y1="4.5" x2="8" y2="11.5"/><path d="M9.8,6 C9.8,5.2 9,4.9 8,4.9 C7,4.9 6.3,5.3 6.3,6.1 C6.3,7.9 9.8,7.2 9.8,9.1 C9.8,9.9 9,10.4 8,10.4 C7,10.4 6.2,10 6.2,9.2"/></svg></div>
+          <div><div class="ft">Card ending 4242</div><div class="fs">Transaction &middot; Aug 15, 2026</div></div>
+          <span class="pillo g">Succeeded</span>
+          <span class="fa">$14,620.00</span>
+        </div>
+        <div class="frow">
+          <div class="ftile"><svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="#8b8a84" stroke-width="1.3"><line x1="3" y1="4.5" x2="13" y2="4.5"/><line x1="3" y1="8" x2="10" y2="8"/><line x1="3" y1="11.5" x2="12" y2="11.5"/></svg></div>
+          <div><div class="ft">Progress payment</div><div class="fs">Payment request &middot; Aug 14, 2026</div></div>
+          <span class="pillo g">Paid</span>
+          <span class="fa">$14,620.00</span>
+        </div>
+      </div>
+      <div class="vall"><span>8 records &middot; 3 of 4 milestones invoiced</span><span class="lk2">View all</span></div>
+      </div>
+      </div>
+      <p class="note">Scoped to one accepted proposal. With two accepted proposals, this block has to decide whether it is showing the customer's money or one proposal's money.</p>
+    </div>
+
+    <div class="mblk">
+      <div class="mblk-h">
+        <h5>Opportunities</h5>
+        <div class="seg"><span class="on">Open 3</span><span>Quoted 3</span><span>Won 3</span><span>Lost 1</span></div>
+      </div>
+      <div class="orow">
+        <span class="on2">Gutter replacement</span>
+        <span class="pill p xs">DeDe identified</span>
+        <span class="ov">est. $3,800</span>
+      </div>
+      <div class="orow">
+        <span class="on2">HVAC replacement</span>
+        <span class="pill a xs">Contractor identified</span>
+        <span class="ov">est. $14,600</span>
+      </div>
+      <div class="orow">
+        <span class="on2">EV charger</span>
+        <span class="pill g xs">Customer interest</span>
+        <span class="ov">est. $1,900</span>
+      </div>
+    </div>
+
+    <div class="mblk">
+      <div class="mblk-h">
+        <h5>Proposals</h5>
+        <div class="seg"><span class="on">Open 2</span><span>Accepted 1</span><span>Declined 1</span></div>
+      </div>
+      <div class="prow">
+        <div class="prow-m">
+          <span class="pt">P&#8209;1044 &nbsp;HVAC replacement and care plan</span>
+          <span class="pc">2 scopes</span>
+          <span class="pv">$14,600 + $39/mo</span>
+          <span class="pill m">Ready to send</span>
+        </div>
+        <div class="exp">
+          <div class="part"><span class="pn">Scope 1 &nbsp;Equipment and installation</span><span class="pv">$14,600</span><span class="po">&rarr; job</span></div>
+          <div class="part"><span class="pn">Scope 2 &nbsp;Annual care plan</span><span class="pv">$39/mo</span><span class="po">&rarr; service</span></div>
+          <div class="tot"><span>Total</span><span class="num">$14,600 &nbsp;+&nbsp; $39/mo</span></div>
+          <p class="note">One proposal, two scopes, two different kinds of output. This is the case that makes the scope's output polymorphic.</p>
+        </div>
+      </div>
+      <div class="prow">
+        <div class="prow-m">
+          <span class="pt">P&#8209;1043 &nbsp;Solar and battery</span>
+          <span class="pc">1 scope</span>
+          <span class="pv">$41,900</span>
+          <span class="pill a">Sent 21 Aug &middot; viewed</span>
+        </div>
+      </div>
+      <p class="note">Tapping any row expands it in place. P&#8209;1044 is shown expanded; P&#8209;1043 has a single scope, so it behaves exactly like a proposal does today.</p>
+    </div>
+
+    <div class="mblk">
+      <div class="mblk-h">
+        <h5>Jobs</h5>
+        <div class="seg"><span class="on">Active 2</span><span>Complete 0</span></div>
+      </div>
+      <div class="prow">
+        <div class="prow-m">
+          <span class="pt">JOB&#8209;2291 &nbsp;Roofing</span>
+          <span class="pc">P&#8209;1042 &middot; scope 1 of 2 &middot; 4 of 8 tasks</span>
+          <span class="pv">$38,900</span>
+          <span class="pill a">Installing</span>
+        </div>
+      </div>
+      <div class="prow">
+        <div class="prow-m">
+          <span class="pt">JOB&#8209;2292 &nbsp;Siding and windows</span>
+          <span class="pc">P&#8209;1042 &middot; scope 2 of 2 &middot; starts 2 Sep</span>
+          <span class="pv">$34,200</span>
+          <span class="pill m">Orders &amp; scheduling</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="mblk">
+      <div class="mblk-h">
+        <h5>Services</h5>
+        <span class="pill m">Separate because a service has no end state</span>
+      </div>
+      <div class="prow">
+        <div class="prow-m">
+          <span class="pt">SVC&#8209;102 &nbsp;Annual HVAC care plan</span>
+          <span class="pc">since Apr 2024 &middot; next visit 14 Oct</span>
+          <span class="pv">$34/mo</span>
+          <span class="pill g">Active</span>
+        </div>
+      </div>
+      <p class="note">The failing condenser was spotted on a July service visit, which is how the HVAC replacement opportunity exists at all.</p>
+    </div>
+
+    <div class="mblk">
+      <div class="mblk-h"><h5>Notes</h5><span class="pill m">Add note</span></div>
+      <div class="pin"><span class="pi">&#9679;</span><span>Gate code 4417. Dog in the back yard, friendly but loud.</span></div>
+      <div class="pin"><span class="pi">&#9679;</span><span>HOA requires colour approval before any exterior work.</span></div>
+      <div style="margin-top:12px">
+        <div class="nt">
+          <div class="nt-h"><span class="nt-d">26 Aug</span><span class="pill w xs">Site note</span><span class="pill m xs">JOB&#8209;2291</span></div>
+          <p class="nt-b">Deck rot on the north slope, about 40 sq ft, worse than the inspection suggested. Documented with photos and raised CO&#8209;04. Sara approved by phone; waiting on the lender.</p>
+          <p class="nt-a">Marcus Ellery</p>
+        </div>
+        <div class="nt">
+          <div class="nt-h"><span class="nt-d">12 Aug</span><span class="pill a xs">Site inspection</span><span class="pill m xs">P&#8209;1043</span></div>
+          <p class="nt-b">South array is shaded by the neighbour's oak until about 11am. Production estimate revised down 8%. Told Sara before we quoted, so the number in the proposal is the revised one.</p>
+          <p class="nt-a">Priya Raman</p>
+        </div>
+        <div class="nt">
+          <div class="nt-h"><span class="nt-d">30 Jul</span><span class="pill p xs">Service visit</span><span class="pill m xs">SVC&#8209;102</span></div>
+          <p class="nt-b">Condenser fan motor failing and the unit is 19 years old. Raised replacement with Robert; he asked for a quote.</p>
+          <p class="nt-a">Danny Cho</p>
+        </div>
+        <div class="nt">
+          <div class="nt-h"><span class="nt-d">04 Mar 24</span><span class="pill xs">Intake</span><span class="pill m xs">Customer</span></div>
+          <p class="nt-b">Came in from the spring roofing campaign. Sara is the decision maker, Robert defers on cost. Wants exterior work finished before winter.</p>
+          <p class="nt-a">Alicia Moss</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="mblk">
+      <div class="mblk-h"><h5>History</h5><span class="pill m">All events</span></div>
+      <div class="hist">
+        <div class="hd">26 Aug</div><div class="he">Change order CO&#8209;04 raised on P&#8209;1042 scope 1, +$2,800</div>
+        <div class="hd">24 Aug</div><div class="he">Job JOB&#8209;2291 entered Installing</div>
+        <div class="hd">21 Aug</div><div class="he">Proposal P&#8209;1043 sent to Sara Thompson</div>
+        <div class="hd">14 Aug</div><div class="he">Proposal P&#8209;1042 accepted &middot; financing approved $70,300</div>
+        <div class="hd">02 Aug</div><div class="he">Opportunity "HVAC replacement" created from service visit</div>
+      </div>
+      <p class="note">Same stream as notes, unfiltered. A note written on a job appears in both places without being stored twice.</p>
+    </div>
+
+    <div class="mblk">
+      <div class="ph"><span>Documents and photos</span><span>placeholder</span></div>
+      <div class="ph"><span>Financing across all proposals</span><span>placeholder</span></div>
+    </div>
+  </div>
+
+  <p class="cap" style="margin-top:26px">Tapping either chip in the header opens a sheet</p>
+  <div class="mkrow">
+    <div class="mock">
+      <div class="mk-bar">
+        <div><div class="mk-ttl">Contacts</div><div class="mk-sub">2 on this customer</div></div>
+        <span class="pill m">Close</span>
+      </div>
+      <div class="mk-pad">
+        <div class="srow">
+          <div class="srow-h"><span class="sn">Sara Thompson</span><span class="pill a xs">Decision maker</span></div>
+          <div class="sd2">sara.t@email.com &middot; (916) 555&#8209;0188<br>Prefers text. Signs the paperwork.</div>
+        </div>
+        <div class="srow">
+          <div class="srow-h"><span class="sn">Robert Thompson</span><span class="pill m xs">Billing</span></div>
+          <div class="sd2">r.thompson@email.com &middot; (916) 555&#8209;0142<br>Defers to Sara on cost.</div>
+        </div>
+        <div class="sact"><span class="pill m">Add contact</span><span class="pill m">Manage roles</span></div>
+      </div>
+    </div>
+    <div class="mock">
+      <div class="mk-bar">
+        <div><div class="mk-ttl">Properties</div><div class="mk-sub">2 on this customer</div></div>
+        <span class="pill m">Close</span>
+      </div>
+      <div class="mk-pad">
+        <div class="srow">
+          <div class="srow-h"><span class="sn">1428 Maple Ave</span><span class="pill a xs">Primary</span></div>
+          <div class="sd2">Sacramento CA 95818 &middot; 2,140 sq ft &middot; built 1996<br>Site model available &middot; 2 jobs, 1 service here</div>
+        </div>
+        <div class="srow">
+          <div class="srow-h"><span class="sn">55 Oleander Ct</span><span class="pill m xs">Rental</span></div>
+          <div class="sd2">Sacramento CA 95820 &middot; 1,180 sq ft &middot; built 1974<br>No site model &middot; no work here yet</div>
+        </div>
+        <div class="sact"><span class="pill m">Add property</span><span class="pill m">Set primary</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="argrow">
+    <div class="arg">
+      <p class="lab">The synopsis answers the arrival question</p>
+      <p>People open a customer record asking "where is this one". Three chunks and the last few notes
+      answer that without scrolling, which is what earns the long page underneath. You go down only
+      when the answer is not enough.</p>
+    </div>
+    <div class="arg">
+      <p class="lab">Contacts and properties are links, not sections</p>
+      <p>Both are peer lists that most customers barely have. Full sections would put two near-empty
+      blocks above the work. As underlined counts in the header they stay reachable and editable
+      without <strong>costing a screen to people who have one of each</strong>.</p>
+    </div>
+    <div class="arg">
+      <p class="lab">The stage line is the useful one</p>
+      <p>A count of completed jobs is history. What someone wants from a glance is what is happening
+      to the work that is still moving, so the card carries the stage and its task count rather than a
+      tally, and it is the only line given its own weight.</p>
+    </div>
+    <div class="arg">
+      <p class="lab">The primary address still shows</p>
+      <p>The header keeps a readable address and puts the count beside it. Replacing the address with
+      "2 properties" would make the header stop identifying which house you are looking at, which is
+      the one thing it has to do.</p>
+    </div>
+    <div class="arg">
+      <p class="lab">The balance needs a scope, and it is not obvious</p>
+      <p>Shown here against the one accepted proposal. Once a customer has two, the block has to
+      choose: the customer's money, or this proposal's money. <strong>Those are different numbers and
+      both are legitimate answers</strong>, which is why it is labelled rather than left implicit.</p>
+    </div>
+    <div class="arg">
+      <p class="lab">Three objects, one list</p>
+      <p>A <strong>master invoice</strong> is the total owed. A <strong>payment request</strong> is an
+      individual ask, either drawing against a master invoice or standing on its own. A
+      <strong>transaction</strong> is money actually moving. Different levels, but people read them as
+      one thing in date order, so the segments filter one stream rather than opening three screens.</p>
+    </div>
+    <div class="arg">
+      <p class="lab">Four rows and a way out</p>
+      <p><strong>A customer record is not a ledger.</strong> Enough to see whether money is moving and
+      what is outstanding, then a link to the full history. Showing eight rows was quietly claiming
+      this was the place to reconcile accounts.</p>
+    </div>
+    <div class="arg">
+      <p class="lab">Peers stacked, not nested</p>
+      <p>Opportunities, proposals, jobs and services are four sections at the same level. Nothing is
+      indented under anything. The links inside each row are the only place structure is asserted, and
+      they assert it by naming the thing on the other side.</p>
+    </div>
+    <div class="arg">
+      <p class="lab">Every section shows the live subset</p>
+      <p>Open opportunities, undecided proposals, active jobs. Everything settled sits behind a
+      segment. <strong>The screen is for deciding what to do next</strong>, not for auditing what
+      already happened.</p>
+    </div>
+    <div class="arg">
+      <p class="lab">Provenance is on the opportunity</p>
+      <p>Whether a customer asked, a contractor spotted it, or DeDe surfaced it changes how it gets
+      pursued and how much it is worth chasing. Without it, three identical-looking rows get treated
+      identically when they should not be.</p>
+    </div>
+    <div class="arg">
+      <p class="lab">Two vocabularies, so two sections</p>
+      <p>A job is scheduled, in progress, complete. A service is active, paused, cancelled. The words
+      differ because the things differ, and one list carrying both is what made "in progress" and
+      "active" read as the same status.</p>
+    </div>
+    <div class="arg">
+      <p class="lab">Pinned notes are facts, not events</p>
+      <p>A gate code is true until it changes. An inspection result happened on a day. Mixing them
+      means the durable thing sinks. The stream below carries what happened, tagged with what it
+      happened to.</p>
+    </div>
+  </div>
+
+  <div class="qrow">
+    <div>
+      <div class="q"><div class="qn">1</div><p>Do pinned notes belong to the customer or to the property? A gate code is a property fact.</p></div>
+      <div class="q"><div class="qn">2</div><p>Does the synopsis earn its space, or does it just delay the real content by a screen?</p></div>
+      <div class="q"><div class="qn">7</div><p>Is the running balance per customer, per proposal, or per folio once bundling exists?</p></div>
+    </div>
+    <div>
+      <div class="q"><div class="qn">3</div><p>Is provenance just a label, or should it change ordering and follow-up prompts?</p></div>
+      <div class="q"><div class="qn">4</div><p>Five segmented controls on one page. Do they remember their state between visits?</p></div>
+      <div class="q"><div class="qn">8</div><p>Answered in section D: the proposal, rolling up to the customer. Never the job.</p></div>
+    </div>
+    <div>
+      <div class="q"><div class="qn">5</div><p>Can two scopes of one proposal produce one shared job, or is one scope to one output a hard rule?</p></div>
+      <div class="q"><div class="qn">6</div><p>Who can pin a note, and does pinning need review? These become quasi-official facts.</p></div>
+      <div class="q"><div class="qn">9</div><p>Two things called history on one page, one for money and one for events. Which keeps the name?</p></div>
+      <div class="q"><div class="qn">10</div><p>Once a customer has two properties, must every job and opportunity name which one it is on?</p></div>
+    </div>
+  </div>
+</div>
+
+<div class="sec">
+  <div class="sec-head"><div class="badge">C</div><h2 class="sec-title">The job view</h2></div>
+  <div class="two">
+    <div>
+      <p class="cap">Job detail &middot; running Dana's Roofing configuration</p>
+      <div class="mock">
+        <div class="mk-bar">
+          <div><div class="mk-ttl">JOB&#8209;2291 &nbsp;Roofing</div>
+          <div class="mk-sub">Thompson &middot; 1428 Maple Ave &middot; roofing crew &middot; <span class="tap">P&#8209;1042, scope 1 of 2</span> &middot; <span class="tap">shared financing</span></div></div>
+          <span class="pill a">Installing</span>
+        </div>
+
+        <div class="mblk" style="border-top:none">
+          <div class="mblk-h"><h5>Where this job is</h5><span class="pill m">Stage 7 of 10 &middot; Production board</span></div>
+          <div class="stgwrap">
+            <div class="stginner">
+              <div class="stgrow done"><span class="dot"></span><span class="nm">New lead<span class="bd2">Leads &amp; sales</span></span><span class="mt">12 Jun</span></div>
+              <div class="stgrow done"><span class="dot"></span><span class="nm">Working<span class="bd2">Leads &amp; sales</span></span><span class="mt">28 Jun</span></div>
+              <div class="stgrow done"><span class="dot"></span><span class="nm">Sold<span class="bd2">Leads &amp; sales</span></span><span class="mt">14 Aug</span></div>
+              <div class="stgrow done"><span class="dot"></span><span class="nm">Ops intake<span class="bd2">Production</span></span><span class="mt">18 Aug</span></div>
+              <div class="stgrow done"><span class="dot"></span><span class="nm">Orders &amp; scheduling<span class="bd2">Production</span></span><span class="mt">21 Aug</span></div>
+              <div class="stgrow done"><span class="dot"></span><span class="nm">Final checks<span class="bd2">Production</span></span><span class="mt">24 Aug</span></div>
+              <div class="stgrow now"><span class="dot"></span><span class="nm">Installing<span class="bd2">Production &middot; since 24 Aug</span></span><span class="mt">4 of 8 tasks</span></div>
+              <div class="stgrow"><span class="dot"></span><span class="nm">Closeout<span class="bd2">Closeout &amp; payment</span></span><span class="mt">6 tasks</span></div>
+              <div class="stgrow"><span class="dot"></span><span class="nm">Invoiced<span class="bd2">Closeout &amp; payment</span></span><span class="mt">3 tasks</span></div>
+              <div class="stgrow"><span class="dot"></span><span class="nm">Closed<span class="bd2">Closeout &amp; payment</span></span><span class="mt">2 tasks</span></div>
+            </div>
+            <div class="fadeT"></div>
+            <div class="fadeB"></div>
+          </div>
+          <div class="gatestrip">
+            <span>&#9888;</span>
+            <span>Next gate is two moves away. <b>Closeout cannot become Invoiced</b> until the permit final inspection passes. Permit is currently Approved.</span>
+          </div>
+        </div>
+
+        <div class="mblk">
+          <div class="mblk-h"><h5>Installing</h5><span class="pill m">Since 24 Aug &middot; roofing crew</span></div>
+          <div class="cdrow" style="padding:0">
+            <div class="cd">
+              <h6>Recently completed</h6>
+              <div class="dn"><span>Dry-in photos</span><span class="dd">26 Aug</span></div>
+              <div class="dn"><span>Deck inspected, rot documented</span><span class="dd">25 Aug</span></div>
+              <div class="dn"><span>Tear-off</span><span class="dd">25 Aug</span></div>
+              <div class="dn"><span>Stage: Final checks cleared</span><span class="dd">24 Aug</span></div>
+              <p class="cdn">Marcus Ellery on all four.</p>
+            </div>
+            <div class="cd">
+              <h6>To finish Installing &middot; 4 of 8</h6>
+              <div class="tk blk"><span class="bx"></span><span>Change order approved<span class="sub2">CO&#8209;04 awaiting lender re-approval</span></span></div>
+              <div class="tk"><span class="bx"></span><span>End-of-day photos</span></div>
+              <div class="tk"><span class="bx"></span><span>Magnet sweep</span></div>
+              <div class="tk"><span class="bx"></span><span>Cleanup</span></div>
+              <p class="cdn">Roofing tasks, because this is a roofing job.</p>
+            </div>
+            <div class="cd wn">
+              <h6>Change order CO&#8209;04</h6>
+              <div class="cdi"><p class="cdl">Added</p><p class="cdv">Deck rot, north slope, 40 sq ft &nbsp;+$2,800</p></div>
+              <div class="cdi"><p class="cdl">Scope value</p><p class="cdv">$36,100 &rarr; $38,900</p></div>
+              <div class="cdi"><p class="cdl">Proposal total</p><p class="cdv">$70,300 &rarr; $73,100</p></div>
+              <div class="cdi"><p class="cdl">Financing</p><p class="cdv">Awaiting re-approval</p></div>
+              <p class="cdn">Raised from a task in this stage, and it is now blocking that task.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="mblk">
+          <div class="mblk-h"><h5>Everything else</h5><span class="pill m">Not affected by this model</span></div>
+          <div class="ph"><span>Schedule and crew</span><span>placeholder</span></div>
+          <div class="ph"><span>Materials and bill of materials</span><span>placeholder</span></div>
+          <div class="ph"><span>Permits and inspections</span><span>placeholder</span></div>
+          <div class="ph"><span>Photos and documents</span><span>placeholder</span></div>
+          <div class="ph"><span>Invoices and payments</span><span>placeholder</span></div>
+          <div class="ph"><span>Notes for this job</span><span>placeholder</span></div>
+        </div>
+      </div>
+
+      <p class="cap2">Tapping either link in the header opens a sheet</p>
+      <div class="mkrow">
+        <div class="mock">
+          <div class="mk-bar">
+            <div><div class="mk-ttl">Where this job came from</div><div class="mk-sub">P&#8209;1042 &middot; accepted 14 Aug</div></div>
+            <span class="pill m">Close</span>
+          </div>
+          <div class="mk-pad">
+            <div class="kv"><span class="k">Proposal</span><span class="v lk">P&#8209;1042 Roofing and siding</span></div>
+            <div class="kv"><span class="k">This job is</span><span class="v">Scope 1 of 2 &middot; $38,900</span></div>
+            <div class="kv"><span class="k">Satisfies</span><span class="v">Roofing</span></div>
+            <div class="kv"><span class="k">Also from this proposal</span><span class="v lk">JOB&#8209;2292 Siding and windows</span></div>
+            <div class="kv"><span class="k">Proposal total</span><span class="v">$73,100</span></div>
+            <p class="note">Scope 2 covers two opportunities in one job, because one crew does both.</p>
+            <div class="sact"><span class="pill m">Open proposal</span><span class="pill m">View all scopes</span></div>
+          </div>
+        </div>
+        <div class="mock">
+          <div class="mk-bar">
+            <div><div class="mk-ttl">Financing</div><div class="mk-sub">Shared across the proposal</div></div>
+            <span class="pill m">Close</span>
+          </div>
+          <div class="mk-pad">
+            <div class="kv"><span class="k">Product</span><span class="v">Loan &middot; 20 yr &middot; 6.99%</span></div>
+            <div class="kv"><span class="k">Financed, whole proposal</span><span class="v">$73,100</span></div>
+            <div class="kv"><span class="k">This scope's share</span><span class="v">$38,900</span></div>
+            <div class="kv"><span class="k">Status</span><span class="v">Approved</span></div>
+            <div class="kv"><span class="k">After CO&#8209;04</span><span class="v" style="color:var(--wn)">Re-approval pending</span></div>
+            <p class="note">This job displays financing it does not own. A change here moves the whole proposal.</p>
+            <div class="sact"><span class="pill m">Open financing</span><span class="pill m">View change orders</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="arg">
+        <p class="lab">Stage answers where, sub-status answers what we are waiting on</p>
+        <p>The rail is position. The waiting-on card is external processes nobody here can speed up.
+        Keeping them apart is the whole point of the configuration model: <strong>"waiting on the
+        city" and "someone needs to make a call" must not look the same</strong>.</p>
+      </div>
+      <div class="arg">
+        <p class="lab">A list, because ten stages will not fit across</p>
+        <p>Horizontally, ten stages either truncate or shrink past reading. Vertically they fit at full
+        length, the board each belongs to can sit under the name, and dates line up on the right.</p>
+      </div>
+      <div class="arg">
+        <p class="lab">Two behind, two ahead, and a fade</p>
+        <p>Enough to see what just finished and what is coming without the whole pipeline competing
+        for attention. <strong>The fade is load-bearing</strong>: it is the only thing saying the list
+        continues, and if it reads as decoration the design has failed.</p>
+      </div>
+      <div class="arg">
+        <p class="lab">The gate is named before it bites</p>
+        <p>The blocking condition is two transitions away and already stated. Surfacing it only at the
+        moment of refusal is what makes gates feel arbitrary, and arbitrary gates get worked around.</p>
+      </div>
+      <div class="arg">
+        <p class="lab">Recently completed is four lines, not an audit trail</p>
+        <p>Enough to confirm the job is moving and who is moving it. Anyone who needs the full record
+        goes to the stage. <strong>A status header that scrolls has stopped being a status header.</strong></p>
+      </div>
+      <div class="arg">
+        <p class="lab">The change order sits in the stage that caused it</p>
+        <p>Deck rot was found by a task in Installing, and the resulting change order now blocks
+        another task in the same stage. Putting it beside the task list rather than down with the
+        paperwork is what makes that loop legible.</p>
+      </div>
+      <div class="arg">
+        <p class="lab">Provenance is a header hint, not a card</p>
+        <p>"P&#8209;1042, scope 1 of 2" is enough to know this job is half of something bigger, and the
+        sheet carries the rest. <strong>The bundle is never invisible, but it never occupies the
+        screen either</strong>, which is the balance the earlier draft missed in both directions.</p>
+      </div>
+      <div class="arg">
+        <p class="lab">Sheets are the pattern now</p>
+        <p>Contacts and properties on the customer record work the same way: a count or a phrase in
+        the header, detail one tap away. Reusing it here means one behaviour to learn rather than
+        three ways of reaching secondary information.</p>
+      </div>
+      <div class="arg">
+        <p class="lab">The money is borrowed, not owned</p>
+        <p>The middle card shows a figure this job cannot change alone. <strong>Stating that plainly is
+        the point</strong>. Showing only the scope's share would read as though the job controls its own
+        financing, which in shared mode it does not.</p>
+      </div>
+      <div class="arg">
+        <p class="lab">The change order shows both numbers</p>
+        <p>Scope value and proposal total, side by side. One tells operations what the work is now worth,
+        the other decides whether the loan needs re-approving. Showing one without the other hides the
+        consequence, so the card is tinted to say something is outstanding.</p>
+      </div>
+      <div class="arg">
+        <p class="lab">Placeholders are honest here</p>
+        <p>Schedule, materials, permits and invoicing are the bulk of a real job screen and none of them
+        are affected by this model. Sketching them would invite feedback on the wrong thing.</p>
+      </div>
+      <div class="q"><div class="qn">1</div><p>Is the change order a task, or is it really a sub-status? It is waiting on the lender, which is the definition of a sub-status.</p></div>
+      <div class="q"><div class="qn">2</div><p>Does the list need all ten stages, or only the board this job is on?</p></div>
+      <div class="q"><div class="qn">3</div><p>Should a blocked task look different from one nobody has started?</p></div>
+      <div class="q"><div class="qn">4</div><p>Does the fade read as "there is more", or does it just read as styling?</p></div>
+      <div class="q"><div class="qn">5</div><p>What does this screen become when the scope produced a service instead of a job?</p></div>
+    </div>
+  </div>
+
+  <div class="expl">
+    <h4>Components to explore later</h4>
+    <p>Drawn, and then pulled off the job screen so the status header could be judged on its own.
+    Parked, not discarded.</p>
+    <div class="explbox">
+      <div class="cdrow" style="padding:0;grid-template-columns:minmax(0,1fr) minmax(0,2fr)">
+        <div class="cd">
+          <h6>Waiting on</h6>
+          <div class="sub"><span class="sk">Financing</span><span class="sv ok">NTP</span></div>
+          <div class="sub"><span class="sk">Materials</span><span class="sv ok">Delivered</span></div>
+          <div class="sub"><span class="sk">HOA</span><span class="sv ok">Approved</span></div>
+          <div class="sub"><span class="sk">Permit</span><span class="sv wait">Approved</span></div>
+          <div class="sub na"><span class="sk">Insurance</span><span class="sv">Not applicable</span></div>
+        </div>
+        <div style="padding:4px 2px">
+          <p class="arg" style="margin:0 0 12px"><span class="lab" style="display:block">The sub-status block</span>
+          Five external processes nobody on the crew can accelerate. It belongs on this screen, and it
+          was cut only because the status header had to be judged without it competing.</p>
+          <p style="margin:0;font-size:13px;line-height:1.55;color:var(--tx2)">The hard part is not the
+          list. It is making <strong>not applicable</strong> and <strong>not yet</strong> look
+          different enough that a contractor can tell "ignore forever" from "work toward this" without
+          reading. Insurance will never apply to this job. Permit is live and has one value left, and
+          that value drives the gate before Invoiced. Get this wrong and the whole block gets tuned
+          out.</p>
+        </div>
+      </div>
+    </div>
+    <p style="margin:14px 0 0">Not drawn at all yet: gates other than the next one, board context so
+    you can get from this job back to the Production board, and task ownership, which is the obvious
+    next question after "what is left".</p>
+  </div>
+</div>
+
+<div class="sec">
+  <div class="sec-head"><div class="badge">D</div><h2 class="sec-title">The same record at three product tiers</h2></div>
+
+  <p class="cap">Customer record &middot; sections present at each tier</p>
+  <div class="tiers">
+    <div class="mock">
+      <div class="mk-bar">
+        <div><div class="mk-ttl">Payments only</div><div class="mk-sub">Thompson &middot; 1428 Maple Ave</div></div>
+      </div>
+      <div class="mk-pad">
+        <div class="bal" style="margin-bottom:10px">
+          <h6>Running balance</h6>
+          <div class="balr"><span>Total owed</span><span class="v">$73,100.00</span></div>
+          <div class="balr"><span>Paid</span><span class="v">$28,740.00</span></div>
+          <div class="balr tot"><span>Balance due</span><span class="v">$44,360.00</span></div>
+        </div>
+        <div class="tsec"><span class="tn">Activity</span><span class="tv">8 records</span></div>
+        <div class="tsec"><span class="tn">Notes</span><span class="tv">2 pinned</span></div>
+        <div class="tsec"><span class="tn">History</span><span class="tv">6 events</span></div>
+      </div>
+      <div class="tcount">4 sections &middot; balance is the page &middot; master invoice not derived</div>
+    </div>
+
+    <div class="mock">
+      <div class="mk-bar">
+        <div><div class="mk-ttl">Payments and selling</div><div class="mk-sub">Thompson &middot; 2 contacts &middot; 2 properties</div></div>
+      </div>
+      <div class="mk-pad">
+        <div class="tsec new"><span class="tn">Pipeline overview</span><span class="tv">2 cards</span></div>
+        <div class="tsec new"><span class="tn">Opportunities</span><span class="tv">3 open</span></div>
+        <div class="tsec new"><span class="tn">Proposals</span><span class="tv">2 open &middot; 1 won</span></div>
+        <div class="tsec"><span class="tn">Financials</span><span class="tv">$44,360 due</span></div>
+        <div class="tsec"><span class="tn">Activity</span><span class="tv">8 records</span></div>
+        <div class="tsec"><span class="tn">Notes</span><span class="tv">2 pinned</span></div>
+        <div class="tsec"><span class="tn">History</span><span class="tv">12 events</span></div>
+      </div>
+      <div class="tcount">7 sections &middot; the work is tracked elsewhere</div>
+    </div>
+
+    <div class="mock">
+      <div class="mk-bar">
+        <div><div class="mk-ttl">Payments, selling, operations</div><div class="mk-sub">Thompson &middot; 2 contacts &middot; 2 properties</div></div>
+      </div>
+      <div class="mk-pad">
+        <div class="tsec"><span class="tn">Pipeline overview</span><span class="tv">3 cards</span></div>
+        <div class="tsec"><span class="tn">Opportunities</span><span class="tv">3 open</span></div>
+        <div class="tsec"><span class="tn">Proposals</span><span class="tv">2 open &middot; 1 won</span></div>
+        <div class="tsec new"><span class="tn">Jobs</span><span class="tv">2 active</span></div>
+        <div class="tsec new"><span class="tn">Services</span><span class="tv">1 active</span></div>
+        <div class="tsec"><span class="tn">Financials</span><span class="tv">$44,360 due</span></div>
+        <div class="tsec"><span class="tn">Activity</span><span class="tv">8 records</span></div>
+        <div class="tsec"><span class="tn">Notes</span><span class="tv">2 pinned</span></div>
+        <div class="tsec"><span class="tn">History</span><span class="tv">18 events</span></div>
+      </div>
+      <div class="tcount">9 sections &middot; views A to C show this one</div>
+    </div>
+  </div>
+
+  <div class="argrow">
+    <div class="arg">
+      <p class="lab">Order is a function of tier, not a layout</p>
+      <p>Financials cannot sit sixth down the page when it is the only thing a payments customer has.
+      <strong>The record is a composition, not a template</strong>, and the sequence has to be
+      computed rather than authored once.</p>
+    </div>
+    <div class="arg">
+      <p class="lab">Customer means paid, not built</p>
+      <p>Becoming a Customer is having taken a payment or set up financing. That rule <strong>works
+      identically at every tier</strong> and never mentions jobs, which makes it better than the one
+      it replaces rather than a patch over a gap.</p>
+    </div>
+    <div class="arg">
+      <p class="lab">The balance runs ahead of the work</p>
+      <p>Accepting a proposal creates nothing to deliver at the selling tier, but it does move the
+      amount owed. So money flows from the proposal, and <strong>a job never owns an invoice</strong>.
+      That settles where the master invoice attaches without anyone having to prefer an answer.</p>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:26px">
+    <p class="mono-label">Answered since this section was drawn</p>
+    <ul class="b">
+      <li>Accepting a proposal at the selling tier creates <strong>nothing</strong>, but it does change the balance.</li>
+      <li>A Customer is someone who has <strong>taken a payment or set up financing</strong>. Not someone with a job.</li>
+      <li>Tier is set <strong>per organisation</strong>, so there is no mixed-permission case inside one account.</li>
+      <li>The customer list gets <strong>different columns per tier</strong>, not the same columns with gaps.</li>
+      <li>Selling-tier contractors track the work in <strong>their own other software</strong>.</li>
+      <li>The payments tier is a <strong>real product and a large part of the current base</strong>, not a migration state.</li>
+    </ul>
+  </div>
+
+  <div class="qrow" style="margin-top:22px">
+    <div>
+      <div class="q"><div class="qn">1</div><p>At the payments tier a master invoice has no proposal to derive from. Is it created by hand, or does that tier run on standalone payment requests with no total to draw against?</p></div>
+    </div>
+    <div>
+      <div class="q"><div class="qn">2</div><p>Selling-tier contractors run the work elsewhere. Does the record acknowledge that, or stay silent about it?</p></div>
+    </div>
+    <div>
+      <div class="q"><div class="qn">3</div><p>What happens to existing customers when an organisation upgrades tier?</p></div>
+    </div>
+  </div>
+</div>
+
+<div class="sec">
+  <div class="sec-head"><div class="badge">E</div><h2 class="sec-title">What these views commit to, and what they leave alone</h2></div>
+  <div class="grid4">
+    <div class="g4c">
+      <h4>Carried over as-is</h4>
+      <ul>
+        <li>The proposal as the signed document</li>
+        <li>Financing bundles and one active selection</li>
+        <li>The existing change order path for money</li>
+        <li>Tiers, untouched and out of scope</li>
+      </ul>
+    </div>
+    <div class="g4c">
+      <h4>New here</h4>
+      <ul>
+        <li>The customer as a person above the address</li>
+        <li>The additive scope, with its own value</li>
+        <li>Scope-level change orders</li>
+        <li>Opportunity provenance</li>
+        <li>Service and visit as their own objects</li>
+        <li>Stage, sub-status, task and gate on the job</li>
+      </ul>
+    </div>
+    <div class="g4c">
+      <h4>Deliberately refused</h4>
+      <ul>
+        <li>Nesting jobs under proposals</li>
+        <li>One stage per customer</li>
+        <li>Per-scope financing in the UI</li>
+        <li>One list for jobs and services</li>
+        <li>A single blended contract value</li>
+      </ul>
+    </div>
+    <div class="g4c">
+      <h4>Placeholder for now</h4>
+      <ul>
+        <li>Schedule, crew and dispatch</li>
+        <li>Materials and permits</li>
+        <li>Invoicing and payments</li>
+        <li>Contacts and multiple properties</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="foot">
+  <p class="mono-label">What goes into the design prompts next</p>
+  <p>The screens above are the structural argument. What they do not carry is component-level detail:
+  real table and list components, the segmented controls, expanding rows and sheets as actual
+  disclosure patterns, empty and loading states, and how a nine-section record behaves on a narrower
+  window.</p>
+  <p><strong>The payments tier deserves its own round rather than a diff.</strong> This memo argues
+  from the fullest configuration downward, which is the right way to test the model but the wrong way
+  to design a four-section record that is already a large part of the customer base. A page where the
+  balance is the page is a different design problem, not a subset of this one.</p>
+</div>
+
+</div>
+</body>
+</html>

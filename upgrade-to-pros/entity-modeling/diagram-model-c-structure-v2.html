@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Model C — the structure</title>
+<style>
+:root{
+  color-scheme: light;
+  --bg:#ffffff; --s1:#faf9f7; --s2:#ffffff;
+  --tx:#1b1b1a; --tx2:#575651; --tx3:#8b8a84;
+  --bd:#e7e5e0; --bds:#d5d3cc;
+  --ac:#185fa5; --acbg:#e9f1fa; --acbd:#a8c9ec;
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:var(--sans);font-size:15px;line-height:1.62;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1300px;margin:0 auto;padding:56px 40px 88px}
+.eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--tx3);margin:0 0 18px}
+.eyebrow span{margin-right:26px}
+h1{font-size:38px;line-height:1.12;font-weight:500;letter-spacing:-.02em;margin:0 0 16px;max-width:780px}
+.lede{max-width:780px;color:var(--tx2);font-size:15.5px;margin:0 0 34px}
+.fig{background:var(--s2);border:1px solid var(--bd);border-radius:12px;padding:20px}
+.fig > svg{display:block;width:100%;height:auto}
+.legend{display:flex;gap:30px;flex-wrap:wrap;align-items:center;margin:0 0 20px;padding:0 0 15px;border-bottom:1px solid var(--bd)}
+.legend .lt{font-family:var(--mono);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--tx3)}
+.legend .li{display:flex;gap:10px;align-items:center;font-size:12.5px;color:var(--tx2)}
+.legend .li b{color:var(--tx);font-weight:500}
+.legend svg{display:block;flex:0 0 auto;width:46px;height:26px}
+.note{margin:16px 0 0;font-size:12px;line-height:1.5;color:var(--tx3);font-style:italic;max-width:900px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<p class="eyebrow"><span>Pros Web</span><span>Model C &mdash; the structure</span><span>2 Sep 2026</span></p>
+
+<h1>The project is the container</h1>
+
+<p class="lede">One customer, holding properties, opportunities and a customer-level record, and a
+mandatory project that contains the priced offer, the work and the money. Nothing inside the project
+is nested under anything but the project.</p>
+
+<div class="fig">
+  <div class="legend">
+    <span class="lt">Reading the links</span>
+    <span class="li">
+      <svg width="46" height="26" viewBox="0 0 46 26"><rect x="0.5" y="0.5" width="45" height="25" rx="4" fill="#faf9f7" stroke="#d5d3cc"/><rect x="7" y="6" width="32" height="14" rx="3" fill="#ffffff" stroke="#b4b2a9"/></svg>
+      <span><b>Nested</b> = contains</span>
+    </span>
+    <span class="li">
+      <svg width="46" height="26" viewBox="0 0 46 26"><defs><marker id="lg1" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,1 L8,4.5 L0,8 z" fill="#8b8a84"/></marker></defs><path d="M6,13 H36" fill="none" stroke="#8b8a84" stroke-width="1.3" marker-end="url(#lg1)"/></svg>
+      <span><b>Labelled arrow</b> = produces</span>
+    </span>
+    <span class="li">
+      <svg width="46" height="26" viewBox="0 0 46 26"><path d="M6,13 H40" fill="none" stroke="#b4b2a9" stroke-width="1.3" stroke-dasharray="5 4"/></svg>
+      <span><b>Dashed, no head</b> = references, owns nothing</span>
+    </span>
+    <span class="li">
+      <svg width="46" height="26" viewBox="0 0 46 26"><rect x="12" y="2" width="30" height="20" rx="3" fill="#ffffff" stroke="#d5d3cc"/><rect x="8" y="5" width="30" height="20" rx="3" fill="#ffffff" stroke="#cac8c0"/><rect x="4" y="8" width="30" height="16" rx="3" fill="#ffffff" stroke="#b4b2a9"/></svg>
+      <span><b>Stacked</b> = one or more</span>
+    </span>
+  </div>
+
+  <svg viewBox="0 0 1200 955" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="mt md">
+    <title id="mt">Model C, the structure</title>
+    <desc id="md">The customer contains a customer-level record holding notes and history, the financial roll-up and the project and job roll-up; one or more properties beside one or more opportunities; and a project, also called the lifecycle object, holding the sale end to end. The opportunities are sited at a property and link into the project, and the project is also sited at a property. Inside it: a configurable pipeline, a proposal holding one or more priced scopes, one or more jobs produced from the signed scopes, each carrying its records and its own configurable pipeline, and the money at project level.</desc>
+    <defs><marker id="ar" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,1 L8,4.5 L0,8 z" fill="#8b8a84"/></marker></defs>
+
+    <!-- CUSTOMER -->
+    <rect x="20" y="40" width="1160" height="885" rx="10" fill="#faf9f7" stroke="#d5d3cc"/>
+    <text x="38" y="66" font-family="-apple-system,sans-serif" font-size="14" font-weight="500" fill="#1b1b1a">Customer</text>
+    <text x="122" y="66" font-family="-apple-system,sans-serif" font-size="11" fill="#8b8a84">a person, above the address</text>
+
+    <!-- customer-level record -->
+    <rect x="40" y="80" width="1120" height="86" rx="8" fill="#ffffff" stroke="#b4b2a9"/>
+    <text x="56" y="102" font-family="-apple-system,sans-serif" font-size="11.5" font-weight="500" fill="#1b1b1a">Customer-level record</text>
+    <rect x="56" y="110" width="352" height="40" rx="5" fill="#faf9f7" stroke="#d5d3cc"/>
+    <text x="70" y="135" font-family="-apple-system,sans-serif" font-size="10.5" fill="#575651">Notes and history</text>
+    <rect x="424" y="110" width="352" height="40" rx="5" fill="#faf9f7" stroke="#d5d3cc"/>
+    <text x="438" y="135" font-family="-apple-system,sans-serif" font-size="10.5" fill="#575651">Financial roll-up</text>
+    <rect x="792" y="110" width="352" height="40" rx="5" fill="#faf9f7" stroke="#d5d3cc"/>
+    <text x="806" y="135" font-family="-apple-system,sans-serif" font-size="10.5" fill="#575651">Project and job roll-up</text>
+
+    <!-- properties -->
+    <rect x="48" y="202" width="520" height="100" rx="7" fill="#ffffff" stroke="#d5d3cc"/>
+    <rect x="44" y="206" width="520" height="100" rx="7" fill="#ffffff" stroke="#cac8c0"/>
+    <rect x="40" y="210" width="520" height="100" rx="7" fill="#ffffff" stroke="#b4b2a9"/>
+    <text x="58" y="234" font-family="-apple-system,sans-serif" font-size="12" font-weight="500" fill="#1b1b1a">Property &#183; one or more</text>
+    <text x="58" y="256" font-family="-apple-system,sans-serif" font-size="10.5" fill="#575651">The site the work happens at</text>
+    <text x="58" y="276" font-family="-apple-system,sans-serif" font-size="10.5" fill="#8b8a84">One customer may hold several</text>
+    <text x="58" y="294" font-family="-apple-system,sans-serif" font-size="10.5" fill="#8b8a84">Referenced, never owned, by a project</text>
+
+    <!-- opportunities -->
+    <rect x="648" y="202" width="512" height="100" rx="7" fill="#ffffff" stroke="#d5d3cc"/>
+    <rect x="644" y="206" width="512" height="100" rx="7" fill="#ffffff" stroke="#cac8c0"/>
+    <rect x="640" y="210" width="512" height="100" rx="7" fill="#ffffff" stroke="#b4b2a9"/>
+    <text x="658" y="234" font-family="-apple-system,sans-serif" font-size="12" font-weight="500" fill="#1b1b1a">Opportunity &#183; one or more</text>
+    <text x="658" y="256" font-family="-apple-system,sans-serif" font-size="10.5" fill="#575651">A piece of work someone thinks might be sold</text>
+    <text x="658" y="276" font-family="-apple-system,sans-serif" font-size="10.5" fill="#8b8a84">One per trade &#183; carries its origin and a line of detail</text>
+    <text x="658" y="294" font-family="-apple-system,sans-serif" font-size="10.5" fill="#8b8a84">Survives being declined</text>
+
+    <!-- opportunity sited at property -->
+    <path d="M636,260 H564" fill="none" stroke="#b4b2a9" stroke-width="1.3" stroke-dasharray="5 4"/>
+    <text x="600" y="252" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="10" fill="#8b8a84">sited at</text>
+
+    <!-- opportunity links into project -->
+    <path d="M900,310 V384" fill="none" stroke="#b4b2a9" stroke-width="1.3" stroke-dasharray="5 4"/>
+    <text x="912" y="352" font-family="-apple-system,sans-serif" font-size="10" fill="#8b8a84">links into</text>
+
+    <!-- project sited at property -->
+    <path d="M300,310 V384" fill="none" stroke="#b4b2a9" stroke-width="1.3" stroke-dasharray="5 4"/>
+    <text x="312" y="352" font-family="-apple-system,sans-serif" font-size="10" fill="#8b8a84">sited at</text>
+
+    <!-- PROJECT -->
+    <rect x="40" y="384" width="1120" height="525" rx="9" fill="#ffffff" stroke="#185fa5" stroke-width="1.7"/>
+    <text x="58" y="410" font-family="-apple-system,sans-serif" font-size="14" font-weight="500" fill="#185fa5">Project (aka Lifecycle Object)</text>
+    <text x="310" y="410" font-family="-apple-system,sans-serif" font-size="11" fill="#22557f">the workspace for selling and, if sold, operations &#183; exists before anything is priced &#183; never sent to anyone</text>
+
+    <!-- project-level pipeline -->
+    <rect x="56" y="424" width="1088" height="44" rx="6" fill="#f4f8fc" stroke="#a8c9ec"/>
+    <text x="72" y="451" font-family="ui-monospace,Menlo,monospace" font-size="8.5" letter-spacing=".9" fill="#3f6f9f">PIPELINE, CONFIGURABLE</text>
+    <text x="232" y="452" font-family="-apple-system,sans-serif" font-size="10.5" fill="#22557f">Stage, sub-statuses, tasks, gating &#183; set per organisation</text>
+
+    <!-- proposal -->
+    <rect x="56" y="486" width="1088" height="88" rx="7" fill="#e9f1fa" stroke="#a8c9ec"/>
+    <text x="72" y="510" font-family="-apple-system,sans-serif" font-size="12" font-weight="500" fill="#0c447c">Proposal &#183; versioned, offers options and tiers</text>
+    <rect x="72" y="518" width="1056" height="40" rx="5" fill="#ffffff" stroke="#a8c9ec"/>
+    <text x="88" y="543" font-family="-apple-system,sans-serif" font-size="10.5" fill="#22557f">Scope &#183; a priced unit, one or more per proposal &#183; statement of work, estimate, itemisation</text>
+
+    <path d="M600,574 V604" fill="none" stroke="#8b8a84" stroke-width="1.3" marker-end="url(#ar)"/>
+    <text x="612" y="592" font-family="-apple-system,sans-serif" font-size="10" fill="#575651">produces one job per signed scope</text>
+
+    <!-- jobs, stacked -->
+    <rect x="64" y="604" width="1088" height="195" rx="7" fill="#eef4e4" stroke="#c3d8a8"/>
+    <rect x="60" y="608" width="1088" height="195" rx="7" fill="#eef4e4" stroke="#b4cf95"/>
+    <rect x="56" y="612" width="1088" height="195" rx="7" fill="#eef4e4" stroke="#a3c47f"/>
+    <text x="72" y="636" font-family="-apple-system,sans-serif" font-size="12" font-weight="500" fill="#27500a">Job &#183; the work being delivered &#183; one or more</text>
+    <text x="72" y="655" font-family="-apple-system,sans-serif" font-size="10.5" fill="#3b6d11">One per signed scope &#183; siblings run independently &#183; periodic service and maintenance can also be stored in a Job</text>
+
+    <text x="72" y="683" font-family="ui-monospace,Menlo,monospace" font-size="8.5" letter-spacing=".9" fill="#5d7a3a">RECORDS ON THE JOB</text>
+    <rect x="72" y="691" width="200" height="44" rx="5" fill="#ffffff" stroke="#c3d8a8"/>
+    <text x="86" y="710" font-family="-apple-system,sans-serif" font-size="10" fill="#3d5c1c">Crew and schedule</text>
+    <rect x="286" y="691" width="200" height="44" rx="5" fill="#ffffff" stroke="#c3d8a8"/>
+    <text x="300" y="710" font-family="-apple-system,sans-serif" font-size="10" fill="#3d5c1c">Material order</text>
+    <text x="300" y="725" font-family="-apple-system,sans-serif" font-size="10" fill="#3d5c1c">and delivery</text>
+    <rect x="500" y="691" width="200" height="44" rx="5" fill="#ffffff" stroke="#c3d8a8"/>
+    <text x="514" y="710" font-family="-apple-system,sans-serif" font-size="10" fill="#3d5c1c">Permits and</text>
+    <text x="514" y="725" font-family="-apple-system,sans-serif" font-size="10" fill="#3d5c1c">inspections</text>
+    <rect x="714" y="691" width="200" height="44" rx="5" fill="#ffffff" stroke="#c3d8a8"/>
+    <text x="728" y="710" font-family="-apple-system,sans-serif" font-size="10" fill="#3d5c1c">Documents</text>
+    <text x="728" y="725" font-family="-apple-system,sans-serif" font-size="10" fill="#3d5c1c">and photos</text>
+    <rect x="928" y="691" width="200" height="44" rx="5" fill="#ffffff" stroke="#c3d8a8"/>
+    <text x="942" y="710" font-family="-apple-system,sans-serif" font-size="10" fill="#3d5c1c">Change order</text>
+    <text x="942" y="725" font-family="-apple-system,sans-serif" font-size="10" fill="#3d5c1c">attaches to one scope</text>
+
+    <!-- job-level pipeline -->
+    <rect x="72" y="751" width="1056" height="40" rx="5" fill="#ffffff" stroke="#c3d8a8"/>
+    <text x="88" y="776" font-family="ui-monospace,Menlo,monospace" font-size="8.5" letter-spacing=".9" fill="#5d7a3a">PIPELINE, CONFIGURABLE</text>
+    <text x="248" y="776" font-family="-apple-system,sans-serif" font-size="10.5" fill="#3d5c1c">Stage, sub-statuses, tasks, gating &#183; set per organisation</text>
+
+    <!-- money -->
+    <rect x="56" y="835" width="1088" height="58" rx="7" fill="#faf9f7" stroke="#d5d3cc"/>
+    <text x="72" y="859" font-family="-apple-system,sans-serif" font-size="12" font-weight="500" fill="#1b1b1a">Money &#183; at project level</text>
+    <text x="72" y="881" font-family="-apple-system,sans-serif" font-size="10.5" fill="#575651">Master invoice as the total owed &#183; payment requests, drawing against it or standing alone &#183; transactions &#183; cost and profit</text>
+  </svg>
+
+  <p class="note">Containment is the only structural claim here: the project holds the proposal, the
+  jobs and the money, and nothing inside it is nested under anything else. The single arrow marks
+  the one place where one object produces another. Properties and opportunities are referenced
+  rather than owned, which is what lets a declined opportunity survive. The project and the job each
+  carry their own configurable pipeline, drawn the same way at both levels.</p>
+</div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Why the model has to change</title>
+<style>
+:root{
+  color-scheme: light;
+  --bg:#ffffff; --s1:#faf9f7; --s2:#ffffff; --s3:#f2f1ed;
+  --tx:#1b1b1a; --tx2:#575651; --tx3:#8b8a84;
+  --bd:#e7e5e0; --bds:#d5d3cc;
+  --ac:#185fa5; --acbg:#e9f1fa; --acbd:#a8c9ec;
+  --wn:#a8461f; --wnbg:#fbf0eb; --wnbd:#e2b39d;
+  --gd:#3b6d11; --gdbg:#eef4e4;
+  --pr:#534ab7; --prbg:#eeedfe;
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:var(--sans);font-size:15px;line-height:1.62;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1560px;margin:0 auto;padding:56px 40px 96px}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.04em;color:var(--tx3);margin:0 0 16px}
+.eyebrow span{margin-right:26px}
+h1{font-size:40px;line-height:1.12;font-weight:500;letter-spacing:-.02em;margin:0 0 18px;max-width:750px}
+.lede{max-width:750px;color:var(--tx2);font-size:15.5px;margin:0 0 24px}
+.conv{display:flex;gap:11px;align-items:baseline;background:var(--s1);border:1px solid var(--bd);border-radius:10px;padding:12px 16px;margin:0 0 26px;font-size:13.5px;color:var(--tx2);line-height:1.55;max-width:750px}
+.conv .cm{font-weight:500;color:var(--ac);flex:0 0 auto}
+.card{background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:16px 22px;margin:0 0 18px;max-width:750px}
+.card.last{margin-bottom:56px}
+ul.b{margin:0;padding:0 0 0 18px}
+ul.b li{margin:0 0 8px;color:var(--tx2);font-size:14.5px;line-height:1.55}
+ul.b li:last-child{margin-bottom:0}
+ul.b li strong,p strong{color:var(--tx);font-weight:500}
+.card .dbody p{margin:0 0 10px;font-size:14.5px;line-height:1.6;color:var(--tx2)}
+.card .dbody p:last-child{margin-bottom:0}
+details > summary{cursor:pointer;list-style:none;display:flex;align-items:baseline;justify-content:space-between;gap:16px}
+details > summary::-webkit-details-marker{display:none}
+summary .sl{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+summary .st{font-size:15px;font-weight:500;color:var(--tx)}
+summary .sh2{font-size:13px;color:var(--tx3)}
+summary .cv{font-size:16px;color:var(--tx3);transition:transform .15s ease;flex:0 0 auto;line-height:1;position:relative;top:2px}
+details[open] > summary .cv{transform:rotate(90deg)}
+details[open] > summary{margin-bottom:14px}
+.sec{margin:0 0 64px}
+.sec-head{display:flex;align-items:baseline;gap:11px;padding-bottom:12px;border-bottom:1px solid var(--bd);margin-bottom:20px}
+.badge{flex:0 0 auto;width:20px;height:20px;border:1px solid var(--acbd);border-radius:4px;color:var(--ac);font-family:var(--mono);font-size:10.5px;display:flex;align-items:center;justify-content:center;background:var(--acbg);position:relative;top:2px}
+.sec-title{font-size:19px;font-weight:500;margin:0;letter-spacing:-.01em}
+.sec-when{font-size:13px;color:var(--tx3);margin-left:auto}
+.two{display:grid;grid-template-columns:minmax(0,1fr) 350px;gap:38px;align-items:start}
+.cap{font-family:var(--mono);font-size:11px;color:var(--tx3);margin:0 0 10px}
+.arg{margin:0 0 20px}
+.arg .lab{font-family:var(--mono);font-size:11px;color:#7d8fa3;margin:0 0 5px}
+.arg p{margin:0;font-size:14px;line-height:1.58;color:var(--tx2)}
+.arg p + p{margin-top:8px}
+.q{display:flex;gap:10px;align-items:flex-start;margin:0 0 10px}
+.qn{flex:0 0 auto;width:17px;height:17px;border-radius:50%;background:var(--ac);color:#fff;font-family:var(--mono);font-size:9.5px;display:flex;align-items:center;justify-content:center;margin-top:2px}
+.q p{margin:0;font-size:13.5px;line-height:1.5;color:var(--tx2)}
+.who{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.03em;padding:3px 9px;border-radius:4px;background:var(--s3);color:var(--tx3);margin-left:auto}
+
+/* mockup chrome */
+.mock{background:var(--s2);border:1px solid var(--bds);border-radius:10px;overflow:hidden}
+.mk-bar{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:12px 16px;border-bottom:1px solid var(--bd);background:var(--s1)}
+.mk-ttl{font-size:14px;font-weight:500}
+.mk-sub{font-size:11.5px;color:var(--tx3);margin-top:2px}
+.tap{color:var(--ac);text-decoration:underline;text-underline-offset:2px}
+.blk{border-top:1px solid var(--bd);padding:14px 16px}
+.blk:first-child{border-top:none}
+.bh{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:11px}
+.bh h5{margin:0;font-size:12.5px;font-weight:500}
+.pill{display:inline-block;font-size:10.5px;padding:2px 9px;border-radius:20px;background:var(--s3);color:var(--tx2);white-space:nowrap}
+.pill.a{background:var(--acbg);color:var(--ac)}
+.pill.g{background:var(--gdbg);color:var(--gd)}
+.pill.w{background:var(--wnbg);color:var(--wn)}
+.pill.p{background:var(--prbg);color:var(--pr)}
+.pill.m{background:var(--s3);color:var(--tx3)}
+.pill.xs{font-size:9.5px;padding:1px 7px}
+.row{display:grid;grid-template-columns:1fr auto auto;gap:12px;align-items:center;padding:9px 0;border-bottom:1px solid var(--bd);font-size:12px}
+.row:last-of-type{border-bottom:none}
+.row .rn{color:var(--tx)}
+.row .rs{font-size:10.5px;color:var(--tx3);display:block;margin-top:2px}
+.row .rv{color:var(--tx2);font-variant-numeric:tabular-nums;white-space:nowrap;font-size:11.5px}
+.note{margin:9px 0 0;font-size:11px;line-height:1.45;color:var(--tx3);font-style:italic}
+.note::before{content:"[i] ";font-style:normal;font-weight:500;color:var(--ac)}
+.g3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.g2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.sc{background:var(--s1);border:1px solid var(--bd);border-radius:6px;padding:11px 12px;min-width:0}
+.sc h6{margin:0 0 6px;font-family:var(--mono);font-size:10px;color:var(--tx3);font-weight:400}
+.sc .big{font-size:17px;font-weight:500;margin:0 0 6px;line-height:1.2}
+.sc .lin{display:flex;justify-content:space-between;gap:8px;font-size:11px;color:var(--tx2);line-height:1.5}
+.sc .lin span:last-child{color:var(--tx3);font-variant-numeric:tabular-nums;white-space:nowrap}
+.prj{border:1px solid var(--bd);border-radius:7px;padding:11px 13px;margin-bottom:9px;background:var(--s2)}
+.prj:last-child{margin-bottom:0}
+.prj.now{border-color:var(--acbd);background:var(--acbg)}
+.prjh{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+.prjt{font-size:12.5px;font-weight:500}
+.prjv{font-size:12px;color:var(--tx2);font-variant-numeric:tabular-nums}
+.prjm{font-size:10.5px;color:var(--tx3);margin-top:4px}
+.chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
+.dup{display:inline-block;font-family:var(--mono);font-size:9px;padding:1px 6px;border-radius:3px;background:var(--s3);color:var(--tx3);margin-left:6px;vertical-align:1px;font-weight:400;white-space:nowrap}
+.fig{border:1px solid var(--bd);border-radius:8px;background:var(--s1);padding:16px 18px 12px;overflow-x:auto}
+.fig svg{display:block;width:100%;min-width:640px;height:auto}
+table.f{width:100%;border-collapse:collapse;font-size:13.5px}
+table.f th{text-align:left;font-family:var(--mono);font-size:10.5px;letter-spacing:.04em;color:var(--tx3);font-weight:400;border-bottom:1px solid var(--bds);padding:0 14px 8px 0;vertical-align:bottom}
+table.f td{padding:11px 14px 11px 0;border-bottom:1px solid var(--bd);vertical-align:top;color:var(--tx2);line-height:1.5}
+table.f tr:last-child td{border-bottom:none}
+table.f td.k{color:var(--tx);font-weight:500}
+@media (max-width:900px){ .two{grid-template-columns:1fr} .g3,.g2{grid-template-columns:1fr} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<p class="eyebrow"><span>Pros Web</span><span>Why the model has to change</span><span>Memo, 31 Aug 2026</span></p>
+
+<h1>The model describes a transaction. The business is a relationship.</h1>
+
+<p class="lede">Merlin's contractor-facing data model is a coherent shape for one sale, to one
+address, on one document. Every deficiency below is a version of that shape being asked to hold a
+second sale. It follows one customer of Northgate Home Services, drawn twice on the same day. This
+memo makes the case that the fix is structural rather than visual, and it is written for two
+audiences at once: the first half is the symptom, which anyone can see, and the
+second half is the diagnosis, which needs the code.</p>
+
+<div class="conv">
+  <span class="cm">[i]</span>
+  <span>Inside a mockup, small grey text prefixed with <strong>[i]</strong> is my annotation, not
+  interface copy. Everything else in a mockup frame is intended as real UI.</span>
+</div>
+
+<details class="card">
+  <summary>
+    <span class="sl"><span class="st">How to read this</span><span class="sh2">Two halves, two readers</span></span>
+    <span class="cv">&#9656;</span>
+  </summary>
+  <div class="dbody">
+  <p><strong>Sections A and B are the symptom.</strong> One customer, one afternoon, drawn twice:
+  once on the record we have and once on the record we want. If you are here for whether the work is
+  worth doing, these two screens are the argument and you can stop after them.</p>
+  <p><strong>Sections C and D are the diagnosis.</strong> What is actually in the codebase, and what
+  the words we use are doing to us. If you are going to build this, section C is the part that decides
+  which options are available at all.</p>
+  </div>
+</details>
+
+<details class="card">
+  <summary>
+    <span class="sl"><span class="st">Taken as settled for this memo</span><span class="sh2">Working assumptions, not decisions anyone has signed</span></span>
+    <span class="cv">&#9656;</span>
+  </summary>
+  <div class="dbody">
+  <ul class="b">
+    <li>Contractors <strong>want to hand a customer one document</strong> for work sold in one
+    conversation, and <strong>need to run it as separate work</strong> afterwards. Different crews,
+    different timelines, different permits.</li>
+    <li>A <strong>customer is a person</strong>, above the address, and can hold several properties.</li>
+    <li>The <strong>single-sale case must stay exactly as simple as it is today.</strong> Any fix that
+    taxes the contractor who only ever sells one thing at a time is not a fix.</li>
+    <li>The first four rows in section C are <strong>read out of the Merlin codebase</strong>, not
+    inferred from documentation. The fifth is design context and is labelled as such. Several relevant
+    Confluence pages are four to ten months old and contradict what ships.</li>
+  </ul>
+  </div>
+</details>
+
+<details class="card last" open>
+  <summary>
+    <span class="sl"><span class="st">The one thing to decide before anything is built</span><span class="sh2">Not answered by this memo</span></span>
+    <span class="cv">&#9656;</span>
+  </summary>
+  <div class="dbody">
+  <p><strong>Does a proposal hold several priced scopes, or do proposals stay whole and something new
+  gathers them?</strong> Scopes inside one proposal give the customer one document, one signature and
+  one financing decision, and extend an object that already exists. Keeping proposals atomic means
+  inventing the thing that gathers them, and the customer signs several times.</p>
+  <p>Both branches are real work and they are not the same work, which makes this a
+  development-shape question as much as a design one. Every screen in this memo looks the same either
+  way, so nothing here settles it. If it goes unanswered, the next round builds on a guess.</p>
+  </div>
+</details>
+
+<!-- ==================================================== A -->
+<div class="sec">
+  <div class="sec-head">
+    <span class="badge">A</span>
+    <h2 class="sec-title">One afternoon, on the record we have today</h2>
+    <span class="who">SYMPTOM</span>
+  </div>
+  <div class="two">
+    <div>
+      <p class="cap">Lead detail &middot; 1428 Maple Ave &middot; as it would look on 24 September</p>
+      <div class="mock">
+        <div class="mk-bar">
+          <div>
+            <div class="mk-ttl">1428 Maple Ave</div>
+            <div class="mk-sub">Lead &middot; LD&#8209;8841 &middot; Created March 2024</div>
+          </div>
+          <span class="pill m">Lead</span>
+        </div>
+
+        <div class="blk">
+          <div class="bh"><h5>Contact</h5></div>
+          <div class="row"><span class="rn">Sara Thompson<span class="rs">sara.t@email.com &middot; (916) 555&#8209;0148</span></span><span class="rv"></span><span class="rv"></span></div>
+          <p class="note">Robert handles the billing and Sara decides. Only one of them is on the record, and
+          there is no shape here that holds both.</p>
+        </div>
+
+        <div class="blk">
+          <div class="bh"><h5>Proposals</h5><span class="pill m">4</span></div>
+          <div class="row"><span class="rn">P&#8209;1042 &nbsp;Gutter replacement<span class="rs">Accepted 12 Nov 2024</span></span><span class="rv">$6,800</span><span class="pill g xs">Complete</span></div>
+          <div class="row"><span class="rn">P&#8209;1058 &nbsp;Siding replacement<span class="rs">Accepted 18 Aug 2026</span></span><span class="rv">$37,000</span><span class="pill a xs">In progress</span></div>
+          <div class="row"><span class="rn">P&#8209;1059 &nbsp;Window replacement<span class="rs">Accepted 18 Aug 2026</span></span><span class="rv">$18,600</span><span class="pill g xs">Complete</span></div>
+          <div class="row"><span class="rn">P&#8209;1067 &nbsp;HVAC replacement<span class="rs">Draft</span></span><span class="rv">$12,900</span><span class="pill m xs">Not sent</span></div>
+          <p class="note">P&#8209;1058 and P&#8209;1059 were sold in the same conversation, on the same
+          afternoon, from the same walkthrough. Nothing in the record says so.</p>
+        </div>
+
+        <div class="blk">
+          <div class="bh"><h5>Financing</h5><span class="pill w">2 loans &middot; 1 cash</span></div>
+          <div class="row"><span class="rn">P&#8209;1042 &nbsp;Cash<span class="rs">Paid in full</span></span><span class="rv">$6,800</span><span class="rv"></span></div>
+          <div class="row"><span class="rn">P&#8209;1058 &nbsp;Loan &middot; 15 yr @ 6.99%<span class="rs">Approved &middot; NTP 20 Aug</span></span><span class="rv">$307/mo</span><span class="rv"></span></div>
+          <div class="row"><span class="rn">P&#8209;1059 &nbsp;Loan &middot; 15 yr @ 6.99%<span class="rs">Approved &middot; NTP 20 Aug</span></span><span class="rv">$167/mo</span><span class="rv"></span></div>
+          <p class="note">Two loans, underwritten twice, for one sale. The customer answered the same
+          questions twice and carries $474 a month across two agreements for one afternoon&#8217;s
+          decision.</p>
+        </div>
+
+        <div class="blk">
+          <div class="bh"><h5>Contracts</h5><span class="pill w">3 signed</span></div>
+          <div class="row"><span class="rn">Contract &middot; P&#8209;1042<span class="rs">Signed 12 Nov 2024</span></span><span class="rv"></span><span class="rv"></span></div>
+          <div class="row"><span class="rn">Contract &middot; P&#8209;1058<span class="rs">Signed 18 Aug 2026</span></span><span class="rv"></span><span class="rv"></span></div>
+          <div class="row"><span class="rn">Contract &middot; P&#8209;1059<span class="rs">Signed 18 Aug 2026</span></span><span class="rv"></span><span class="rv"></span></div>
+        </div>
+
+        <div class="blk">
+          <div class="bh"><h5>Invoices</h5><span class="pill w">3</span></div>
+          <div class="row"><span class="rn">INV&#8209;2201 &middot; P&#8209;1042<span class="rs">Paid</span></span><span class="rv">$6,800</span><span class="rv"></span></div>
+          <div class="row"><span class="rn">INV&#8209;4471 &middot; P&#8209;1058<span class="rs">$20,520 collected</span></span><span class="rv">$37,000</span><span class="rv"></span></div>
+          <div class="row"><span class="rn">INV&#8209;4472 &middot; P&#8209;1059<span class="rs">$11,160 collected</span></span><span class="rv">$18,600</span><span class="rv"></span></div>
+          <p class="note">There is no figure anywhere on this page for what the Thompsons owe. A
+          contractor asked that on the phone has to add three numbers in their head.</p>
+        </div>
+
+        <div class="blk">
+          <div class="bh"><h5>Change orders</h5><span class="pill m">1</span></div>
+          <div class="row"><span class="rn">CO&#8209;01 &middot; P&#8209;1058<span class="rs">Loan amount changed &middot; re&#8209;approved 4 Sep</span></span><span class="rv">+$2,800</span><span class="rv"></span></div>
+          <p class="note">Recorded as a financing change, which it was. What it was <em>about</em>, rot
+          behind the siding on the north elevation, is not in the record. That lives in someone's
+          photos.</p>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="arg">
+        <p class="lab">THE FAILURE IS REPETITION WITHOUT A CONTAINER</p>
+        <p>Four proposals, two loans and a cash sale, three contracts, three invoices. Every one of those
+        objects is correct on its own. The problem is that there is no level between the customer and the
+        proposal, so the page has no way to group them and no vocabulary to say which invoice belongs
+        to which piece of work.</p>
+        <p>This is not a layout problem that better design solves. Any arrangement of these objects has
+        the same defect, because the relationship the contractor is holding in their head does not
+        exist in the data.</p>
+      </div>
+
+      <div class="arg">
+        <p class="lab">THE CUSTOMER FELT IT BEFORE THE CONTRACTOR DID</p>
+        <p>Two loan applications and two signing ceremonies for one afternoon is a worse sales
+        experience than the contractor's paper process. It is also the thing the contractor most
+        wanted the software to fix, and the reason they mention bundling unprompted.</p>
+      </div>
+
+      <div class="arg">
+        <p class="lab">THE PAGE IS ALREADY AT ITS LIMIT</p>
+        <p>This is a modest customer. Two sales, one pending. A storm-restoration contractor with a
+        four-year relationship produces this page with thirty rows in it and no way to collapse them
+        into the four jobs they actually represent.</p>
+      </div>
+
+      <div class="arg">
+        <p class="lab">AND THE HEADER IS WRONG</p>
+        <p>The page is titled with an address, and the object is called a lead. Sara Thompson has bought
+        twice over two years. She has been a customer for longer than she was a lead, and the product
+        has never stopped calling her one.</p>
+      </div>
+
+      <div class="q"><span class="qn">1</span><p>Is anyone already adding a total-owed figure by hand, in a spreadsheet or on the phone? That would tell us how load-bearing the missing number is.</p></div>
+      <div class="q"><span class="qn">2</span><p>How often does a contractor genuinely sell two things in one conversation? If it is rare, the whole argument weakens and we should say so.</p></div>
+      <div class="q"><span class="qn">3</span><p>Do customers today actually get two loans, or is the sales rep quietly writing one proposal and sorting the work out off-system?</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================================================== B -->
+<div class="sec">
+  <div class="sec-head">
+    <span class="badge">B</span>
+    <h2 class="sec-title">The same customer, the same day, under Model C</h2>
+    <span class="who">SYMPTOM</span>
+  </div>
+  <div class="two">
+    <div>
+      <p class="cap">Customer record &middot; Robert &amp; Sara Thompson &middot; 24 September</p>
+      <div class="mock">
+        <div class="mk-bar">
+          <div>
+            <div class="mk-ttl">Robert &amp; Sara Thompson</div>
+            <div class="mk-sub">Customer since March 2024 &middot; <span class="tap">2 contacts</span> &middot; <span class="tap">2 properties</span></div>
+          </div>
+          <span class="pill a">Active</span>
+        </div>
+
+        <div class="blk">
+          <div class="bh"><h5>Balance across everything</h5></div>
+          <div class="g3">
+            <div class="sc"><h6>CONTRACTED</h6><p class="big">$62,400</p><div class="lin"><span>2 sold projects</span><span></span></div></div>
+            <div class="sc"><h6>COLLECTED</h6><p class="big">$38,480</p><div class="lin"><span>Last payment 2 Sep</span><span></span></div></div>
+            <div class="sc"><h6>DUE</h6><p class="big">$23,920</p><div class="lin"><span>Held by a permit</span><span></span></div></div>
+          </div>
+          <p class="note">One number, because there is now something that owns the total. The HVAC proposal is
+          not counted, because it has not been sent. This is the figure the contractor is asked for on
+          the phone.</p>
+        </div>
+
+        <div class="blk">
+          <div class="bh"><h5>Projects</h5><span class="pill m">3</span></div>
+
+          <div class="prj now">
+            <div class="prjh"><span class="prjt">Exterior refresh for the Thompsons</span><span class="prjv">$55,600</span></div>
+            <div class="prjm">Production &middot; 2 jobs &middot; signed 18 Aug &middot; $474/mo &middot; MI&#8209;4471</div>
+            <div class="chips">
+              <span class="pill a xs">Siding &middot; Closeout</span>
+              <span class="pill g xs">Windows &middot; Closed</span>
+              <span class="pill w xs">CO&#8209;01 &nbsp;+$2,800 &middot; rot, north elevation</span>
+            </div>
+          </div>
+
+          <div class="prj">
+            <div class="prjh"><span class="prjt">HVAC replacement</span><span class="prjv">$12,900</span></div>
+            <div class="prjm">Pursuing &middot; proposal drafted, not sent</div>
+          </div>
+
+          <div class="prj">
+            <div class="prjh"><span class="prjt">Gutter replacement</span><span class="prjv">$6,800</span></div>
+            <div class="prjm">Closed Dec 2024 &middot; paid in full</div>
+          </div>
+
+          <p class="note">Fourteen rows on the page before, three here. The siding and windows work is one
+          project because it was one conversation, and it still shows as two jobs because it is two
+          crews.</p>
+        </div>
+
+        <div class="blk">
+          <div class="bh"><h5>Opportunities</h5><span class="pill m">1 open</span></div>
+          <div class="row"><span class="rn">Roofing<span class="rs">Customer interest &middot; quoted, then deferred 18 Aug &middot; roof sound, may want metal once they have saved</span></span><span class="rv">$38,900</span><span class="pill p xs">Deferred</span></div>
+          <p class="note">Nowhere for this to live today. It was discussed, priced, and taken back off
+          the table, and under the current model that conversation leaves no trace.</p>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="arg">
+        <p class="lab">THE CONTAINER IS THE WHOLE FIX</p>
+        <p>Nothing on this page is a new interaction. It is the same objects with one level inserted
+        above them, so that work sold together can be grouped and work delivered separately can still
+        be separate.</p>
+        <p>That single insertion is what produces the total owed, the single loan, the single contract,
+        and the two jobs that are visibly part of one thing.</p>
+      </div>
+
+      <div class="arg">
+        <p class="lab">THE SIMPLE CASE DID NOT GET HARDER</p>
+        <p>Gutter replacement is a project with one opportunity, one proposal and one job. It renders as
+        one line. A contractor who never bundles never meets the concept, which is the test any version
+        of this has to pass.</p>
+      </div>
+
+      <div class="arg">
+        <p class="lab">THE CHANGE ORDER NOW SAYS WHAT IT WAS ABOUT</p>
+        <p>Attached to the siding scope rather than to a financing record, so it carries both the reason
+        and the money. The re-underwriting still happens; it is just no longer the only thing recorded.</p>
+      </div>
+
+      <div class="arg">
+        <p class="lab">WHAT THIS SCREEN IS NOT ARGUING</p>
+        <p>Whether the project holds scopes inside one proposal or gathers several whole proposals. That
+        is the open question, it is argued in its own memo, and this page looks the same either way.</p>
+      </div>
+
+      <div class="q"><span class="qn">1</span><p>Does a project need a name a human writes, or is one generated from its opportunities good enough? A named project is a small tax on every sale.</p></div>
+      <div class="q"><span class="qn">2</span><p>Should the deferred roofing opportunity sit on the customer, as drawn, or inside the project it was deferred out of?</p></div>
+      <div class="q"><span class="qn">3</span><p>Is a rolled-up total across three projects, one of them four years closed, actually useful, or is it a number nobody asks for?</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================================================== C -->
+<div class="sec">
+  <div class="sec-head">
+    <span class="badge">C</span>
+    <h2 class="sec-title">What is actually in the codebase</h2>
+    <span class="who">DIAGNOSIS</span>
+  </div>
+  <div class="two">
+    <div>
+      <p class="cap">Today's shape &middot; everything of consequence hangs off one object</p>
+      <div class="fig">
+        <svg viewBox="0 0 900 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Today's model: a lead is an address, a proposal hangs off it, and financing, contract, invoice, change order and job all hang off the proposal. There is no opportunity and no level between the lead and the proposal.">
+          <defs><marker id="wm" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,1 L8,4.5 L0,8 z" fill="#8b8a84"/></marker></defs>
+
+          <rect x="0" y="112" width="176" height="60" rx="4" fill="#ffffff" stroke="#d5d3cc"/>
+          <text x="16" y="138" font-size="12.5" font-weight="500" fill="#1b1b1a" font-family="-apple-system,sans-serif">Lead</text>
+          <text x="16" y="157" font-size="10.5" fill="#8b8a84" font-family="-apple-system,sans-serif">an address, not a person</text>
+
+          <path d="M176,142 H228" fill="none" stroke="#8b8a84" stroke-width="1.3" marker-end="url(#wm)"/>
+
+          <rect x="238" y="100" width="196" height="84" rx="4" fill="#e9f1fa" stroke="#185fa5" stroke-width="1.4"/>
+          <text x="256" y="128" font-size="13" font-weight="500" fill="#0c447c" font-family="-apple-system,sans-serif">Proposal</text>
+          <text x="256" y="148" font-size="10.5" fill="#22557f" font-family="-apple-system,sans-serif">one scope of work</text>
+          <text x="256" y="166" font-size="10.5" fill="#22557f" font-family="-apple-system,sans-serif">carries everything below</text>
+
+          <path d="M434,142 H486" fill="none" stroke="#8b8a84" stroke-width="1.3"/>
+          <path d="M486,26 V258" fill="none" stroke="#8b8a84" stroke-width="1.3"/>
+
+          <g font-family="-apple-system,sans-serif">
+            <path d="M486,26 H544" fill="none" stroke="#8b8a84" stroke-width="1.3" marker-end="url(#wm)"/>
+            <rect x="554" y="8" width="220" height="36" rx="3" fill="#ffffff" stroke="#d5d3cc"/>
+            <text x="570" y="31" font-size="11.5" fill="#1b1b1a">Financing bundle</text>
+            <text x="758" y="31" text-anchor="end" font-size="10" fill="#8b8a84">singular in practice</text>
+
+            <path d="M486,84 H544" fill="none" stroke="#8b8a84" stroke-width="1.3" marker-end="url(#wm)"/>
+            <rect x="554" y="66" width="220" height="36" rx="3" fill="#ffffff" stroke="#d5d3cc"/>
+            <text x="570" y="89" font-size="11.5" fill="#1b1b1a">Contract</text>
+
+            <path d="M486,142 H544" fill="none" stroke="#8b8a84" stroke-width="1.3" marker-end="url(#wm)"/>
+            <rect x="554" y="124" width="220" height="36" rx="3" fill="#ffffff" stroke="#d5d3cc"/>
+            <text x="570" y="147" font-size="11.5" fill="#1b1b1a">Invoice</text>
+
+            <path d="M486,200 H544" fill="none" stroke="#8b8a84" stroke-width="1.3" marker-end="url(#wm)"/>
+            <rect x="554" y="182" width="220" height="36" rx="3" fill="#fbf0eb" stroke="#e2b39d"/>
+            <text x="570" y="205" font-size="11.5" fill="#a8461f">Change order</text>
+            <text x="758" y="205" text-anchor="end" font-size="10" fill="#a8461f">a financing event</text>
+
+            <path d="M486,258 H544" fill="none" stroke="#8b8a84" stroke-width="1.3" marker-end="url(#wm)"/>
+            <rect x="554" y="240" width="220" height="36" rx="3" fill="#ffffff" stroke="#d5d3cc"/>
+            <text x="570" y="263" font-size="11.5" fill="#1b1b1a">Job</text>
+          </g>
+
+          <rect x="0" y="216" width="176" height="60" rx="4" fill="#faf9f7" stroke="#e7e5e0" stroke-dasharray="4 3"/>
+          <text x="16" y="242" font-size="12.5" font-weight="500" fill="#b4b2a9" font-family="-apple-system,sans-serif">Opportunity</text>
+          <text x="16" y="261" font-size="10.5" fill="#b4b2a9" font-family="-apple-system,sans-serif">does not exist</text>
+        </svg>
+      </div>
+
+      <table class="f" style="margin-top:22px">
+        <thead><tr><th style="width:190px">Finding</th><th>What the code does</th><th style="width:210px">Consequence</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="k">The proposal hangs off a lead, and a lead is an address</td>
+            <td>Proposals are keyed by <span class="pill m xs">leadId</span>. There is no person-level identity above the property.</td>
+            <td>One customer with two properties, or two decision-makers at one property, has nowhere to live. This is the largest structural change of the four.</td>
+          </tr>
+          <tr>
+            <td class="k">Financing is proposal-level and singular in practice</td>
+            <td>The financing bundles field is an array, but each bundle is a set of quotes, quotes are cash or loan, and the code works with a single active bundle selected by id.</td>
+            <td>The array reads as alternatives offered, not several financings running at once. Two proposals sold in one conversation therefore cannot share a loan, because there is nothing above the proposal for one to attach to.</td>
+          </tr>
+          <tr>
+            <td class="k">A change order is a financing change, not a scope change</td>
+            <td>It fires when the loan amount, offer, autopay election or cash price differs from the active bundle, and resolves by updating the proposal's financing. Blocked outright when the loan is conditional.</td>
+            <td>There is already machinery for "the money changed after the customer said yes", attached to the proposal. There is nothing attaching a change order to a piece of work.</td>
+          </tr>
+          <tr>
+            <td class="k">The existing "projects" concept is a design artefact, not a commercial one</td>
+            <td>On the proposal it is a version pointer. Resolved, it carries a bill of materials, an electricity profile and a design.</td>
+            <td>It is closer to "the engineered system" than to "the priced chunk of scope". It is the nearest existing thing to what we need and still not the same thing.</td>
+          </tr>
+          <tr>
+            <td class="k">A proposal holds exactly one scope <span class="dup">design context</span></td>
+            <td>Asserted in the model work rather than read out of the code: there is no additive subdivision layer inside a proposal. Worth confirming before it is relied on.</td>
+            <td>Bundling is either impossible or done by convention outside the data. This is the extension the open question is about.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div>
+      <div class="arg">
+        <p class="lab">THESE CHANGE WHICH OPTIONS EXIST</p>
+        <p>They are stated first because they are constraints, not colour. Two of them make a design option
+        cheaper than it looks and two make one more expensive, and it is not obvious in advance which is
+        which without reading them.</p>
+      </div>
+
+      <div class="arg">
+        <p class="lab">THE GOOD NEWS IS THE CHANGE ORDER</p>
+        <p>The hard part, re-underwriting a loan after acceptance, is already built. It is bounded rather
+        than free: blocked outright when the loan is conditional, and held inside the category&#8217;s
+        minimum and maximum. What is missing is only the link from the money to the work it was about,
+        which is a smaller ask than it sounds from the outside.</p>
+      </div>
+
+      <div class="arg">
+        <p class="lab">THE BAD NEWS IS THE LEAD</p>
+        <p>Person-above-address is not an addition, it is a re-parenting. Everything currently keyed to a
+        lead has to acquire an owner. It is tracked separately from this work for that reason, but no
+        version of the model works without it.</p>
+      </div>
+
+      <div class="arg">
+        <p class="lab">A WARNING ABOUT THE WORD PROJECT</p>
+        <p>Model C wants to call its container a project. Merlin already has a project and it means the
+        engineered system. That collision has to be resolved with engineering early rather than
+        discovered in review.</p>
+      </div>
+
+      <div class="q"><span class="qn">1</span><p>Is the existing project concept closer to a priced chunk of scope than I have read it? If so, question one of the open decisions turns from new work into an extension.</p></div>
+      <div class="q"><span class="qn">2</span><p>Is a join table between opportunities and scopes acceptable, or is there pressure to keep a single foreign key? I would rather know the constraint than design around one that is not there.</p></div>
+      <div class="q"><span class="qn">3</span><p>Is person-above-address genuinely on someone's roadmap, or is it a dependency that nobody currently owns?</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================================================== D -->
+<div class="sec">
+  <div class="sec-head">
+    <span class="badge">D</span>
+    <h2 class="sec-title">The vocabulary is wrong too, and that is not cosmetic</h2>
+    <span class="who">DIAGNOSIS</span>
+  </div>
+  <div class="two">
+    <div>
+      <table class="f">
+        <thead><tr><th style="width:150px">Word</th><th>The problem</th><th style="width:230px">What it costs</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="k">Lead</td>
+            <td>A permanent name for a temporary condition. A lead is the first thirty seconds of a
+            relationship; in Merlin it is the object that persists for its whole life. A homeowner who
+            has bought three times over four years is still, structurally and on screen, a lead.</td>
+            <td>The contractor's vocabulary and the product's vocabulary diverge on day one and never
+            reconverge. Every conversation about the record needs a translation step.</td>
+          </tr>
+          <tr>
+            <td class="k">Project</td>
+            <td>Already taken. In Merlin it is the engineered system: a version pointer carrying a bill
+            of materials, an electricity profile and a design. Model C wants the same word for the
+            commercial container.</td>
+            <td>Two meanings in one codebase and one UI. Either Model C picks another word or the
+            existing one is renamed, and the second is more work than it sounds.</td>
+          </tr>
+          <tr>
+            <td class="k">Scope</td>
+            <td>Collides with itself. Model C uses scope for a priced, additive unit of a proposal. The
+            insurance sub-status uses "Scope received" for the carrier's damage document. Both appear on
+            the same job on the same day.</td>
+            <td>A contractor doing insurance restoration reads the word twice on one screen meaning two
+            different things. One of them has to be renamed before either ships.</td>
+          </tr>
+          <tr>
+            <td class="k">Opportunity</td>
+            <td>Not a collision, an absence. There is no word because there is no object, so the thing
+            a rep spots on a service visit has no name and no home.</td>
+            <td>Pipeline is only what has already been priced. Anything noticed and not yet quoted falls
+            out of the system entirely.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div>
+      <div class="arg">
+        <p class="lab">NAMING IS THE CHEAPEST PART TO FIX AND THE MOST EXPENSIVE TO LEAVE</p>
+        <p>These are not polish items to be handled at the end. Two of the four are collisions, which
+        means every conversation between design and engineering about the model silently carries an
+        ambiguity, and the ambiguity survives into the code.</p>
+      </div>
+
+      <div class="arg">
+        <p class="lab">"LEAD" IS THE ONE THE CONTRACTOR NOTICES</p>
+        <p>The other three are internal. Lead is on the screen, in the navigation, and in the mouth of
+        every rep who has to explain why the system calls their best repeat customer a lead.</p>
+      </div>
+
+      <div class="arg">
+        <p class="lab">WHERE I COULD BE WRONG</p>
+        <p>It is possible the industry has simply accepted "lead" as a permanent record name and nobody
+        blinks. Several CRMs do exactly this. If field research says contractors do not notice, this
+        item drops to a nice-to-have and the memo is weaker for it.</p>
+      </div>
+
+      <div class="q"><span class="qn">1</span><p>Do we rename the existing project concept, or does Model C give up the word? Deciding late is much worse than deciding either way now.</p></div>
+      <div class="q"><span class="qn">2</span><p>Which "scope" gets renamed? The insurance one is inherited industry vocabulary, which argues for keeping it and renaming ours.</p></div>
+      <div class="q"><span class="qn">3</span><p>Does anyone outside design object to retiring "lead" as a persistent object name, or is the resistance purely migration cost?</p></div>
+    </div>
+  </div>
+</div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Model C on screen</title>
+<style>
+:root{
+  color-scheme: light;
+  --bg:#ffffff; --s1:#faf9f7; --s2:#ffffff; --s3:#f2f1ed;
+  --tx:#1b1b1a; --tx2:#575651; --tx3:#8b8a84;
+  --bd:#e7e5e0; --bds:#d5d3cc;
+  --ac:#185fa5; --acbg:#e9f1fa; --acbd:#a8c9ec;
+  --wn:#a8461f; --wnbg:#fbf0eb; --wnbd:#e2b39d;
+  --gd:#3b6d11; --gdbg:#eef4e4;
+  --pr:#534ab7; --prbg:#eeedfe;
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:var(--sans);font-size:15px;line-height:1.62;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1560px;margin:0 auto;padding:56px 40px 96px}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.04em;color:var(--tx3);margin:0 0 16px}
+.eyebrow span{margin-right:26px}
+h1{font-size:40px;line-height:1.12;font-weight:500;letter-spacing:-.02em;margin:0 0 18px;max-width:750px}
+.lede{max-width:750px;color:var(--tx2);font-size:15.5px;margin:0 0 24px}
+.conv{display:flex;gap:11px;align-items:baseline;background:var(--s1);border:1px solid var(--bd);border-radius:10px;padding:12px 16px;margin:0 0 26px;font-size:13.5px;color:var(--tx2);line-height:1.55;max-width:750px}
+.conv .cm{font-weight:500;color:var(--ac);flex:0 0 auto}
+.card{background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:16px 22px;margin:0 0 18px;max-width:750px}
+.card.last{margin-bottom:56px}
+ul.b{margin:0;padding:0 0 0 18px}
+ul.b li{margin:0 0 8px;color:var(--tx2);font-size:14.5px;line-height:1.55}
+ul.b li:last-child{margin-bottom:0}
+ul.b li strong,p strong{color:var(--tx);font-weight:500}
+.card .dbody p{margin:0 0 10px;font-size:14.5px;line-height:1.6;color:var(--tx2)}
+.card .dbody p:last-child{margin-bottom:0}
+details > summary{cursor:pointer;list-style:none;display:flex;align-items:baseline;justify-content:space-between;gap:16px}
+details > summary::-webkit-details-marker{display:none}
+summary .sl{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+summary .st{font-size:15px;font-weight:500;color:var(--tx)}
+summary .sh2{font-size:13px;color:var(--tx3)}
+summary .cv{font-size:16px;color:var(--tx3);transition:transform .15s ease;flex:0 0 auto;line-height:1;position:relative;top:2px}
+details[open] > summary .cv{transform:rotate(90deg)}
+details[open] > summary{margin-bottom:14px}
+.sec{margin:0 0 64px}
+.sec-head{display:flex;align-items:baseline;gap:11px;padding-bottom:12px;border-bottom:1px solid var(--bd);margin-bottom:20px}
+.badge{flex:0 0 auto;width:20px;height:20px;border:1px solid var(--acbd);border-radius:4px;color:var(--ac);font-family:var(--mono);font-size:10.5px;display:flex;align-items:center;justify-content:center;background:var(--acbg);position:relative;top:2px}
+.sec-title{font-size:19px;font-weight:500;margin:0;letter-spacing:-.01em}
+.sec-when{font-size:13px;color:var(--tx3);margin-left:auto}
+.two{display:grid;grid-template-columns:minmax(0,1fr) 350px;gap:38px;align-items:start}
+.cap{font-family:var(--mono);font-size:11px;color:var(--tx3);margin:0 0 10px}
+.arg{margin:0 0 20px}
+.arg .lab{font-family:var(--mono);font-size:11px;color:#7d8fa3;margin:0 0 5px}
+.arg p{margin:0;font-size:14px;line-height:1.58;color:var(--tx2)}
+.q{display:flex;gap:10px;align-items:flex-start;margin:0 0 10px}
+.qn{flex:0 0 auto;width:17px;height:17px;border-radius:50%;background:var(--ac);color:#fff;font-family:var(--mono);font-size:9.5px;display:flex;align-items:center;justify-content:center;margin-top:2px}
+.q p{margin:0;font-size:13.5px;line-height:1.5;color:var(--tx2)}
+
+/* mockup chrome */
+.lineage{border:1px solid var(--bd);border-radius:6px;background:var(--s1);padding:14px 16px}
+.lineage svg{display:block;width:100%;height:auto}
+.mock{background:var(--s2);border:1px solid var(--bds);border-radius:10px;overflow:hidden}
+.mk-bar{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:12px 16px;border-bottom:1px solid var(--bd);background:var(--s1)}
+.mk-ttl{font-size:14px;font-weight:500}
+.mk-sub{font-size:11.5px;color:var(--tx3);margin-top:2px}
+.tap{color:var(--ac);text-decoration:underline;text-underline-offset:2px}
+.blk{border-top:1px solid var(--bd);padding:14px 16px}
+.blk:first-child{border-top:none}
+.bh{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:11px}
+.bh h5{margin:0;font-size:12.5px;font-weight:500}
+.pill{display:inline-block;font-size:10.5px;padding:2px 9px;border-radius:20px;background:var(--s3);color:var(--tx2);white-space:nowrap}
+.pill.a{background:var(--acbg);color:var(--ac)}
+.pill.g{background:var(--gdbg);color:var(--gd)}
+.pill.w{background:var(--wnbg);color:var(--wn)}
+.pill.p{background:var(--prbg);color:var(--pr)}
+.pill.m{background:var(--s3);color:var(--tx3)}
+.pill.xs{font-size:9.5px;padding:1px 7px}
+.row{display:grid;grid-template-columns:1fr auto auto;gap:12px;align-items:center;padding:9px 0;border-bottom:1px solid var(--bd);font-size:12px}
+.row:last-of-type{border-bottom:none}
+.row .rn{color:var(--tx)}
+.row .rs{font-size:10.5px;color:var(--tx3);display:block;margin-top:2px}
+.row .rv{color:var(--tx2);font-variant-numeric:tabular-nums;white-space:nowrap;font-size:11.5px}
+.note{margin:9px 0 0;font-size:11px;line-height:1.45;color:var(--tx3);font-style:italic}
+.note::before{content:"[i] ";font-style:normal;font-weight:500;color:var(--ac)}
+.empty{border:1px dashed var(--bds);border-radius:6px;padding:14px 16px;text-align:center;font-size:11.5px;color:var(--tx3);background:var(--s1)}
+.locked{border:1px dashed var(--bds);border-radius:6px;padding:12px 16px;font-size:11.5px;color:var(--b4b2a9);background:var(--s1);display:flex;justify-content:space-between;gap:12px;align-items:center;color:#b4b2a9}
+.g3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.g2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.sc{background:var(--s1);border:1px solid var(--bd);border-radius:6px;padding:11px 12px;min-width:0}
+.sc h6{margin:0 0 6px;font-family:var(--mono);font-size:10px;color:var(--tx3);font-weight:400}
+.sc .big{font-size:17px;font-weight:500;margin:0 0 6px;line-height:1.2}
+.sc .lin{display:flex;justify-content:space-between;gap:8px;font-size:11px;color:var(--tx2);line-height:1.5}
+.sc .lin span:last-child{color:var(--tx3);font-variant-numeric:tabular-nums;white-space:nowrap}
+.tog{display:grid;grid-template-columns:38px 1fr auto;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--bd)}
+.tog:last-of-type{border-bottom:none}
+.sw{width:34px;height:19px;border-radius:20px;background:var(--ac);position:relative}
+.sw.off{background:var(--s3);border:1px solid var(--bds)}
+.sw i{position:absolute;top:3px;right:3px;width:13px;height:13px;border-radius:50%;background:#fff;display:block}
+.sw.off i{right:auto;left:3px;background:var(--tx3)}
+.tog .tn{font-size:12.5px;font-weight:500;color:var(--tx)}
+.tog .td{font-size:10.5px;color:var(--tx3);margin-top:2px}
+.tog.off .tn{color:var(--tx3)}
+.tog .tv{font-size:12.5px;color:var(--tx);font-variant-numeric:tabular-nums;text-align:right}
+.tog.off .tv{color:#b4b2a9}
+.tot{display:flex;justify-content:space-between;align-items:baseline;padding-top:11px;margin-top:4px;border-top:1px solid var(--bds);font-size:13px;font-weight:500}
+.tot .big{font-size:17px}
+.stg{display:grid;grid-template-columns:14px 1fr auto;gap:11px;align-items:center;padding:0 12px;height:38px;border-bottom:1px solid var(--bd);background:var(--s2)}
+.stg:last-child{border-bottom:none}
+.stg .dot{width:10px;height:10px;border-radius:50%;border:1.5px solid var(--bds);background:var(--s2)}
+.stg.done .dot{background:var(--gd);border-color:var(--gd)}
+.stg.now{background:var(--acbg)}
+.stg.now .dot{background:var(--ac);border-color:var(--ac)}
+.stg .nm{font-size:11.5px;color:var(--tx2)}
+.stg.done .nm{color:var(--tx3)}
+.stg.now .nm{color:var(--tx);font-weight:500}
+.stg .mt{font-size:10.5px;color:var(--tx3);white-space:nowrap}
+.stg.now .mt{color:var(--ac)}
+.gaterow{display:flex;align-items:center;gap:9px;background:var(--wnbg);border:1px solid var(--wnbd);border-radius:6px;padding:9px 12px;margin:10px 0 0;font-size:11px;color:#6f4028}
+.gaterow b{color:#4f2a17;font-weight:500}
+.sub{display:flex;justify-content:space-between;gap:8px;padding:6px 0;font-size:11.5px;border-bottom:1px solid var(--bd)}
+.sub:last-child{border-bottom:none}
+.sub .sk{color:var(--tx3)}
+.sub .sv{color:var(--tx);font-weight:500;text-align:right}
+.sub .sv.ok{color:var(--gd)}
+.sub .sv.wait{color:var(--wn)}
+.sub.na .sk,.sub.na .sv{color:#b4b2a9;font-weight:400}
+.tk{display:grid;grid-template-columns:13px 1fr;gap:9px;align-items:start;padding:4px 0;font-size:11.5px;color:var(--tx2);line-height:1.4}
+.tk .bx{width:12px;height:12px;border-radius:3px;border:1px solid var(--bds);margin-top:2px}
+.tk.done .bx{background:var(--gd);border-color:var(--gd)}
+.tk.done span{color:var(--tx3)}
+.tk.blk .bx{border-color:var(--wnbd);background:var(--wnbg)}
+.tk .s2{display:block;color:var(--tx3);font-size:10px}
+.bal{border:1px solid var(--bd);border-radius:6px;background:var(--s2);padding:12px 13px}
+.bal h6{margin:0 0 9px;font-size:12px;font-weight:500}
+.balr{display:flex;justify-content:space-between;font-size:11.5px;padding:4px 0;color:var(--tx2)}
+.balr .v{font-variant-numeric:tabular-nums;color:var(--tx);font-weight:500}
+.balr.t{border-top:1px solid var(--bd);margin-top:7px;padding-top:9px;font-size:13px;color:var(--tx);font-weight:500}
+.balr.t .v{font-size:15px}
+.co{background:var(--wnbg);border:1px solid var(--wnbd);border-radius:6px;padding:11px 12px}
+.co h6{margin:0 0 8px;font-size:12px;font-weight:500;color:#a8461f}
+.cor{display:flex;justify-content:space-between;gap:10px;font-size:11.5px;padding:3px 0}
+.cor .k{color:#8a5636}
+.cor .v{color:#5c3320;font-variant-numeric:tabular-nums;text-align:right}
+@media (max-width:900px){ .two{grid-template-columns:1fr} .g3,.g2{grid-template-columns:1fr} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<p class="eyebrow"><span>Pros Web</span><span>Model C on screen</span><span>Mockups, 31 Aug 2026</span></p>
+
+<h1>One project, start to finish</h1>
+
+<p class="lede">Eight moments in one sale, drawn as screens rather than diagrams. Northgate Home
+Services sells siding and windows to the Thompsons, defers a roof, finds rot at tear-off, and gets
+held at closeout by a permit inspection. The point is to see whether the model survives being
+looked at.</p>
+
+<div class="conv">
+  <span class="cm">[i]</span>
+  <span>Inside a mockup, small grey text prefixed with <strong>[i]</strong> is my annotation, not
+  interface copy. Everything else in a mockup frame is intended as real UI.</span>
+</div>
+
+<details class="card">
+  <summary>
+    <span class="sl"><span class="st">Taken as settled for this memo</span><span class="sh2">Carried in from the Model C memo</span></span>
+    <span class="cv">&#9656;</span>
+  </summary>
+  <div class="dbody">
+  <ul class="b">
+    <li>A <strong>project is always mandatory</strong> and is the container. Opportunities, proposals and jobs are peers inside it.</li>
+    <li>The project has <strong>two phases</strong>. Selling holds property details, notes and a proposal. Operations arrives on winning and brings the money and the jobs.</li>
+    <li><strong>One acceptance, one contract, one financing.</strong> A proposal holds scopes; one job per signed scope.</li>
+    <li>Opportunities <strong>link into</strong> a project and keep their provenance. Status is what moves.</li>
+    <li>Jobs run <strong>stages, tasks, sub-statuses and gates</strong>. A gate sits on a transition, not on a stage.</li>
+  </ul>
+  </div>
+</details>
+
+<details class="card last">
+  <summary>
+    <span class="sl"><span class="st">Invented for this memo, overrule freely</span><span class="sh2">Three things nothing else specifies</span></span>
+    <span class="cv">&#9656;</span>
+  </summary>
+  <div class="dbody">
+  <p><strong>Project status vocabulary.</strong> Pursuing, production, closing, closed, with archived
+  for a project that never sells. Nothing we have written defines one.</p>
+  <p><strong>Payment milestones.</strong> Twenty percent deposit, forty on install start, forty on
+  completion. Every money figure in these screens follows from that.</p>
+  <p><strong>The change order subject.</strong> Rot behind the siding, found at tear-off. The old deck
+  rot example belonged to a roofing job, and roofing was deferred.</p>
+  </div>
+</details>
+
+<div class="sec">
+  <div class="sec-head"><div class="badge">A</div><h2 class="sec-title">Before there is a project</h2><span class="sec-when">Customer record &middot; 12 Aug</span></div>
+  <div class="two">
+    <div>
+      <p class="cap">Three opportunities, nothing started</p>
+      <div class="mock">
+        <div class="mk-bar">
+          <div><div class="mk-ttl">Robert &amp; Sara Thompson</div>
+          <div class="mk-sub">1428 Maple Ave, Sacramento CA &middot; <span class="tap">2 contacts</span> &middot; <span class="tap">2 properties</span> &middot; customer since Mar 2024</div></div>
+          <span class="pill m">Prospect</span>
+        </div>
+
+        <div class="blk">
+          <div class="bh"><h5>Opportunities</h5><span class="pill a">Start a project from selected</span></div>
+          <div class="row">
+            <span class="rn">Siding<span class="rs">Sara mentioned the south elevation is cupping</span></span>
+            <span class="pill g xs">Customer interest</span>
+            <span class="rv">est. $32,000</span>
+          </div>
+          <div class="row">
+            <span class="rn">Roofing<span class="rs">Asked about it at the same visit</span></span>
+            <span class="pill g xs">Customer interest</span>
+            <span class="rv">est. $38,000</span>
+          </div>
+          <div class="row">
+            <span class="rn">Windows<span class="rs">Spotted while measuring. Worth doing with siding</span></span>
+            <span class="pill a xs">Contractor identified</span>
+            <span class="rv">est. $18,000</span>
+          </div>
+          <p class="note">All three are unpursued. Provenance is set here and never changes; status is what moves.</p>
+        </div>
+
+        <div class="blk">
+          <div class="bh"><h5>Projects</h5></div>
+          <div class="empty">No projects yet. Selecting one or more opportunities starts one.</div>
+        </div>
+
+        <div class="blk">
+          <div class="bh"><h5>Financials</h5></div>
+          <div class="empty">Nothing owed. No master invoice, no payment requests.</div>
+        </div>
+
+        <div class="blk">
+          <div class="bh"><h5>Notes</h5><span class="pill m">4</span></div>
+          <div class="row"><span class="rn">Gate code 4417. Dog in the back yard, friendly but loud.<span class="rs">Pinned</span></span><span></span><span class="rv">&mdash;</span></div>
+          <div class="row"><span class="rn">Measured all elevations. Siding is cupping badly on the south side.<span class="rs">Site visit &middot; Priya Raman</span></span><span></span><span class="rv">10 Aug</span></div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="arg">
+        <p class="lab">The project is the verb</p>
+        <p>Nothing here is a project yet, and the action that creates one is <strong>selecting
+        opportunities and starting</strong>. That single control is where the model becomes visible to
+        a contractor, and it is the only place a project is ever born.</p>
+      </div>
+      <div class="arg">
+        <p class="lab">Two empty states, not one</p>
+        <p>No projects and nothing owed are different absences. Collapsing them into one "nothing here
+        yet" would hide that this customer has been engaged and measured, just not sold to.</p>
+      </div>
+      <div class="arg">
+        <p class="lab">Estimates before pricing</p>
+        <p>Rough figures on unpursued opportunities, deliberately round. They are what makes a list of
+        three worth triaging, and they must not be confused with a scope price.</p>
+      </div>
+      <div class="q"><div class="qn">1</div><p>Can a project be started from zero opportunities, for work that walks in the door?</p></div>
+      <div class="q"><div class="qn">2</div><p>Does selecting opportunities imply they are all going in the proposal, or just in the project?</p></div>
+    </div>
+  </div>
+</div>
+
+<div class="sec">
+  <div class="sec-head"><div class="badge">B</div><h2 class="sec-title">The project on day one</h2><span class="sec-when">Project view &middot; 12 Aug</span></div>
+  <div class="two">
+    <div>
+      <p class="cap">Selling phase only. This is how thin a project starts</p>
+      <div class="mock">
+        <div class="mk-bar">
+          <div><div class="mk-ttl">Exterior refresh for the Thompsons</div>
+          <div class="mk-sub">Project &middot; <span class="tap">R. &amp; S. Thompson</span> &middot; 1428 Maple Ave &middot; created 12 Aug by Priya Raman</div></div>
+          <span class="pill a">Pursuing</span>
+        </div>
+
+        <div class="blk">
+          <div class="bh"><h5>How this project came together</h5><span class="pill m">3 opportunities</span></div>
+          <div class="lineage">
+          <svg viewBox="0 0 1000 178" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Three opportunities on the customer, each with its provenance, feed one project that holds only a selling phase.">
+            <defs><marker id="lb" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,1 L8,4.5 L0,8 z" fill="#8b8a84"/></marker></defs>
+            <text x="0" y="12" font-family="-apple-system,sans-serif" font-size="10" fill="#8b8a84">Opportunities on the customer</text>
+            <rect x="0" y="22" width="280" height="44" rx="3" fill="#ffffff" stroke="#d5d3cc"/>
+            <text x="14" y="42" font-family="-apple-system,sans-serif" font-size="12" fill="#1b1b1a">Siding</text>
+            <text x="14" y="57" font-family="-apple-system,sans-serif" font-size="9.5" fill="#3b6d11">Customer interest</text>
+            <rect x="0" y="74" width="280" height="44" rx="3" fill="#ffffff" stroke="#d5d3cc"/>
+            <text x="14" y="94" font-family="-apple-system,sans-serif" font-size="12" fill="#1b1b1a">Roofing</text>
+            <text x="14" y="109" font-family="-apple-system,sans-serif" font-size="9.5" fill="#3b6d11">Customer interest</text>
+            <rect x="0" y="126" width="280" height="44" rx="3" fill="#ffffff" stroke="#d5d3cc"/>
+            <text x="14" y="146" font-family="-apple-system,sans-serif" font-size="12" fill="#1b1b1a">Windows</text>
+            <text x="14" y="161" font-family="-apple-system,sans-serif" font-size="9.5" fill="#185fa5">Contractor identified</text>
+
+            <path d="M280,44 H360" fill="none" stroke="#b4b2a9" stroke-width="1.3"/>
+            <path d="M280,96 H360" fill="none" stroke="#b4b2a9" stroke-width="1.3"/>
+            <path d="M280,148 H360" fill="none" stroke="#b4b2a9" stroke-width="1.3"/>
+            <path d="M360,44 V148" fill="none" stroke="#b4b2a9" stroke-width="1.3"/>
+            <path d="M360,96 H440" fill="none" stroke="#8b8a84" stroke-width="1.3" marker-end="url(#lb)"/>
+
+            <rect x="446" y="48" width="440" height="96" rx="3" fill="#ffffff" stroke="#185fa5" stroke-width="1.4"/>
+            <text x="464" y="74" font-family="-apple-system,sans-serif" font-size="12" font-weight="500" fill="#185fa5">Project</text>
+            <text x="464" y="96" font-family="-apple-system,sans-serif" font-size="12" fill="#1b1b1a">Exterior refresh for the Thompsons</text>
+            <text x="464" y="116" font-family="-apple-system,sans-serif" font-size="10.5" fill="#8b8a84">Selling phase only. Nothing sold yet.</text>
+          </svg>
+          </div>
+          <p class="note">Linked, not moved. All three still belong to the customer and keep the provenance they were created with.</p>
+        </div>
+
+        <div class="blk">
+          <div class="bh"><h5>Selling phase</h5><span class="pill m">Everything the project holds today</span></div>
+          <div class="row"><span class="rn">Linked opportunities<span class="rs">Siding, Roofing, Windows &middot; all still owned by the customer</span></span><span></span><span class="rv">3</span></div>
+          <div class="row"><span class="rn">Property details and measurements<span class="rs">1428 Maple Ave &middot; elevations measured 10 Aug</span></span><span></span><span class="rv">Complete</span></div>
+          <div class="row"><span class="rn">Notes and history<span class="rs">Carried from the customer, plus anything added here</span></span><span></span><span class="rv">2</span></div>
+          <div class="row"><span class="rn">Proposal<span class="rs">v1 draft &middot; not yet sent</span></span><span class="pill m xs">Draft</span><span class="rv">&mdash;</span></div>
+        </div>
+
+        <div class="blk">
+          <div class="bh"><h5>Operations phase</h5><span class="pill m">Not yet</span></div>
+          <div class="locked"><span>Master invoice, financing, change orders, money and jobs</span><span>Appears when a proposal is won</span></div>
+          <p class="note">Deliberately shown rather than hidden. A contractor should be able to see what winning will bring.</p>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="arg">
+        <p class="lab">Four rows is the whole project</p>
+        <p>Opportunities, a property, some notes and a draft. <strong>This is the argument that a
+        project is a workspace rather than a document</strong>, and it only lands if the screen is
+        allowed to look this empty.</p>
+      </div>
+      <div class="arg">
+        <p class="lab">The locked half is doing work</p>
+        <p>Greying out what arrives on winning tells a new user what a project is for without a tour,
+        and it makes the moment of winning legible before it happens. Hiding it would be tidier and
+        less useful.</p>
+      </div>
+      <div class="arg">
+        <p class="lab">Opportunities are listed, not absorbed</p>
+        <p>The row says linked, and the count is three. They still belong to the customer, which is
+        what lets roofing survive being declined later.</p>
+      </div>
+      <div class="q"><div class="qn">3</div><p>Should the locked operations rows be interactive at all, or purely informational?</p></div>
+      <div class="q"><div class="qn">4</div><p>Is "pursuing" the right first status, and what moves a project out of it if nothing sells?</p></div>
+    </div>
+  </div>
+</div>
+
+<div class="sec">
+  <div class="sec-head"><div class="badge">C</div><h2 class="sec-title">In the room</h2><span class="sec-when">Proposal &middot; 18 Aug</span></div>
+  <div class="two">
+    <div>
+      <p class="cap">Adapting Merlin's existing proposal page. Scopes are the new block</p>
+      <div class="mock">
+        <div class="mk-bar">
+          <div><div class="mk-ttl">Proposal v2 &middot; Exterior refresh</div>
+          <div class="mk-sub">Presenting to Sara Thompson &middot; <span class="tap">one document</span> or <span class="tap">one scope at a time</span></div></div>
+          <span class="pill a">Presenting</span>
+        </div>
+
+        <div class="blk">
+          <div class="bh"><h5>Scopes</h5><span><span class="pill a">New</span> <span class="pill m">Toggle to include</span></span></div>
+          <div class="tog">
+            <span class="sw"><i></i></span>
+            <span><span class="tn">Siding</span><span class="td">Full replacement, all elevations &middot; 8 line items</span></span>
+            <span class="tv">$34,200</span>
+          </div>
+          <div class="tog off">
+            <span class="sw off"><i></i></span>
+            <span><span class="tn">Roofing</span><span class="td">Switched off in the room. Roof is sound and they may want metal later</span></span>
+            <span class="tv">$38,900</span>
+          </div>
+          <div class="tog">
+            <span class="sw"><i></i></span>
+            <span><span class="tn">Windows</span><span class="td">Switched on in the room &middot; 14 openings</span></span>
+            <span class="tv">$18,600</span>
+          </div>
+          <div class="tot"><span>Total</span><span class="big">$52,800</span></div>
+          <p class="note">Was $73,100 a moment ago. The toggle is the mechanism for varying an offer before signature; change orders handle it after.</p>
+        </div>
+
+        <div class="blk">
+          <div class="bh"><h5>Financing</h5><span class="pill a">Recalculated</span></div>
+          <div class="g3">
+            <div class="sc"><h6>Cash</h6><p class="big">$52,800</p><div class="lin"><span>Due on schedule</span><span>3 payments</span></div></div>
+            <div class="sc" style="background:var(--acbg);border-color:var(--acbd)"><h6>Loan &middot; 15 yr &middot; 6.99%</h6><p class="big">$474/mo</p><div class="lin"><span>Selected by Sara</span><span>$52,800</span></div></div>
+            <div class="sc"><h6>Loan &middot; 10 yr &middot; 6.49%</h6><p class="big">$599/mo</p><div class="lin"><span>Available</span><span>$52,800</span></div></div>
+          </div>
+          <p class="note">Monthly figures move with every toggle. This is the reason financing has to be attached to something that changes, not stamped on at the end.</p>
+        </div>
+
+        <div class="blk">
+          <div class="bh"><h5>Accept</h5></div>
+          <div class="row"><span class="rn">Two scopes &middot; one contract &middot; one financing<span class="rs">Roofing stays on the record as offered and declined</span></span><span class="pill a">Sign</span><span class="rv">$52,800</span></div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="arg">
+        <p class="lab">Only one block here is new</p>
+        <p>This adapts the proposal page that already exists. Financing, presentation and accept are
+        broadly what is there today. <strong>Scopes are the addition</strong>, and a scope has to be
+        independently priceable and removable live, in front of a customer. If it cannot be toggled
+        without re-authoring the document, Model C's fork tilts toward the folio.</p>
+      </div>
+      <div class="arg">
+        <p class="lab">One document or one at a time</p>
+        <p>The presentation control sits in the header, not in the body, because it changes how the
+        same proposal is walked through rather than what it contains. One signature either way.</p>
+      </div>
+      <div class="arg">
+        <p class="lab">Declining is recorded, not erased</p>
+        <p>Roofing stays visible with its price, switched off. That is what feeds the deferred status
+        back to the opportunity and gives a follow-up in two years something to stand on.</p>
+      </div>
+      <div class="q"><div class="qn">5</div><p>Does the customer see the switched-off scope and its price, or only the contractor?</p></div>
+      <div class="q"><div class="qn">6</div><p>Is a version created on every toggle, or only when the proposal is sent or signed?</p></div>
+    </div>
+  </div>
+</div>
+
+<div class="sec">
+  <div class="sec-head"><div class="badge">D</div><h2 class="sec-title">Won</h2><span class="sec-when">Project view &middot; 18 Aug</span></div>
+  <div class="two">
+    <div>
+      <p class="cap">The same project, minutes later. Operations exists now</p>
+      <div class="mock">
+        <div class="mk-bar">
+          <div><div class="mk-ttl">Exterior refresh for the Thompsons</div>
+          <div class="mk-sub">Project &middot; <span class="tap">R. &amp; S. Thompson</span> &middot; 1428 Maple Ave &middot; signed 18 Aug</div></div>
+          <span class="pill g">Production</span>
+        </div>
+
+        <div class="blk">
+          <div class="bh"><h5>How this project came together</h5><span class="pill m">3 opportunities &middot; 2 scopes &middot; 2 jobs</span></div>
+          <div class="lineage">
+          <svg viewBox="0 0 1000 206" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Two of the three opportunities were won and became scopes on the signed proposal, and each scope produced one job. Roofing was deferred and has no scope.">
+            <defs><marker id="ld" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,1 L8,4.5 L0,8 z" fill="#8b8a84"/></marker></defs>
+            <text x="0" y="12" font-family="-apple-system,sans-serif" font-size="10" fill="#8b8a84">Opportunities on the customer</text>
+            <rect x="0" y="22" width="250" height="44" rx="3" fill="#ffffff" stroke="#d5d3cc"/>
+            <text x="14" y="42" font-family="-apple-system,sans-serif" font-size="12" fill="#1b1b1a">Siding</text>
+            <text x="14" y="57" font-family="-apple-system,sans-serif" font-size="9.5" fill="#8b8a84">Customer interest &middot; <tspan fill="#3b6d11">Won</tspan></text>
+            <rect x="0" y="74" width="250" height="44" rx="3" fill="#ffffff" stroke="#d5d3cc"/>
+            <text x="14" y="94" font-family="-apple-system,sans-serif" font-size="12" fill="#1b1b1a">Roofing</text>
+            <text x="14" y="109" font-family="-apple-system,sans-serif" font-size="9.5" fill="#8b8a84">Customer interest &middot; <tspan fill="#534ab7">Deferred</tspan></text>
+            <rect x="0" y="126" width="250" height="44" rx="3" fill="#ffffff" stroke="#d5d3cc"/>
+            <text x="14" y="146" font-family="-apple-system,sans-serif" font-size="12" fill="#1b1b1a">Windows</text>
+            <text x="14" y="161" font-family="-apple-system,sans-serif" font-size="9.5" fill="#8b8a84">Contractor identified &middot; <tspan fill="#3b6d11">Won</tspan></text>
+
+            <rect x="330" y="0" width="670" height="192" rx="3" fill="#ffffff" stroke="#185fa5" stroke-width="1.4"/>
+            <text x="348" y="24" font-family="-apple-system,sans-serif" font-size="11.5" font-weight="500" fill="#185fa5">Project &middot; Exterior refresh</text>
+
+            <rect x="348" y="42" width="230" height="118" rx="3" fill="#e9f1fa" stroke="#a8c9ec"/>
+            <text x="362" y="64" font-family="-apple-system,sans-serif" font-size="11" font-weight="500" fill="#0c447c">Proposal v3 &middot; signed</text>
+            <rect x="362" y="76" width="202" height="28" rx="3" fill="#ffffff" stroke="#a8c9ec"/>
+            <text x="374" y="95" font-family="-apple-system,sans-serif" font-size="10.5" fill="#0c447c">Scope &middot; Siding</text>
+            <rect x="362" y="110" width="202" height="28" rx="3" fill="#ffffff" stroke="#a8c9ec"/>
+            <text x="374" y="129" font-family="-apple-system,sans-serif" font-size="10.5" fill="#0c447c">Scope &middot; Windows</text>
+
+            <rect x="660" y="69" width="326" height="42" rx="3" fill="#eef4e4"/>
+            <text x="676" y="95" font-family="-apple-system,sans-serif" font-size="11" fill="#27500a">Job &middot; Siding</text>
+            <rect x="660" y="123" width="326" height="42" rx="3" fill="#eef4e4"/>
+            <text x="676" y="149" font-family="-apple-system,sans-serif" font-size="11" fill="#27500a">Job &middot; Windows</text>
+
+            <path d="M250,44 H290 V90 H344" fill="none" stroke="#8b8a84" stroke-width="1.3" marker-end="url(#ld)"/>
+            <path d="M250,148 H310 V124 H344" fill="none" stroke="#8b8a84" stroke-width="1.3" marker-end="url(#ld)"/>
+            <path d="M564,90 H610 V90 H654" fill="none" stroke="#8b8a84" stroke-width="1.3" marker-end="url(#ld)"/>
+            <path d="M564,124 H610 V144 H654" fill="none" stroke="#8b8a84" stroke-width="1.3" marker-end="url(#ld)"/>
+          </svg>
+          </div>
+          <p class="note">Same block as before the sale, grown. Roofing has no line into the proposal because it was never scoped.</p>
+        </div>
+
+        <div class="blk">
+          <div class="g3">
+            <div class="sc"><h6>Contract</h6><p class="big">$52,800</p><div class="lin"><span>Two scopes signed</span><span>18 Aug</span></div><div class="lin"><span>Financing</span><span>Loan, 15 yr</span></div></div>
+            <div class="sc"><h6>Collected</h6><p class="big">$10,560</p><div class="lin"><span>Deposit, 20%</span><span>19 Aug</span></div><div class="lin"><span>Outstanding</span><span>$42,240</span></div></div>
+            <div class="sc"><h6>Jobs</h6><p class="big">2 created</p><div class="lin"><span>Siding</span><span>Ops intake</span></div><div class="lin"><span>Windows</span><span>Ops intake</span></div></div>
+          </div>
+        </div>
+
+        <div class="blk">
+          <div class="bh"><h5>Jobs</h5><span class="pill m">One per signed scope</span></div>
+          <div class="row"><span class="rn">JOB&#8209;3101 &nbsp;Siding<span class="rs">Exterior crew &middot; from Scope · Siding</span></span><span class="pill m xs">Ops intake &middot; 0 of 4</span><span class="rv">$34,200</span></div>
+          <div class="row"><span class="rn">JOB&#8209;3102 &nbsp;Windows<span class="rs">Install crew &middot; from Scope · Windows</span></span><span class="pill m xs">Ops intake &middot; 0 of 4</span><span class="rv">$18,600</span></div>
+        </div>
+
+        <div class="blk">
+          <div class="bh"><h5>Selling phase</h5><span class="pill m">Kept, not replaced</span></div>
+          <div class="row"><span class="rn">Proposal v3 &middot; signed<span class="rs">v1 and v2 retained. Roofing shown as offered and declined</span></span><span class="pill g xs">Won</span><span class="rv">$52,800</span></div>
+          <div class="row"><span class="rn">Linked opportunities<span class="rs">Siding won &middot; Windows won &middot; Roofing deferred</span></span><span></span><span class="rv">3</span></div>
+        </div>
+
+        <div class="blk">
+          <div class="bh"><h5>Money</h5><span class="pill m">Project level</span></div>
+          <div class="row"><span class="rn">Master invoice &middot; MI&#8209;4471<span class="rs">Three milestones: deposit, install start, completion</span></span><span class="pill a xs">Open</span><span class="rv">$52,800</span></div>
+          <div class="row"><span class="rn">Change orders<span class="rs">None yet</span></span><span></span><span class="rv">&mdash;</span></div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="arg">
+        <p class="lab">Nothing was replaced</p>
+        <p>The selling phase is still here with all three proposal versions. <strong>Winning adds a
+        half rather than closing one</strong>, which is what lets someone six weeks in ask what was
+        originally quoted and why roofing went away.</p>
+      </div>
+      <div class="arg">
+        <p class="lab">Two jobs, not one job with two halves</p>
+        <p>Each has a crew, a value and its own pipeline position. They will diverge within days, and
+        the screen has to be able to show them at different stages without apology.</p>
+      </div>
+      <div class="arg">
+        <p class="lab">The money is at project level</p>
+        <p>One master invoice against the contract, not one per job. Job values sum to it, but no job
+        owns an invoice, which is what keeps the balance answerable in one place.</p>
+      </div>
+      <div class="q"><div class="qn">7</div><p>Is the three-card summary the project's status, or does the project need a status separate from its jobs?</p></div>
+      <div class="q"><div class="qn">8</div><p>Do the milestones come from the proposal, the contractor's default, or the financing product?</p></div>
+    </div>
+  </div>
+</div>
+
+<div class="sec">
+  <div class="sec-head"><div class="badge">E</div><h2 class="sec-title">Early production</h2><span class="sec-when">Job view &middot; 21 Aug</span></div>
+  <div class="two">
+    <div>
+      <p class="cap">Permits and orders in flight. Our work is done and we are still stuck</p>
+      <div class="mock">
+        <div class="mk-bar">
+          <div><div class="mk-ttl">JOB&#8209;3101 &nbsp;Siding</div>
+          <div class="mk-sub">Exterior crew &middot; <span class="tap">Exterior refresh for the Thompsons</span> &middot; <span class="tap">Scope · Siding, $34,200</span></div></div>
+          <span class="pill m">Ops intake</span>
+        </div>
+
+        <div class="blk">
+          <div class="bh"><h5>This job in the project</h5><span class="pill m">1 of 2</span></div>
+          <div class="lineage">
+          <svg viewBox="0 0 1000 132" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The project holds two jobs. This screen shows the siding job; the windows job is running alongside it.">
+            <rect x="0" y="0" width="1000" height="120" rx="3" fill="#ffffff" stroke="#185fa5" stroke-width="1.4"/>
+            <text x="18" y="26" font-family="-apple-system,sans-serif" font-size="11.5" font-weight="500" fill="#185fa5">Project &middot; Exterior refresh</text>
+            <text x="982" y="26" text-anchor="end" font-family="-apple-system,sans-serif" font-size="10" fill="#8b8a84">2 jobs, one per signed scope</text>
+            <rect x="18" y="40" width="470" height="64" rx="3" fill="#e9f1fa" stroke="#185fa5" stroke-width="1.4"/>
+            <text x="34" y="64" font-family="-apple-system,sans-serif" font-size="11.5" font-weight="500" fill="#0c447c">Job &middot; Siding</text>
+            <text x="34" y="84" font-family="-apple-system,sans-serif" font-size="10.5" fill="#22557f">Exterior crew &middot; Ops intake</text>
+            <text x="472" y="64" text-anchor="end" font-family="-apple-system,sans-serif" font-size="10" fill="#185fa5">You are here</text>
+            <rect x="506" y="40" width="476" height="64" rx="3" fill="#faf9f7" stroke="#e7e5e0"/>
+            <text x="522" y="64" font-family="-apple-system,sans-serif" font-size="11.5" font-weight="500" fill="#8b8a84">Job &middot; Windows</text>
+            <text x="522" y="84" font-family="-apple-system,sans-serif" font-size="10.5" fill="#b4b2a9">Install crew &middot; Ops intake</text>
+          </svg>
+          </div>
+          <p class="note">Both from the same signed proposal. They will not stay in step, and the screen should not imply they will.</p>
+        </div>
+
+        <div class="blk">
+          <div class="bh"><h5>Where this job is</h5><span class="pill m">Stage 4 of 10 &middot; Production board</span></div>
+          <div style="border:1px solid var(--bd);border-radius:6px;overflow:hidden">
+            <div class="stg done"><span class="dot"></span><span class="nm">Sold</span><span class="mt">18 Aug</span></div>
+            <div class="stg now"><span class="dot"></span><span class="nm">Ops intake</span><span class="mt">4 of 4 tasks done</span></div>
+            <div class="stg"><span class="dot"></span><span class="nm">Orders &amp; scheduling</span><span class="mt">6 tasks</span></div>
+            <div class="stg"><span class="dot"></span><span class="nm">Final checks</span><span class="mt">4 tasks</span></div>
+          </div>
+          <div class="gaterow"><span>&#9888;</span><span><b>Held at the gate.</b> Orders &amp; scheduling needs HOA approved. Submitted 19 Aug, HOA meets Thursday.</span></div>
+          <p class="note">The interesting state: every task is complete and the job still cannot move. That is the difference between a task and a sub-status made visible.</p>
+        </div>
+
+        <div class="blk">
+          <div class="g2">
+            <div>
+              <div class="bh"><h5>Waiting on</h5></div>
+              <div class="sub"><span class="sk">Financing</span><span class="sv ok">NTP</span></div>
+              <div class="sub"><span class="sk">Materials</span><span class="sv wait">Ordered</span></div>
+              <div class="sub"><span class="sk">Permit</span><span class="sv wait">Applied</span></div>
+              <div class="sub"><span class="sk">HOA</span><span class="sv wait">Submitted</span></div>
+              <div class="sub na"><span class="sk">Insurance</span><span class="sv">Not applicable</span></div>
+            </div>
+            <div>
+              <div class="bh"><h5>Ops intake &middot; 4 of 4</h5></div>
+              <div class="tk done"><span class="bx"></span><span>BOM finalised<span class="s2">19 Aug &middot; Marcus Ellery</span></span></div>
+              <div class="tk done"><span class="bx"></span><span>Permit application submitted<span class="s2">20 Aug &middot; city portal, ref P&#8209;22841</span></span></div>
+              <div class="tk done"><span class="bx"></span><span>HOA submitted<span class="s2">19 Aug &middot; colour and profile pack</span></span></div>
+              <div class="tk done"><span class="bx"></span><span>Scope verified against contract<span class="s2">20 Aug</span></span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="blk">
+          <div class="bh"><h5>Material order</h5><span class="pill a">MO&#8209;7734</span></div>
+          <div class="row"><span class="rn">Cedar-look composite, Harbour Grey<span class="rs">Confirmed with supplier, awaiting delivery date</span></span><span class="pill m xs">Ordered</span><span class="rv">$11,480</span></div>
+          <div class="row"><span class="rn">Trim, fasteners, housewrap<span class="rs">Same order</span></span><span class="pill m xs">Ordered</span><span class="rv">$2,140</span></div>
+          <p class="note">Colour is HOA-dependent, which is why the order cannot be confirmed until Thursday either.</p>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="arg">
+        <p class="lab">Four of four, and going nowhere</p>
+        <p>This is the screen that proves the sub-status is a separate concept. <strong>Everything the
+        crew controls is finished, and the job is still held</strong>, so a completion count on its own
+        would be actively misleading here.</p>
+      </div>
+      <div class="arg">
+        <p class="lab">The gate names the wait and the date</p>
+        <p>Not just "blocked" but what, since when, and when it might clear. A gate that only says no is
+        the kind people learn to route around.</p>
+      </div>
+      <div class="arg">
+        <p class="lab">The material order is downstream of the same gate</p>
+        <p>Colour depends on HOA approval, so the order sits at ordered rather than confirmed. One
+        external party is holding two different things, and the screen should let someone notice that
+        rather than chase them separately.</p>
+      </div>
+      <div class="q"><div class="qn">9</div><p>Should the stage list show only the current board, or all ten stages as here?</p></div>
+      <div class="q"><div class="qn">10</div><p>When one sub-status blocks several things, is that a relationship worth modelling or just a coincidence?</p></div>
+    </div>
+  </div>
+</div>
+
+<div class="sec">
+  <div class="sec-head"><div class="badge">F</div><h2 class="sec-title">An install day</h2><span class="sec-when">Job view &middot; 2 Sep</span></div>
+  <div class="two">
+    <div>
+      <p class="cap">Tear-off done, rot found, change order raised mid-stage</p>
+      <div class="mock">
+        <div class="mk-bar">
+          <div><div class="mk-ttl">JOB&#8209;3101 &nbsp;Siding</div>
+          <div class="mk-sub">Exterior crew &middot; <span class="tap">Exterior refresh for the Thompsons</span> &middot; <span class="tap">Scope · Siding, $37,000</span></div></div>
+          <span class="pill a">Installing</span>
+        </div>
+
+        <div class="blk">
+          <div class="bh"><h5>Where this job is</h5><span class="pill m">Day 2 of 4 &middot; Production board</span></div>
+          <div style="border:1px solid var(--bd);border-radius:6px;overflow:hidden">
+            <div class="stg done"><span class="dot"></span><span class="nm">Orders &amp; scheduling</span><span class="mt">26 Aug</span></div>
+            <div class="stg done"><span class="dot"></span><span class="nm">Final checks</span><span class="mt">31 Aug</span></div>
+            <div class="stg now"><span class="dot"></span><span class="nm">Installing</span><span class="mt">4 of 8 tasks done</span></div>
+            <div class="stg"><span class="dot"></span><span class="nm">Closeout</span><span class="mt">6 tasks</span></div>
+          </div>
+        </div>
+
+        <div class="blk">
+          <div class="g2">
+            <div>
+              <div class="bh"><h5>Done today and yesterday</h5></div>
+              <div class="tk done"><span class="bx"></span><span>Pre-install property photos<span class="s2">1 Sep &middot; 22 photos</span></span></div>
+              <div class="tk done"><span class="bx"></span><span>Tear-off<span class="s2">1 Sep &middot; all elevations</span></span></div>
+              <div class="tk done"><span class="bx"></span><span>Sheathing inspected and rot documented<span class="s2">2 Sep &middot; north elevation, 6 sheets</span></span></div>
+              <div class="tk done"><span class="bx"></span><span>Housewrap and flashing photos<span class="s2">2 Sep</span></span></div>
+            </div>
+            <div>
+              <div class="bh"><h5>Left in Installing &middot; 4 of 8</h5></div>
+              <div class="tk blk"><span class="bx"></span><span>Change order approved if needed<span class="s2">CO&#8209;01 raised, awaiting lender re-approval</span></span></div>
+              <div class="tk"><span class="bx"></span><span>Cladding hung, all elevations</span></div>
+              <div class="tk"><span class="bx"></span><span>End-of-day photos<span class="s2">Due each day</span></span></div>
+              <div class="tk"><span class="bx"></span><span>Magnet sweep and cleanup</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="blk">
+          <div class="g2">
+            <div class="co">
+              <h6>Change order CO&#8209;01</h6>
+              <div class="cor"><span class="k">Found</span><span class="v">Rot behind siding, north elevation</span></div>
+              <div class="cor"><span class="k">Added</span><span class="v">Replace 6 sheets, treat framing &nbsp;+$2,800</span></div>
+              <div class="cor"><span class="k">This scope</span><span class="v">$34,200 &rarr; $37,000</span></div>
+              <div class="cor"><span class="k">Master invoice</span><span class="v">$52,800 &rarr; $55,600</span></div>
+              <div class="cor"><span class="k">Financing</span><span class="v">Within headroom &middot; awaiting re-approval</span></div>
+              <div class="cor"><span class="k">Customer</span><span class="v">Sara approved by phone, 2 Sep</span></div>
+              <p class="note">Raised by a task in this stage and now blocking another task in the same stage.</p>
+            </div>
+            <div>
+              <div class="bh"><h5>The other job</h5></div>
+              <div class="row"><span class="rn">JOB&#8209;3102 &nbsp;Windows<span class="rs">Install crew &middot; materials confirmed for 9 Sep</span></span><span class="pill m xs">Orders &amp; scheduling</span><span class="rv">$18,600</span></div>
+              <div class="bh" style="margin-top:14px"><h5>Money, project level</h5></div>
+              <div class="bal">
+                <div class="balr"><span>Contract, after CO&#8209;01</span><span class="v">$55,600</span></div>
+                <div class="balr"><span>Collected</span><span class="v">$31,680</span></div>
+                <div class="balr t"><span>Outstanding</span><span class="v">$23,920</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="arg">
+        <p class="lab">The change order is a loop inside one stage</p>
+        <p>A task found the rot, the change order came out of it, and now it blocks a different task in
+        the same stage. <strong>Putting it beside the task list rather than in a paperwork section is
+        what makes that legible</strong>.</p>
+      </div>
+      <div class="arg">
+        <p class="lab">Two numbers, because two things move</p>
+        <p>The scope goes to $37,000 and the master invoice to $55,600. Showing one without the other
+        hides which figure triggers re-approval, and it is never the scope.</p>
+      </div>
+      <div class="arg">
+        <p class="lab">The sibling job is one line</p>
+        <p>Enough to know windows has not slipped, not enough to distract. The full picture of both
+        jobs belongs on the project, and this is the link to it.</p>
+      </div>
+      <div class="q"><div class="qn">11</div><p>Should "change order approved" be a task at all, given it is waiting on a lender?</p></div>
+      <div class="q"><div class="qn">12</div><p>Can the crew keep working while the change order is unapproved, and does the screen say so?</p></div>
+    </div>
+  </div>
+</div>
+
+<div class="sec">
+  <div class="sec-head"><div class="badge">G</div><h2 class="sec-title">Closeout, and a gate that bites</h2><span class="sec-when">Project view &middot; 24 Sep</span></div>
+  <div class="two">
+    <div>
+      <p class="cap">Work finished, money not collectable</p>
+      <div class="mock">
+        <div class="mk-bar">
+          <div><div class="mk-ttl">Exterior refresh for the Thompsons</div>
+          <div class="mk-sub">Project &middot; <span class="tap">R. &amp; S. Thompson</span> &middot; 1428 Maple Ave &middot; signed 18 Aug</div></div>
+          <span class="pill w">Closing</span>
+        </div>
+
+        <div class="blk">
+          <div class="g3">
+            <div class="sc"><h6>Contract</h6><p class="big">$55,600</p><div class="lin"><span>Original</span><span>$52,800</span></div><div class="lin"><span>CO&#8209;01 approved</span><span>+$2,800</span></div></div>
+            <div class="sc"><h6>Collected</h6><p class="big">$31,680</p><div class="lin"><span>Deposit + install start</span><span>2 payments</span></div><div class="lin"><span>Final not yet sent</span><span>$23,920</span></div></div>
+            <div class="sc" style="background:var(--wnbg);border-color:var(--wnbd)"><h6 style="color:#9c6440">Blocked</h6><p class="big" style="color:#a8461f">1 gate</p><div class="lin"><span style="color:#8a5636">Closeout to invoiced</span><span style="color:#8a5636">Siding</span></div></div>
+          </div>
+          <div class="gaterow"><span>&#9888;</span><span><b>The final invoice cannot be sent.</b> Closeout to invoiced needs the permit final inspection passed. Inspection booked for 26 Sep.</span></div>
+          <p class="note">The whole reason this gate exists: an open permit causes problems at sale and with insurers. It is doing its job here, at the cost of two days.</p>
+        </div>
+
+        <div class="blk">
+          <div class="bh"><h5>Jobs</h5></div>
+          <div class="row"><span class="rn">JOB&#8209;3101 &nbsp;Siding<span class="rs">Walkthrough done, punch list cleared, warranty registered</span></span><span class="pill w xs">Closeout &middot; 5 of 6</span><span class="rv">$37,000</span></div>
+          <div class="row"><span class="rn">JOB&#8209;3102 &nbsp;Windows<span class="rs">Completed 16 Sep, inspection passed 18 Sep</span></span><span class="pill g xs">Closed</span><span class="rv">$18,600</span></div>
+          <p class="note">Two jobs from one project, finishing eight days apart. The project cannot be one status while they disagree.</p>
+        </div>
+
+        <div class="blk">
+          <div class="bh"><h5>Money</h5><span class="pill m">Project level</span></div>
+          <div class="row"><span class="rn">Master invoice &middot; MI&#8209;4471<span class="rs">Amended by CO&#8209;01 on 4 Sep</span></span><span class="pill a xs">Open</span><span class="rv">$55,600</span></div>
+          <div class="row"><span class="rn">Deposit &middot; 20%<span class="rs">Card ending 4242 &middot; 19 Aug</span></span><span class="pill g xs">Paid</span><span class="rv">$10,560</span></div>
+          <div class="row"><span class="rn">Install start &middot; 40%<span class="rs">ACH &middot; 2 Sep</span></span><span class="pill g xs">Paid</span><span class="rv">$21,120</span></div>
+          <div class="row"><span class="rn">Completion &middot; 40% plus CO&#8209;01<span class="rs">Held by the closeout gate</span></span><span class="pill w xs">Not sent</span><span class="rv">$23,920</span></div>
+          <div class="row"><span class="rn">Cost and profit<span class="rs">Against estimate, including the rot repair</span></span><span></span><span class="rv">Margin 31%</span></div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="arg">
+        <p class="lab">A gate that costs money is the honest test</p>
+        <p>Every earlier drawing had gates blocking work. This one blocks <strong>an invoice worth
+        $23,920</strong>, which is where a contractor finds out whether they believe in the gate. If
+        this is the one they override every time, it should not exist.</p>
+      </div>
+      <div class="arg">
+        <p class="lab">The project status is not derived</p>
+        <p>One job is in closeout and the other is closed. Closing is the project's own word for the
+        situation, not a summary of its jobs, which is why the vocabularies have to be separate.</p>
+      </div>
+      <div class="arg">
+        <p class="lab">The money reads as a schedule</p>
+        <p>Two paid, one held, with the reason attached to the held one. That is more useful than a
+        balance, because it says what has to happen next rather than only how much is left.</p>
+      </div>
+      <div class="q"><div class="qn">13</div><p>Can this gate be overridden, and by whom? It is the one most likely to be fought.</p></div>
+      <div class="q"><div class="qn">14</div><p>Does cost and profit belong on the project, or is it an org-level view scoped to a project?</p></div>
+    </div>
+  </div>
+</div>
+
+<div class="sec">
+  <div class="sec-head"><div class="badge">H</div><h2 class="sec-title">Back at the customer</h2><span class="sec-when">Customer record &middot; 24 Sep</span></div>
+  <div class="two">
+    <div>
+      <p class="cap">Six weeks later. Same three opportunities, different statuses</p>
+      <div class="mock">
+        <div class="mk-bar">
+          <div><div class="mk-ttl">Robert &amp; Sara Thompson</div>
+          <div class="mk-sub">1428 Maple Ave, Sacramento CA &middot; <span class="tap">2 contacts</span> &middot; <span class="tap">2 properties</span> &middot; customer since Mar 2024</div></div>
+          <span class="pill g">Customer</span>
+        </div>
+
+        <div class="blk">
+          <div class="g3">
+            <div class="sc"><h6>Projects</h6><p class="big">1 closing</p><div class="lin"><span>Exterior refresh</span><span>$55,600</span></div><div class="lin"><span>Blocked</span><span>1 gate</span></div></div>
+            <div class="sc"><h6>Opportunities</h6><p class="big">1 open</p><div class="lin"><span>Roofing, deferred</span><span>est. $38,000</span></div><div class="lin"><span>Won</span><span>2</span></div></div>
+            <div class="sc"><h6>Owed</h6><p class="big">$23,920</p><div class="lin"><span>Collected to date</span><span>$31,680</span></div><div class="lin"><span>Final invoice</span><span>Not sent</span></div></div>
+          </div>
+        </div>
+
+        <div class="blk">
+          <div class="bh"><h5>Projects</h5></div>
+          <div class="row"><span class="rn">Exterior refresh for the Thompsons<span class="rs">Siding and windows &middot; 2 jobs &middot; signed 18 Aug</span></span><span class="pill w xs">Closing</span><span class="rv">$55,600</span></div>
+        </div>
+
+        <div class="blk">
+          <div class="bh"><h5>Opportunities</h5><span class="pill a">Start a project from selected</span></div>
+          <div class="row">
+            <span class="rn">Roofing<span class="rs">Quoted at $38,900 in Aug. Roof sound; they may want metal once they have saved</span></span>
+            <span class="pill p xs">Deferred, still interested</span>
+            <span class="rv">est. $38,000</span>
+          </div>
+          <p class="note">Full weight, because it is the only one still worth pursuing. The quoted figure and the reason came back from the project.</p>
+          <div style="margin-top:12px;font-size:11px;color:#b4b2a9">Won opportunities are archived but kept for context.</div>
+          <div class="row" style="opacity:.62"><span class="rn">Siding<span class="rs">Won 18 Aug &middot; Exterior refresh</span></span><span class="pill m xs">Won</span><span class="rv">$37,000</span></div>
+          <div class="row" style="opacity:.62"><span class="rn">Windows<span class="rs">Won 18 Aug &middot; Exterior refresh</span></span><span class="pill m xs">Won</span><span class="rv">$18,600</span></div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="arg">
+        <p class="lab">The record is richer than it was</p>
+        <p>Roofing was an estimate and a hunch in section A. It now carries a real quote, a reason and a
+        date. <strong>The project handed something back on its way past</strong>, which is the argument
+        for opportunities living outside it.</p>
+      </div>
+      <div class="arg">
+        <p class="lab">Won recedes, open leads</p>
+        <p>The two wins are archived below a line and dimmed. Anyone opening this record is deciding
+        what to do next, and what to do next is roofing.</p>
+      </div>
+      <div class="arg">
+        <p class="lab">Stage moved without anyone setting it</p>
+        <p>Prospect in section A, customer here, because a payment has been taken. Derived from money
+        rather than from jobs, so it works identically at every product tier.</p>
+      </div>
+      <div class="q"><div class="qn">15</div><p>Does the won opportunity show the scope value after the change order, or the value at signing?</p></div>
+      <div class="q"><div class="qn">16</div><p>When the deferred roofing is eventually pursued, is that a new project or a reopening of this one?</p></div>
+    </div>
+  </div>
+</div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Statuses on screen</title>
+<style>
+:root{
+  color-scheme: light;
+  --bg:#ffffff; --s1:#faf9f7; --s2:#ffffff; --s3:#f2f1ed;
+  --tx:#1b1b1a; --tx2:#575651; --tx3:#8b8a84; --tx4:#b4b2a9;
+  --bd:#e7e5e0; --bds:#d5d3cc;
+  --ac:#185fa5; --acbg:#e9f1fa; --acbd:#a8c9ec;
+  --wn:#a8461f; --wnbg:#fbf0eb; --wnbd:#e2b39d;
+  --gd:#3b6d11; --gdbg:#eef4e4; --gdbd:#bdd39c;
+  --pr:#534ab7; --prbg:#eeedfe; --prbd:#c3bff3;
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:var(--sans);font-size:15px;line-height:1.62;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1560px;margin:0 auto;padding:56px 40px 96px}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.04em;color:var(--tx3);margin:0 0 16px;text-transform:uppercase}
+.eyebrow span{margin-right:26px}
+h1{font-size:40px;line-height:1.12;font-weight:500;letter-spacing:-.02em;margin:0 0 18px;max-width:750px}
+.lede{max-width:750px;color:var(--tx2);font-size:15.5px;margin:0 0 24px}
+.conv{display:flex;gap:11px;align-items:baseline;background:var(--s1);border:1px solid var(--bd);border-radius:10px;padding:12px 16px;margin:0 0 26px;font-size:13.5px;color:var(--tx2);line-height:1.55;max-width:750px}
+.conv .cm{font-weight:500;color:var(--ac);flex:0 0 auto}
+.card{background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:16px 22px;margin:0 0 18px;max-width:750px}
+.card.last{margin-bottom:56px}
+.card h3{margin:0 0 4px;font-size:15px;font-weight:500}
+.card .sh2{font-size:13px;color:var(--tx3);margin:0 0 12px}
+ul.b{margin:0;padding:0 0 0 18px}
+ul.b li{margin:0 0 8px;color:var(--tx2);font-size:14.5px;line-height:1.55}
+ul.b li:last-child{margin-bottom:0}
+ul.b li strong,p strong{color:var(--tx);font-weight:500}
+.sec{margin:0 0 64px}
+.sec-head{display:flex;align-items:baseline;gap:11px;padding-bottom:12px;border-bottom:1px solid var(--bd);margin-bottom:20px}
+.badge{flex:0 0 auto;width:20px;height:20px;border:1px solid var(--acbd);border-radius:4px;color:var(--ac);font-family:var(--mono);font-size:10.5px;display:flex;align-items:center;justify-content:center;background:var(--acbg);position:relative;top:2px}
+.sec-title{font-size:19px;font-weight:500;margin:0;letter-spacing:-.01em}
+.sec-when{font-size:13px;color:var(--tx3);margin-left:auto}
+.two{display:grid;grid-template-columns:minmax(0,1fr) 350px;gap:38px;align-items:start}
+.cap{font-family:var(--mono);font-size:11px;color:var(--tx3);margin:0 0 10px}
+.arg{margin:0 0 20px}
+.arg .lab{font-family:var(--mono);font-size:11px;color:#7d8fa3;margin:0 0 5px}
+.arg p{margin:0 0 9px;font-size:14px;line-height:1.58;color:var(--tx2)}
+.arg p:last-child{margin-bottom:0}
+.setl{border:1px solid var(--bd);border-radius:7px;background:var(--s1);padding:11px 13px;margin:0 0 20px}
+.setl .lab{font-family:var(--mono);font-size:10px;color:var(--tx3);margin:0 0 7px;text-transform:uppercase;letter-spacing:.03em}
+.setl .v{font-size:12.5px;line-height:1.7;color:var(--tx2)}
+.setl .v b{color:var(--tx);font-weight:500}
+.setl .v i{color:var(--tx4);font-style:normal}
+.qhead{font-family:var(--mono);font-size:10px;color:var(--tx3);text-transform:uppercase;letter-spacing:.03em;margin:22px 0 9px}
+.q{display:flex;gap:10px;align-items:flex-start;margin:0 0 10px}
+.qn{flex:0 0 auto;width:17px;height:17px;border-radius:50%;background:var(--ac);color:#fff;font-family:var(--mono);font-size:9.5px;display:flex;align-items:center;justify-content:center;margin-top:2px}
+.q p{margin:0;font-size:13.5px;line-height:1.5;color:var(--tx2)}
+
+/* mockup chrome */
+.lineage{border:1px solid var(--bd);border-radius:6px;background:var(--s1);padding:14px 16px}
+.lineage svg{display:block;width:100%;height:auto}
+.mock{background:var(--s2);border:1px solid var(--bds);border-radius:10px;overflow:hidden}
+.mk-bar{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;padding:12px 16px;border-bottom:1px solid var(--bd);background:var(--s1)}
+.mk-ttl{font-size:14px;font-weight:500}
+.mk-sub{font-size:11.5px;color:var(--tx3);margin-top:2px;line-height:1.5}
+.mk-st{display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex:0 0 auto}
+.tap{color:var(--ac);text-decoration:underline;text-underline-offset:2px}
+.blk{border-top:1px solid var(--bd);padding:14px 16px}
+.blk:first-child{border-top:none}
+.blk.dim{background:var(--s1)}
+.bh{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:11px}
+.bh h5{margin:0;font-size:12.5px;font-weight:500}
+.bh .hint{font-size:10.5px;color:var(--tx3)}
+.pill{display:inline-block;font-size:10.5px;padding:2px 9px;border-radius:20px;background:var(--s3);color:var(--tx2);white-space:nowrap}
+.pill.a{background:var(--acbg);color:var(--ac)}
+.pill.g{background:var(--gdbg);color:var(--gd)}
+.pill.w{background:var(--wnbg);color:var(--wn)}
+.pill.p{background:var(--prbg);color:var(--pr)}
+.pill.m{background:var(--s3);color:var(--tx3)}
+.pill.o{background:var(--s2);color:var(--tx4);border:1px solid var(--bds)}
+.pill.xs{font-size:9.5px;padding:1px 7px}
+.pill.der::before{content:"\2934\00a0";font-size:9px}
+.row{display:grid;grid-template-columns:1fr auto auto;gap:12px;align-items:center;padding:9px 0;border-bottom:1px solid var(--bd);font-size:12px}
+.row:last-of-type{border-bottom:none}
+.row.wide{grid-template-columns:1fr auto}
+.row .rn{color:var(--tx)}
+.row .rs{font-size:10.5px;color:var(--tx3);display:block;margin-top:2px;line-height:1.45}
+.row .rv{color:var(--tx2);font-variant-numeric:tabular-nums;white-space:nowrap;font-size:11.5px}
+.row.off .rn{color:var(--tx3)}
+.row.off .rv{color:var(--tx4)}
+.note{margin:9px 0 0;font-size:11px;line-height:1.45;color:var(--tx3);font-style:italic}
+.note::before{content:"[i] ";font-style:normal;font-weight:500;color:var(--ac)}
+.empty{border:1px dashed var(--bds);border-radius:6px;padding:14px 16px;text-align:center;font-size:11.5px;color:var(--tx3);background:var(--s1)}
+.ph{border:1px dashed var(--bds);border-radius:6px;padding:16px;background:repeating-linear-gradient(135deg,var(--s1),var(--s1) 7px,#f4f2ee 7px,#f4f2ee 14px);font-size:11.5px;color:var(--tx3);text-align:center}
+.g3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.g2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.sc{background:var(--s1);border:1px solid var(--bd);border-radius:6px;padding:11px 12px;min-width:0}
+.sc h6{margin:0 0 6px;font-family:var(--mono);font-size:10px;color:var(--tx3);font-weight:400}
+.sc .big{font-size:17px;font-weight:500;margin:0 0 6px;line-height:1.2}
+.sc .lin{display:flex;justify-content:space-between;gap:8px;font-size:11px;color:var(--tx2);line-height:1.5}
+.sc .lin span:last-child{color:var(--tx3);font-variant-numeric:tabular-nums;white-space:nowrap}
+.tog{display:grid;grid-template-columns:38px 1fr auto;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--bd)}
+.tog:last-of-type{border-bottom:none}
+.sw{width:34px;height:19px;border-radius:20px;background:var(--ac);position:relative}
+.sw.off{background:var(--s3);border:1px solid var(--bds)}
+.sw i{position:absolute;top:3px;right:3px;width:13px;height:13px;border-radius:50%;background:#fff;display:block}
+.sw.off i{right:auto;left:3px;background:var(--tx3)}
+.tog .tn{font-size:12.5px;font-weight:500;color:var(--tx)}
+.tog .td{font-size:10.5px;color:var(--tx3);margin-top:2px;line-height:1.45}
+.tog.off .tn{color:var(--tx3)}
+.tog .tv{font-size:12.5px;color:var(--tx);font-variant-numeric:tabular-nums;text-align:right}
+.tog.off .tv{color:var(--tx4)}
+.tot{display:flex;justify-content:space-between;align-items:baseline;padding-top:11px;margin-top:4px;border-top:1px solid var(--bds);font-size:13px;font-weight:500}
+.tot .big{font-size:17px}
+.tot .was{font-size:11px;color:var(--tx3);font-weight:400;margin-right:8px;text-decoration:line-through}
+.stg{display:grid;grid-template-columns:14px 1fr auto;gap:11px;align-items:center;padding:0 12px;height:38px;border-bottom:1px solid var(--bd);background:var(--s2)}
+.stg:last-child{border-bottom:none}
+.stg .dot{width:10px;height:10px;border-radius:50%;border:1.5px solid var(--bds);background:var(--s2)}
+.stg.done .dot{background:var(--gd);border-color:var(--gd)}
+.stg.now{background:var(--acbg)}
+.stg.now .dot{background:var(--ac);border-color:var(--ac)}
+.stg.hold{background:var(--wnbg)}
+.stg.hold .dot{background:var(--wn);border-color:var(--wn)}
+.stg .nm{font-size:11.5px;color:var(--tx2)}
+.stg.done .nm{color:var(--tx3)}
+.stg.now .nm{color:var(--tx);font-weight:500}
+.stg.hold .nm{color:#6f4028;font-weight:500}
+.stg .mt{font-size:10.5px;color:var(--tx3);white-space:nowrap}
+.stg.now .mt{color:var(--ac)}
+.stg.hold .mt{color:var(--wn)}
+.gaterow{display:flex;align-items:flex-start;gap:9px;background:var(--wnbg);border:1px solid var(--wnbd);border-radius:6px;padding:10px 12px;margin:10px 0 0;font-size:11px;color:#6f4028;line-height:1.5}
+.gaterow b{color:#4f2a17;font-weight:500}
+.derrow{display:flex;align-items:flex-start;gap:9px;background:var(--acbg);border:1px solid var(--acbd);border-radius:6px;padding:10px 12px;margin:0 0 12px;font-size:11px;color:#14496f;line-height:1.5}
+.derrow b{color:#0e3b5c;font-weight:500}
+.sub{display:flex;justify-content:space-between;gap:8px;padding:6px 0;font-size:11.5px;border-bottom:1px solid var(--bd)}
+.sub:last-child{border-bottom:none}
+.sub .sk{color:var(--tx3)}
+.sub .sv{color:var(--tx);font-weight:500;text-align:right}
+.sub .sv.ok{color:var(--gd)}
+.sub .sv.wait{color:var(--wn)}
+.sub.na .sk,.sub.na .sv{color:var(--tx4);font-weight:400}
+.tk{display:grid;grid-template-columns:13px 1fr;gap:9px;align-items:start;padding:4px 0;font-size:11.5px;color:var(--tx2);line-height:1.4}
+.tk .bx{width:12px;height:12px;border-radius:3px;border:1px solid var(--bds);margin-top:2px}
+.tk.done .bx{background:var(--gd);border-color:var(--gd)}
+.tk.done span{color:var(--tx3)}
+.tk.blk .bx{border-color:var(--wnbd);background:var(--wnbg)}
+.tk .s2{display:block;color:var(--tx3);font-size:10px}
+.bal{border:1px solid var(--bd);border-radius:6px;background:var(--s2);padding:12px 13px}
+.bal h6{margin:0 0 9px;font-size:12px;font-weight:500}
+.balr{display:flex;justify-content:space-between;font-size:11.5px;padding:4px 0;color:var(--tx2)}
+.balr .v{font-variant-numeric:tabular-nums;color:var(--tx);font-weight:500}
+.balr.t{border-top:1px solid var(--bd);margin-top:7px;padding-top:9px;font-size:13px;color:var(--tx);font-weight:500}
+.balr.t .v{font-size:15px}
+.reason{border:1px solid var(--bds);border-left:3px solid var(--wnbd);border-radius:0 6px 6px 0;background:var(--s1);padding:9px 12px;margin:8px 0 0}
+.reason .rk{font-family:var(--mono);font-size:9.5px;color:var(--wn);text-transform:uppercase;letter-spacing:.03em}
+.reason .rt{font-size:11.5px;color:var(--tx2);line-height:1.5;margin-top:3px}
+.axes{display:flex;flex-direction:column;gap:4px;align-items:flex-end}
+.axl{font-family:var(--mono);font-size:9px;color:var(--tx4);text-transform:uppercase;letter-spacing:.04em}
+.tl{position:relative}
+.tlr{display:grid;grid-template-columns:16px 1fr auto auto;gap:11px;align-items:center;padding:10px 0;border-bottom:1px solid var(--bd);font-size:12px}
+.tlr:last-child{border-bottom:none}
+.tlr .mk{width:9px;height:9px;border-radius:50%;background:var(--s3);border:1.5px solid var(--bds);margin-left:3px}
+.tlr.past .mk{background:var(--gd);border-color:var(--gd)}
+.tlr.now .mk{background:var(--ac);border-color:var(--ac)}
+.tlr.next .mk{background:var(--s2);border-color:var(--bds)}
+.tlr .tn{color:var(--tx)}
+.tlr .ts{font-size:10.5px;color:var(--tx3);display:block;margin-top:2px}
+.tlr.next .tn{color:var(--tx2)}
+.entl{display:flex;gap:6px;align-items:center}
+.entl i{width:22px;height:7px;border-radius:4px;background:var(--s3);border:1px solid var(--bds);display:block}
+.entl i.used{background:var(--gd);border-color:var(--gd)}
+.dcard{background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:18px 22px;margin:0 0 14px;max-width:900px}
+.dcard .dl{display:flex;gap:11px;align-items:baseline;margin:0 0 7px}
+.dcard .dn{font-family:var(--mono);font-size:11px;color:var(--ac);flex:0 0 auto;position:relative;top:-1px}
+.dcard h4{margin:0;font-size:15px;font-weight:500}
+.dcard p{margin:0 0 8px;font-size:14px;line-height:1.6;color:var(--tx2)}
+.dcard p:last-child{margin-bottom:0}
+.dcard .cost{font-size:13.5px;color:var(--tx2);border-top:1px solid var(--bd);margin-top:11px;padding-top:10px}
+.dcard .cost b{color:var(--tx);font-weight:500}
+h2.bighead{font-size:26px;font-weight:500;letter-spacing:-.015em;margin:76px 0 10px;padding-top:34px;border-top:1px solid var(--bds)}
+.bigsub{max-width:750px;color:var(--tx2);font-size:15px;margin:0 0 26px}
+@media (max-width:900px){ .two{grid-template-columns:1fr} .g3,.g2{grid-template-columns:1fr} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<p class="eyebrow"><span>Pros Web</span><span>Statuses across the model</span><span>Mockup, 10 Sep 2026</span></p>
+
+<h1>Where the statuses live</h1>
+
+<p class="lede">The model is settled enough to draw. This memo tests one thing: whether the status
+sets agreed for leads, projects, proposals and jobs survive being put on screen. Four screens follow
+the Thompsons through a two trade sale with a deferred roof and a permit that sticks. A fifth screen
+is the service plan on their heat pump, which needs a different set of statuses and is the reason
+this memo has five sections rather than four.</p>
+
+<div class="conv">
+  <span class="cm">[i]</span>
+  <span>Inside a mockup, small grey text prefixed with <strong>[i]</strong> is my annotation, not
+  interface copy. Everything else in a mockup frame is intended as real UI.</span>
+</div>
+
+<div class="card">
+  <h3>Taken as settled for this memo</h3>
+  <p class="sh2">Working assumptions from the DRAFT v3 comparison, not decisions anyone has signed off</p>
+  <ul class="b">
+    <li><strong>The project is the spine, and it mints on pursuit.</strong> It is created when someone
+    starts working a lead with the intention of writing a proposal, so it exists before anything is
+    priced.</li>
+    <li><strong>One lead per trade.</strong> Three trades on one house are three leads, and they can be
+    pursued into a single project.</li>
+    <li><strong>Statuses are authored on leads, proposals and jobs, and derived on the project.</strong>
+    The only project status a person sets is the first one.</li>
+    <li><strong>Deferred is not lost.</strong> A declined trade keeps its lead open with a reason, a
+    note and a revive date, and keeps its priced option on the proposal.</li>
+    <li><strong>Every unhappy state carries a reason code and a free text note</strong>, written for
+    whoever picks the conversation up next season.</li>
+    <li><strong>A proposal carries two statuses.</strong> A lifecycle one and a delivery one, because
+    revised and unsent are two different facts.</li>
+    <li><strong>Selling and work are groupings in the experience, not entities.</strong> They exist so
+    a person can see the line between what is being sold and what is being delivered.</li>
+    <li><strong>Service runs as its own project type</strong>, with one job per visit and a cadence
+    taken from the plan terms.</li>
+  </ul>
+</div>
+
+<div class="card last">
+  <h3>Invented for this memo, overrule freely</h3>
+  <p class="sh2">Three things nothing we have written specifies</p>
+  <ul class="b">
+    <li><strong>The permit stall.</strong> Windows needs a building permit, plan review returns a
+    correction on 10 September, and nothing about the job is wrong. Taken from the financed multi
+    trade scenario, because it is the only place a status has to survive four weeks of silence.</li>
+    <li><strong>The heat pump service plan.</strong> Sold at closeout of the 2025 HVAC job, two visits
+    a year at twenty nine dollars a month. Nothing in the model says a plan is sold this way; it is
+    the flywheel drawn as a fact so section E has something to stand on.</li>
+    <li><strong>Reason code vocabularies.</strong> The specific codes shown on the deferred roof and
+    the blocked job are made up. The claim is that codes exist and are required, not that these are
+    the right ones.</li>
+  </ul>
+</div>
+
+<!-- ============================ A ============================ -->
+<div class="sec">
+  <div class="sec-head"><div class="badge">A</div><h2 class="sec-title">Three leads, two sold, one deferred</h2><span class="sec-when">Customer record &middot; 19 Aug</span></div>
+  <div class="two">
+    <div>
+      <p class="cap">The day after the sale. The roof is the reason this screen is hard</p>
+      <div class="mock">
+        <div class="mk-bar">
+          <div><div class="mk-ttl">Robert &amp; Sara Thompson</div>
+          <div class="mk-sub">1428 Maple Ave, Sacramento CA &middot; <span class="tap">2 contacts</span> &middot; <span class="tap">1 property</span> &middot; customer since Aug 2025</div></div>
+          <div class="mk-st"><span class="pill g">Customer</span></div>
+        </div>
+
+        <div class="blk">
+          <div class="bh"><h5>Leads</h5><span class="hint">One per trade &middot; 3 open or closed this year</span></div>
+          <div class="row">
+            <span class="rn">Roofing<span class="rs">Raised by the homeowner in the Home App, 21 Jul &middot; shingles in the yard after the storm</span></span>
+            <span class="pill w xs">Deferred</span>
+            <span class="rv">revive Mar 2027</span>
+          </div>
+          <div class="reason">
+            <div class="rk">Reason &middot; Budget this season</div>
+            <div class="rt">Took siding and windows and asked to come back to the roof in spring. Sara
+            said the roof is "not leaking yet". Worth leading with the storm damage photos from July
+            when we call.</div>
+          </div>
+          <div class="row" style="margin-top:11px">
+            <span class="rn">Siding<span class="rs">Raised by Sara on the intake call, 22 Jul &middot; south elevation faded and cracking</span></span>
+            <span class="pill g xs">Won</span>
+            <span class="rv">$34,200</span>
+          </div>
+          <div class="row">
+            <span class="rn">Windows<span class="rs">Suggested by the system, 21 Jul &middot; original single panes on a 1978 build</span></span>
+            <span class="pill g xs">Won</span>
+            <span class="rv">$18,600</span>
+          </div>
+          <p class="note">Three leads, three authors, three moments. Provenance is set once and never
+          changes. Status is the only thing that moves.</p>
+        </div>
+
+        <div class="blk">
+          <div class="bh"><h5>Projects</h5><span class="hint">Status derived from what is inside</span></div>
+          <div class="row">
+            <span class="rn">Exterior refresh for the Thompsons<span class="rs">Roofing, Siding and Windows pursued together &middot; opened 12 Aug &middot; 2 jobs, 1 deferred</span></span>
+            <span class="pill a xs der">Sold</span>
+            <span class="rv">$52,800</span>
+          </div>
+          <div class="row">
+            <span class="rn">HVAC, central air and heat pump conversion<span class="rs">Closed 24 Sep 2025 &middot; 1 job</span></span>
+            <span class="pill m xs der">Paid</span>
+            <span class="rv">$14,800</span>
+          </div>
+          <p class="note">The roofing lead stays linked to the project that failed to sell it, which
+          is what makes a March conversation cheap. A lead nobody ever pursued would sit in the list
+          above with no project at all.</p>
+        </div>
+
+        <div class="blk">
+          <div class="bh"><h5>Service plans</h5><span class="hint">Not projects. They outlive them</span></div>
+          <div class="row">
+            <span class="rn">Heat pump maintenance, 2 visits a year<span class="rs">Sold at HVAC closeout, Sep 2025 &middot; renews annually &middot; see section E</span></span>
+            <span class="pill g xs">Active</span>
+            <span class="rv">$29 / mo</span>
+          </div>
+        </div>
+
+        <div class="blk">
+          <div class="bh"><h5>Financials</h5></div>
+          <div class="g3">
+            <div class="sc"><h6>Sold to date</h6><p class="big">$67,600</p><div class="lin"><span>Across 2 projects</span><span></span></div></div>
+            <div class="sc"><h6>Outstanding</h6><p class="big">$52,800</p><div class="lin"><span>Exterior refresh</span><span>0 collected</span></div></div>
+            <div class="sc"><h6>Open demand</h6><p class="big">$38,900</p><div class="lin"><span>Roofing, deferred</span><span>est.</span></div></div>
+          </div>
+          <p class="note">Open demand is a roll up of deferred and unpursued leads. It only exists
+          because a deferred lead keeps its estimate.</p>
+        </div>
+
+        <div class="blk dim">
+          <div class="bh"><h5>Documents, notes, measurements, history</h5><span class="pill o xs">Placeholder</span></div>
+          <div class="ph">Deliberately not designed. These attach to the customer, the project, the
+          proposal, the jobs and the money at once, and where they surface is in the to decide list at
+          the end of this memo.</div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="setl">
+        <div class="lab">Lead status set, authored</div>
+        <div class="v"><b>New</b> &middot; <b>Qualifying</b> &middot; <b>Pursuing</b> &middot; <b>Quoted</b> &middot; <b>Won</b> &middot; <b>Deferred</b> &middot; <b>Lost</b> &middot; <i>Disqualified</i></div>
+      </div>
+      <div class="arg">
+        <p class="lab">Deferred needs a date, or it rots</p>
+        <p>A status alone does not make anything happen. The revive date is what turns the roof from a
+        note somebody wrote into a thing that appears in a queue next March. Without it, deferred and
+        lost behave identically no matter what the reporting says.</p>
+      </div>
+      <div class="arg">
+        <p class="lab">The reason is the deliverable</p>
+        <p>The code drives reporting and the free text drives the next conversation. Both were captured
+        in the room on 18 August, which is the only moment anyone knows why. Making the note optional
+        would be the same as not having it.</p>
+      </div>
+      <div class="arg">
+        <p class="lab">Won leads stay on the list</p>
+        <p>Siding and windows read Won rather than disappearing into the project. It costs a longer
+        list, and it buys the only honest answer to "what have we sold these people", which is the
+        question this screen exists for.</p>
+      </div>
+      <div class="arg">
+        <p class="lab">Counts differ at every level</p>
+        <p>Three leads, one project, two jobs, one plan. The screen has to hold four different numbers
+        without implying they should match, which is why leads and projects are separate lists rather
+        than a tree.</p>
+      </div>
+      <div class="arg">
+        <p class="lab">The uncomfortable part</p>
+        <p>The roofing lead reads Deferred while the project holding it reads Sold. On this screen two
+        statuses appear to disagree and both are correct, because one is about demand and the other is
+        about commitment. That is the cost of keeping them separate, and it is the first item in the to
+        decide list at the end.</p>
+      </div>
+      <p class="qhead">Open questions</p>
+      <div class="q"><div class="qn">1</div><p>Does a Won lead ever leave this list, or does it accumulate for the life of the customer?</p></div>
+      <div class="q"><div class="qn">2</div><p>When the roof revives in March, does it start a new project or reopen the exterior refresh?</p></div>
+      <div class="q"><div class="qn">3</div><p>Is Open demand a figure we want a contractor to see, given none of it is committed?</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================ B ============================ -->
+<div class="sec">
+  <div class="sec-head"><div class="badge">B</div><h2 class="sec-title">The project, with one lane running and one stuck</h2><span class="sec-when">Project workspace &middot; 9 Sep</span></div>
+  <div class="two">
+    <div>
+      <p class="cap">Selling is done, work is half blocked, and the status is computed</p>
+      <div class="mock">
+        <div class="mk-bar">
+          <div><div class="mk-ttl">Exterior refresh for the Thompsons</div>
+          <div class="mk-sub">Project &middot; <span class="tap">R. &amp; S. Thompson</span> &middot; 1428 Maple Ave &middot; opened 12 Aug by Priya Raman</div></div>
+          <div class="mk-st"><span class="pill a der">In progress</span><span class="axl">derived</span></div>
+        </div>
+
+        <div class="blk">
+          <div class="derrow"><span>&#9432;</span><span><b>Why this reads In progress.</b> One job has
+          started, which is enough. It will read Complete when both jobs are complete, and Paid when
+          the balance clears. Nobody can set it by hand.</span></div>
+          <div class="g3">
+            <div class="sc"><h6>Selling</h6><p class="big">Accepted</p><div class="lin"><span>1 proposal, 3 options</span><span>18 Aug</span></div></div>
+            <div class="sc"><h6>Work</h6><p class="big">1 of 2</p><div class="lin"><span>Siding running</span><span>Windows blocked</span></div></div>
+            <div class="sc"><h6>Money</h6><p class="big">$55,600</p><div class="lin"><span>Financed, 15 yr</span><span>$31,680 drawn</span></div></div>
+          </div>
+        </div>
+
+        <div class="blk">
+          <div class="bh"><h5>Selling</h5><span class="hint">How the work got sold</span></div>
+          <div class="row">
+            <span class="rn">Proposal, version 3<span class="rs">Accepted 18 Aug &middot; contract e&#8209;signed &middot; amended 9 Sep</span></span>
+            <span class="pill g xs">Accepted</span>
+            <span class="rv">$55,600</span>
+          </div>
+          <div class="row off">
+            <span class="rn">Roofing option<span class="rs">Priced $38,900, declined for this season, still on the proposal &middot; <span class="tap">Roofing lead, deferred</span></span></span>
+            <span class="pill w xs">Declined</span>
+            <span class="rv">held</span>
+          </div>
+          <p class="note">The declined line stays inside Selling rather than leaving. Its price is the
+          thing that makes a March conversation cheap.</p>
+        </div>
+
+        <div class="blk">
+          <div class="bh"><h5>Work</h5><span class="hint">One job per committed scope</span></div>
+          <div class="row">
+            <span class="rn">JOB&#8209;3101 Siding<span class="rs">Exterior crew &middot; rot repair after change order &middot; 5 of 8 steps</span></span>
+            <span class="pill a xs">In progress</span>
+            <span class="rv">$37,000</span>
+          </div>
+          <div class="row">
+            <span class="rn">JOB&#8209;3102 Windows<span class="rs">Install crew &middot; units on order, delivery 23 Sep &middot; 2 of 8 steps</span></span>
+            <span class="pill w xs der">Blocked</span>
+            <span class="rv">$18,600</span>
+          </div>
+          <div class="gaterow"><span>&#9888;</span><span><b>Windows is blocked by Permit P&#8209;22841.</b>
+          Plan review returned a correction yesterday, U&#8209;factor documentation missing. Waiting
+          14 days. Nothing about the job is wrong. <span class="tap">Open the permit</span></span></div>
+          <p class="note">Blocked is derived from the permit record, not chosen by a person. It clears
+          itself when the permit does.</p>
+        </div>
+
+        <div class="blk">
+          <div class="bh"><h5>Money</h5><span class="hint">Held here, not on the jobs</span></div>
+          <div class="g2">
+            <div class="bal">
+              <h6>Master invoice MI&#8209;4471</h6>
+              <div class="balr"><span>Original contract</span><span class="v">$52,800</span></div>
+              <div class="balr"><span>CO&#8209;01 rot behind siding</span><span class="v">$2,800</span></div>
+              <div class="balr"><span>Drawn to date</span><span class="v">$31,680</span></div>
+              <div class="balr t"><span>Outstanding</span><span class="v">$23,920</span></div>
+            </div>
+            <div class="bal">
+              <h6>Costs, per job</h6>
+              <div class="balr"><span>JOB&#8209;3101 Siding</span><span class="v">$21,940</span></div>
+              <div class="balr"><span>JOB&#8209;3102 Windows</span><span class="v">$1,120</span></div>
+              <div class="balr"><span>Margin, project</span><span class="v">31%</span></div>
+              <div class="balr t"><span>Margin, per job</span><span class="v" style="color:var(--tx4);font-weight:400;font-size:12px">not available</span></div>
+            </div>
+          </div>
+          <p class="note">Revenue landed on the project and costs land on the jobs, so project margin
+          reads and per job margin does not. This is a real gap, not a rendering choice.</p>
+        </div>
+
+        <div class="blk dim">
+          <div class="bh"><h5>Stages, tasks and gates</h5><span class="pill o xs">Placeholder</span></div>
+          <div class="ph">Deliberately not designed. The configured pipeline surfaces at the lead, the
+          project, selling, work and each job, and choosing where is in the to decide list.</div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="setl">
+        <div class="lab">Project status set, derived except at mint</div>
+        <div class="v"><b>Pursuing</b> <i>(authored)</i> &middot; <b>Quoting</b> &middot; <b>Presented</b> &middot; <b>Sold</b> &middot; <b>In progress</b> &middot; <b>Complete</b> &middot; <b>Paid</b> &middot; <b>Stalled</b> &middot; <b>Lost</b> &middot; <b>Cancelled</b> <i>(authored)</i></div>
+      </div>
+      <div class="arg">
+        <p class="lab">A derived status has to show its working</p>
+        <p>If a person cannot set the status, they will not trust it until they can see what produced
+        it. The one line explanation under the header is doing more work than the pill above it, and it
+        is the difference between a computed field and a field people quietly work around.</p>
+      </div>
+      <div class="arg">
+        <p class="lab">A blocked job says what blocks it</p>
+        <p>In the financed walkthrough the windows job sat blocked for twenty six days with nothing in
+        its own record saying so, because the blocking fact lived on the permit. Deriving Blocked from
+        the blocker, and showing the elapsed days, is the fix and it costs one pointer.</p>
+      </div>
+      <div class="arg">
+        <p class="lab">Two lanes, one status, no averaging</p>
+        <p>Siding is running and windows is stuck. The project reads In progress off the first and does
+        not soften it with the second. Any status that tried to describe both at once would describe
+        neither.</p>
+      </div>
+      <div class="arg">
+        <p class="lab">The declined trade stays inside Selling</p>
+        <p>Roofing sits under the proposal it was priced on, greyed, linked back to its lead. That is
+        the DRAFT v3 idea worth taking: the demand survives on the lead, and the number survives
+        here.</p>
+      </div>
+      <div class="arg">
+        <p class="lab">The uncomfortable part</p>
+        <p>Per job margin is not answerable and the screen says so out loud. Every model in play has
+        this gap, because revenue attaches one level above where costs land. Showing a blank is better
+        than showing an allocation nobody agreed.</p>
+      </div>
+      <p class="qhead">Open questions</p>
+      <div class="q"><div class="qn">1</div><p>If both jobs were blocked, should the project read Stalled, and who gets told?</p></div>
+      <div class="q"><div class="qn">2</div><p>Does a derived status need a manual override for a project everyone has quietly abandoned?</p></div>
+      <div class="q"><div class="qn">3</div><p>Is Blocked an outer state of its own, or a flag sitting on top of In progress? The reporting differs.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================ C ============================ -->
+<div class="sec">
+  <div class="sec-head"><div class="badge">C</div><h2 class="sec-title">Two status axes, moving independently</h2><span class="sec-when">Proposal &middot; 18 Aug, in the room</span></div>
+  <div class="two">
+    <div>
+      <p class="cap">Roofing has just gone off and windows has just gone on. Nothing has been sent</p>
+      <div class="mock">
+        <div class="mk-bar">
+          <div><div class="mk-ttl">Exterior refresh for the Thompsons</div>
+          <div class="mk-sub">Proposal &middot; version 2 &middot; prepared 13 Aug &middot; presented in person 18 Aug by Priya Raman</div></div>
+          <div class="mk-st">
+            <span class="pill a">Presented</span><span class="axl">lifecycle</span>
+            <span class="pill w" style="margin-top:4px">Changes not sent</span><span class="axl">delivery</span>
+          </div>
+        </div>
+
+        <div class="blk">
+          <div class="bh"><h5>Options</h5><span class="hint">Priced is not the same as offered</span></div>
+          <div class="tog off">
+            <span class="sw off"><i></i></span>
+            <span><span class="tn">Roofing</span><span class="td">Priced 13 Aug &middot; offered first &middot; declined in the session</span></span>
+            <span class="tv">$38,900</span>
+          </div>
+          <div class="tog">
+            <span class="sw"><i></i></span>
+            <span><span class="tn">Siding</span><span class="td">Priced 13 Aug &middot; offered &middot; selected</span></span>
+            <span class="tv">$34,200</span>
+          </div>
+          <div class="tog">
+            <span class="sw"><i></i></span>
+            <span><span class="tn">Windows</span><span class="td">Priced 13 Aug, held back &middot; offered second &middot; selected</span></span>
+            <span class="tv">$18,600</span>
+          </div>
+          <div class="tot"><span>Total</span><span><span class="was">$73,100</span><span class="big">$52,800</span></span></div>
+          <p class="note">Windows sat on this proposal for five days before anyone showed it. Held back
+          is a state on the option, not a separate draft.</p>
+        </div>
+
+        <div class="blk">
+          <div class="bh"><h5>Why roofing came off</h5><span class="pill w xs">Required to switch off an offered option</span></div>
+          <div class="reason">
+            <div class="rk">Reason &middot; Budget this season</div>
+            <div class="rt">Took siding and windows and asked to come back to the roof in spring. Sara
+            said the roof is "not leaking yet". Worth leading with the storm damage photos from July
+            when we call.</div>
+          </div>
+          <div class="row wide" style="margin-top:11px">
+            <span class="rn">Writes back to the Roofing lead<span class="rs">Status becomes Deferred &middot; revive date Mar 2027 &middot; estimate retained at $38,900</span></span>
+            <span class="pill w xs">Deferred</span>
+          </div>
+          <p class="note">Captured in the room, because 18 August is the only moment anyone knows why.
+          Nothing here can be filled in later.</p>
+        </div>
+
+        <div class="blk">
+          <div class="bh"><h5>Delivery history</h5><span class="hint">The second axis, on its own</span></div>
+          <div class="row">
+            <span class="rn">Version 1<span class="rs">All three trades, roofing and siding offered, windows held</span></span>
+            <span class="pill m xs">Never sent</span>
+            <span class="rv">13 Aug</span>
+          </div>
+          <div class="row">
+            <span class="rn">Version 2<span class="rs">Shown on screen at the kitchen table</span></span>
+            <span class="pill a xs">Presented in person</span>
+            <span class="rv">18 Aug</span>
+          </div>
+          <div class="row">
+            <span class="rn">Version 2, reworked<span class="rs">Roofing off, windows on, total re&#8209;estimated</span></span>
+            <span class="pill w xs">Changes not sent</span>
+            <span class="rv">18 Aug</span>
+          </div>
+          <p class="note">A proposal can be presented and then edited without being resent. One status
+          cannot hold both facts, which is why there are two.</p>
+        </div>
+
+        <div class="blk">
+          <div class="bh"><h5>Financing</h5><span class="hint">Presented here, modelled below the proposal</span></div>
+          <div class="row wide">
+            <span class="rn">Not yet chosen<span class="rs">Cash and financed both available on $52,800 &middot; decided later in the same session</span></span>
+            <span class="pill m xs">Pending</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="setl">
+        <div class="lab">Proposal, lifecycle axis</div>
+        <div class="v"><b>Draft</b> &middot; <b>Presented</b> &middot; <b>Accepted</b> &middot; <b>Declined</b> &middot; <b>Expired</b> &middot; <b>Superseded</b></div>
+      </div>
+      <div class="setl">
+        <div class="lab">Proposal, delivery axis</div>
+        <div class="v"><b>Never sent</b> &middot; <b>Sent</b> &middot; <b>Viewed</b> &middot; <b>Presented in person</b> &middot; <b>Changes not sent</b></div>
+      </div>
+      <div class="setl">
+        <div class="lab">Option, decision state</div>
+        <div class="v"><b>Priced, held back</b> &middot; <b>Offered</b> &middot; <b>Selected</b> &middot; <b>Declined</b></div>
+      </div>
+      <div class="arg">
+        <p class="lab">Two axes because they move independently</p>
+        <p>Revised and unsent are two facts about the same document, and you asked for the second
+        without losing the first. A single list would force a state called something like revised, not
+        sent, which then has to be duplicated for every lifecycle state it can co&#8209;occur with.</p>
+      </div>
+      <div class="arg">
+        <p class="lab">No partially accepted state</p>
+        <p>Two trades are taken and one is declined, and the proposal still reads Accepted. The per
+        trade decision lives on the option, which is where DRAFT v3 already puts it. A compound
+        proposal status would have to encode the mix and would be unreportable.</p>
+      </div>
+      <div class="arg">
+        <p class="lab">Held back is a presentation state, not a draft</p>
+        <p>Windows was fully priced and deliberately not shown. That is a different thing from an
+        unfinished line, and the inversion where the held back trade wins and the offered one loses is
+        what makes the distinction worth paying for.</p>
+      </div>
+      <div class="arg">
+        <p class="lab">Switching off is gated on a reason</p>
+        <p>The reason and note are required to turn an offered option off. That is friction in the
+        highest pressure moment of the sale, deliberately, because it is the only moment the answer
+        exists. It will be unpopular.</p>
+      </div>
+      <p class="qhead">Open questions</p>
+      <div class="q"><div class="qn">1</div><p>Does the homeowner's link show declined lines at all, or only what they bought?</p></div>
+      <div class="q"><div class="qn">2</div><p>After acceptance, is a new version a change order or a new proposal? The screen currently implies change order.</p></div>
+      <div class="q"><div class="qn">3</div><p>Should a held back option be invisible to the homeowner, or visible and switched off?</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================ D ============================ -->
+<div class="sec">
+  <div class="sec-head"><div class="badge">D</div><h2 class="sec-title">A job blocked by somebody outside the contract</h2><span class="sec-when">Job detail &middot; 9 Sep</span></div>
+  <div class="two">
+    <div>
+      <p class="cap">Fourteen days of waiting, and the reason lives on another record</p>
+      <div class="mock">
+        <div class="mk-bar">
+          <div><div class="mk-ttl">JOB&#8209;3102 Windows</div>
+          <div class="mk-sub">Job &middot; <span class="tap">Exterior refresh for the Thompsons</span> &middot; 14 units &middot; install crew &middot; opened 18 Aug</div></div>
+          <div class="mk-st"><span class="pill w der">Blocked</span><span class="axl">derived</span></div>
+        </div>
+
+        <div class="blk">
+          <div class="gaterow"><span>&#9888;</span><span><b>Blocked by Permit P&#8209;22841 since 26 Aug.</b>
+          Plan review returned a correction on 10 Sep: U&#8209;factor documentation missing from the
+          submittal. Not denied, held. Owner of the next action: Priya Raman.
+          <span class="tap">Open the permit</span></span></div>
+          <div class="row wide">
+            <span class="rn">Days waiting<span class="rs">Since the permit was applied for, not since the correction</span></span>
+            <span class="rv" style="font-size:15px;color:var(--wn);font-weight:500">14</span>
+          </div>
+          <p class="note">The elapsed count is the whole point. A status without a clock produced
+          twenty six days of silence in the scenario this screen is drawn from.</p>
+        </div>
+
+        <div class="blk">
+          <div class="bh"><h5>Outer state</h5><span class="hint">Fixed vocabulary. Not configurable</span></div>
+          <div class="g3">
+            <div class="sc"><h6>Now</h6><p class="big">Blocked</p><div class="lin"><span>Was Ready</span><span>26 Aug</span></div></div>
+            <div class="sc"><h6>Next</h6><p class="big">In progress</p><div class="lin"><span>On permit issue</span><span></span></div></div>
+            <div class="sc"><h6>Completes on</h6><p class="big">Evidence</p><div class="lin"><span>Not a button</span><span></span></div></div>
+          </div>
+        </div>
+
+        <div class="blk">
+          <div class="bh"><h5>Steps</h5><span class="hint">Configured by Northgate for window work</span></div>
+          <div class="stg done"><span class="dot"></span><span class="nm">Work package built</span><span class="mt">19 Aug</span></div>
+          <div class="stg done"><span class="dot"></span><span class="nm">Units ordered</span><span class="mt">26 Aug</span></div>
+          <div class="stg hold"><span class="dot"></span><span class="nm">Permit issued</span><span class="mt">held 14 days</span></div>
+          <div class="stg"><span class="dot"></span><span class="nm">Units delivered</span><span class="mt">due 23 Sep</span></div>
+          <div class="stg"><span class="dot"></span><span class="nm">Crew and date confirmed</span><span class="mt"></span></div>
+          <div class="stg"><span class="dot"></span><span class="nm">Install</span><span class="mt"></span></div>
+          <div class="stg"><span class="dot"></span><span class="nm">City final inspection</span><span class="mt"></span></div>
+          <div class="stg"><span class="dot"></span><span class="nm">Closeout</span><span class="mt"></span></div>
+          <p class="note">These eight are Northgate's configuration, not the model's. The four outer
+          states above them are the model's and cannot be renamed.</p>
+        </div>
+
+        <div class="blk">
+          <div class="bh"><h5>What Complete will derive from</h5><span class="hint">Three pieces of evidence</span></div>
+          <div class="sub"><span class="sk">Work visit closed</span><span class="sv na">Not scheduled</span></div>
+          <div class="sub"><span class="sk">Checklist closed</span><span class="sv wait">2 of 11</span></div>
+          <div class="sub"><span class="sk">City final inspection passed</span><span class="sv na">Not applied</span></div>
+          <p class="note">Completion is a computed consequence of these three, so the last one is issued
+          by a municipal inspector who is not party to the contract.</p>
+        </div>
+
+        <div class="blk">
+          <div class="bh"><h5>Scope and money on this job</h5></div>
+          <div class="g2">
+            <div class="bal">
+              <h6>Committed scope</h6>
+              <div class="balr"><span>14 units, unit schedule from 20 Aug</span><span class="v">$18,600</span></div>
+              <div class="balr"><span>Change orders</span><span class="v">None</span></div>
+            </div>
+            <div class="bal">
+              <h6>Money</h6>
+              <div class="balr"><span>Costs to date</span><span class="v">$1,120</span></div>
+              <div class="balr"><span>Invoice</span><span class="v" style="color:var(--tx3);font-weight:400">On the project</span></div>
+              <div class="balr"><span>Funding milestone</span><span class="v">Not released</span></div>
+            </div>
+          </div>
+          <p class="note">The siding job releases its own milestone on its own evidence. This job's
+          tranche sits on the same loan and is untouched by it.</p>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="setl">
+        <div class="lab">Job, outer state, fixed</div>
+        <div class="v"><b>Review</b> &middot; <b>Ready</b> &middot; <b>In progress</b> &middot; <b>Complete</b> &middot; <b>Blocked</b> &middot; <b>Cancelled</b></div>
+      </div>
+      <div class="setl">
+        <div class="lab">Job, steps, configured per org</div>
+        <div class="v"><i>Whatever the trade needs. Eight for window work at Northgate, four for a service visit, none for a job that is only a scheduling shell.</i></div>
+      </div>
+      <div class="arg">
+        <p class="lab">Outer states fixed, steps configured</p>
+        <p>This is the line that keeps the model safe. The six outer states are what the project's
+        derived status reads, so they cannot be renamed by an org. Everything an org wants to rename
+        sits underneath them as steps.</p>
+      </div>
+      <div class="arg">
+        <p class="lab">Blocked is derived, and it clears itself</p>
+        <p>Nobody sets Blocked and nobody has to remember to unset it. It comes from a live blocker
+        record with a pointer back, and it disappears when the permit issues. A manually set block is a
+        block that stays on after the problem goes away.</p>
+      </div>
+      <div class="arg">
+        <p class="lab">The clock does the work the status cannot</p>
+        <p>Blocked is a fact. Fourteen days is a prompt. In the scenario the job waited twenty six days
+        with nothing in its record saying anything at all, which is the single most expensive gap the
+        walkthroughs found.</p>
+      </div>
+      <div class="arg">
+        <p class="lab">Completion is evidence, not a button</p>
+        <p>Three pieces of evidence, one of them a municipal signature. Deriving Complete means nobody
+        can close a job to clear their queue, and it means the final bill cannot be issued early.</p>
+      </div>
+      <div class="arg">
+        <p class="lab">The uncomfortable part</p>
+        <p>If one permit ever covers both siding and windows, the same blocker has to hold two jobs and
+        the evidence has to be shared. Nothing on this screen handles that, and the scenario set flags
+        it as unresolved.</p>
+      </div>
+      <p class="qhead">Open questions</p>
+      <div class="q"><div class="qn">1</div><p>Is Blocked an outer state, or a flag on In progress? As drawn it replaces the state, which loses the fact that the job was Ready.</p></div>
+      <div class="q"><div class="qn">2</div><p>Who owns clearing a block when the blocker is a third party, and does the owner belong on the job or the permit?</p></div>
+      <div class="q"><div class="qn">3</div><p>When one permit covers two sibling jobs, does each read Blocked, or does the project?</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================ E ============================ -->
+<div class="sec">
+  <div class="sec-head"><div class="badge">E</div><h2 class="sec-title">A project type that never reads Paid</h2><span class="sec-when">Service project &middot; 10 Sep</span></div>
+  <div class="two">
+    <div>
+      <p class="cap">One job per visit, past and future, on a cadence nobody scheduled</p>
+      <div class="mock">
+        <div class="mk-bar">
+          <div><div class="mk-ttl">Heat pump maintenance, Thompson</div>
+          <div class="mk-sub">Service project &middot; <span class="tap">R. &amp; S. Thompson</span> &middot; 1428 Maple Ave &middot; plan sold 24 Sep 2025 &middot; renews 24 Sep 2026</div></div>
+          <div class="mk-st"><span class="pill g">Active</span><span class="axl">plan term</span></div>
+        </div>
+
+        <div class="blk">
+          <div class="derrow"><span>&#9432;</span><span><b>This project type has different terminal
+          states.</b> There is no contract value to close out, so it can read Complete for a term but
+          never Paid. Active, Renewing, Suspended, Not renewed and Cancelled replace the sold to paid
+          run in section B.</span></div>
+          <div class="g3">
+            <div class="sc"><h6>Term</h6><p class="big">Year 1</p><div class="lin"><span>24 Sep 2025 to 23 Sep 2026</span><span></span></div></div>
+            <div class="sc"><h6>Entitlement</h6><p class="big">1 of 2</p><div class="lin"><span>Visits consumed</span><span><span class="entl"><i class="used"></i><i></i></span></span></div></div>
+            <div class="sc"><h6>Billing</h6><p class="big">$29 / mo</p><div class="lin"><span>12 of 12 collected</span><span>no balance</span></div></div>
+          </div>
+        </div>
+
+        <div class="blk">
+          <div class="bh"><h5>Visits</h5><span class="hint">One job each &middot; cadence from the plan terms</span></div>
+          <div class="tl">
+            <div class="tlr past">
+              <span class="mk"></span>
+              <span><span class="tn">Spring tune up</span><span class="ts">JOB&#8209;2904 &middot; 18 Mar 2026 &middot; Tomas Vega &middot; filter and coil, refrigerant checked</span></span>
+              <span class="pill g xs">Complete</span>
+              <span class="rv" style="font-size:11px;color:var(--tx3)">entitlement 1</span>
+            </div>
+            <div class="tlr now">
+              <span class="mk"></span>
+              <span><span class="tn">Autumn tune up</span><span class="ts">JOB&#8209;3140 &middot; scheduled 22 Sep 2026 &middot; Tomas Vega &middot; 0 of 4 steps</span></span>
+              <span class="pill a xs">Scheduled</span>
+              <span class="rv" style="font-size:11px;color:var(--tx3)">entitlement 2</span>
+            </div>
+            <div class="tlr next">
+              <span class="mk"></span>
+              <span><span class="tn">Spring tune up</span><span class="ts">JOB&#8209;3141 &middot; due Mar 2027 &middot; unassigned &middot; exists because the cadence says so</span></span>
+              <span class="pill o xs">Upcoming</span>
+              <span class="rv" style="font-size:11px;color:var(--tx4)">next term</span>
+            </div>
+          </div>
+          <p class="note">The March 2027 job exists before anyone has scheduled it or sold the renewal.
+          No job in a one off project ever behaves this way.</p>
+        </div>
+
+        <div class="blk">
+          <div class="bh"><h5>Billing</h5><span class="hint">A subscription, not a balance</span></div>
+          <div class="g2">
+            <div class="bal">
+              <h6>This term</h6>
+              <div class="balr"><span>Invoices issued</span><span class="v">12 of 12</span></div>
+              <div class="balr"><span>Collected</span><span class="v">$348</span></div>
+              <div class="balr"><span>Card on file</span><span class="v" style="font-size:11px;font-weight:400">Visa ending 6411, on the customer</span></div>
+              <div class="balr t"><span>Closing balance</span><span class="v" style="color:var(--tx4);font-weight:400;font-size:12px">none, by design</span></div>
+            </div>
+            <div class="bal">
+              <h6>Where the invoice hangs</h6>
+              <div class="balr"><span>Monthly invoice parent</span><span class="v" style="color:var(--wn);font-size:11px">Unresolved</span></div>
+              <div class="balr"><span>Visit jobs billed</span><span class="v">$0</span></div>
+              <div class="balr"><span>Plan revenue this term</span><span class="v">$348</span></div>
+              <div class="balr"><span>Margin</span><span class="v" style="color:var(--tx4);font-weight:400;font-size:12px">not available</span></div>
+            </div>
+          </div>
+          <p class="note">The monthly invoice belongs to neither a job nor a project. The scenario set
+          flags this as a defect and it is the sharpest thing this screen exposes.</p>
+        </div>
+
+        <div class="blk">
+          <div class="bh"><h5>Plan terms</h5><span class="hint">The cadence that produces the jobs</span></div>
+          <div class="row"><span class="rn">Visits<span class="rs">Two a year, spring and autumn, four to eight weeks either side of the target month</span></span><span></span><span class="rv">2 / yr</span></div>
+          <div class="row"><span class="rn">Covers<span class="rs"><span class="tap">Heat pump, installed Sep 2025</span> &middot; registered against the property</span></span><span></span><span class="rv">1 unit</span></div>
+          <div class="row"><span class="rn">Renewal<span class="rs">Automatic unless cancelled 30 days out</span></span><span class="pill m xs">Auto</span><span class="rv">24 Sep</span></div>
+          <div class="row"><span class="rn">Anchored to<span class="rs">The customer and the property. Survives every project underneath it</span></span><span></span><span class="rv">both</span></div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="setl">
+        <div class="lab">Service project status set</div>
+        <div class="v"><b>Active</b> &middot; <b>Renewing</b> &middot; <b>Suspended</b> &middot; <b>Not renewed</b> &middot; <b>Cancelled</b> &middot; <i>never Paid</i></div>
+      </div>
+      <div class="setl">
+        <div class="lab">Visit job status set</div>
+        <div class="v"><b>Upcoming</b> &middot; <b>Scheduled</b> &middot; <b>In progress</b> &middot; <b>Complete</b> &middot; <b>Missed</b> &middot; <b>Skipped</b></div>
+      </div>
+      <div class="arg">
+        <p class="lab">The terminal states have to differ</p>
+        <p>A one off project ends at Paid because a balance closes. A plan has no balance, so the run
+        from Sold to Paid has nothing to describe. Forcing this project type through the same set would
+        leave every service plan permanently unfinished.</p>
+      </div>
+      <div class="arg">
+        <p class="lab">Upcoming is a status one off work does not need</p>
+        <p>The March 2027 visit exists because the cadence says so, before anybody schedules it and
+        before the renewal is sold. That is the mechanical difference between work produced by a signed
+        scope and work produced by a term.</p>
+      </div>
+      <div class="arg">
+        <p class="lab">Missed and Skipped decide money</p>
+        <p>Whether a visit consumed an entitlement is not an operational detail, it is what the
+        homeowner paid for. Complete, Missed and Skipped have to be distinguishable, and only one of
+        them decrements the count.</p>
+      </div>
+      <div class="arg">
+        <p class="lab">Suspended is not Cancelled</p>
+        <p>When the card fails and dunning runs out, the plan suspends: the cadence stops firing and no
+        visit job mints, but nothing is deleted and the installed equipment keeps its registration. A
+        suspended plan can come back and a cancelled one starts over.</p>
+      </div>
+      <div class="arg">
+        <p class="lab">The uncomfortable part</p>
+        <p>The monthly invoice has no valid parent. Money in this model hangs off a job or a project,
+        and a subscription charge belongs to neither. Drawing it as unresolved is honest; it is also
+        the thing most likely to force a change above the container.</p>
+      </div>
+      <p class="qhead">Open questions</p>
+      <div class="q"><div class="qn">1</div><p>One service project across the term, or a new one per visit cycle? Drawn here as one across the term.</p></div>
+      <div class="q"><div class="qn">2</div><p>Does the monthly invoice belong to the project, or does the plan need to be able to hold money itself?</p></div>
+      <div class="q"><div class="qn">3</div><p>When the house sells, does the plan follow the customer or the property? It is written against both.</p></div>
+      <div class="q"><div class="qn">4</div><p>Does a reactive repair found on a visit become a job on this project, or start a one off project of its own?</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================ TO DECIDE ============================ -->
+<h2 class="bighead">To decide</h2>
+<p class="bigsub">Three things this memo could not avoid and did not settle. The first two are
+questions about the model. The third is a question about the screens, and every mockup above dodged
+it with a labelled placeholder.</p>
+
+<div class="dcard">
+  <div class="dl"><span class="dn">01</span><h4>Whether a deferred lead holds its project back</h4></div>
+  <p>The Thompsons committed two trades and deferred one. The project reads Sold, and one of the leads
+  that fed it reads Deferred. If project status derives from its leads, a deferred sibling could stop
+  the project ever reading Sold, and the more leads a project carries the worse it gets.</p>
+  <p>Drawn here as: project status derives from the <strong>proposal and the jobs</strong>, never from
+  the leads. A lead's status is about demand and the project's is about the commitment, and the two are
+  allowed to disagree.</p>
+  <p class="cost"><b>If this is wrong, the model is wrong rather than the layout.</b> It would mean
+  either that a project cannot carry a lead it did not sell, which breaks bundling, or that lead status
+  and project status are the same fact recorded twice.</p>
+</div>
+
+<div class="dcard">
+  <div class="dl"><span class="dn">02</span><h4>Where the configured pipeline surfaces</h4></div>
+  <p>Stages, tasks, sub statuses and gates are cross cutting, which is why the model deliberately does
+  not draw them at any one level. But a screen has to put them somewhere. Section D shows steps on the
+  job, and sections A and B both leave a placeholder where a pipeline would go.</p>
+  <p>The live tension is that the ten configured stages an org sets up describe the whole run from
+  first contact to closeout, and that run crosses the lead, the project, selling and the jobs. Whoever
+  configures it thinks of it as one pipeline. The model has it as four.</p>
+  <p class="cost"><b>Cost of deciding late:</b> every screen in this memo has an empty region in it,
+  and the next round cannot lay any of them out properly.</p>
+</div>
+
+<div class="dcard">
+  <div class="dl"><span class="dn">03</span><h4>Where documents, notes, measurements and history attach</h4></div>
+  <p>They hang off the customer, the project, the proposal, the jobs and the money at once. Putting them
+  on one object asserts an ownership the model is not claiming, and putting them everywhere means five
+  places to look for the same photograph.</p>
+  <p>Section A has the placeholder at customer level and section D shows checklists on the job. Neither
+  is a position, and the site assessment from 20 August is the awkward case: one record, findings tagged
+  per trade, later read by two jobs that never run in step.</p>
+  <p class="cost"><b>Cost of deciding late:</b> lower than the other two. This can be settled per screen
+  in the next round as long as nobody treats the first answer as a rule.</p>
+</div>
+
+</div>
+</body>
+</html>

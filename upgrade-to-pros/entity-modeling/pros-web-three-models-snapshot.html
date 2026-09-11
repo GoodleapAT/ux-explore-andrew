@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pros object models: where the three of them stand</title>
+<style>
+:root{
+  color-scheme: light;
+  --bg:#ffffff; --s1:#faf9f7; --s2:#ffffff; --s3:#f2f1ed;
+  --tx:#1b1b1a; --tx2:#575651; --tx3:#8b8a84;
+  --bd:#e7e5e0; --bds:#d5d3cc;
+  --ac:#185fa5; --acbg:#e9f1fa; --acbd:#a8c9ec;
+  --wn:#a8461f; --wnbg:#fbf0eb; --wnbd:#e2b39d;
+  --gd:#3b6d11; --gdbg:#eef4e4;
+  --pr:#534ab7; --prbg:#eeedfe;
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:var(--sans);font-size:15px;line-height:1.62;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1560px;margin:0 auto;padding:56px 40px 96px}
+.eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--tx3);margin:0 0 18px}
+.eyebrow span{margin-right:26px}
+h1{font-size:40px;line-height:1.12;font-weight:500;letter-spacing:-.02em;margin:0 0 18px;max-width:820px}
+.lede{max-width:790px;color:var(--tx2);font-size:15.5px;margin:0 0 14px}
+.lede.last{margin-bottom:40px}
+.sec{margin:0 0 66px}
+.sec-head{display:flex;align-items:center;gap:11px;padding-bottom:12px;border-bottom:1px solid var(--bd);margin-bottom:22px}
+.badge{flex:0 0 auto;width:20px;height:20px;border:1px solid var(--acbd);border-radius:4px;color:var(--ac);font-family:var(--mono);font-size:10.5px;display:flex;align-items:center;justify-content:center;background:var(--acbg)}
+.sec-title{font-size:19px;font-weight:500;margin:0;letter-spacing:-.01em}
+.cap{font-family:var(--mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--tx3);margin:0 0 10px}
+.fig{background:var(--s2);border:1px solid var(--bd);border-radius:12px;padding:18px;margin-bottom:26px}
+.fig > svg{display:block;width:100%;height:auto}
+.note{margin:12px 0 0;font-size:12px;line-height:1.45;color:var(--tx3);font-style:italic;max-width:820px}
+.legend{display:flex;gap:30px;flex-wrap:wrap;align-items:center;margin:0 0 20px;padding:0 0 15px;border-bottom:1px solid var(--bd)}
+.legend .lt{font-family:var(--mono);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--tx3)}
+.legend .li{display:flex;gap:10px;align-items:center;font-size:12.5px;color:var(--tx2)}
+.legend .li b{color:var(--tx);font-weight:500}
+.legend svg{display:block;flex:0 0 auto;width:46px;height:26px}
+table{border-collapse:collapse;width:100%;max-width:1180px;margin:0 0 26px;font-size:13.5px}
+th,td{text-align:left;vertical-align:top;padding:9px 14px;border-bottom:1px solid var(--bd)}
+th{font-family:var(--mono);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--tx3);font-weight:400;border-bottom:1px solid var(--bds)}
+td{color:var(--tx2);line-height:1.5}
+td:first-child{color:var(--tx);font-weight:500;width:210px}
+table.src td:first-child{width:150px}
+h3{font-size:16px;font-weight:500;margin:34px 0 4px;letter-spacing:-.005em}
+h3:first-of-type{margin-top:0}
+h4{font-family:var(--mono);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--tx3);font-weight:400;margin:22px 0 8px}
+.modelblock{max-width:1180px;margin:0 0 44px;padding:0 0 8px;border-top:2px solid var(--bds)}
+.modelblock h3{margin-top:20px}
+.three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:34px;max-width:1400px;margin-bottom:8px}
+.three .arg{margin:0}
+.arg .lab{font-family:var(--mono);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:#7d8fa3;margin:0 0 6px}
+.arg p{margin:0 0 10px;font-size:14px;line-height:1.58;color:var(--tx2)}
+.arg p:last-child{margin-bottom:0}
+.arg p strong{color:var(--tx);font-weight:500}
+ol.ag{max-width:1180px;margin:0;padding:0 0 0 22px}
+ol.ag li{margin:0 0 14px;color:var(--tx2);font-size:14.5px;line-height:1.58}
+ol.ag li strong{color:var(--tx);font-weight:500}
+ol.ag li em{color:var(--wn);font-style:normal}
+.q{max-width:1180px;border-top:1px solid var(--bd);padding:16px 0 6px;display:grid;grid-template-columns:26px minmax(0,1fr);gap:14px}
+.qn{width:21px;height:21px;border-radius:50%;background:var(--ac);color:#fff;font-family:var(--mono);font-size:10.5px;display:flex;align-items:center;justify-content:center;margin-top:3px}
+.q h5{margin:0 0 6px;font-size:15px;font-weight:500}
+.q p{margin:0 0 7px;font-size:14px;line-height:1.56;color:var(--tx2)}
+.q p:last-child{margin-bottom:0}
+.q .who{color:var(--tx3);font-style:italic}
+.q .set{color:var(--gd)}
+.q ul{margin:6px 0 0;padding:0 0 0 18px}
+.q li{font-size:13.5px;line-height:1.5;color:var(--tx2);margin-bottom:7px}
+.foot{border-top:1px solid var(--bd);padding-top:22px;margin-top:40px}
+.foot p{font-size:14px;color:var(--tx2);max-width:820px;margin:0}
+.foot p strong{color:var(--tx);font-weight:500}
+@media (max-width:1000px){ .three{grid-template-columns:1fr} td:first-child{width:auto} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<p class="eyebrow"><span>Pros Web</span><span>Three object models</span><span>Snapshot, 2 Sep 2026</span></p>
+
+<h1>Pros object models: where the three of them stand</h1>
+
+<p class="lede">A point-in-time record of three independently developed object models for Pros,
+written so the three authors can work from one description rather than three boards. It describes
+each model on its own terms and does not pick between them.</p>
+
+<p class="lede last">Nothing here has been signed off by anyone outside the design and engineering
+work, and all three models are still moving. Where a model is silent on something, this document
+says so rather than filling the gap.</p>
+
+<table class="src">
+  <tr><th>Model</th><th>Author</th><th>Artefact</th><th>Version as read</th></tr>
+  <tr><td>Model C</td><td>Andrew Thompson</td><td>Object mapping — Model C, plus memos 0, 3 and 4</td><td>Board diagram v1; memos 28–31 Aug 2026</td></tr>
+  <tr><td>Base Entity Map</td><td>Daidipya</td><td>Base Entity Map and the entity glossary</td><td>Projection of entity-registry.md · v11 · 2026-08-30</td></tr>
+  <tr><td>Full entity map</td><td>Joel</td><td>Full entity map — core / optional / satellite / cross-lane</td><td>DRAFT v2</td></tr>
+</table>
+
+<p class="note">Daidipya's map states that the entity registry is the source of truth and the board
+is a projection of it. This document reads the board and the glossary, not the registry.</p>
+
+<div class="sec" style="margin-top:56px">
+  <div class="sec-head"><div class="badge">A</div><h2 class="sec-title">How each model is put together</h2></div>
+  <p class="cap">Each model's central objects &middot; three link types, declared</p>
+  <div class="fig">
+    <div class="legend">
+      <span class="lt">Reading the links</span>
+      <span class="li">
+        <svg width="46" height="26" viewBox="0 0 46 26"><rect x="0.5" y="0.5" width="45" height="25" rx="4" fill="#faf9f7" stroke="#d5d3cc"/><rect x="7" y="6" width="32" height="14" rx="3" fill="#ffffff" stroke="#b4b2a9"/></svg>
+        <span><b>Nested</b> = contains</span>
+      </span>
+      <span class="li">
+        <svg width="46" height="26" viewBox="0 0 46 26"><defs><marker id="lg1" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,1 L8,4.5 L0,8 z" fill="#8b8a84"/></marker></defs><path d="M6,13 H36" fill="none" stroke="#8b8a84" stroke-width="1.3" marker-end="url(#lg1)"/></svg>
+        <span><b>Labelled arrow</b> = produces or becomes, pointing the way creation runs</span>
+      </span>
+      <span class="li">
+        <svg width="46" height="26" viewBox="0 0 46 26"><path d="M6,13 H40" fill="none" stroke="#b4b2a9" stroke-width="1.3" stroke-dasharray="5 4"/></svg>
+        <span><b>Dashed, no head</b> = references, owns nothing</span>
+      </span>
+    </div>
+    <svg viewBox="0 0 1400 700" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="t1 d1">
+      <title id="t1">The central objects of each of the three models</title>
+      <desc id="d1">Three columns. Model C is mostly nesting: the customer contains one or more properties, one or more opportunities and a mandatory project; the opportunities and the project both reference a property; and the project contains a proposal holding scopes, a job holding its pipeline and its records, and the money. Daidipya's is part nesting and part production: the customer contains the lead, the lead contains the proposal, the proposal produces the contract, the contract produces the job, and the job contains the sub-job. Joel's is mostly production: lead drafts a proposal holding options, the selected option triggers the contract, the contract sells into the job, and the job contains scope components inside an optional project group.</desc>
+      <defs><marker id="a1" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,1 L8,4.5 L0,8 z" fill="#8b8a84"/></marker></defs>
+
+      <!-- ===== MODEL C ===== -->
+      <text x="0" y="13" font-family="ui-monospace,Menlo,monospace" font-size="9" letter-spacing="1.1" fill="#8b8a84">MODEL C &#183; ANDREW</text>
+      <text x="0" y="27" font-family="-apple-system,sans-serif" font-size="10.5" fill="#8b8a84">Containment-led</text>
+
+      <rect x="0" y="40" width="440" height="624" rx="8" fill="#faf9f7" stroke="#d5d3cc"/>
+      <text x="14" y="60" font-family="-apple-system,sans-serif" font-size="11.5" font-weight="500" fill="#1b1b1a">Customer</text>
+
+      <rect x="26" y="72" width="404" height="50" rx="6" fill="#ffffff" stroke="#d5d3cc"/>
+      <rect x="22" y="76" width="404" height="50" rx="6" fill="#ffffff" stroke="#cac8c0"/>
+      <rect x="18" y="80" width="404" height="50" rx="6" fill="#ffffff" stroke="#b4b2a9"/>
+      <text x="32" y="99" font-family="-apple-system,sans-serif" font-size="11" font-weight="500" fill="#1b1b1a">Property &#183; one or more</text>
+      <text x="32" y="115" font-family="-apple-system,sans-serif" font-size="9.5" fill="#8b8a84">the site the work happens at</text>
+
+      <path d="M90,148 V130" fill="none" stroke="#b4b2a9" stroke-width="1.3" stroke-dasharray="5 4"/>
+      <text x="98" y="144" font-family="-apple-system,sans-serif" font-size="9" fill="#b4b2a9">at</text>
+      <path d="M370,222 V130" fill="none" stroke="#b4b2a9" stroke-width="1.3" stroke-dasharray="5 4"/>
+      <text x="378" y="178" font-family="-apple-system,sans-serif" font-size="9" fill="#b4b2a9">at</text>
+
+      <rect x="26" y="140" width="300" height="60" rx="6" fill="#ffffff" stroke="#d5d3cc"/>
+      <rect x="22" y="144" width="300" height="60" rx="6" fill="#ffffff" stroke="#cac8c0"/>
+      <rect x="18" y="148" width="300" height="60" rx="6" fill="#ffffff" stroke="#b4b2a9"/>
+      <text x="32" y="167" font-family="-apple-system,sans-serif" font-size="11" font-weight="500" fill="#1b1b1a">Opportunity &#183; one or more</text>
+      <text x="32" y="182" font-family="-apple-system,sans-serif" font-size="9.5" fill="#8b8a84">one per trade &#183; carries its origin</text>
+      <text x="32" y="197" font-family="-apple-system,sans-serif" font-size="9.5" fill="#8b8a84">survives being declined</text>
+
+      <path d="M90,208 V222" fill="none" stroke="#b4b2a9" stroke-width="1.3" stroke-dasharray="5 4"/>
+      <text x="98" y="220" font-family="-apple-system,sans-serif" font-size="9" fill="#b4b2a9">links into</text>
+
+      <rect x="18" y="222" width="404" height="426" rx="7" fill="#ffffff" stroke="#185fa5" stroke-width="1.5"/>
+      <text x="32" y="242" font-family="-apple-system,sans-serif" font-size="11.5" font-weight="500" fill="#185fa5">Project &#183; mandatory</text>
+      <text x="32" y="257" font-family="-apple-system,sans-serif" font-size="9.5" fill="#22557f">the workspace for selling and, if sold, operations</text>
+
+      <rect x="32" y="268" width="376" height="66" rx="6" fill="#e9f1fa" stroke="#a8c9ec"/>
+      <text x="46" y="286" font-family="-apple-system,sans-serif" font-size="11" font-weight="500" fill="#0c447c">Proposal &#183; versioned, offers options</text>
+      <rect x="46" y="294" width="348" height="32" rx="4" fill="#ffffff" stroke="#a8c9ec"/>
+      <text x="58" y="314" font-family="-apple-system,sans-serif" font-size="10" fill="#22557f">Scope &#183; priced unit, one or more</text>
+
+      <path d="M236,334 V358" fill="none" stroke="#8b8a84" stroke-width="1.3" marker-end="url(#a1)"/>
+      <text x="246" y="351" font-family="-apple-system,sans-serif" font-size="9" fill="#575651">produces</text>
+
+      <rect x="32" y="358" width="376" height="208" rx="6" fill="#eef4e4" stroke="#a3c47f"/>
+      <text x="46" y="378" font-family="-apple-system,sans-serif" font-size="11" font-weight="500" fill="#27500a">Job &#183; one per signed scope</text>
+      <text x="46" y="393" font-family="-apple-system,sans-serif" font-size="9.5" fill="#3b6d11">runs its own pipeline; will not stay in step with its siblings</text>
+
+      <text x="46" y="410" font-family="ui-monospace,Menlo,monospace" font-size="8" letter-spacing=".9" fill="#5d7a3a">PIPELINE, CONFIGURABLE</text>
+      <rect x="46" y="416" width="170" height="24" rx="4" fill="#ffffff" stroke="#c3d8a8"/>
+      <text x="56" y="432" font-family="-apple-system,sans-serif" font-size="9" fill="#3d5c1c">Board</text>
+      <rect x="46" y="445" width="170" height="24" rx="4" fill="#ffffff" stroke="#c3d8a8"/>
+      <text x="56" y="461" font-family="-apple-system,sans-serif" font-size="9" fill="#3d5c1c">Stage</text>
+      <rect x="46" y="474" width="170" height="24" rx="4" fill="#ffffff" stroke="#c3d8a8"/>
+      <text x="56" y="490" font-family="-apple-system,sans-serif" font-size="9" fill="#3d5c1c">Sub-status</text>
+      <rect x="46" y="503" width="170" height="24" rx="4" fill="#ffffff" stroke="#c3d8a8"/>
+      <text x="56" y="519" font-family="-apple-system,sans-serif" font-size="9" fill="#3d5c1c">Task</text>
+      <rect x="46" y="532" width="170" height="24" rx="4" fill="#ffffff" stroke="#c3d8a8"/>
+      <text x="56" y="548" font-family="-apple-system,sans-serif" font-size="9" fill="#3d5c1c">Gate</text>
+
+      <text x="224" y="410" font-family="ui-monospace,Menlo,monospace" font-size="8" letter-spacing=".9" fill="#5d7a3a">RECORDS ON THE JOB</text>
+      <rect x="224" y="416" width="170" height="24" rx="4" fill="#ffffff" stroke="#c3d8a8"/>
+      <text x="234" y="432" font-family="-apple-system,sans-serif" font-size="9" fill="#3d5c1c">Crew and schedule</text>
+      <rect x="224" y="445" width="170" height="24" rx="4" fill="#ffffff" stroke="#c3d8a8"/>
+      <text x="234" y="461" font-family="-apple-system,sans-serif" font-size="9" fill="#3d5c1c">Material order and delivery</text>
+      <rect x="224" y="474" width="170" height="24" rx="4" fill="#ffffff" stroke="#c3d8a8"/>
+      <text x="234" y="490" font-family="-apple-system,sans-serif" font-size="9" fill="#3d5c1c">Permits and inspections</text>
+      <rect x="224" y="503" width="170" height="24" rx="4" fill="#ffffff" stroke="#c3d8a8"/>
+      <text x="234" y="519" font-family="-apple-system,sans-serif" font-size="9" fill="#3d5c1c">Documents and photos</text>
+      <rect x="224" y="532" width="170" height="24" rx="4" fill="#ffffff" stroke="#c3d8a8"/>
+      <text x="234" y="548" font-family="-apple-system,sans-serif" font-size="9" fill="#3d5c1c">Change order</text>
+
+      <rect x="32" y="586" width="376" height="46" rx="6" fill="#faf9f7" stroke="#d5d3cc"/>
+      <text x="46" y="605" font-family="-apple-system,sans-serif" font-size="11" fill="#1b1b1a">Money &#183; master invoice, requests, transactions</text>
+      <text x="46" y="621" font-family="-apple-system,sans-serif" font-size="9.5" fill="#8b8a84">contained by the project, produced by nothing</text>
+
+      <line x1="460" y1="0" x2="460" y2="700" stroke="#e7e5e0"/>
+
+      <!-- ===== DAIDIPYA ===== -->
+      <text x="480" y="13" font-family="ui-monospace,Menlo,monospace" font-size="9" letter-spacing="1.1" fill="#8b8a84">BASE ENTITY MAP &#183; DAIDIPYA</text>
+      <text x="480" y="27" font-family="-apple-system,sans-serif" font-size="10.5" fill="#8b8a84">Part containment, part production</text>
+
+      <rect x="480" y="40" width="440" height="140" rx="8" fill="#faf9f7" stroke="#d5d3cc"/>
+      <text x="494" y="60" font-family="-apple-system,sans-serif" font-size="11.5" font-weight="500" fill="#1b1b1a">Customer</text>
+
+      <rect x="496" y="68" width="408" height="96" rx="6" fill="#e9f1fa" stroke="#a8c9ec"/>
+      <text x="510" y="87" font-family="-apple-system,sans-serif" font-size="11" font-weight="500" fill="#0c447c">Lead &#183; the hub of selling</text>
+      <text x="510" y="102" font-family="-apple-system,sans-serif" font-size="9.5" fill="#22557f">source &#183; trade &#183; outcome &#183; holds the financing</text>
+      <rect x="510" y="112" width="380" height="42" rx="4" fill="#ffffff" stroke="#a8c9ec"/>
+      <text x="522" y="128" font-family="-apple-system,sans-serif" font-size="10" fill="#22557f">Proposal &#183; tier offers, add-ons embedded</text>
+      <text x="522" y="144" font-family="-apple-system,sans-serif" font-size="9.5" fill="#8b8a84">draft &#8594; final &#8594; presented &#8594; selected</text>
+
+      <path d="M700,154 V206" fill="none" stroke="#8b8a84" stroke-width="1.3" marker-end="url(#a1)"/>
+      <text x="710" y="186" font-family="-apple-system,sans-serif" font-size="9" fill="#575651">selected, produces</text>
+
+      <rect x="480" y="206" width="440" height="40" rx="6" fill="#ffffff" stroke="#b4b2a9"/>
+      <text x="494" y="231" font-family="-apple-system,sans-serif" font-size="11" fill="#1b1b1a">Contract &#183; HIC, original and amendments</text>
+
+      <path d="M700,246 V290" fill="none" stroke="#8b8a84" stroke-width="1.3" marker-end="url(#a1)"/>
+      <text x="710" y="272" font-family="-apple-system,sans-serif" font-size="9" fill="#575651">sold, produces</text>
+
+      <rect x="480" y="290" width="440" height="126" rx="7" fill="#eef4e4"/>
+      <text x="494" y="310" font-family="-apple-system,sans-serif" font-size="11.5" font-weight="500" fill="#27500a">Job &#183; one status for the whole</text>
+      <rect x="496" y="322" width="408" height="80" rx="6" fill="#ffffff" stroke="#a3c47f"/>
+      <text x="510" y="342" font-family="-apple-system,sans-serif" font-size="11" font-weight="500" fill="#27500a">sub-Job &#183; the unit of execution</text>
+      <text x="510" y="358" font-family="-apple-system,sans-serif" font-size="9.5" fill="#3b6d11">work package &#183; crew &#183; installation appointment</text>
+      <text x="510" y="374" font-family="-apple-system,sans-serif" font-size="9.5" fill="#3b6d11">at least one per job &#183; division is additive</text>
+      <text x="510" y="392" font-family="-apple-system,sans-serif" font-size="9.5" fill="#8b8a84">execution phase held here, in notes only</text>
+
+      <rect x="480" y="440" width="440" height="52" rx="6" fill="#faf9f7" stroke="#d5d3cc"/>
+      <text x="494" y="459" font-family="-apple-system,sans-serif" font-size="11" fill="#1b1b1a">Master invoice &#183; the customer balance</text>
+      <text x="494" y="476" font-family="-apple-system,sans-serif" font-size="9.5" fill="#8b8a84">anchored to the customer &#183; references the contract for the amount owed</text>
+
+      <line x1="940" y1="0" x2="940" y2="700" stroke="#e7e5e0"/>
+
+      <!-- ===== JOEL ===== -->
+      <text x="960" y="13" font-family="ui-monospace,Menlo,monospace" font-size="9" letter-spacing="1.1" fill="#8b8a84">FULL ENTITY MAP &#183; JOEL</text>
+      <text x="960" y="27" font-family="-apple-system,sans-serif" font-size="10.5" fill="#8b8a84">Production-led</text>
+
+      <rect x="960" y="40" width="440" height="80" rx="8" fill="#faf9f7" stroke="#d5d3cc"/>
+      <text x="974" y="60" font-family="-apple-system,sans-serif" font-size="11.5" font-weight="500" fill="#1b1b1a">Customer</text>
+      <rect x="976" y="68" width="408" height="40" rx="6" fill="#ffffff" stroke="#b4b2a9"/>
+      <text x="990" y="93" font-family="-apple-system,sans-serif" font-size="10.5" fill="#1b1b1a">Property &#183; the site of the job</text>
+
+      <rect x="960" y="140" width="440" height="38" rx="6" fill="#ffffff" stroke="#b4b2a9"/>
+      <text x="974" y="164" font-family="-apple-system,sans-serif" font-size="11" fill="#1b1b1a">Lead &#183; thin; entered from START</text>
+
+      <path d="M1180,178 V202" fill="none" stroke="#8b8a84" stroke-width="1.3" marker-end="url(#a1)"/>
+      <text x="1190" y="195" font-family="-apple-system,sans-serif" font-size="9" fill="#575651">scopes and drafts</text>
+
+      <rect x="960" y="202" width="440" height="98" rx="7" fill="#e9f1fa" stroke="#a8c9ec"/>
+      <text x="974" y="222" font-family="-apple-system,sans-serif" font-size="11.5" font-weight="500" fill="#0c447c">Proposal</text>
+      <rect x="976" y="234" width="408" height="56" rx="6" fill="#ffffff" stroke="#a8c9ec"/>
+      <text x="990" y="253" font-family="-apple-system,sans-serif" font-size="11" font-weight="500" fill="#0c447c">Option &#183; good / better / best</text>
+      <text x="990" y="269" font-family="-apple-system,sans-serif" font-size="9.5" fill="#22557f">one of N selected &#183; own estimate &#183; own payment plan</text>
+      <text x="990" y="284" font-family="-apple-system,sans-serif" font-size="9.5" fill="#8b8a84">alternatives, not additive items</text>
+
+      <path d="M1180,300 V330" fill="none" stroke="#8b8a84" stroke-width="1.3" marker-end="url(#a1)"/>
+      <text x="1190" y="320" font-family="-apple-system,sans-serif" font-size="9" fill="#575651">selection triggers e-sign</text>
+
+      <rect x="960" y="330" width="440" height="44" rx="6" fill="#ffffff" stroke="#b4b2a9"/>
+      <text x="974" y="350" font-family="-apple-system,sans-serif" font-size="11" fill="#1b1b1a">Contract &#183; e-signed</text>
+      <text x="974" y="366" font-family="-apple-system,sans-serif" font-size="9.5" fill="#8b8a84">pins the proposal version &#183; amended by change orders</text>
+
+      <path d="M1180,374 V404" fill="none" stroke="#8b8a84" stroke-width="1.3" marker-end="url(#a1)"/>
+      <text x="1190" y="394" font-family="-apple-system,sans-serif" font-size="9" fill="#575651">sells into, at stage SOLD</text>
+
+      <rect x="960" y="404" width="440" height="152" rx="8" fill="#ffffff" stroke="#b4b2a9" stroke-dasharray="6 5"/>
+      <text x="974" y="424" font-family="-apple-system,sans-serif" font-size="10.5" fill="#575651">Project &#183; optional group of jobs</text>
+
+      <rect x="976" y="434" width="408" height="108" rx="7" fill="#eef4e4"/>
+      <text x="990" y="454" font-family="-apple-system,sans-serif" font-size="11.5" font-weight="500" fill="#27500a">JOB &#183; the pivot</text>
+      <rect x="990" y="466" width="380" height="62" rx="6" fill="#ffffff" stroke="#a3c47f"/>
+      <text x="1004" y="485" font-family="-apple-system,sans-serif" font-size="11" font-weight="500" fill="#27500a">Scope Component &#183; typed by trade</text>
+      <text x="1004" y="501" font-family="-apple-system,sans-serif" font-size="9.5" fill="#3b6d11">solar &#183; battery &#183; roofing &#183; HVAC</text>
+      <text x="1004" y="517" font-family="-apple-system,sans-serif" font-size="9.5" fill="#8b8a84">a decomposition; carries no status of its own</text>
+
+      <rect x="960" y="580" width="440" height="40" rx="6" fill="#faf9f7" stroke="#d5d3cc"/>
+      <text x="974" y="605" font-family="-apple-system,sans-serif" font-size="10.5" fill="#1b1b1a">Invoice &#183; raised from the job, settled by payments</text>
+    </svg>
+    <p class="note">One relation per link. Two relations are described in words rather than drawn,
+    because drawing them would cross the columns: in Daidipya's model a job also originates from the
+    converted lead, and in Joel's an option also selects a payment plan. Neither source map uses
+    this convention &mdash; Daidipya's arrows point from the dependent object to what it references,
+    and Joel's indicate flow &mdash; so the direction here is this document's, not theirs.
+    <strong>Depth is uneven on purpose and worth reading with care:</strong> Model C's job is opened
+    up to show its pipeline primitives and the records that hang off it, while Daidipya's sub-job and
+    Joel's job are not opened to the same level, though both carry equivalents &mdash; a work order
+    with materials and task lists in one case, work visits, material orders, permits and checklists
+    in the other. Section B lists all three in full.</p>
+  </div>
+
+  <div class="three">
+    <div class="arg">
+      <p class="lab">Model C</p>
+      <p><strong>A project is the container</strong> for one piece of business, and it is mandatory.
+      It is the workspace for selling and, if the work sells, for operations. One or more
+      opportunities live on the customer and link in, so one that is declined survives. A proposal
+      is versioned and holds one or more scopes; a scope carries its own statement of work, estimate
+      and itemisation, and is what a job traces back to. One job per signed scope, each running its
+      own pipeline. Money sits at project level.</p>
+      <p>Change orders are graded three ways by whether price changes and whether the change fits
+      inside financing headroom. Project management is configurable from five primitives: stage,
+      sub-status, task, gate, board. Three product tiers are set per organisation.</p>
+      <p><strong>Open inside the model.</strong> Whether a proposal can hold several scopes, or
+      whether proposals stay whole and something new gathers them.</p>
+    </div>
+    <div class="arg">
+      <p class="lab">Daidipya</p>
+      <p><strong>The Lead is the hub of selling.</strong> It carries its source, stage,
+      qualification, outcome and type of work; a customer can have many; it converts into a Job; and
+      it holds the financing option, which reads the deal total live. A proposal is built from a
+      template and the pricebook, holds tier offers with add-ons embedded, and holds no financing
+      link. A contract is the HIC, derived from the selected proposal.</p>
+      <p>The <strong>sub-Job</strong> is the unit of execution, carrying the work package, crew and
+      installation appointment. Every job has at least one; division is additive, never
+      re-parenting. A master invoice is a customer-anchored running balance, and payment terms is
+      its own entity set at job creation.</p>
+      <p>Execution phase is tracked per sub-Job in notes only and is not diagrammed.</p>
+    </div>
+    <div class="arg">
+      <p class="lab">Joel</p>
+      <p><strong>The JOB is the pivot</strong>, and the map is six lanes wide. Selling runs from a
+      lead through sales appointments and a site assessment into a proposal offering Options, one of
+      which is selected, triggering contract e-signature. The contract pins the proposal version and
+      takes change orders as amendments. An estimate is priced one-to-one off the option; a payment
+      plan, a tender mix, is selected per option.</p>
+      <p>Money is a lane of its own, tracing first-party financing, third-party references, card and
+      ACH, cash, and insurance supplements into Payments, then bundling outward into contractor
+      payouts. A stated uniform rule: rails create Payments, payouts bundle Payments, and one
+      receivable can mix funding sources.</p>
+      <p>A completed job sells service agreements, which schedule recurring events, which book
+      further jobs. Installed equipment is registered on the property.</p>
+    </div>
+  </div>
+</div>
+
+<div class="sec">
+  <div class="sec-head"><div class="badge">B</div><h2 class="sec-title">Entity inventories</h2></div>
+  <p class="lede" style="margin-bottom:26px">Listed as each model states them, paraphrased from the
+  source artefacts. "Not present" would mean the model does not carry the entity, not that its
+  author rejects it.</p>
+
+  <div class="modelblock">
+    <h3>Model C &middot; Andrew</h3>
+    <h4>CRM</h4>
+    <table>
+      <tr><th>Entity</th><th>As stated</th></tr>
+      <tr><td>Customer</td><td>A person, above the address. One customer may have several properties</td></tr>
+      <tr><td>Contact</td><td>A person we do business with, belonging to a customer</td></tr>
+      <tr><td>Property</td><td>A site where work happens, belonging to a customer</td></tr>
+    </table>
+    <h4>Container</h4>
+    <table>
+      <tr><th>Entity</th><th>As stated</th></tr>
+      <tr><td>Project</td><td>Mandatory. The workspace for selling and, if sold, operations. Exists before anything is priced and is never sent to anyone. Contains the proposal, the jobs and the money as peers; nothing inside it is nested under anything but the project</td></tr>
+    </table>
+    <h4>Selling</h4>
+    <table>
+      <tr><th>Entity</th><th>As stated</th></tr>
+      <tr><td>Opportunity</td><td>A piece of work someone thinks might be sold. One or more per customer, one per trade. Belongs to the customer, links into a project. Carries an origin and a line of detail, and a status: not yet pursued, quoted, won, deferred, lost</td></tr>
+      <tr><td>Proposal</td><td>A priced document, versioned, holding one or more scopes. Carries options and tiers</td></tr>
+      <tr><td>Scope</td><td>A priced unit of a proposal, with its own statement of work, estimate and itemisation. Drives one job</td></tr>
+      <tr><td>Contract</td><td>Project level. One acceptance, one contract, one financing per bundled sale</td></tr>
+      <tr><td>Financing</td><td>Presented at the proposal, modelled below it. A job shows financing it does not own and must say so</td></tr>
+    </table>
+    <h4>Work</h4>
+    <table>
+      <tr><th>Entity</th><th>As stated</th></tr>
+      <tr><td>Job</td><td>Work being delivered. One per signed scope. Two jobs in one project run independently and will not stay in step</td></tr>
+      <tr><td>Stage</td><td>A position in a board's sequence</td></tr>
+      <tr><td>Sub-status</td><td>An external process the contractor is waiting on and cannot speed up. Independent of stage; several may apply at once</td></tr>
+      <tr><td>Task</td><td>Work the contractor's own team does</td></tr>
+      <tr><td>Gate</td><td>A condition on the transition between two stages, not on a stage</td></tr>
+      <tr><td>Board</td><td>A grouping of stages</td></tr>
+    </table>
+    <h4>Money and change</h4>
+    <table>
+      <tr><th>Entity</th><th>As stated</th></tr>
+      <tr><td>Master invoice</td><td>The total owed. Project level, not owned by the proposal or by a job</td></tr>
+      <tr><td>Payment request</td><td>Draws against the master invoice, or stands alone</td></tr>
+      <tr><td>Transaction</td><td>Money moving</td></tr>
+      <tr><td>Cost and profit</td><td>Project level</td></tr>
+      <tr><td>Change order</td><td>Graded three ways. No price change is a task. A price change inside financing headroom is a sub-status. A price change beyond headroom is its own object with a cash-split path. Attaches to one scope, showing both the scope value and the proposal total</td></tr>
+    </table>
+    <h4>Organisation</h4>
+    <table>
+      <tr><th>Entity</th><th>As stated</th></tr>
+      <tr><td>Product tier</td><td>Three, set per organisation: payments only; payments and selling; payments, selling and operations</td></tr>
+      <tr><td>Project status</td><td>pursuing → production → closing → closed, with archived as the alternative ending</td></tr>
+    </table>
+  </div>
+
+  <div class="modelblock">
+    <h3>Base Entity Map &middot; Daidipya</h3>
+    <h4>CRM</h4>
+    <table>
+      <tr><th>Entity</th><th>As stated</th></tr>
+      <tr><td>Customer</td><td>Contractor-scoped identity anchor. Owns contacts and properties, anchors all money entities and jobs, has one or more leads, created at lead capture</td></tr>
+      <tr><td>Contact</td><td>A person we do business with, belonging to a customer</td></tr>
+      <tr><td>Property</td><td>Physical site where work happens, belonging to a customer</td></tr>
+    </table>
+    <h4>Org level</h4>
+    <table>
+      <tr><th>Entity</th><th>As stated</th></tr>
+      <tr><td>Pricebook</td><td>Catalog of sellable items and prices</td></tr>
+      <tr><td>Template</td><td>Reusable proposal template the org defines, used to pre-build proposals</td></tr>
+      <tr><td>Pricing Rule</td><td>Org pricing and margin rules governing proposal pricing, for margin protection</td></tr>
+      <tr><td>Equipment Catalog</td><td>Org-level catalog of equipment, referenced by materials lists</td></tr>
+    </table>
+    <h4>Selling</h4>
+    <table>
+      <tr><th>Entity</th><th>As stated</th></tr>
+      <tr><td>Lead</td><td>A potential deal; the hub of Selling; converts into a Job. Carries source, current stage and qualification, outcome, and the type of work or trade. A customer can have many</td></tr>
+      <tr><td>Salesperson</td><td>The rep assigned to work a lead</td></tr>
+      <tr><td>Appointment</td><td>Shared and typed: sales, inspection or installation. Sales appointments are for a lead; inspection and installation for a sub-job. Date, person and availability deferred</td></tr>
+      <tr><td>Site Model</td><td>Technical capture of the site: 3D model, roof measurements, property report, load calcs. Not always present</td></tr>
+      <tr><td>Proposal</td><td>Priced offer built from a template and the pricebook. Holds one or more tier offers (good/better/best) and add-ons embedded. Governed by pricing rules. Moves draft → final → presented → selected. Holds no financing link. A lead can have one or more</td></tr>
+      <tr><td>Presentation</td><td>A custom presentation shown to the customer, presenting a proposal. Flagged borderline — may be an activity</td></tr>
+      <tr><td>Financing Option</td><td>Cash or financing choice for the deal, deal-scoped on the lead. Holds selected payment method and terms, reads the deal total live, its amount shows on the master invoice, a financed payment records to it</td></tr>
+      <tr><td>Contract</td><td>The contractor's HIC. Holds original contract and amendments, derived from the selected proposal, specifies scope and agreed price, not payment method</td></tr>
+      <tr><td>Notes</td><td>Notes, pictures, questionnaires. Shared: attaches to Lead and Job. May be captured during an appointment</td></tr>
+    </table>
+    <h4>Work</h4>
+    <table>
+      <tr><th>Entity</th><th>As stated</th></tr>
+      <tr><td>Job</td><td>Sold work to be executed, belonging to a customer, referencing its contract for scope and revenue. Originates from a converted lead. Overall status tracked as job state; execution phase tracked per sub-Job, notes only, not diagrammed</td></tr>
+      <tr><td>sub-Job</td><td>The unit of execution, carrying the work package, crew and installation appointment. Every job has at least one; an undivided job has exactly one default sub-Job. Division is additive, never re-parenting</td></tr>
+      <tr><td>Work Order</td><td>Execution package for the sub-job: instructions, materials list, task list</td></tr>
+      <tr><td>Materials List</td><td>The materials required, referencing the equipment catalog</td></tr>
+      <tr><td>Task List</td><td>The tasks to complete the work. Permit pull and close, and warranty registration, live here as tasks</td></tr>
+      <tr><td>Materials Order</td><td>An order placed to a distributor to fulfil the materials list</td></tr>
+      <tr><td>Crew</td><td>The crew assigned to perform the installation</td></tr>
+    </table>
+    <h4>Operational finance</h4>
+    <table>
+      <tr><th>Entity</th><th>As stated</th></tr>
+      <tr><td>Master Invoice</td><td>Customer-facing balance, AR. Anchored to a customer, may bill a job, references the contract for the amount owed, reflects the financing option amount when the deal is financed</td></tr>
+      <tr><td>Payment Terms</td><td>How the job bills: schedule type and planned draws. Set at job creation</td></tr>
+      <tr><td>Cost</td><td>A job-level cost line item, manual or auto-added, with optional reference to the source record</td></tr>
+      <tr><td>Job P&amp;L</td><td>Computed profitability per job. Revenue is contract price including amendments, cost is the sum of the job's costs. Computed, not stored. Reviewed at close</td></tr>
+    </table>
+    <h4>Money</h4>
+    <table>
+      <tr><th>Entity</th><th>As stated</th></tr>
+      <tr><td>Invoice</td><td>A request for payment, anchored to a customer, may roll up to a master invoice. Each invoice is one draw of the payment terms</td></tr>
+      <tr><td>Transaction</td><td>Money changing hands, in only for now. Anchored to a customer, may pay an invoice. A financed payment records to the financing option. Can occur with or without an invoice or master invoice</td></tr>
+    </table>
+  </div>
+
+  <div class="modelblock">
+    <h3>Full entity map &middot; Joel</h3>
+    <h4>Catalog and org</h4>
+    <table>
+      <tr><th>Entity</th><th>As drawn</th></tr>
+      <tr><td>Contractor Org</td><td>Top of the catalog lane</td></tr>
+      <tr><td>User / Role</td><td>Alongside the org</td></tr>
+      <tr><td>Pricebook</td><td>Contains SKUs</td></tr>
+      <tr><td>SKU</td><td>Typed service, material or equipment. Referenced by estimate lines</td></tr>
+    </table>
+    <h4>Anchors</h4>
+    <table>
+      <tr><th>Entity</th><th>As drawn</th></tr>
+      <tr><td>Customer</td><td>Has contacts and properties</td></tr>
+      <tr><td>Contact</td><td>Belongs to the customer</td></tr>
+      <tr><td>Property</td><td>Belongs to the customer. Site of a job</td></tr>
+      <tr><td>Installed Equipment</td><td>Asset registry on the property</td></tr>
+    </table>
+    <h4>Agreements</h4>
+    <table>
+      <tr><th>Entity</th><th>As drawn</th></tr>
+      <tr><td>Service Agreement</td><td>Held by the customer. Schedules zero or more recurring service events. Sold by a job</td></tr>
+      <tr><td>Recurring Service Event</td><td>Books a job</td></tr>
+      <tr><td>Warranty Plan</td><td>Covers installed equipment</td></tr>
+    </table>
+    <h4>Demand and selling</h4>
+    <table>
+      <tr><th>Entity</th><th>As drawn</th></tr>
+      <tr><td>Lead</td><td>Entered from START. Has zero or more sales appointments. The proposal is scoped and drafted from it</td></tr>
+      <tr><td>Appointment — SALES</td><td>For a lead. Leads to a site assessment</td></tr>
+      <tr><td>Site Assessment</td><td>Any trade. Informs proposal scope</td></tr>
+      <tr><td>Proposal</td><td>Selects one of N options. The first proposal is drawn as minting the job, and that link is flagged borderline</td></tr>
+      <tr><td>Option</td><td>Good, better, best. One of N selected; selection triggers contract e-sign. Priced one-to-one by an estimate. Sets the payment plan</td></tr>
+      <tr><td>Estimate</td><td>Satellite record: line items, margin, tax. Lines reference SKUs</td></tr>
+      <tr><td>Contract</td><td>E-signed. Pins the proposal version. Takes zero or more change orders as amendments. Terms reference the payment plan. Sells into the job at stage SOLD</td></tr>
+      <tr><td>Change Order</td><td>Amends the contract, zero or more. Corresponds to a payment plan revision</td></tr>
+      <tr><td>Payment Plan</td><td>A tender mix. One selected per option, setting pricing. Referenced by contract terms. Points at the financing sources</td></tr>
+    </table>
+    <h4>Work</h4>
+    <table>
+      <tr><th>Entity</th><th>As drawn</th></tr>
+      <tr><td>JOB</td><td>Labelled the pivot. Central entity of the map. Sold from the contract. Its site is a property</td></tr>
+      <tr><td>Project</td><td>An optional group. Groups zero or one jobs</td></tr>
+      <tr><td>Scope Component</td><td>The job decomposes into zero or more, typed by trade: solar, battery, roofing, HVAC. Referenced by the financing app</td></tr>
+      <tr><td>Appointment — WORK VISIT</td><td>Phase 2. Zero or more per job. Carries a crew assignment</td></tr>
+      <tr><td>Crew Assignment</td><td>Satellite record on the appointment</td></tr>
+      <tr><td>Material Order</td><td>Zero or more per job. Fulfilled via a purchase order</td></tr>
+      <tr><td>Purchase Order</td><td>Satellite record fulfilling a material order</td></tr>
+      <tr><td>Permit</td><td>Zero or more per job. Marked GAP</td></tr>
+      <tr><td>Rebate Application</td><td>Zero or more per job. Marked GAP</td></tr>
+      <tr><td>Photos / Docs</td><td>Satellite record on the job</td></tr>
+      <tr><td>Forms / Checklists</td><td>Satellite record on the job</td></tr>
+    </table>
+    <h4>Money</h4>
+    <table>
+      <tr><th>Entity</th><th>As drawn</th></tr>
+      <tr><td>GoodLeap Financing App</td><td>First party. Leads to approval. References scope components</td></tr>
+      <tr><td>Approval</td><td>Credit, offers, stips. Leads to the financing agreement and the payment plan</td></tr>
+      <tr><td>Financing Agreement</td><td>E-signed. Leads to funding events</td></tr>
+      <tr><td>Funding Events</td><td>Milestones. Produce financing-typed payments</td></tr>
+      <tr><td>3rd-Party Financing Ref</td><td>External id. A payment source</td></tr>
+      <tr><td>Insurance Claim</td><td>Negotiates supplements</td></tr>
+      <tr><td>Supplement</td><td>Carrier tranches, producing payments</td></tr>
+      <tr><td>Card / ACH Transaction</td><td>A payment source</td></tr>
+      <tr><td>Cash / Check</td><td>Settles outside the rails, producing payments</td></tr>
+      <tr><td>Invoice</td><td>Settled by one or more payments. Raised from the job</td></tr>
+      <tr><td>Payment</td><td>Funds applied to the invoice, source-typed</td></tr>
+      <tr><td>Contractor Payout</td><td>Bundles payments by source. Method: Stripe ACH or WAB wire</td></tr>
+      <tr><td>Job Financials</td><td>P&amp;L roll-up on the job. Computes commission</td></tr>
+      <tr><td>Commission</td><td>Computed from job financials</td></tr>
+    </table>
+    <h4>Stated rules on the map</h4>
+    <table>
+      <tr><th>Rule</th><th>As stated</th></tr>
+      <tr><td>Uniform rule</td><td>Rails create Payments; payouts bundle Payments. A receivable can mix zero or more funding sources per invoice — for example a deposit by card with the balance financed, first- or third-party</td></tr>
+      <tr><td>Start gate</td><td>The transition from SOLD to IN_PROGRESS may require nothing, a paid deposit, or financing notice to proceed. "Money before work" is per-organisation configuration on the job's stage transition, not structure</td></tr>
+      <tr><td>Visual language</td><td>Core flow always occurs. Optional steps occur zero or more times. Satellite records are data that hangs off a step but is never a step itself</td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="sec">
+  <div class="sec-head"><div class="badge">C</div><h2 class="sec-title">What all three already agree on</h2></div>
+  <p class="lede" style="margin-bottom:24px">Stated here only where all three take the same
+  position, or where two state it and the third is consistent. Where agreement is partial, that is
+  said.</p>
+  <ol class="ag">
+    <li><strong>The customer is the anchor, and owns contacts and properties.</strong> Identical in
+    all three, and all three keep the customer above the address rather than tying identity to a
+    site.</li>
+    <li><strong>The selling chain has the same links.</strong> Something representing demand, then a
+    priced offer, then a signed agreement, then work. The names and levels differ; no model proposes
+    a different sequence.</li>
+    <li><strong>A proposal offers options or tiers.</strong> Joel makes Option a first-class entity,
+    selected one of N, with its own estimate and payment plan. Daidipya embeds tier offers with
+    add-ons inside the proposal. Model C supports it but had not stated it, and it is stated here
+    for the first time. <em>Unresolved:</em> how options compose with several independently
+    acceptable scopes — whether each scope carries its own options. Deferred by agreement, not
+    solved.</li>
+    <li><strong>Financing is not held on the contract.</strong> Model C presents it at the proposal
+    and models it below. Daidipya puts it on the lead and says explicitly that neither proposal nor
+    contract holds financing detail. Joel selects a payment plan per option and has the contract's
+    terms merely reference it. Three hosts, one shared instinct.</li>
+    <li><strong>An organisation-level catalog governs pricing.</strong> A pricebook in all three.
+    Daidipya adds templates and pricing rules; Joel adds SKUs typed as service, material or
+    equipment.</li>
+    <li><strong>Appointments are one typed entity shared across selling and delivery.</strong>
+    Daidipya and Joel both state this and both type it. Model C does not model appointments, and
+    nothing in it conflicts.</li>
+    <li><strong>Work sold decomposes below the sale.</strong> All three place a unit beneath the
+    agreement rather than treating the sale as indivisible. <em>Partial:</em> they disagree on what
+    the unit is — see open question 5.</li>
+    <li><strong>Change after signature rides the existing agreement.</strong> Model C's change
+    order, Daidipya's contract amendments and Joel's change orders all amend rather than replace,
+    and all three keep the amount owed derived from the amended agreement.</li>
+    <li><strong>Margin comes from agreed price minus captured cost.</strong> Daidipya computes Job
+    P&amp;L; Joel rolls up Job Financials; Model C carries cost and profit. <em>Partial:</em> the
+    level differs — Model C at project level, the other two at job level, none below that.</li>
+    <li><strong>Process is partly per-organisation configuration.</strong> Model C makes this a
+    design principle with five primitives. Joel states it for the start gate specifically. Daidipya
+    defers execution phase to notes and does not contradict it.</li>
+  </ol>
+</div>
+
+<div class="sec">
+  <div class="sec-head"><div class="badge">D</div><h2 class="sec-title">Open questions</h2></div>
+  <p class="lede" style="margin-bottom:20px">Numbered for reference in discussion. Each names who it
+  affects and what would settle it.</p>
+
+  <div class="q"><span class="qn">1</span><div>
+    <h5>What holds a sale that spans several trades?</h5>
+    <p class="who">Affects all three.</p>
+    <p>Model C answers with a mandatory project that exists before pricing. Daidipya has no
+    equivalent; the lead is the deal. Joel has a Project, but it is optional and groups jobs after
+    the sale, so it cannot hold a bundle before one exists.</p>
+    <p class="set">Settled by deciding whether a pre-sale container exists at all.</p>
+  </div></div>
+
+  <div class="q"><span class="qn">2</span><div>
+    <h5>Can a proposal hold several independently acceptable scopes?</h5>
+    <p class="who">Affects Model C directly, and the other two if they adopt multi-trade bundling.</p>
+    <p>If yes, the change is contained and acceptance, contract and financing stay where they are.
+    If no, something must be invented above the proposal to carry one acceptance, one signing and
+    one financing.</p>
+    <p class="set">Settled by engineering, on whether today's single-scope proposal can hold many.</p>
+  </div></div>
+
+  <div class="q"><span class="qn">3</span><div>
+    <h5>How do options and scopes compose?</h5>
+    <p class="who">Affects all three.</p>
+    <p>If a proposal can hold several scopes and also offer tiers, does each scope carry its own
+    options, or does the proposal offer whole-bundle alternatives?</p>
+    <p class="set">Settled later, deliberately. Recorded so it is not mistaken for solved.</p>
+  </div></div>
+
+  <div class="q"><span class="qn">4</span><div>
+    <h5>Where does a declined-but-still-wanted piece of work live?</h5>
+    <p class="who">Affects all three.</p>
+    <p>Only Model C has an object that survives being declined, and only because opportunities live
+    on the customer and are linked rather than moved. In the other two, work not selected is simply
+    absent from the chosen offer.</p>
+    <p class="set">Settled by deciding whether the demand object is per-trade and outlives the sale.</p>
+  </div></div>
+
+  <div class="q"><span class="qn">5</span><div>
+    <h5>What is the unit below the sale?</h5>
+    <p class="who">Affects all three, differently.</p>
+    <p>Model C's scope is a priced unit that drives a job. Daidipya's sub-Job is a schedulable unit
+    with a crew and an appointment. Joel's Scope Component is a trade-typed decomposition that is
+    not schedulable. These are three different things, and a complete model may need two of
+    them.</p>
+    <p class="set">Settled by separating the priced unit from the schedulable unit, or proving they
+    are the same.</p>
+  </div></div>
+
+  <div class="q"><span class="qn">6</span><div>
+    <h5>Is there a customer-level running balance?</h5>
+    <p class="who">Affects Joel.</p>
+    <p>Model C and Daidipya both carry a master invoice as the total owed. Joel has invoices settled
+    by payments and no customer-level balance.</p>
+    <p class="set">Settled by deciding whether AR is in scope for this model.</p>
+  </div></div>
+
+  <div class="q"><span class="qn">7</span><div>
+    <h5>Where do inbound funding sources live?</h5>
+    <p class="who">Affects Model C and Daidipya.</p>
+    <p>Joel models first-party financing through approval, agreement and milestone funding;
+    third-party by reference; card, ACH, cash and cheque; and insurance claims through supplements.
+    Neither of the other two models this surface.</p>
+    <p class="set">Settled by deciding whether to adopt Joel's money lane wholesale.</p>
+  </div></div>
+
+  <div class="q"><span class="qn">8</span><div>
+    <h5>Is a permit an entity, a task, or a gate?</h5>
+    <p class="who">Affects all three.</p>
+    <p>Joel draws it as an entity and marks it a gap. Daidipya makes permit pull and close tasks on
+    a task list. Model C treats it as both a gate and a sub-status.</p>
+    <p class="set">Settled by deciding whether external dependencies need their own records or only
+    their status.</p>
+  </div></div>
+
+  <div class="q"><span class="qn">9</span><div>
+    <h5>Are gates structure or configuration?</h5>
+    <p class="who">Affects Model C and Joel.</p>
+    <p>Joel says explicitly that "money before work" is per-organisation configuration on a stage
+    transition, not structure. Model C makes the gate one of five primitives. These may be
+    compatible; nobody has checked.</p>
+    <p class="set">Settled by comparing Model C's gate primitive against Joel's stage-transition
+    policy.</p>
+  </div></div>
+
+  <div class="q"><span class="qn">10</span><div>
+    <h5>What is a Lead?</h5>
+    <p class="who">Affects Daidipya primarily.</p>
+    <p>The glossary supports two readings: one thing the customer might buy, given that a lead
+    carries a single trade; and one deal that might be sold, given that a lead owns the proposals,
+    holds the financing and converts into a job. A multi-trade sale forces these apart.</p>
+    <p class="set">Settled by choosing one reading, then deciding what sits at the other level.</p>
+  </div></div>
+
+  <div class="q"><span class="qn">11</span><div>
+    <h5>How is execution status held when parts diverge?</h5>
+    <p class="who">Affects Joel primarily.</p>
+    <p>Daidipya tracks execution phase per sub-Job. Model C gives each job its own pipeline. Joel's
+    job has one status and his scope components carry none, so two parts of one sale finishing weeks
+    apart has no representation.</p>
+    <p class="set">Settled by deciding whether status lives on the job or below it.</p>
+  </div></div>
+
+  <div class="q"><span class="qn">12</span><div>
+    <h5>At what level is margin answerable?</h5>
+    <p class="who">Affects all three.</p>
+    <p>Model C computes at project level, Daidipya and Joel at job level. None computes per scope,
+    sub-job or scope component, so per-trade margin within a bundled sale is not available in any of
+    the three.</p>
+    <p class="set">Settled by deciding whether per-part margin is a requirement.</p>
+  </div></div>
+
+  <div class="q"><span class="qn">13</span><div>
+    <h5>Are recurring service, warranties, installed equipment, commission and payouts in scope?</h5>
+    <p class="who">Affects Model C and Daidipya.</p>
+    <p>Only Joel models them, and his flywheel — a job selling a service agreement that schedules
+    events that book further jobs — is a claim about the business as much as about the data.</p>
+    <p class="set">Settled by a scope decision above the model.</p>
+  </div></div>
+
+  <div class="q"><span class="qn">14</span><div>
+    <h5>Naming collisions</h5>
+    <p class="who">Affects all three. Three collisions, all live.</p>
+    <ul>
+      <li><strong>Project.</strong> Model C's project contains the sale and precedes it. Joel's is
+      optional and groups jobs after the sale. Agreeing the word would hide the disagreement in
+      question 1. Separately, "project" is already taken in Merlin as a design artefact carrying a
+      bill of materials and an electricity profile.</li>
+      <li><strong>Scope.</strong> Model C uses it for a priced unit of a proposal; Joel uses "scope
+      component" for a trade-typed decomposition of a job; and the insurance sub-status uses "scope
+      received" for the carrier's damage document. Two of these appear on the same record.</li>
+      <li><strong>Lead and opportunity.</strong> Model C's opportunity survives decline and is
+      per-trade. Both other models call their demand object a lead, and Daidipya's is the deal hub.
+      The words are not interchangeable.</li>
+    </ul>
+    <p class="set">Settled by a naming pass once questions 1, 5 and 10 are answered, not before.</p>
+  </div></div>
+</div>
+
+<div class="foot">
+  <p><strong>Not in this document.</strong> The Thompson scenario traced through each model, and a
+  full vocabulary reconciliation table. Both exist as analysis and can be added as companions if the
+  group wants them.</p>
+</div>
+
+</div>
+</body>
+</html>

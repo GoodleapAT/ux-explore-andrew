@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Five views</title>
+<style>
+/* ============================================================================
+   Merlin / Sol tokens, light only. Lifted from the standalone Pros Web
+   recreations, which extracted them from Merlin's compiled production
+   stylesheet on 24 Aug 2026.
+
+   Density rules for this memo:
+   - No badges, pills or chips. Status is plain text.
+   - Colour only where something needs attention. At most one amber region
+     per view.
+   - No explanatory copy inside a mock. Those moved under each view.
+   - No [i] annotation inside the mocks either, so no convention is declared.
+   ========================================================================= */
+:root{
+  color-scheme:light;
+  --sol-actions-button:#161051; --sol-actions-link:#382ca5; --sol-actions-interaction:#382ca5;
+  --sol-backgrounds-accent-purple:#e2e1fe; --sol-backgrounds-accent-yellow:#fffaf0;
+  --sol-backgrounds-system-warning:#fffaf0;
+  --sol-backgrounds-ui-high:#ffffff; --sol-backgrounds-ui-low:#e3e3ed; --sol-backgrounds-ui-medium:#f5f5f9;
+  --sol-borders-accent-purple:#6d62d5; --sol-borders-accent-yellow:#f5b638;
+  --sol-borders-ui-default:#c8c8d5; --sol-borders-ui-strong:#a7a7b9; --sol-borders-ui-subtle:#e3e3ed;
+  --sol-elevation-md:0px 1px 12px 0px #0000000f;
+  --sol-icons-accent-purple:#382ca5; --sol-icons-system-success:#008f30; --sol-icons-system-warning:#b88723;
+  --sol-icons-ui-secondary:#4b4b58;
+  --sol-states-focus:#144eb8;
+  --sol-text-primary:#14141a; --sol-text-secondary:#4b4b58; --sol-text-warning:#8f5f00;
+  --sol-text-disabled:#a7a7b9;
+  --pw-ink:#2c1b3c;
+  --pw-shadow-xs:0 1px 2px 0 rgb(0 0 0/.05);
+  --inter:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+  --m-bg:#ffffff; --m-paper:#fbfbfc; --m-bd:#e6e6ea; --m-bds:#d3d3da;
+  --m-tx:#1b1b20; --m-tx2:#55555e; --m-tx3:#86868f;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--m-bg);color:var(--m-tx);font-family:var(--inter);font-size:15px;line-height:1.62;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1360px;margin:0 auto;padding:56px 40px 96px}
+
+/* ---------- editorial frame ---------- */
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.04em;color:var(--m-tx3);margin:0 0 16px;text-transform:uppercase}
+.eyebrow span{margin-right:26px}
+h1{font-size:40px;line-height:1.12;font-weight:500;letter-spacing:-.02em;margin:0 0 18px;max-width:750px}
+.lede{max-width:750px;color:var(--m-tx2);font-size:15.5px;margin:0 0 40px}
+.lede.tight{margin-bottom:26px}
+.sec{margin:0 0 68px}
+.sec-head{display:flex;align-items:baseline;gap:11px;padding-bottom:12px;border-bottom:1px solid var(--m-bd);margin-bottom:18px}
+.badge-l{flex:0 0 auto;width:20px;height:20px;border:1px solid var(--sol-borders-accent-purple);border-radius:4px;color:var(--sol-icons-accent-purple);font-family:var(--mono);font-size:10.5px;display:flex;align-items:center;justify-content:center;background:var(--sol-backgrounds-accent-purple);position:relative;top:2px}
+.sec-title{font-size:19px;font-weight:500;margin:0;letter-spacing:-.01em}
+.sec-when{font-size:13px;color:var(--m-tx3);margin-left:auto}
+.cap{font-family:var(--mono);font-size:11px;color:var(--m-tx3);margin:0 0 10px}
+
+/* suggestions under a mock */
+.sug{margin:26px 0 0;padding-top:22px;border-top:1px solid var(--m-bd)}
+.sug h3{margin:0 0 3px;font-size:14px;font-weight:500;color:var(--m-tx)}
+.sug .sh{margin:0 0 16px;font-size:13px;color:var(--m-tx3)}
+.suglist{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:14px 34px}
+.sugi{display:grid;grid-template-columns:96px minmax(0,1fr);gap:14px;align-items:start}
+.sugi .k{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.03em;color:var(--m-tx3);padding-top:3px}
+.sugi .k[data-t=out]{color:#8a6a3f}
+.sugi .k[data-t=home]{color:#5b5b8a}
+.sugi p{margin:0;font-size:13.5px;line-height:1.55;color:var(--m-tx2)}
+.sugi p strong{color:var(--m-tx);font-weight:500}
+
+/* ---------- the mockup frame ---------- */
+.frame{border:1px solid var(--m-bds);border-radius:12px;overflow:hidden;background:var(--sol-backgrounds-ui-high)}
+.pw-page{display:flex;flex-direction:column;background:var(--sol-backgrounds-ui-high);padding:30px 38px 38px;font-family:var(--inter);color:var(--pw-ink)}
+.pw-stack{display:flex;flex-direction:column;gap:30px}
+
+.t-h1{font:700 26px/38px var(--inter);margin:0}
+.t-l4{font:500 12px/18px var(--inter)}
+.t-p2{font:400 14px/20px var(--inter)}
+.t-p4{font:400 12px/18px var(--inter)}
+.muted{color:var(--sol-text-secondary)}
+
+.pw-crumbs{display:flex;align-items:center;gap:8px;font:400 12px/18px var(--inter);color:var(--sol-text-secondary);margin-bottom:14px}
+.pw-crumbs a{color:var(--sol-actions-link);text-decoration:none}
+.pw-crumbs .s{color:var(--sol-borders-ui-strong)}
+.pw-titlerow{display:flex;align-items:flex-start;gap:24px;flex-wrap:wrap}
+.pw-meta{margin:5px 0 0;font:400 13px/20px var(--inter);color:var(--sol-text-secondary)}
+.pw-meta .now{color:var(--pw-ink);font-weight:500}
+.pw-meta a{color:var(--sol-actions-link);text-decoration:none;border-bottom:1px solid var(--sol-borders-ui-default)}
+.pw-meta .s{color:var(--sol-borders-ui-strong);margin:0 7px}
+.pw-actions{display:flex;gap:10px;flex-wrap:wrap;margin-left:auto;align-items:center}
+.pw-btn{border:1px solid var(--sol-borders-ui-default);border-radius:8px;background:var(--sol-backgrounds-ui-high);padding:7px 13px;font:500 13px/18px var(--inter);color:var(--pw-ink)}
+.pw-btn.pri{background:var(--sol-actions-button);border-color:var(--sol-actions-button);color:#fff}
+.pw-kebab{width:34px;height:34px;border:1px solid var(--sol-borders-ui-default);border-radius:8px;background:var(--sol-backgrounds-ui-high);color:var(--sol-icons-ui-secondary);display:flex;align-items:center;justify-content:center;font-size:15px;line-height:1}
+
+/* attention strip: the only colour on a page */
+.pw-attn{display:flex;align-items:flex-start;gap:11px;border:1px solid var(--sol-icons-system-warning);border-left-width:3px;border-radius:8px;background:var(--sol-backgrounds-system-warning);padding:12px 15px;font:400 14px/20px var(--inter);color:var(--sol-text-warning)}
+.pw-attn .ic{flex:0 0 auto;margin-top:2px;color:var(--sol-icons-system-warning)}
+.pw-attn strong{font-weight:600}
+.pw-attn a{color:var(--sol-text-warning);margin-left:auto;white-space:nowrap;border-bottom:1px solid currentColor;text-decoration:none}
+
+/* cards, groups, pairs */
+.pw-card{background:var(--sol-backgrounds-ui-high);border:1px solid var(--sol-borders-ui-subtle);border-radius:12px;box-shadow:var(--sol-elevation-md);padding:20px}
+.pw-cardstack{display:flex;flex-direction:column;gap:15px}
+.pw-cardstack h5{margin:0;font:700 16px/24px var(--inter);color:var(--sol-text-primary)}
+.pw-cardhead{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.pw-group{display:flex;flex-direction:column;gap:13px}
+.pw-grouphead{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.pw-grouphead h2{margin:0;font:700 18px/24px var(--inter);color:var(--pw-ink)}
+.pw-pair{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}
+.pw-pair>*{min-width:0}
+.pw-pair.wide-l{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr)}
+.pw-pair.wide-r{grid-template-columns:minmax(0,1fr) minmax(0,1.3fr)}
+
+/* segmented control */
+.pw-seg{display:inline-flex;border:1px solid var(--sol-borders-ui-subtle);border-radius:8px;overflow:hidden;background:var(--sol-backgrounds-ui-medium)}
+.pw-segi{border:0;border-right:1px solid var(--sol-borders-ui-subtle);background:transparent;padding:5px 9px;font:400 13px/19px var(--inter);color:var(--sol-text-secondary);white-space:nowrap}
+.pw-segi:last-child{border-right:0}
+.pw-segi[data-on=true]{background:var(--sol-backgrounds-ui-high);color:var(--sol-text-primary);font-weight:500;box-shadow:var(--pw-shadow-xs)}
+
+/* peer rows: name and sub on the left, value over status on the right */
+.pw-crowlist{display:flex;flex-direction:column}
+.pw-lrow{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:18px;align-items:baseline;padding:11px 0;border-bottom:1px solid var(--sol-borders-ui-subtle)}
+.pw-lrow:last-child{border-bottom:0}
+.pw-lrow:first-child{padding-top:0}
+.pw-lname{font:400 14px/20px var(--inter);color:var(--pw-ink);min-width:0}
+.pw-lsub{display:block;font:400 12px/18px var(--inter);color:var(--sol-text-secondary);margin-top:1px}
+.pw-r{text-align:right;white-space:nowrap}
+.pw-lval{display:block;font:500 14px/20px var(--inter);color:var(--pw-ink);font-variant-numeric:tabular-nums}
+.pw-lst{display:block;font:400 12px/18px var(--inter);color:var(--sol-text-secondary);margin-top:1px}
+.pw-lst.attn{color:var(--sol-text-warning);font-weight:500}
+.pw-lst .ic{position:relative;top:2px;margin-right:3px;color:var(--sol-icons-system-warning)}
+.pw-lrow.dim .pw-lname,.pw-lrow.dim .pw-lval{color:var(--sol-text-secondary);font-weight:400}
+.pw-missing{font:italic 400 13px/18px var(--inter);color:var(--sol-text-secondary)}
+
+/* label / value rows */
+.pw-cardrows{display:flex;flex-direction:column;gap:13px}
+.pw-crow{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+.pw-crow .cl{font:400 14px/20px var(--inter);color:var(--sol-text-secondary)}
+.pw-crow .cv{font:500 15px/22px var(--inter);color:var(--sol-text-primary);font-variant-numeric:tabular-nums;text-align:right}
+.pw-crow.tot .cl{font:700 14px/20px var(--inter);color:var(--sol-text-primary)}
+.pw-crow.tot .cv{font:700 20px/28px var(--inter)}
+.pw-crule{height:1px;background:var(--sol-borders-ui-subtle)}
+
+/* two-column fact grid */
+.pw-syn{display:grid;grid-template-columns:1fr 1fr;gap:11px 18px}
+.pw-syn.one{grid-template-columns:1fr}
+.pw-synr{min-width:0}
+.pw-synr .k{display:block;font:400 11px/16px var(--inter);color:var(--sol-text-secondary)}
+.pw-synr .v{display:block;font:500 13px/18px var(--inter);color:var(--pw-ink);text-wrap:pretty}
+.pw-synr .v.q{font-weight:400;color:var(--sol-text-secondary);font-style:italic}
+
+/* stage rail */
+.pw-rail{border:1px solid var(--sol-borders-ui-subtle);border-radius:8px;background:var(--sol-backgrounds-ui-high);overflow:hidden}
+.pw-railboard{display:flex;align-items:center;gap:8px;height:27px;padding:0 12px;background:var(--sol-backgrounds-ui-medium);border-bottom:1px solid var(--sol-borders-ui-subtle);font:700 10px/14px var(--inter);letter-spacing:.08em;text-transform:uppercase;color:var(--sol-text-secondary)}
+.pw-railboard .n{margin-left:auto;letter-spacing:0;text-transform:none;font-weight:400;font-size:10px;white-space:nowrap}
+.pw-stg{width:100%;height:35px;display:grid;grid-template-columns:12px minmax(0,1fr) auto;gap:11px;align-items:center;padding:0 12px;border-bottom:1px solid var(--sol-borders-ui-subtle)}
+.pw-stg:last-child{border-bottom:0}
+.pw-stg[data-state=now]{background:var(--sol-backgrounds-accent-purple)}
+.pw-stgdot{width:11px;height:11px;border-radius:999px;border:1.5px solid var(--sol-borders-ui-strong);background:var(--sol-backgrounds-ui-high)}
+.pw-stg[data-state=done] .pw-stgdot{background:var(--sol-icons-system-success);border-color:var(--sol-icons-system-success)}
+.pw-stg[data-state=now] .pw-stgdot{background:var(--sol-actions-button);border-color:var(--sol-actions-button);box-shadow:0 0 0 3px var(--sol-states-focus)}
+.pw-stgname{font:400 13px/17px var(--inter);color:var(--sol-text-secondary);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pw-stg[data-state=now] .pw-stgname{color:var(--pw-ink);font-weight:500}
+.pw-stgmeta{font:400 11px/14px var(--inter);color:var(--sol-text-secondary);white-space:nowrap}
+.pw-stg[data-state=now] .pw-stgmeta{color:var(--sol-actions-button);font-weight:500}
+
+/* sub-status */
+.pw-ss{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid var(--sol-borders-ui-subtle);font:400 14px/20px var(--inter)}
+.pw-ss:last-of-type{border-bottom:0}
+.pw-ss .k{color:var(--sol-text-secondary)}
+.pw-ss .v{font-weight:500;text-align:right;color:var(--pw-ink)}
+.pw-ss[data-reg=working] .v{color:var(--sol-text-warning);font-weight:600}
+.pw-ss[data-reg=na] .k,.pw-ss[data-reg=na] .v{color:var(--sol-text-secondary);font-weight:400;font-style:italic}
+
+/* tasks */
+.pw-tk{display:grid;grid-template-columns:18px minmax(0,1fr);gap:10px;align-items:start;padding:5px 0;font:400 14px/20px var(--inter);color:var(--pw-ink)}
+.pw-tkbx{width:18px;height:18px;border-radius:4px;border:1.5px solid var(--sol-borders-ui-strong);background:var(--sol-backgrounds-ui-high);margin-top:1px;display:flex;align-items:center;justify-content:center;color:#fff;flex:0 0 18px}
+.pw-tk[data-state=complete] .pw-tkbx{background:var(--sol-icons-system-success);border-color:var(--sol-icons-system-success)}
+.pw-tk[data-state=complete]{color:var(--sol-text-secondary)}
+.pw-tk[data-state=blocked] .pw-tkbx{border-color:var(--sol-icons-system-warning);background:var(--sol-backgrounds-system-warning);color:var(--sol-text-warning)}
+.pw-tk[data-state=na] .pw-tkbx{border-style:dashed;border-color:var(--sol-borders-ui-subtle);background:transparent}
+.pw-tk[data-state=na]{color:var(--sol-text-secondary);font-style:italic}
+.pw-tksub{display:block;font:400 12px/18px var(--inter);color:var(--sol-text-secondary)}
+
+/* done rows */
+.pw-dn{display:flex;justify-content:space-between;gap:12px;padding:6px 0;font:400 14px/20px var(--inter);border-bottom:1px solid var(--sol-borders-ui-subtle)}
+.pw-dn:last-of-type{border-bottom:0}
+.pw-dn .dd{color:var(--sol-text-secondary);font:400 12px/18px var(--inter);white-space:nowrap}
+.pw-dn .who{display:block;font:400 12px/18px var(--inter);color:var(--sol-text-secondary)}
+.pw-cds{display:grid;grid-template-columns:repeat(auto-fit,minmax(238px,1fr));gap:18px;align-items:stretch}
+.pw-cds>*{min-width:0}
+
+/* notes */
+.pw-latest{border:1px solid var(--sol-borders-ui-subtle);border-radius:12px;background:var(--sol-backgrounds-ui-medium);padding:14px 16px}
+.pw-latest h4{font:700 11px/16px var(--inter);letter-spacing:.07em;text-transform:uppercase;color:var(--sol-text-secondary);margin:0 0 9px}
+.pw-latestcards{display:grid;grid-template-columns:repeat(auto-fit,minmax(238px,1fr));gap:12px}
+.pw-latestcard{border:1px solid var(--sol-borders-ui-subtle);border-radius:10px;background:var(--sol-backgrounds-ui-high);padding:11px 13px;display:flex;flex-direction:column;gap:5px;min-width:0}
+.pw-latestcard .d{font:500 12px/18px var(--inter);color:var(--sol-text-secondary)}
+.pw-latestcard .b{margin:0;font:400 13px/19px var(--inter);color:var(--pw-ink)}
+.pw-latestcard .m{margin:0;font:400 11px/16px var(--inter);color:var(--sol-text-secondary)}
+.pw-note-item{padding:11px 0;border-bottom:1px solid var(--sol-borders-ui-subtle)}
+.pw-note-item:last-child{border-bottom:0}
+.pw-note-item:first-child{padding-top:0}
+.pw-note-h{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap;margin-bottom:4px;font:400 12px/18px var(--inter);color:var(--sol-text-secondary)}
+.pw-note-h .ty{color:var(--pw-ink);font-weight:500}
+.pw-pinned{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border:1px solid var(--sol-borders-ui-subtle);border-radius:8px;background:var(--sol-backgrounds-ui-medium);font:400 13px/19px var(--inter);color:var(--pw-ink)}
+.pw-pinned .ic{flex:0 0 auto;margin-top:2px;color:var(--sol-icons-ui-secondary)}
+.pw-timeline{list-style:none;margin:0;padding:0 0 0 20px;display:flex;flex-direction:column;gap:15px;position:relative}
+.pw-timeline:before{content:'';position:absolute;left:4px;top:6px;bottom:6px;width:1px;background:var(--sol-borders-ui-subtle)}
+.pw-timeline li{position:relative}
+.pw-timeline li:before{content:'';position:absolute;left:-20px;top:5px;width:9px;height:9px;border-radius:999px;background:var(--sol-backgrounds-ui-high);border:2px solid var(--sol-borders-ui-strong)}
+.pw-timeline .e{margin:0;font:400 13px/19px var(--inter);color:var(--pw-ink)}
+.pw-timeline .dt{margin:1px 0 0;font:400 12px/18px var(--inter);color:var(--sol-text-secondary)}
+
+/* option toggles */
+.pw-tog{display:grid;grid-template-columns:36px minmax(0,1fr) auto;gap:14px;align-items:center;padding:13px 0;border-bottom:1px solid var(--sol-borders-ui-subtle)}
+.pw-tog:last-of-type{border-bottom:0}
+.pw-tog:first-of-type{padding-top:0}
+.pw-sw{width:34px;height:19px;border-radius:20px;background:var(--sol-actions-button);position:relative}
+.pw-sw.off{background:var(--sol-backgrounds-ui-low);border:1px solid var(--sol-borders-ui-default)}
+.pw-sw i{position:absolute;top:3px;right:3px;width:13px;height:13px;border-radius:50%;background:#fff;display:block}
+.pw-sw.off i{right:auto;left:3px;background:var(--sol-borders-ui-strong)}
+.pw-tog .tn{font:500 14px/20px var(--inter);color:var(--pw-ink)}
+.pw-tog .td{display:block;font:400 12px/18px var(--inter);color:var(--sol-text-secondary);margin-top:1px}
+.pw-tog.off .tn{color:var(--sol-text-secondary);font-weight:400}
+.pw-tog .tv{font:500 14px/20px var(--inter);color:var(--pw-ink);font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+.pw-tog.off .tv{color:var(--sol-text-secondary);font-weight:400}
+.pw-tot{display:flex;justify-content:space-between;align-items:baseline;padding-top:13px;border-top:1px solid var(--sol-borders-ui-strong)}
+.pw-tot .l{font:700 14px/20px var(--inter)}
+.pw-tot .v{font:700 20px/28px var(--inter);font-variant-numeric:tabular-nums}
+.pw-tot .was{font:400 12px/18px var(--inter);color:var(--sol-text-secondary);text-decoration:line-through;margin-right:9px}
+
+/* itemisation */
+.pw-tbl{width:100%;border-collapse:collapse;font:400 13px/19px var(--inter)}
+.pw-tbl th{text-align:left;font:500 11px/16px var(--inter);text-transform:uppercase;letter-spacing:.05em;color:var(--sol-text-secondary);padding:0 0 8px;border-bottom:1px solid var(--sol-borders-ui-subtle)}
+.pw-tbl th.r,.pw-tbl td.r{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.pw-tbl td{padding:8px 0;border-bottom:1px solid var(--sol-borders-ui-subtle);color:var(--pw-ink);vertical-align:top}
+.pw-tbl tr:last-child td{border-bottom:0}
+.pw-tbl td .s{display:block;font:400 11px/16px var(--inter);color:var(--sol-text-secondary)}
+.pw-tbl tfoot td{font-weight:600;border-top:1px solid var(--sol-borders-ui-strong);border-bottom:0}
+
+/* visits */
+.pw-visit{display:grid;grid-template-columns:16px minmax(0,1fr) auto;gap:12px;align-items:baseline;padding:11px 0;border-bottom:1px solid var(--sol-borders-ui-subtle)}
+.pw-visit:last-child{border-bottom:0}
+.pw-visit:first-child{padding-top:0}
+.pw-visit .mk{width:9px;height:9px;border-radius:999px;background:var(--sol-backgrounds-ui-high);border:1.5px solid var(--sol-borders-ui-strong);margin-left:3px;position:relative;top:5px}
+.pw-visit[data-s=past] .mk{background:var(--sol-icons-system-success);border-color:var(--sol-icons-system-success)}
+.pw-visit[data-s=now] .mk{background:var(--sol-actions-button);border-color:var(--sol-actions-button)}
+.pw-visit[data-s=next] .vn{color:var(--sol-text-secondary)}
+.pw-visit .vn{font:400 14px/20px var(--inter);color:var(--pw-ink)}
+.pw-visit .vs{display:block;font:400 12px/18px var(--inter);color:var(--sol-text-secondary);margin-top:1px}
+
+/* placeholders */
+.pw-ph{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;border:1px dashed var(--sol-borders-ui-strong);border-radius:8px;font:400 14px/20px var(--inter);color:var(--sol-text-secondary)}
+.pw-ph .t{font:400 12px/18px var(--inter);color:var(--sol-text-disabled)}
+.pw-section{display:flex;flex-direction:column;gap:12px}
+.pw-sectionhead{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.pw-sectionhead h2{margin:0;font:700 18px/24px var(--inter);color:var(--pw-ink)}
+.pw-phlist{display:flex;flex-direction:column;gap:8px}
+.pw-vall{display:flex;justify-content:space-between;align-items:center;gap:12px;border-top:1px solid var(--sol-borders-ui-subtle);padding-top:10px;font:400 12px/18px var(--inter);color:var(--sol-text-secondary)}
+.pw-link{color:var(--sol-actions-link);text-decoration:none;border-bottom:1px solid var(--sol-borders-ui-default)}
+.pw-plate{height:84px;border:1px solid var(--sol-borders-ui-subtle);border-radius:8px;background:var(--sol-backgrounds-ui-medium);display:flex;align-items:center;justify-content:center;color:var(--sol-borders-ui-strong)}
+.pw-shots{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.pw-shot{display:flex;flex-direction:column;gap:4px;min-width:0}
+.pw-shot .cap2{font:400 11px/15px var(--inter);color:var(--sol-text-secondary)}
+.ic{display:inline-block;vertical-align:middle}
+
+@media (max-width:1100px){
+  .pw-pair,.pw-pair.wide-l,.pw-pair.wide-r{grid-template-columns:1fr}
+  .pw-syn{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 4.5 2.8 20h18.4L12 4.5Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M12 10v4.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="17.2" r="1.05" fill="currentColor"/></symbol>
+<symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.6" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 7.2V12l3.4 2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+<symbol id="i-note" viewBox="0 0 24 24"><path d="M5.5 3.8h13v16.4h-13z" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M8.6 8.4h6.8M8.6 12h6.8M8.6 15.6h4.2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+<symbol id="i-image" viewBox="0 0 24 24"><rect x="3.4" y="5.2" width="17.2" height="13.6" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="8.6" cy="10" r="1.5" fill="currentColor"/><path d="M4.2 17.2 9.8 12l4 3.6 3-2.4 3.4 3" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></symbol>
+</defs></svg>
+
+<div class="wrap">
+
+<p class="eyebrow"><span>Pros Web</span><span>Five views on the model</span><span>Mockup, 10 Sep 2026</span></p>
+
+<h1>Five views</h1>
+
+<p class="lede">Mocks only, at the density you asked for. Status is plain text, colour appears once per
+page and only where somebody has to act, and no page explains itself in its own copy. Anything that
+came out of a mock, or that the model needs and the mock has nowhere to put, is listed underneath the
+view it belongs to. The Thompsons, on 10 September, with siding running and windows stuck at a permit
+desk.</p>
+
+<!-- ============================ A ============================ -->
+<div class="sec">
+  <div class="sec-head"><div class="badge-l">A</div><h2 class="sec-title">Customer record</h2><span class="sec-when">Robert &amp; Sara Thompson</span></div>
+  <p class="cap">Leads and projects where opportunities and proposals used to be</p>
+
+<div class="frame"><div class="pw-page">
+  <div class="pw-crumbs"><a href="#" onclick="return false">Customers</a><span class="s">/</span><span>Thompson, R. &amp; S.</span></div>
+  <div class="pw-stack">
+
+    <div class="pw-titlerow">
+      <div style="min-width:0">
+        <h1 class="t-h1">Robert &amp; Sara Thompson</h1>
+        <p class="pw-meta">1428 Maple Ave, Sacramento CA<span class="s">·</span><a href="#" onclick="return false">2 contacts</a><span class="s">·</span><a href="#" onclick="return false">1 property</a><span class="s">·</span>customer since Aug 2025</p>
+      </div>
+      <div class="pw-actions">
+        <button class="pw-btn">Add note</button>
+        <button class="pw-btn pri">New lead</button>
+        <span class="pw-kebab">&#8943;</span>
+      </div>
+    </div>
+
+    <div class="pw-latest">
+      <h4>Latest notes</h4>
+      <div class="pw-latestcards">
+        <article class="pw-latestcard">
+          <span class="d">9 Sep</span>
+          <p class="b">Rot behind the siding on the north elevation, worse than the walk suggested. Photographed and raised CO&#8209;01. Sara approved by phone.</p>
+          <p class="m">Marcus Ellery &middot; JOB&#8209;3101</p>
+        </article>
+        <article class="pw-latestcard">
+          <span class="d">18 Aug</span>
+          <p class="b">Took siding and windows, deferred the roof to spring. Sara said the roof is not leaking yet. Lead with the July storm photos when we call back.</p>
+          <p class="m">Priya Raman &middot; Roofing lead</p>
+        </article>
+        <article class="pw-latestcard">
+          <span class="d">20 Aug</span>
+          <p class="b">Fourteen window openings measured unit by unit. Two on the south elevation are out of square and will need trim work.</p>
+          <p class="m">Priya Raman &middot; Site assessment</p>
+        </article>
+      </div>
+    </div>
+
+    <div class="pw-group">
+      <div class="pw-grouphead"><h2>Sales</h2></div>
+      <div class="pw-pair">
+        <div class="pw-card"><div class="pw-cardstack">
+          <div class="pw-cardhead">
+            <h5>Leads</h5>
+            <div class="pw-seg">
+              <button class="pw-segi" data-on="true">All 4</button>
+              <button class="pw-segi">Open 0</button>
+              <button class="pw-segi">Deferred 1</button>
+              <button class="pw-segi">Closed 3</button>
+            </div>
+          </div>
+          <div class="pw-crowlist">
+            <div class="pw-lrow">
+              <span class="pw-lname">Roofing<span class="pw-lsub">Home App, 21 Jul &middot; storm damage, wants it looked at before winter</span></span>
+              <span class="pw-r"><span class="pw-lval">est. $38,900</span><span class="pw-lst">Deferred to Mar 2027</span></span>
+            </div>
+            <div class="pw-lrow">
+              <span class="pw-lname">Siding<span class="pw-lsub">Intake call, 22 Jul &middot; south elevation faded and cracking</span></span>
+              <span class="pw-r"><span class="pw-lval">$37,000</span><span class="pw-lst">Won 18 Aug</span></span>
+            </div>
+            <div class="pw-lrow">
+              <span class="pw-lname">Windows<span class="pw-lsub">Suggested by DeDe, 21 Jul &middot; original single panes on a 1978 build</span></span>
+              <span class="pw-r"><span class="pw-lval">$18,600</span><span class="pw-lst">Won 18 Aug</span></span>
+            </div>
+            <div class="pw-lrow">
+              <span class="pw-lname">HVAC replacement<span class="pw-lsub">Phone enquiry, Aug 2025 &middot; system failed in the August heat</span></span>
+              <span class="pw-r"><span class="pw-lval">$14,800</span><span class="pw-lst">Won Sep 2025</span></span>
+            </div>
+          </div>
+        </div></div>
+
+        <div class="pw-card"><div class="pw-cardstack">
+          <div class="pw-cardhead">
+            <h5>Projects</h5>
+            <div class="pw-seg">
+              <button class="pw-segi" data-on="true">Live 1</button>
+              <button class="pw-segi">Closed 1</button>
+            </div>
+          </div>
+          <div class="pw-crowlist">
+            <div class="pw-lrow">
+              <span class="pw-lname">Exterior refresh for the Thompsons<span class="pw-lsub">3 leads pursued &middot; 1 proposal &middot; 2 jobs, 1 blocked</span></span>
+              <span class="pw-r"><span class="pw-lval">$55,600</span><span class="pw-lst attn"><svg class="ic" width="12" height="12"><use href="#i-alert"/></svg>Needs attention</span></span>
+            </div>
+            <div class="pw-lrow">
+              <span class="pw-lname">HVAC, central air and heat pump conversion<span class="pw-lsub">1 lead &middot; 1 proposal &middot; 1 job &middot; closed 24 Sep 2025</span></span>
+              <span class="pw-r"><span class="pw-lval">$14,800</span><span class="pw-lst">Paid</span></span>
+            </div>
+          </div>
+          <div class="pw-vall"><span>Proposals, contracts and change orders sit inside a project</span><a href="#" onclick="return false" class="pw-link">Open project</a></div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="pw-group">
+      <div class="pw-grouphead"><h2>Operations</h2></div>
+      <div class="pw-pair">
+        <div class="pw-card"><div class="pw-cardstack">
+          <div class="pw-cardhead">
+            <h5>Jobs</h5>
+            <div class="pw-seg">
+              <button class="pw-segi" data-on="true">Active 2</button>
+              <button class="pw-segi">Complete 1</button>
+            </div>
+          </div>
+          <div class="pw-crowlist">
+            <div class="pw-lrow">
+              <span class="pw-lname">JOB&#8209;3101&nbsp; Siding<span class="pw-lsub">Exterior refresh &middot; exterior crew &middot; installing, 5 of 8</span></span>
+              <span class="pw-r"><span class="pw-lval">$37,000</span><span class="pw-lst">In progress</span></span>
+            </div>
+            <div class="pw-lrow">
+              <span class="pw-lname">JOB&#8209;3102&nbsp; Windows<span class="pw-lsub">Exterior refresh &middot; install crew &middot; units due 23 Sep</span></span>
+              <span class="pw-r"><span class="pw-lval">$18,600</span><span class="pw-lst attn"><svg class="ic" width="12" height="12"><use href="#i-alert"/></svg>Blocked 14 days</span></span>
+            </div>
+          </div>
+        </div></div>
+
+        <div class="pw-card"><div class="pw-cardstack">
+          <div class="pw-cardhead">
+            <h5>Service plans</h5>
+            <span class="t-l4 muted">1 active</span>
+          </div>
+          <div class="pw-crowlist">
+            <div class="pw-lrow">
+              <span class="pw-lname">Heat pump maintenance<span class="pw-lsub">2 visits a year &middot; next 22 Sep &middot; renews 24 Sep</span></span>
+              <span class="pw-r"><span class="pw-lval">$29 / mo</span><span class="pw-lst">Active, year 1</span></span>
+            </div>
+          </div>
+          <div class="pw-vall"><span>Held against the customer and the property, not a project</span><a href="#" onclick="return false" class="pw-link">Open plan</a></div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="pw-group">
+      <div class="pw-grouphead"><h2>Financials</h2></div>
+      <div class="pw-pair">
+        <div class="pw-card"><div class="pw-cardstack">
+          <div class="pw-cardhead"><h5>Across all projects</h5><span class="t-l4 muted">2 projects, 1 plan</span></div>
+          <div class="pw-cardrows">
+            <div class="pw-crow"><span class="cl">Sold to date</span><span class="cv">$70,400.00</span></div>
+            <div class="pw-crow"><span class="cl">Collected</span><span class="cv">$46,480.00</span></div>
+            <div class="pw-crule"></div>
+            <div class="pw-crow tot"><span class="cl">Outstanding</span><span class="cv">$23,920.00</span></div>
+            <div class="pw-crow"><span class="cl">Recurring</span><span class="cv">$29.00 / mo</span></div>
+          </div>
+        </div></div>
+
+        <div class="pw-card"><div class="pw-cardstack">
+          <div class="pw-cardhead">
+            <h5>Activity</h5>
+            <div class="pw-seg">
+              <button class="pw-segi" data-on="true">All</button>
+              <button class="pw-segi">Invoices</button>
+              <button class="pw-segi">Requests</button>
+              <button class="pw-segi">Payments</button>
+            </div>
+          </div>
+          <div class="pw-crowlist">
+            <div class="pw-lrow">
+              <span class="pw-lname">MI&#8209;4471&nbsp; Master invoice<span class="pw-lsub">Exterior refresh &middot; amended 9 Sep &middot; 3 milestones</span></span>
+              <span class="pw-r"><span class="pw-lval">$55,600.00</span><span class="pw-lst">Open</span></span>
+            </div>
+            <div class="pw-lrow">
+              <span class="pw-lname">Milestone 2 of 3<span class="pw-lsub">Payment request &middot; 2 Sep</span></span>
+              <span class="pw-r"><span class="pw-lval">$21,120.00</span><span class="pw-lst">Paid</span></span>
+            </div>
+            <div class="pw-lrow">
+              <span class="pw-lname">Loan funding, exteriors<span class="pw-lsub">Payment &middot; 2 Sep &middot; GoodLeap</span></span>
+              <span class="pw-r"><span class="pw-lval">$21,120.00</span><span class="pw-lst">Succeeded</span></span>
+            </div>
+          </div>
+          <div class="pw-vall"><span>9 records</span><a href="#" onclick="return false" class="pw-link">View all</a></div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="pw-group">
+      <div class="pw-grouphead"><h2>Record</h2></div>
+      <div class="pw-pair">
+        <div class="pw-card"><div class="pw-cardstack">
+          <div class="pw-cardhead"><h5>Notes</h5><button class="pw-btn">Add note</button></div>
+          <div class="pw-pinned"><svg class="ic" width="16" height="16"><use href="#i-note"/></svg><span>Gate code 4417. Dog in the back yard, friendly but loud.</span></div>
+          <div class="pw-pinned"><svg class="ic" width="16" height="16"><use href="#i-note"/></svg><span>HOA requires colour approval before any exterior work.</span></div>
+          <div class="pw-crowlist" style="margin-top:4px">
+            <div class="pw-note-item">
+              <div class="pw-note-h"><span>9 Sep</span><span class="ty">Site note</span><span>JOB&#8209;3101</span></div>
+              <p class="t-p2" style="margin:0">Rot behind the siding on the north elevation, about 40 square feet. Photographed and raised CO&#8209;01.</p>
+              <p class="t-p4 muted" style="margin:3px 0 0">Marcus Ellery</p>
+            </div>
+            <div class="pw-note-item">
+              <div class="pw-note-h"><span>18 Aug</span><span class="ty">Decision</span><span>Roofing lead</span></div>
+              <p class="t-p2" style="margin:0">Deferred to spring on budget. Not leaking yet. Storm photos from July are the thing to lead with.</p>
+              <p class="t-p4 muted" style="margin:3px 0 0">Priya Raman</p>
+            </div>
+          </div>
+        </div></div>
+
+        <div class="pw-card"><div class="pw-cardstack">
+          <div class="pw-cardhead"><h5>History</h5><span class="t-l4 muted">All events</span></div>
+          <ol class="pw-timeline">
+            <li><p class="e">Change order CO&#8209;01 raised on the siding scope, plus $2,800</p><p class="dt">9 Sep</p></li>
+            <li><p class="e">Permit P&#8209;22841 correction requested by plan review</p><p class="dt">10 Sep</p></li>
+            <li><p class="e">Milestone 2 funded, $21,120</p><p class="dt">2 Sep</p></li>
+            <li><p class="e">Proposal accepted, financing approved at $52,800</p><p class="dt">18 Aug</p></li>
+            <li><p class="e">Project opened, three leads pursued together</p><p class="dt">12 Aug</p></li>
+          </ol>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="pw-section">
+      <div class="pw-sectionhead"><h2>Everything else</h2></div>
+      <div class="pw-phlist">
+        <div class="pw-ph"><span>Documents, photos and the site assessment</span><span class="t">not drawn</span></div>
+        <div class="pw-ph"><span>Measurements, home report and the equipment registry</span><span class="t">not drawn</span></div>
+      </div>
+    </div>
+
+  </div>
+</div></div>
+
+  <div class="sug">
+    <h3>Taken out, and things needing a home</h3>
+    <p class="sh">Suggestions rather than decisions. Nothing here is in the mock above.</p>
+    <div class="suglist">
+      <div class="sugi"><span class="k" data-t="out">Taken out</span><p><strong>Status pills on every row.</strong> Won, Deferred, Active and Paid are now the second line of the right hand column, in secondary text. Only the two rows somebody has to act on carry colour, and both point at the same permit.</p></div>
+      <div class="sugi"><span class="k" data-t="out">Taken out</span><p><strong>Provenance pills.</strong> Home App, intake call and DeDe now read as the first words of each lead's sub line. Provenance changes how a lead gets worked, so it stays; it just does not need a coloured chip to say so.</p></div>
+      <div class="sugi"><span class="k" data-t="out">Taken out</span><p><strong>A customer status.</strong> Prospect and Customer were a pill in the header. Customer since Aug 2025 says it, and the projects card says the rest.</p></div>
+      <div class="sugi"><span class="k" data-t="out">Suggested copy</span><p>Under the projects card: <em>a project holds the proposal, the contract, the change orders and the jobs, so none of those appear on the customer.</em> Worth saying once during rollout, not on the page forever.</p></div>
+      <div class="sugi"><span class="k" data-t="home">Needs a home</span><p><strong>Open demand.</strong> The deferred roof is worth $38,900 and no figure on this page adds it up. A third row in the financials card would do it, at the cost of implying it is money.</p></div>
+      <div class="sugi"><span class="k" data-t="home">Needs a home</span><p><strong>Revive dates as work.</strong> Deferred to Mar 2027 is legible here but nothing makes it arrive in March. That is a queue somewhere else, not a row on this record.</p></div>
+      <div class="sugi"><span class="k" data-t="home">Question</span><p><strong>Four leads and growing.</strong> Won leads never leave, so a fifteen year customer has thirty rows. The All segment may need to default to the last twelve months.</p></div>
+      <div class="sugi"><span class="k" data-t="home">Question</span><p><strong>Jobs across projects.</strong> The jobs card lists jobs from any project, which is useful and slightly breaks the containment story. Each row names its project to compensate.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================ B ============================ -->
+<div class="sec">
+  <div class="sec-head"><div class="badge-l">B</div><h2 class="sec-title">Project workspace</h2><span class="sec-when">Exterior refresh for the Thompsons</span></div>
+  <p class="cap">The container: what is being sold above what is being delivered, with the money held here</p>
+
+<div class="frame"><div class="pw-page">
+  <div class="pw-crumbs"><a href="#" onclick="return false">Customers</a><span class="s">/</span><a href="#" onclick="return false">Thompson, R. &amp; S.</a><span class="s">/</span><span>Exterior refresh</span></div>
+  <div class="pw-stack">
+
+    <div class="pw-titlerow">
+      <div style="min-width:0">
+        <h1 class="t-h1">Exterior refresh for the Thompsons</h1>
+        <p class="pw-meta"><span class="now">In progress</span><span class="s">·</span>1428 Maple Ave<span class="s">·</span>opened 12 Aug by Priya Raman<span class="s">·</span>Priya Raman owns it</p>
+      </div>
+      <div class="pw-actions">
+        <button class="pw-btn">Add note</button>
+        <button class="pw-btn pri">New proposal</button>
+        <span class="pw-kebab">&#8943;</span>
+      </div>
+    </div>
+
+    <div class="pw-attn">
+      <svg class="ic" width="18" height="18"><use href="#i-alert"/></svg>
+      <span><strong>Windows has been waiting 14 days on Permit P&#8209;22841.</strong> Plan review
+      returned a correction today: the U&#8209;factor documentation is missing from the submittal.</span>
+      <a href="#" onclick="return false">Open the permit</a>
+    </div>
+
+    <div class="pw-pair wide-l">
+      <div class="pw-card"><div class="pw-cardstack">
+        <div class="pw-cardhead"><h5>Project overview</h5><span class="t-l4 muted">One customer, one property</span></div>
+        <div class="pw-syn">
+          <div class="pw-synr"><span class="k">Sold</span><span class="v">Siding and windows</span></div>
+          <div class="pw-synr"><span class="k">Deferred</span><span class="v">Roofing, to spring 2027</span></div>
+          <div class="pw-synr"><span class="k">Committed scope</span><span class="v">2 components, one job each</span></div>
+          <div class="pw-synr"><span class="k">Contract</span><span class="v">Signed 18 Aug, amended 9 Sep</span></div>
+          <div class="pw-synr"><span class="k">Tender</span><span class="v">GoodLeap loan, 15 yr at 6.99%</span></div>
+          <div class="pw-synr"><span class="k">Monthly</span><span class="v">$474</span></div>
+          <div class="pw-synr"><span class="k">Milestones</span><span class="v">20 / 40 / 40, two drawn</span></div>
+          <div class="pw-synr"><span class="k">Property</span><span class="v">1428 Maple Ave, built 1978</span></div>
+        </div>
+      </div></div>
+
+      <div class="pw-card"><div class="pw-cardstack">
+        <div class="pw-cardhead"><h5>Running balance</h5><span class="t-l4 muted">MI&#8209;4471</span></div>
+        <div class="pw-cardrows">
+          <div class="pw-crow"><span class="cl">Original contract</span><span class="cv">$52,800.00</span></div>
+          <div class="pw-crow"><span class="cl">CO&#8209;01, rot behind siding</span><span class="cv">$2,800.00</span></div>
+          <div class="pw-crow"><span class="cl">Drawn, 2 of 3 milestones</span><span class="cv">$31,680.00</span></div>
+          <div class="pw-crule"></div>
+          <div class="pw-crow tot"><span class="cl">Balance due</span><span class="cv">$23,920.00</span></div>
+        </div>
+        <div class="pw-vall"><span>Costs $23,060 &middot; margin 31%</span><a href="#" onclick="return false" class="pw-link">Open financials</a></div>
+      </div></div>
+    </div>
+
+    <div class="pw-group">
+      <div class="pw-grouphead"><h2>Selling</h2><span class="t-l4 muted">Ran 12 to 18 Aug</span></div>
+      <div class="pw-pair">
+        <div class="pw-card"><div class="pw-cardstack">
+          <div class="pw-cardhead"><h5>Leads pursued here</h5><span class="t-l4 muted">3, one per trade</span></div>
+          <div class="pw-crowlist">
+            <div class="pw-lrow">
+              <span class="pw-lname">Siding<span class="pw-lsub">Intake call, 22 Jul</span></span>
+              <span class="pw-r"><span class="pw-lval">$37,000</span><span class="pw-lst">Won</span></span>
+            </div>
+            <div class="pw-lrow">
+              <span class="pw-lname">Windows<span class="pw-lsub">Suggested by DeDe, 21 Jul</span></span>
+              <span class="pw-r"><span class="pw-lval">$18,600</span><span class="pw-lst">Won</span></span>
+            </div>
+            <div class="pw-lrow">
+              <span class="pw-lname">Roofing<span class="pw-lsub">Home App, 21 Jul &middot; budget this season</span></span>
+              <span class="pw-r"><span class="pw-lval">est. $38,900</span><span class="pw-lst">Deferred to Mar 2027</span></span>
+            </div>
+          </div>
+        </div></div>
+
+        <div class="pw-card"><div class="pw-cardstack">
+          <div class="pw-cardhead">
+            <h5>Proposals</h5>
+            <div class="pw-seg">
+              <button class="pw-segi" data-on="true">Current</button>
+              <button class="pw-segi">Versions 3</button>
+            </div>
+          </div>
+          <div class="pw-crowlist">
+            <div class="pw-lrow">
+              <span class="pw-lname">P&#8209;1051&nbsp; Exterior refresh<span class="pw-lsub">Version 3 &middot; 3 options, 2 selected &middot; presented in person</span></span>
+              <span class="pw-r"><span class="pw-lval">$52,800</span><span class="pw-lst">Accepted 18 Aug</span></span>
+            </div>
+            <div class="pw-lrow">
+              <span class="pw-lname">Contract<span class="pw-lsub">E&#8209;signed by Sara Thompson &middot; amended by CO&#8209;01</span></span>
+              <span class="pw-r"><span class="pw-lval">$55,600</span><span class="pw-lst">Signed 18 Aug</span></span>
+            </div>
+            <div class="pw-lrow">
+              <span class="pw-lname">CO&#8209;01&nbsp; Rot behind siding<span class="pw-lsub">North elevation, 40 sq ft &middot; within financing headroom</span></span>
+              <span class="pw-r"><span class="pw-lval">+$2,800</span><span class="pw-lst">Signed 9 Sep</span></span>
+            </div>
+          </div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="pw-group">
+      <div class="pw-grouphead"><h2>Work</h2><span class="t-l4 muted">One job per committed scope component</span></div>
+      <div class="pw-pair">
+        <div class="pw-card"><div class="pw-cardstack">
+          <div class="pw-cardhead">
+            <h5>Jobs</h5>
+            <div class="pw-seg">
+              <button class="pw-segi" data-on="true">Active 2</button>
+              <button class="pw-segi">Complete 0</button>
+            </div>
+          </div>
+          <div class="pw-crowlist">
+            <div class="pw-lrow">
+              <span class="pw-lname">JOB&#8209;3101&nbsp; Siding<span class="pw-lsub">Exterior crew &middot; installing, 5 of 8 &middot; started 2 Sep</span></span>
+              <span class="pw-r"><span class="pw-lval">$37,000</span><span class="pw-lst">In progress</span></span>
+            </div>
+            <div class="pw-lrow">
+              <span class="pw-lname">JOB&#8209;3102&nbsp; Windows<span class="pw-lsub">Install crew &middot; 2 of 8 &middot; units due 23 Sep</span></span>
+              <span class="pw-r"><span class="pw-lval">$18,600</span><span class="pw-lst attn"><svg class="ic" width="12" height="12"><use href="#i-alert"/></svg>Blocked 14 days</span></span>
+            </div>
+          </div>
+          <div class="pw-vall"><span>The two lanes run independently and meet at the final bill</span><a href="#" onclick="return false" class="pw-link">Compare jobs</a></div>
+        </div></div>
+
+        <div class="pw-card"><div class="pw-cardstack">
+          <div class="pw-cardhead"><h5>Waiting on</h5><span class="t-l4 muted">5 external processes</span></div>
+          <div>
+            <div class="pw-ss" data-reg="working"><span class="k">Permit, windows</span><span class="v">Correction requested</span></div>
+            <div class="pw-ss" data-reg="working"><span class="k">Window units</span><span class="v">Ordered, due 23 Sep</span></div>
+            <div class="pw-ss" data-reg="done"><span class="k">Financing</span><span class="v">Notice to proceed</span></div>
+            <div class="pw-ss" data-reg="done"><span class="k">Siding materials</span><span class="v">Delivered</span></div>
+            <div class="pw-ss" data-reg="na"><span class="k">HOA</span><span class="v">Not applicable</span></div>
+          </div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="pw-group">
+      <div class="pw-grouphead"><h2>Record</h2></div>
+      <div class="pw-pair">
+        <div class="pw-card"><div class="pw-cardstack">
+          <div class="pw-cardhead"><h5>Notes</h5><button class="pw-btn">Add note</button></div>
+          <div class="pw-pinned"><svg class="ic" width="16" height="16"><use href="#i-note"/></svg><span>HOA requires colour approval before any exterior work.</span></div>
+          <div class="pw-crowlist" style="margin-top:4px">
+            <div class="pw-note-item">
+              <div class="pw-note-h"><span>9 Sep</span><span class="ty">Site note</span><span>JOB&#8209;3101</span></div>
+              <p class="t-p2" style="margin:0">Rot behind the siding on the north elevation, about 40 square feet, worse than the walk suggested. Photographed and raised CO&#8209;01.</p>
+              <p class="t-p4 muted" style="margin:3px 0 0">Marcus Ellery</p>
+            </div>
+            <div class="pw-note-item">
+              <div class="pw-note-h"><span>18 Aug</span><span class="ty">Decision</span><span>Roofing lead</span></div>
+              <p class="t-p2" style="margin:0">Roof deferred to spring on budget. Not leaking yet.</p>
+              <p class="t-p4 muted" style="margin:3px 0 0">Priya Raman</p>
+            </div>
+          </div>
+        </div></div>
+
+        <div class="pw-card"><div class="pw-cardstack">
+          <div class="pw-cardhead"><h5>History</h5><span class="t-l4 muted">On this project</span></div>
+          <ol class="pw-timeline">
+            <li><p class="e">Permit correction requested by city plan review</p><p class="dt">10 Sep</p></li>
+            <li><p class="e">CO&#8209;01 signed, contract amended to $55,600</p><p class="dt">9 Sep</p></li>
+            <li><p class="e">Siding started, tear&#8209;off on south and west elevations</p><p class="dt">2 Sep</p></li>
+            <li><p class="e">Permit P&#8209;22841 applied for on the windows job</p><p class="dt">26 Aug</p></li>
+            <li><p class="e">Two jobs created at hand&#8209;off, one per selected option</p><p class="dt">18 Aug</p></li>
+            <li><p class="e">Project opened, three leads pursued together</p><p class="dt">12 Aug</p></li>
+          </ol>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="pw-section">
+      <div class="pw-sectionhead"><h2>Everything else</h2></div>
+      <div class="pw-phlist">
+        <div class="pw-ph"><span>Stages, tasks and gates as this contractor configured them</span><span class="t">not drawn</span></div>
+        <div class="pw-ph"><span>Documents, photos and the site assessment from 20 Aug</span><span class="t">not drawn</span></div>
+        <div class="pw-ph"><span>Measurements and insights</span><span class="t">not drawn</span></div>
+      </div>
+    </div>
+
+  </div>
+</div></div>
+
+  <div class="sug">
+    <h3>Taken out, and things needing a home</h3>
+    <p class="sh">The previous version of this page had a status rail and three explanatory boxes. All of it is here instead.</p>
+    <div class="suglist">
+      <div class="sugi"><span class="k" data-t="out">Taken out</span><p><strong>The derived status rail.</strong> Seven states in a bordered box, grouped by what produced them. It was a diagram of the model rather than a thing anyone needs on a Tuesday, and In progress in the meta line says as much.</p></div>
+      <div class="sugi"><span class="k" data-t="out">Taken out</span><p><strong>The blue explanation box.</strong> <em>In progress because one of two jobs has started. It becomes Complete when both jobs are complete, and Paid when the balance clears.</em> Suggested as a tooltip on the status word, or as nothing at all.</p></div>
+      <div class="sugi"><span class="k" data-t="out">Taken out</span><p><strong>Money footnote.</strong> <em>One master invoice for the whole project. Both jobs draw against it, and each job's evidence releases its own milestone.</em> True, and only interesting the first time.</p></div>
+      <div class="sugi"><span class="k" data-t="out">Taken out</span><p><strong>Per job margin, shown as unavailable.</strong> Naming a gap in the UI invites someone to fill it badly. The gap is real and belongs in the model notes, not the card.</p></div>
+      <div class="sugi"><span class="k" data-t="home">Needs a home</span><p><strong>The configured pipeline.</strong> Ten stages describing first contact to closeout, crossing the lead, the project and the jobs. It is a placeholder here because putting it in the project card and in the job card would be the same pipeline twice.</p></div>
+      <div class="sugi"><span class="k" data-t="home">Question</span><p><strong>Leads on a project page.</strong> The only card here showing something the project does not own. It earns its place because the deferred roof would otherwise be invisible from inside the project that failed to sell it.</p></div>
+      <div class="sugi"><span class="k" data-t="home">Question</span><p><strong>Selling and Work as headings.</strong> Written as Selling and Work rather than Sales and Operations, because the line is what is being sold against what is being delivered, not which team is doing it.</p></div>
+      <div class="sugi"><span class="k" data-t="home">Question</span><p><strong>Contract and change orders under Proposals.</strong> They are not proposals. Grouping them there keeps the selling side to two cards; the alternative is a third card and a thinner row.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================ C ============================ -->
+<div class="sec">
+  <div class="sec-head"><div class="badge-l">C</div><h2 class="sec-title">Proposal</h2><span class="sec-when">P&#8209;1051, version 3</span></div>
+  <p class="cap">Three trades priced, two taken. No colour on this page, because nothing here needs acting on</p>
+
+<div class="frame"><div class="pw-page">
+  <div class="pw-crumbs"><a href="#" onclick="return false">Thompson, R. &amp; S.</a><span class="s">/</span><a href="#" onclick="return false">Exterior refresh</a><span class="s">/</span><span>P&#8209;1051</span></div>
+  <div class="pw-stack">
+
+    <div class="pw-titlerow">
+      <div style="min-width:0">
+        <h1 class="t-h1">P&#8209;1051&nbsp; Exterior refresh</h1>
+        <p class="pw-meta"><span class="now">Accepted 18 Aug</span><span class="s">·</span>version 3 of 3<span class="s">·</span>presented in person, 18 Aug<span class="s">·</span>prepared by Priya Raman</p>
+      </div>
+      <div class="pw-actions">
+        <button class="pw-btn">Duplicate</button>
+        <button class="pw-btn">Customer view</button>
+        <span class="pw-kebab">&#8943;</span>
+      </div>
+    </div>
+
+    <div class="pw-pair wide-l">
+      <div class="pw-card"><div class="pw-cardstack">
+        <div class="pw-cardhead"><h5>Options</h5><span class="t-l4 muted">Priced separately, presented in order</span></div>
+        <div>
+          <div class="pw-tog off">
+            <span class="pw-sw off"><i></i></span>
+            <span><span class="tn">Roofing</span><span class="td">Priced 13 Aug &middot; offered first &middot; declined in the session, price retained</span></span>
+            <span class="tv">$38,900</span>
+          </div>
+          <div class="pw-tog">
+            <span class="pw-sw"><i></i></span>
+            <span><span class="tn">Siding</span><span class="td">Priced 13 Aug &middot; offered &middot; selected</span></span>
+            <span class="tv">$34,200</span>
+          </div>
+          <div class="pw-tog">
+            <span class="pw-sw"><i></i></span>
+            <span><span class="tn">Windows, 14 units</span><span class="td">Priced 13 Aug and held back &middot; offered second &middot; selected</span></span>
+            <span class="tv">$18,600</span>
+          </div>
+        </div>
+        <div class="pw-tot"><span class="l">Accepted total</span><span><span class="was">$73,100</span><span class="v">$52,800</span></span></div>
+      </div></div>
+
+      <div class="pw-card"><div class="pw-cardstack">
+        <div class="pw-cardhead"><h5>Financing</h5><span class="t-l4 muted">One application, both trades</span></div>
+        <div class="pw-syn one">
+          <div class="pw-synr"><span class="k">Product</span><span class="v">GoodLeap loan, 15 years at 6.99%</span></div>
+          <div class="pw-synr"><span class="k">Approved</span><span class="v">$52,800, no stipulations</span></div>
+          <div class="pw-synr"><span class="k">Monthly</span><span class="v">$474</span></div>
+          <div class="pw-synr"><span class="k">Covers</span><span class="v">Siding and windows under one exteriors category</span></div>
+          <div class="pw-synr"><span class="k">After CO&#8209;01</span><span class="v">Reissued at $55,600, no new credit pull</span></div>
+        </div>
+      </div></div>
+    </div>
+
+    <div class="pw-group">
+      <div class="pw-grouphead"><h2>Scope of work</h2><span class="t-l4 muted">One statement per accepted option</span></div>
+      <div class="pw-pair">
+        <div class="pw-card"><div class="pw-cardstack">
+          <div class="pw-cardhead"><h5>Siding</h5><span class="t-l4 muted">Becomes JOB&#8209;3101</span></div>
+          <p class="t-p2 muted" style="margin:0">Full wrap of the south and west elevations in fibre cement lap siding, including tear&#8209;off, house wrap, trim and paint. Two elevations, 2,140 square feet.</p>
+          <table class="pw-tbl">
+            <thead><tr><th>Line</th><th class="r">Qty</th><th class="r">Amount</th></tr></thead>
+            <tbody>
+              <tr><td>Fibre cement lap siding<span class="s">Hardie, 8.25 in, Cobble Stone</span></td><td class="r">2,140 sf</td><td class="r">$18,690</td></tr>
+              <tr><td>Tear&#8209;off and disposal<span class="s">Two layers, dumpster on the north driveway</span></td><td class="r">2,140 sf</td><td class="r">$4,280</td></tr>
+              <tr><td>House wrap and flashing</td><td class="r">2,140 sf</td><td class="r">$3,210</td></tr>
+              <tr><td>Trim, corners and paint</td><td class="r">1 lot</td><td class="r">$8,020</td></tr>
+              <tr><td>Sheathing repair<span class="s">Added by CO&#8209;01, 9 Sep</span></td><td class="r">40 sf</td><td class="r">$2,800</td></tr>
+            </tbody>
+            <tfoot><tr><td>Scope total</td><td class="r"></td><td class="r">$37,000</td></tr></tfoot>
+          </table>
+        </div></div>
+
+        <div class="pw-card"><div class="pw-cardstack">
+          <div class="pw-cardhead"><h5>Windows</h5><span class="t-l4 muted">Becomes JOB&#8209;3102</span></div>
+          <p class="t-p2 muted" style="margin:0">Replacement of fourteen original single pane units with double glazed vinyl, measured unit by unit on 20 August. Two south elevation openings are out of square and carry trim work.</p>
+          <table class="pw-tbl">
+            <thead><tr><th>Line</th><th class="r">Qty</th><th class="r">Amount</th></tr></thead>
+            <tbody>
+              <tr><td>Double glazed vinyl units<span class="s">Low&#8209;E, argon, U&#8209;factor 0.28</span></td><td class="r">14</td><td class="r">$11,760</td></tr>
+              <tr><td>Removal and disposal</td><td class="r">14</td><td class="r">$1,680</td></tr>
+              <tr><td>Interior and exterior trim</td><td class="r">14</td><td class="r">$3,220</td></tr>
+              <tr><td>Out of square correction<span class="s">Two south elevation openings</span></td><td class="r">2</td><td class="r">$1,120</td></tr>
+              <tr><td>Building permit<span class="s">Egress and energy code review</span></td><td class="r">1</td><td class="r">$820</td></tr>
+            </tbody>
+            <tfoot><tr><td>Scope total</td><td class="r"></td><td class="r">$18,600</td></tr></tfoot>
+          </table>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="pw-pair">
+      <div class="pw-card"><div class="pw-cardstack">
+        <div class="pw-cardhead"><h5>Acceptance</h5><span class="t-l4 muted">One signature for the whole sale</span></div>
+        <div class="pw-crowlist">
+          <div class="pw-lrow">
+            <span class="pw-lname">Contract<span class="pw-lsub">E&#8209;signed by Sara Thompson, 18 Aug at 7.42pm</span></span>
+            <span class="pw-r"><span class="pw-lval">$52,800</span><span class="pw-lst">Signed</span></span>
+          </div>
+          <div class="pw-lrow">
+            <span class="pw-lname">Financing agreement<span class="pw-lsub">E&#8209;signed in the same sitting &middot; reissued after CO&#8209;01</span></span>
+            <span class="pw-r"><span class="pw-lval">$55,600</span><span class="pw-lst">Signed 9 Sep</span></span>
+          </div>
+          <div class="pw-lrow">
+            <span class="pw-lname">Payment plan<span class="pw-lsub">Three milestones at 20, 40 and 40 per cent</span></span>
+            <span class="pw-r"><span class="pw-lval">$55,600</span><span class="pw-lst">Active</span></span>
+          </div>
+        </div>
+      </div></div>
+
+      <div class="pw-card"><div class="pw-cardstack">
+        <div class="pw-cardhead"><h5>Versions</h5><span class="t-l4 muted">The customer link always resolves to the latest</span></div>
+        <div class="pw-crowlist">
+          <div class="pw-lrow">
+            <span class="pw-lname">Version 3<span class="pw-lsub">Reworked in the room to siding and windows</span></span>
+            <span class="pw-r"><span class="pw-lval">$52,800</span><span class="pw-lst">Accepted 18 Aug</span></span>
+          </div>
+          <div class="pw-lrow dim">
+            <span class="pw-lname">Version 2<span class="pw-lsub">Revised after the site assessment, sent 21 Aug</span></span>
+            <span class="pw-r"><span class="pw-lval">$73,100</span><span class="pw-lst">Superseded</span></span>
+          </div>
+          <div class="pw-lrow dim">
+            <span class="pw-lname">Version 1<span class="pw-lsub">All three trades, windows priced and held back</span></span>
+            <span class="pw-r"><span class="pw-lval">$91,700</span><span class="pw-lst">Never sent</span></span>
+          </div>
+        </div>
+      </div></div>
+    </div>
+
+    <div class="pw-section">
+      <div class="pw-sectionhead"><h2>Everything else</h2></div>
+      <div class="pw-phlist">
+        <div class="pw-ph"><span>Terms, warranty language and the good, better, best presentation</span><span class="t">not drawn</span></div>
+        <div class="pw-ph"><span>Photos and the site assessment the pricing came from</span><span class="t">not drawn</span></div>
+      </div>
+    </div>
+
+  </div>
+</div></div>
+
+  <div class="sug">
+    <h3>Taken out, and things needing a home</h3>
+    <p class="sh">This page is drawn after acceptance. The version being presented in the room would be a different page.</p>
+    <div class="suglist">
+      <div class="sugi"><span class="k" data-t="out">Taken out</span><p><strong>Five status pills.</strong> Accepted, Sent, Declined, Superseded and Never sent now read as the second line of the right hand column. The two axes still show: the lifecycle word and the delivery word sit in the same place without competing.</p></div>
+      <div class="sugi"><span class="k" data-t="out">Taken out</span><p><strong>The two axes footnote.</strong> <em>Two lifecycle statuses and one delivery status on one document.</em> It was explaining the model to the user, which is not the user's problem.</p></div>
+      <div class="sugi"><span class="k" data-t="out">Taken out</span><p><strong>Priced but not offered, as a chip.</strong> Now the first clause of the windows sub line. Held back is a fact about how the option was presented, so it reads as history rather than a state.</p></div>
+      <div class="sugi"><span class="k" data-t="out">Suggested copy</span><p>On the declined roofing row, on hover: <em>the price is retained so this can be revived without requoting.</em> That is the one thing here nobody would guess.</p></div>
+      <div class="sugi"><span class="k" data-t="home">Needs a home</span><p><strong>The reason the roof came off.</strong> It was captured in the room and it lives on the lead. Nothing on this page shows it, which means the proposal records that roofing was declined but not why.</p></div>
+      <div class="sugi"><span class="k" data-t="home">Needs a home</span><p><strong>Good, better, best within a trade.</strong> The model allows several options per proposal and this page reads them as one option per trade. Three tiers of siding would need a second axis on this card.</p></div>
+      <div class="sugi"><span class="k" data-t="home">Question</span><p><strong>Toggles after acceptance.</strong> The switches are how the proposal was built and presented, and leaving them live on an accepted proposal implies the sale can still be edited. They may need to freeze into plain rows once signed.</p></div>
+      <div class="sugi"><span class="k" data-t="home">Question</span><p><strong>Scope of work as two cards.</strong> At half width the itemisation tables lose their quantity column on narrow screens. A single full width card per accepted option is the alternative, at the cost of the pairing.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================ D ============================ -->
+<div class="sec">
+  <div class="sec-head"><div class="badge-l">D</div><h2 class="sec-title">Job</h2><span class="sec-when">JOB&#8209;3102 Windows</span></div>
+  <p class="cap">One committed scope component, its configured stages, and a city plan reviewer holding it up</p>
+
+<div class="frame"><div class="pw-page">
+  <div class="pw-crumbs"><a href="#" onclick="return false">Thompson, R. &amp; S.</a><span class="s">/</span><a href="#" onclick="return false">Exterior refresh</a><span class="s">/</span><span>JOB&#8209;3102</span></div>
+  <div class="pw-stack">
+
+    <div class="pw-titlerow">
+      <div style="min-width:0">
+        <h1 class="t-h1">JOB&#8209;3102&nbsp; Windows</h1>
+        <p class="pw-meta"><span class="now">Blocked</span><span class="s">·</span>1428 Maple Ave<span class="s">·</span>install crew<span class="s">·</span><a href="#" onclick="return false">scope 2 of 2 on P&#8209;1051</a><span class="s">·</span><a href="#" onclick="return false">shared financing</a></p>
+      </div>
+      <div class="pw-actions">
+        <button class="pw-btn">Add note</button>
+        <button class="pw-btn">Move stage</button>
+        <span class="pw-kebab">&#8943;</span>
+      </div>
+    </div>
+
+    <div class="pw-attn">
+      <svg class="ic" width="18" height="18"><use href="#i-alert"/></svg>
+      <span><strong>Permit P&#8209;22841 has been in plan review for 14 days.</strong> A correction came
+      back today: U&#8209;factor documentation missing from the submittal. Priya Raman owns the next move.</span>
+      <a href="#" onclick="return false">Open the permit</a>
+    </div>
+
+    <div class="pw-pair wide-l">
+      <div class="pw-card"><div class="pw-cardstack">
+        <div class="pw-cardhead"><h5>Where this job is</h5><span class="t-l4 muted">Stage 5 of 10</span></div>
+        <div class="pw-rail">
+          <div class="pw-railboard">Leads and sales<span class="n">3 stages, cleared</span></div>
+          <div class="pw-stg" data-state="done"><span class="pw-stgdot"></span><span class="pw-stgname">New lead</span><span class="pw-stgmeta">21 Jul</span></div>
+          <div class="pw-stg" data-state="done"><span class="pw-stgdot"></span><span class="pw-stgname">Working</span><span class="pw-stgmeta">22 Jul</span></div>
+          <div class="pw-stg" data-state="done"><span class="pw-stgdot"></span><span class="pw-stgname">Sold</span><span class="pw-stgmeta">18 Aug</span></div>
+          <div class="pw-railboard">Production<span class="n">4 stages</span></div>
+          <div class="pw-stg" data-state="done"><span class="pw-stgdot"></span><span class="pw-stgname">Ops intake</span><span class="pw-stgmeta">25 Aug</span></div>
+          <div class="pw-stg" data-state="now"><span class="pw-stgdot"></span><span class="pw-stgname">Orders and scheduling</span><span class="pw-stgmeta">since 26 Aug</span></div>
+          <div class="pw-stg"><span class="pw-stgdot"></span><span class="pw-stgname">Final checks</span><span class="pw-stgmeta">4 tasks</span></div>
+          <div class="pw-stg"><span class="pw-stgdot"></span><span class="pw-stgname">Installing</span><span class="pw-stgmeta">8 tasks</span></div>
+          <div class="pw-railboard">Closeout and payment<span class="n">3 stages</span></div>
+          <div class="pw-stg"><span class="pw-stgdot"></span><span class="pw-stgname">Closeout</span><span class="pw-stgmeta">6 tasks</span></div>
+          <div class="pw-stg"><span class="pw-stgdot"></span><span class="pw-stgname">Invoiced</span><span class="pw-stgmeta">2 tasks</span></div>
+          <div class="pw-stg"><span class="pw-stgdot"></span><span class="pw-stgname">Closed</span><span class="pw-stgmeta">2 tasks</span></div>
+        </div>
+        <div class="pw-vall"><span>Next gate: Final checks needs the permit approved</span><a href="#" onclick="return false" class="pw-link">All five gates</a></div>
+      </div></div>
+
+      <div class="pw-card"><div class="pw-cardstack">
+        <div class="pw-cardhead"><h5>Job overview</h5><span class="t-l4 muted">Replacement, 14 units</span></div>
+        <div class="pw-shots">
+          <div class="pw-shot"><div class="pw-plate"><svg class="ic" width="20" height="20"><use href="#i-image"/></svg></div><span class="cap2">South elevation as found</span></div>
+          <div class="pw-shot"><div class="pw-plate"><svg class="ic" width="20" height="20"><use href="#i-image"/></svg></div><span class="cap2">Unit schedule, 20 Aug</span></div>
+        </div>
+        <div class="pw-syn">
+          <div class="pw-synr"><span class="k">Work</span><span class="v">Full replacement, 14 openings</span></div>
+          <div class="pw-synr"><span class="k">Existing</span><span class="v">Original single pane, 1978</span></div>
+          <div class="pw-synr"><span class="k">Units</span><span class="v">Double glazed vinyl, U&#8209;factor 0.28</span></div>
+          <div class="pw-synr"><span class="k">Complexity</span><span class="v">Two openings out of square</span></div>
+          <div class="pw-synr"><span class="k">Access</span><span class="v">Two storey, ladder work on the south</span></div>
+          <div class="pw-synr"><span class="k">Permit</span><span class="v">Required, egress and energy code</span></div>
+        </div>
+      </div></div>
+    </div>
+
+    <div class="pw-group">
+      <div class="pw-grouphead"><h2>Orders and scheduling</h2><span class="t-l4 muted">Since 26 Aug &middot; install crew &middot; 2 of 8 tasks</span></div>
+      <div class="pw-cds">
+        <div class="pw-card"><div class="pw-cardstack">
+          <div class="pw-cardhead"><h5>Recently completed</h5></div>
+          <div>
+            <div class="pw-dn"><span>Permit application submitted<span class="who">Priya Raman</span></span><span class="dd">26 Aug</span></div>
+            <div class="pw-dn"><span>Window units ordered<span class="who">Marcus Ellery</span></span><span class="dd">26 Aug</span></div>
+            <div class="pw-dn"><span>Scope verified against contract<span class="who">Marcus Ellery</span></span><span class="dd">25 Aug</span></div>
+            <div class="pw-dn"><span>Ops intake cleared<span class="who">Marcus Ellery</span></span><span class="dd">25 Aug</span></div>
+          </div>
+        </div></div>
+
+        <div class="pw-card"><div class="pw-cardstack">
+          <div class="pw-cardhead"><h5>To finish this stage</h5><span class="t-l4 muted">2 of 8</span></div>
+          <div>
+            <div class="pw-tk" data-state="blocked"><span class="pw-tkbx"><svg class="ic" width="11" height="11"><use href="#i-alert"/></svg></span><span>Permit approved<span class="pw-tksub">Correction requested 10 Sep</span></span></div>
+            <div class="pw-tk"><span class="pw-tkbx"></span><span>Delivery date confirmed<span class="pw-tksub">Supplier says 23 Sep</span></span></div>
+            <div class="pw-tk"><span class="pw-tkbx"></span><span>Crew assigned</span></div>
+            <div class="pw-tk"><span class="pw-tkbx"></span><span>Date committed with the customer</span></div>
+            <div class="pw-tk"><span class="pw-tkbx"></span><span>Customer notified</span></div>
+            <div class="pw-tk" data-state="na"><span class="pw-tkbx"></span><span>HOA submitted<span class="pw-tksub">Windows are not colour controlled here</span></span></div>
+          </div>
+        </div></div>
+
+        <div class="pw-card"><div class="pw-cardstack">
+          <div class="pw-cardhead"><h5>Permit P&#8209;22841</h5><span class="t-l4 muted">City of Sacramento</span></div>
+          <div class="pw-syn one">
+            <div class="pw-synr"><span class="k">Applied</span><span class="v">26 Aug</span></div>
+            <div class="pw-synr"><span class="k">Status</span><span class="v">Correction requested, 10 Sep</span></div>
+            <div class="pw-synr"><span class="k">What is missing</span><span class="v">NFRC U&#8209;factor documentation for the specified units</span></div>
+            <div class="pw-synr"><span class="k">Next move</span><span class="v">Resubmit with the manufacturer sheet</span></div>
+            <div class="pw-synr"><span class="k">Blocks</span><span class="v">Final checks, and the final bill</span></div>
+          </div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="pw-pair">
+      <div class="pw-card"><div class="pw-cardstack">
+        <div class="pw-cardhead"><h5>Waiting on</h5><span class="t-l4 muted">4 external processes</span></div>
+        <div>
+          <div class="pw-ss" data-reg="working"><span class="k">Permit</span><span class="v">Correction requested</span></div>
+          <div class="pw-ss" data-reg="working"><span class="k">Window units</span><span class="v">Ordered, due 23 Sep</span></div>
+          <div class="pw-ss" data-reg="done"><span class="k">Financing</span><span class="v">Notice to proceed</span></div>
+          <div class="pw-ss" data-reg="na"><span class="k">HOA</span><span class="v">Not applicable</span></div>
+        </div>
+      </div></div>
+
+      <div class="pw-card"><div class="pw-cardstack">
+        <div class="pw-cardhead"><h5>Materials and crew</h5><span class="t-l4 muted">On this job only</span></div>
+        <div class="pw-crowlist">
+          <div class="pw-lrow">
+            <span class="pw-lname">MO&#8209;7801&nbsp; Window units<span class="pw-lsub">Valley Glass Supply &middot; PO&#8209;9942 &middot; four week lead time</span></span>
+            <span class="pw-r"><span class="pw-lval">$11,760</span><span class="pw-lst">Due 23 Sep</span></span>
+          </div>
+          <div class="pw-lrow">
+            <span class="pw-lname">Install crew<span class="pw-lsub">Three, plus a trim carpenter for the two out of square openings</span></span>
+            <span class="pw-r"><span class="pw-lval">3 days</span><span class="pw-lst">Not yet booked</span></span>
+          </div>
+          <div class="pw-lrow">
+            <span class="pw-lname">Costs to date<span class="pw-lsub">Permit fee and the out of square survey</span></span>
+            <span class="pw-r"><span class="pw-lval">$1,120</span><span class="pw-lst">Against $18,600</span></span>
+          </div>
+        </div>
+      </div></div>
+    </div>
+
+    <div class="pw-section">
+      <div class="pw-sectionhead"><h2>Everything else</h2></div>
+      <div class="pw-phlist">
+        <div class="pw-ph"><span>Photos and documents on this job</span><span class="t">not drawn</span></div>
+        <div class="pw-ph"><span>Notes and history on this job</span><span class="t">not drawn</span></div>
+        <div class="pw-ph"><span>Inspections and warranty registration</span><span class="t">not drawn</span></div>
+      </div>
+    </div>
+
+  </div>
+</div></div>
+
+  <div class="sug">
+    <h3>Taken out, and things needing a home</h3>
+    <p class="sh">This is the one page where the rail belongs, because these are the contractor's own stages rather than the model's states.</p>
+    <div class="suglist">
+      <div class="sugi"><span class="k" data-t="out">Taken out</span><p><strong>The stage pill in the header.</strong> Blocked is now the first word of the meta line, in ink. The rail says which stage, and the amber strip says why nothing is moving.</p></div>
+      <div class="sugi"><span class="k" data-t="out">Taken out</span><p><strong>The collapsed gate notice.</strong> It was a second warning box under the rail, competing with the one at the top. Now a single line in the card footer, and the gate list is a click away.</p></div>
+      <div class="sugi"><span class="k" data-t="out">Taken out</span><p><strong>Five sub&#8209;status registers reduced to four.</strong> Insurance was never applicable on a retail job, and a permanently not applicable row is furniture.</p></div>
+      <div class="sugi"><span class="k" data-t="out">Suggested copy</span><p>On the blocked task, on hover: <em>this task cannot be completed by anyone here. The city holds it.</em> The distinction between late and blocked is the one thing a crew lead needs and cannot infer.</p></div>
+      <div class="sugi"><span class="k" data-t="home">Needs a home</span><p><strong>Days blocked, as a number the job owns.</strong> Fourteen days is computed from the permit's application date and appears in the strip. Nothing in the job's own record carries it, so a list of jobs cannot sort by it.</p></div>
+      <div class="sugi"><span class="k" data-t="home">Needs a home</span><p><strong>The sibling.</strong> Siding is running, on the same contract and the same loan, and this page never mentions it. Scope 2 of 2 in the meta line is the only hint that a sibling exists.</p></div>
+      <div class="sugi"><span class="k" data-t="home">Question</span><p><strong>A permit card at stage level.</strong> Drawn as the third card in the current stage because that is the stage it blocks. When the permit is approved the card has nothing to say and the row of three becomes a row of two.</p></div>
+      <div class="sugi"><span class="k" data-t="home">Question</span><p><strong>One permit covering two jobs.</strong> Not the case here. If it were, this card would have to appear on both jobs and the evidence would have to be shared, which nothing in the model handles.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================ E ============================ -->
+<div class="sec">
+  <div class="sec-head"><div class="badge-l">E</div><h2 class="sec-title">Service plan</h2><span class="sec-when">Heat pump maintenance, Thompson</span></div>
+  <p class="cap">Recurring work, a subscription, and jobs that exist because a cadence says so</p>
+
+<div class="frame"><div class="pw-page">
+  <div class="pw-crumbs"><a href="#" onclick="return false">Thompson, R. &amp; S.</a><span class="s">/</span><a href="#" onclick="return false">Service plans</a><span class="s">/</span><span>Heat pump maintenance</span></div>
+  <div class="pw-stack">
+
+    <div class="pw-titlerow">
+      <div style="min-width:0">
+        <h1 class="t-h1">Heat pump maintenance</h1>
+        <p class="pw-meta"><span class="now">Active, year 1</span><span class="s">·</span>1428 Maple Ave<span class="s">·</span>sold 24 Sep 2025 at HVAC closeout<span class="s">·</span>2 visits a year</p>
+      </div>
+      <div class="pw-actions">
+        <button class="pw-btn">Add note</button>
+        <button class="pw-btn">Book a visit</button>
+        <span class="pw-kebab">&#8943;</span>
+      </div>
+    </div>
+
+    <div class="pw-attn">
+      <svg class="ic" width="18" height="18"><use href="#i-clock"/></svg>
+      <span><strong>Renews on 24 September at $34 a month, up from $29.</strong> The 6 October visit is
+      already booked into a term the customer has not renewed yet.</span>
+      <a href="#" onclick="return false">Review renewal</a>
+    </div>
+
+    <div class="pw-pair wide-l">
+      <div class="pw-card"><div class="pw-cardstack">
+        <div class="pw-cardhead"><h5>Plan overview</h5><span class="t-l4 muted">Held against the customer and the property</span></div>
+        <div class="pw-syn">
+          <div class="pw-synr"><span class="k">Visits</span><span class="v">Two a year, spring and autumn</span></div>
+          <div class="pw-synr"><span class="k">Booking window</span><span class="v">Four weeks either side of the target month</span></div>
+          <div class="pw-synr"><span class="k">Entitlement, year 1</span><span class="v">2 of 2 used</span></div>
+          <div class="pw-synr"><span class="k">Term</span><span class="v">24 Sep 2025 to 23 Sep 2026</span></div>
+          <div class="pw-synr"><span class="k">Renewal</span><span class="v">Automatic unless cancelled 30 days out</span></div>
+          <div class="pw-synr"><span class="k">Covers</span><span class="v">One unit, the 2025 heat pump</span></div>
+          <div class="pw-synr"><span class="k">Includes</span><span class="v">Filters, coil clean, refrigerant check, priority booking</span></div>
+          <div class="pw-synr"><span class="k">Excludes</span><span class="v">Parts and repair labour, quoted per visit</span></div>
+        </div>
+      </div></div>
+
+      <div class="pw-card"><div class="pw-cardstack">
+        <div class="pw-cardhead"><h5>Billing</h5><span class="t-l4 muted">Monthly, on the card on file</span></div>
+        <div class="pw-cardrows">
+          <div class="pw-crow"><span class="cl">Monthly charge</span><span class="cv">$29.00</span></div>
+          <div class="pw-crow"><span class="cl">Charged, year 1</span><span class="cv">12 of 12</span></div>
+          <div class="pw-crow"><span class="cl">Collected, year 1</span><span class="cv">$348.00</span></div>
+          <div class="pw-crow"><span class="cl">Card on file</span><span class="cv">Visa ending 6411</span></div>
+          <div class="pw-crule"></div>
+          <div class="pw-crow tot"><span class="cl">Next charge, 24 Sep</span><span class="cv">$34.00</span></div>
+        </div>
+        <div class="pw-vall"><span>12 invoices, 12 payments, no failures</span><a href="#" onclick="return false" class="pw-link">View billing</a></div>
+      </div></div>
+    </div>
+
+    <div class="pw-group">
+      <div class="pw-grouphead"><h2>Visits</h2><span class="t-l4 muted">One job per visit</span></div>
+      <div class="pw-pair wide-l">
+        <div class="pw-card"><div class="pw-cardstack">
+          <div class="pw-cardhead">
+            <h5>Visit history and schedule</h5>
+            <div class="pw-seg">
+              <button class="pw-segi" data-on="true">All 4</button>
+              <button class="pw-segi">Done 2</button>
+              <button class="pw-segi">Ahead 2</button>
+            </div>
+          </div>
+          <div>
+            <div class="pw-visit" data-s="past">
+              <span class="mk"></span>
+              <span><span class="vn">JOB&#8209;2790&nbsp; Autumn tune up</span><span class="vs">14 Oct 2025 &middot; Tomas Vega &middot; filters and coil, no findings</span></span>
+              <span class="pw-r"><span class="pw-lval">Complete</span><span class="pw-lst">Entitlement 1 of 2</span></span>
+            </div>
+            <div class="pw-visit" data-s="past">
+              <span class="mk"></span>
+              <span><span class="vn">JOB&#8209;2904&nbsp; Spring tune up</span><span class="vs">18 Mar 2026 &middot; Tomas Vega &middot; refrigerant topped up, condenser fan noted</span></span>
+              <span class="pw-r"><span class="pw-lval">Complete</span><span class="pw-lst">Entitlement 2 of 2</span></span>
+            </div>
+            <div class="pw-visit" data-s="now">
+              <span class="mk"></span>
+              <span><span class="vn">JOB&#8209;3140&nbsp; Autumn tune up</span><span class="vs">6 Oct 2026 &middot; Tomas Vega &middot; 0 of 4 steps</span></span>
+              <span class="pw-r"><span class="pw-lval">Scheduled</span><span class="pw-lst">First of year 2</span></span>
+            </div>
+            <div class="pw-visit" data-s="next">
+              <span class="mk"></span>
+              <span><span class="vn">JOB&#8209;3141&nbsp; Spring tune up</span><span class="vs">Due Mar 2027 &middot; unassigned &middot; not yet scheduled</span></span>
+              <span class="pw-r"><span class="pw-lval">Upcoming</span><span class="pw-lst">From the cadence</span></span>
+            </div>
+          </div>
+        </div></div>
+
+        <div class="pw-card"><div class="pw-cardstack">
+          <div class="pw-cardhead"><h5>Covered equipment</h5><span class="t-l4 muted">1 unit</span></div>
+          <div class="pw-crowlist">
+            <div class="pw-lrow">
+              <span class="pw-lname">Heat pump, Carrier 25HCB6<span class="pw-lsub">Installed 24 Sep 2025 under the HVAC project &middot; registered to the property</span></span>
+              <span class="pw-r"><span class="pw-lval">10 yr parts</span><span class="pw-lst">Warranty to Sep 2035</span></span>
+            </div>
+            <div class="pw-lrow">
+              <span class="pw-lname">Condenser fan motor<span class="pw-lsub">Noted as noisy at the March visit &middot; not a warranty claim yet</span></span>
+              <span class="pw-r"><span class="pw-lval">Watch</span><span class="pw-lst">Flagged 18 Mar</span></span>
+            </div>
+          </div>
+          <div class="pw-vall"><span>A repair found on a visit is quoted separately</span><a href="#" onclick="return false" class="pw-link">Raise a lead</a></div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="pw-section">
+      <div class="pw-sectionhead"><h2>Everything else</h2></div>
+      <div class="pw-phlist">
+        <div class="pw-ph"><span>Notes, visit reports and photos</span><span class="t">not drawn</span></div>
+        <div class="pw-ph"><span>Plan terms document and the signed agreement</span><span class="t">not drawn</span></div>
+      </div>
+    </div>
+
+  </div>
+</div></div>
+
+  <div class="sug">
+    <h3>Taken out, and things needing a home</h3>
+    <p class="sh">The most speculative of the five. Almost nothing about services is settled in the model.</p>
+    <div class="suglist">
+      <div class="sugi"><span class="k" data-t="out">Taken out</span><p><strong>A closing balance row.</strong> A plan never closes out, so the billing card has no balance due and no total. The absence is the design, and it is the clearest way the page differs from a project.</p></div>
+      <div class="sugi"><span class="k" data-t="out">Taken out</span><p><strong>Status pills on visits.</strong> Complete, Scheduled and Upcoming are now the right hand column. The dots on the left carry past, present and future without repeating it in colour.</p></div>
+      <div class="sugi"><span class="k" data-t="out">Suggested copy</span><p>Under the visits card: <em>the March 2027 visit exists because the cadence says so, not because anyone booked it.</em> Worth saying once, because no other job in the product behaves this way.</p></div>
+      <div class="sugi"><span class="k" data-t="out">Suggested copy</span><p>Under the entitlement row: <em>a missed visit and a skipped visit are different. Only one of them uses up an entitlement.</em> That distinction is not visible anywhere on this page because neither has happened.</p></div>
+      <div class="sugi"><span class="k" data-t="home">Needs a home</span><p><strong>What the monthly invoice belongs to.</strong> Money in the model hangs off a job or a project, and a subscription charge belongs to neither. This page shows the charges without saying what their parent is, because there is no answer yet.</p></div>
+      <div class="sugi"><span class="k" data-t="home">Needs a home</span><p><strong>Where the visits live.</strong> Drawn as jobs directly under the plan. The alternative is a project per visit cycle, which is what the scenario set implies and would put a container between this page and every job on it.</p></div>
+      <div class="sugi"><span class="k" data-t="home">Question</span><p><strong>The condenser fan.</strong> A repair found on a maintenance visit is new demand. Shown here as a watch row with a raise a lead action, which turns a service page into a selling surface.</p></div>
+      <div class="sugi"><span class="k" data-t="home">Question</span><p><strong>Transfer on a house sale.</strong> The plan is written against the customer and the property, and those come apart when the Thompsons move. Nothing on this page or in the model handles it.</p></div>
+    </div>
+  </div>
+</div>
+
+</div>
+</body>
+</html>

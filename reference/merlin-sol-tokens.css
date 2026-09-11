@@ -1,0 +1,915 @@
+/* Merlin / Sol design tokens and Pros Web page utilities.
+   Lifted from Andrew's standalone Pros Web recreations (Customer record, Job),
+   which extracted them verbatim from Merlin's compiled production stylesheet
+   on 24 Aug 2026. Saved here so memo mockups can use the real design language
+   rather than an invented one. Regenerate from the build, do not hand edit. */
+
+/* Merlin / Sol design tokens
+ * Extracted verbatim from Merlin's compiled production stylesheet.
+ * Source: https://app.merlin-v12.com/assets/index-BRLkVD4Y.css
+ * Merlin commit at extraction: cb9b1aa5afbddf49df3f1c5c80b3075bba54f558
+ * Extracted: 2026-08-24
+ *
+ * 113 semantic tokens, light and dark. Values are literal; no token
+ * references another. DO NOT EDIT BY HAND - regenerate from the compiled build.
+ */
+
+/* Self-hosted. Inter and Fira Code are variable fonts; the wght axis spans
+ * 100-900 and 300-700 respectively, so every weight production requests
+ * (200,300,400,500,600,700,800) is a real instance, not synthesised. */
+
+/* ---------- Light (default) ---------- */
+:root {
+  /* actions */
+  --sol-actions-button: #161051;
+  --sol-actions-button-hover: #050529;
+  --sol-actions-button-pressed: #010104;
+  --sol-actions-button-secondary: #4b4b58;
+  --sol-actions-button-secondary-hover: #393947;
+  --sol-actions-button-secondary-pressed: #21212c;
+  --sol-actions-destructive: #8f0007;
+  --sol-actions-destructive-hover: #770d13;
+  --sol-actions-destructive-pressed: #480508;
+  --sol-actions-disabled: #66667a;
+  --sol-actions-interaction: #382ca5;
+  --sol-actions-link: #382ca5;
+  --sol-actions-link-hover: #382ca5;
+  --sol-actions-link-pressed: #161051;
+
+  /* backgrounds */
+  --sol-backgrounds-accent-blue: #f1f7fe;
+  --sol-backgrounds-accent-green: #f0fff5;
+  --sol-backgrounds-accent-pink: #fef0ff;
+  --sol-backgrounds-accent-purple: #e2e1fe;
+  --sol-backgrounds-accent-red: #fff0f0;
+  --sol-backgrounds-accent-teal: azure;
+  --sol-backgrounds-accent-yellow: #fffaf0;
+  --sol-backgrounds-interactive-hover: #e3e3ed;
+  --sol-backgrounds-interactive-pressed: #c8c8d5;
+  --sol-backgrounds-overlay-dark: #000000b3;
+  --sol-backgrounds-overlay-light: #0000004d;
+  --sol-backgrounds-overlay-medium: #00000080;
+  --sol-backgrounds-system-error: #fff0f0;
+  --sol-backgrounds-system-error-solid: #8f0007;
+  --sol-backgrounds-system-info: #f1f7fe;
+  --sol-backgrounds-system-info-solid: #144eb8;
+  --sol-backgrounds-system-success: #f0fff5;
+  --sol-backgrounds-system-success-solid: #0d7731;
+  --sol-backgrounds-system-warning: #fffaf0;
+  --sol-backgrounds-system-warning-solid: #8f5f00;
+  --sol-backgrounds-ui-high: #fff;
+  --sol-backgrounds-ui-low: #e3e3ed;
+  --sol-backgrounds-ui-medium: #f5f5f9;
+
+  /* borders */
+  --sol-borders-accent-blue: #3d78e6;
+  --sol-borders-accent-green: #26df63;
+  --sol-borders-accent-pink: #a915b7;
+  --sol-borders-accent-purple: #6d62d5;
+  --sol-borders-accent-red: #e44e55;
+  --sol-borders-accent-teal: #008f8f;
+  --sol-borders-accent-yellow: #f5b638;
+  --sol-borders-input: #c8c8d5;
+  --sol-borders-system-error: #b8141d;
+  --sol-borders-system-info: #144eb8;
+  --sol-borders-system-success: #008f30;
+  --sol-borders-system-warning: #b88723;
+  --sol-borders-ui-default: #c8c8d5;
+  --sol-borders-ui-strong: #a7a7b9;
+  --sol-borders-ui-subtle: #e3e3ed;
+
+  /* chart */
+  --sol-chart-blue-dark: #091834;
+  --sol-chart-blue-light: #144eb8;
+  --sol-chart-blue-medium: #13284e;
+  --sol-chart-green-dark: #043e17;
+  --sol-chart-green-light: #15b74b;
+  --sol-chart-green-medium: #0d7731;
+  --sol-chart-pink-dark: #37073c;
+  --sol-chart-pink-light: #a915b7;
+  --sol-chart-pink-medium: #6e0d77;
+  --sol-chart-purple-dark: #050529;
+  --sol-chart-purple-light: #6d62d5;
+  --sol-chart-purple-medium: #382ca5;
+  --sol-chart-red-dark: #480508;
+  --sol-chart-red-light: #b8141d;
+  --sol-chart-red-medium: #770d13;
+  --sol-chart-teal-dark: #074040;
+  --sol-chart-teal-light: #15b2b2;
+  --sol-chart-teal-medium: #0d7777;
+  --sol-chart-yellow-dark: #573d0a;
+  --sol-chart-yellow-light: #b88723;
+  --sol-chart-yellow-medium: #77540d;
+
+  /* elevation */
+  --sol-elevation-lg: 0px 2px 12px 0px #0000001a;
+  --sol-elevation-md: 0px 1px 12px 0px #0000000f;
+  --sol-elevation-sm: 0px 0px 12px 0px #0000000f;
+  --sol-elevation-xs: 0px 1px 8px 0px #00000014;
+
+  /* icons */
+  --sol-icons-accent-blue: #00328f;
+  --sol-icons-accent-green: #008f30;
+  --sol-icons-accent-pink: #a915b7;
+  --sol-icons-accent-purple: #382ca5;
+  --sol-icons-accent-red: #8f0007;
+  --sol-icons-accent-teal: #008f8f;
+  --sol-icons-accent-yellow: #8f5f00;
+  --sol-icons-action-primary: #fff;
+  --sol-icons-action-tertiary: #382ca5;
+  --sol-icons-system-error: #8f0007;
+  --sol-icons-system-info: #144eb8;
+  --sol-icons-system-success: #008f30;
+  --sol-icons-system-warning: #b88723;
+  --sol-icons-ui-inverse: #fff;
+  --sol-icons-ui-primary: #14141a;
+  --sol-icons-ui-secondary: #4b4b58;
+
+  /* states */
+  --sol-states-background-destructive-hover: #770d13;
+  --sol-states-background-destructive-pressed: #480508;
+  --sol-states-background-hover: #f5f5f9;
+  --sol-states-background-link-hover: #382ca5;
+  --sol-states-background-link-pressed: #161051;
+  --sol-states-background-pressed: #e3e3ed;
+  --sol-states-disabled: #66667a;
+  --sol-states-focus: #144eb8;
+  --sol-states-interaction-hover: #161051;
+  --sol-states-selection: #e2e1fe;
+
+  /* text */
+  --sol-text-destructive: #8f0007;
+  --sol-text-disabled: #a7a7b9;
+  --sol-text-error: #8f0007;
+  --sol-text-info: #144eb8;
+  --sol-text-inverse: #fff;
+  --sol-text-placeholder: #a7a7b9;
+  --sol-text-primary: #14141a;
+  --sol-text-secondary: #4b4b58;
+  --sol-text-success: #008f30;
+  --sol-text-warning: #8f5f00;
+}
+
+/* ---------- Dark ---------- */
+.dark {
+  /* actions */
+  --sol-actions-button: #e2e1fe;
+  --sol-actions-button-hover: #9792f2;
+  --sol-actions-button-pressed: #6d62d5;
+  --sol-actions-button-secondary: #a7a7b9;
+  --sol-actions-button-secondary-hover: #66667a;
+  --sol-actions-button-secondary-pressed: #4b4b58;
+  --sol-actions-destructive: #f99499;
+  --sol-actions-destructive-hover: #b8141d;
+  --sol-actions-destructive-pressed: #8f0007;
+  --sol-actions-disabled: #a7a7b9;
+  --sol-actions-interaction: #9792f2;
+  --sol-actions-link: #9792f2;
+  --sol-actions-link-hover: #050529;
+  --sol-actions-link-pressed: #010104;
+
+  /* backgrounds */
+  --sol-backgrounds-accent-blue: #091834;
+  --sol-backgrounds-accent-green: #043e17;
+  --sol-backgrounds-accent-pink: #37073c;
+  --sol-backgrounds-accent-purple: #130c40;
+  --sol-backgrounds-accent-red: #480508;
+  --sol-backgrounds-accent-teal: #074040;
+  --sol-backgrounds-accent-yellow: #573d0a;
+  --sol-backgrounds-interactive-hover: #050529;
+  --sol-backgrounds-interactive-pressed: #010104;
+  --sol-backgrounds-overlay-dark: #000c;
+  --sol-backgrounds-overlay-light: #0006;
+  --sol-backgrounds-overlay-medium: #0009;
+  --sol-backgrounds-system-error: #480508;
+  --sol-backgrounds-system-error-solid: #5f1115;
+  --sol-backgrounds-system-info: #091834;
+  --sol-backgrounds-system-info-solid: #0d1f3f;
+  --sol-backgrounds-system-success: #043e17;
+  --sol-backgrounds-system-success-solid: #115f2b;
+  --sol-backgrounds-system-warning: #573d0a;
+  --sol-backgrounds-system-warning-solid: #5f4511;
+  --sol-backgrounds-ui-high: #21212c;
+  --sol-backgrounds-ui-low: #09090b;
+  --sol-backgrounds-ui-medium: #14141a;
+
+  /* borders */
+  --sol-borders-accent-blue: #00328f;
+  --sol-borders-accent-green: #008f30;
+  --sol-borders-accent-pink: #ef97f7;
+  --sol-borders-accent-purple: #9792f2;
+  --sol-borders-accent-red: #8f0007;
+  --sol-borders-accent-teal: #2dd7d7;
+  --sol-borders-accent-yellow: #8f5f00;
+  --sol-borders-input: #393947;
+  --sol-borders-system-error: #e44e55;
+  --sol-borders-system-info: #3d78e6;
+  --sol-borders-system-success: #26df63;
+  --sol-borders-system-warning: #f5b638;
+  --sol-borders-ui-default: #393947;
+  --sol-borders-ui-strong: #a7a7b9;
+  --sol-borders-ui-subtle: #4b4b58;
+
+  /* chart */
+  --sol-chart-blue-dark: #144eb8;
+  --sol-chart-blue-light: #9bbcf8;
+  --sol-chart-blue-medium: #3d78e6;
+  --sol-chart-green-dark: #0d7731;
+  --sol-chart-green-light: #97f7b7;
+  --sol-chart-green-medium: #15b74b;
+  --sol-chart-pink-dark: #83008f;
+  --sol-chart-pink-light: #ef97f7;
+  --sol-chart-pink-medium: #cb47d7;
+  --sol-chart-purple-dark: #382ca5;
+  --sol-chart-purple-light: #b5b4f9;
+  --sol-chart-purple-medium: #6d62d5;
+  --sol-chart-red-dark: #b8141d;
+  --sol-chart-red-light: #ffcccf;
+  --sol-chart-red-medium: #f99499;
+  --sol-chart-teal-dark: #0d7777;
+  --sol-chart-teal-light: #94f9f9;
+  --sol-chart-teal-medium: #15b2b2;
+  --sol-chart-yellow-dark: #8f5f00;
+  --sol-chart-yellow-light: #feeecd;
+  --sol-chart-yellow-medium: #f5b638;
+
+  /* elevation */
+  --sol-elevation-lg: 0px 2px 12px 0px #000000db;
+  --sol-elevation-md: 0px 1px 12px 0px #000000db;
+  --sol-elevation-sm: 0px 0px 12px 0px #000000db;
+  --sol-elevation-xs: 0px 1px 8px 0px #000000db;
+
+  /* icons */
+  --sol-icons-accent-blue: #3d78e6;
+  --sol-icons-accent-green: #26df63;
+  --sol-icons-accent-pink: #ef97f7;
+  --sol-icons-accent-purple: #9792f2;
+  --sol-icons-accent-red: #e44e55;
+  --sol-icons-accent-teal: #2dd7d7;
+  --sol-icons-accent-yellow: #f5b638;
+  --sol-icons-action-primary: #14141a;
+  --sol-icons-action-tertiary: #9792f2;
+  --sol-icons-system-error: #e44e55;
+  --sol-icons-system-info: #3d78e6;
+  --sol-icons-system-success: #26df63;
+  --sol-icons-system-warning: #f5b638;
+  --sol-icons-ui-inverse: #14141a;
+  --sol-icons-ui-primary: #fff;
+  --sol-icons-ui-secondary: #e3e3ed;
+
+  /* states */
+  --sol-states-background-destructive-hover: #e44e55;
+  --sol-states-background-destructive-pressed: #b8141d;
+  --sol-states-background-hover: #050529;
+  --sol-states-background-link-hover: #6d62d5;
+  --sol-states-background-link-pressed: #382ca5;
+  --sol-states-background-pressed: #010104;
+  --sol-states-disabled: #4b4b58;
+  --sol-states-focus: #3d78e6;
+  --sol-states-interaction-hover: #6d62d5;
+  --sol-states-selection: #130c40;
+
+  /* text */
+  --sol-text-destructive: #e44e55;
+  --sol-text-disabled: #a7a7b9;
+  --sol-text-error: #f99499;
+  --sol-text-info: #9bbcf8;
+  --sol-text-inverse: #14141a;
+  --sol-text-placeholder: #a7a7b9;
+  --sol-text-primary: #fff;
+  --sol-text-secondary: #e3e3ed;
+  --sol-text-success: #97f7b7;
+  --sol-text-warning: #f9d894;
+}
+
+
+/* ===== Pros Web page utilities and pw-* classes ===== */
+
+/* Sol-grounded utilities for Pros Web page recreations.
+   Type scale values from merlin frontend/src/index.css + typography.tsx.
+   Colors are always var(--sol-*) from the design system stylesheet. */
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font-family:Inter,sans-serif;color:var(--pw-ink);background:var(--sol-backgrounds-ui-medium);-webkit-font-smoothing:antialiased}
+:root{--pw-ink:#2c1b3c;--pw-shadow-xl:0 20px 25px -5px rgb(0 0 0/.1),0 8px 10px -6px rgb(0 0 0/.1);--pw-shadow-menu:0 0 4px -2px rgba(22,0,98,.9),0 4px 4px -2px rgba(64,28,142,.03);--pw-shadow-xs:0 1px 2px 0 rgb(0 0 0/.05);--pw-shadow-sm:0 1px 3px 0 rgb(0 0 0/.1),0 1px 2px -1px rgb(0 0 0/.1)}
+a{color:var(--sol-actions-link);text-decoration:none}
+a:hover{color:var(--sol-states-interaction-hover);text-decoration:underline}
+button{font-family:inherit}
+
+/* type — d/h/l/p variants */
+.t-h1{font:700 28px/42px Inter;margin:0;letter-spacing:normal}
+.t-h3{font:700 24px/36px Inter;margin:0}
+.t-h4{font:700 20px/30px Inter;margin:0}
+.t-h5{font:700 18px/24px Inter;margin:0}
+.t-h6{font:700 16px/24px Inter;margin:0}
+.t-l2{font:500 14px/20px Inter}.t-l3{font:500 14px/20px Inter}.t-l4{font:500 12px/18px Inter}
+.t-p1{font:400 16px/24px Inter}.t-p2{font:400 14px/20px Inter}.t-p3{font:400 14px/20px Inter}.t-p4{font:400 12px/18px Inter}
+@media(min-width:650px){
+  .t-h1{font:700 48px/60px Inter}.t-h3{font:700 28px/40px Inter}.t-h4{font:700 24px/36px Inter}.t-h5{font:700 20px/28px Inter}.t-h6{font:700 18px/24px Inter}
+  .t-l2{font:500 16px/24px Inter}.t-p1{font:400 18px/28px Inter}.t-p2{font:400 16px/24px Inter}
+}
+.muted{color:var(--sol-text-secondary)}
+.tabular{font-variant-numeric:tabular-nums}
+
+/* app shell */
+.pw-root{display:flex;height:100vh;overflow:hidden;background:var(--sol-backgrounds-ui-medium)}
+.pw-sidebar{position:relative;flex:0 0 auto;width:256px;display:flex;flex-direction:column;background:var(--sol-backgrounds-ui-medium);transition:width .3s ease-in-out}
+.pw-sidebar[data-collapsed=true]{width:92px}
+.pw-sb-head{padding:36px 24px 0;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.pw-logo{height:32px;overflow:hidden;transition:width .3s ease-in-out,opacity .3s ease-in-out}
+.pw-logo img{height:32px;width:152px;min-width:152px;display:block}
+.pw-iconbtn{display:flex;align-items:center;border:0;background:none;border-radius:8px;padding:8px;color:var(--sol-text-secondary);cursor:pointer}
+.pw-iconbtn:hover{background:var(--sol-borders-ui-subtle);color:var(--pw-ink)}
+.pw-sb-body{margin-top:24px;padding:8px 24px;flex:1;min-height:0;overflow-y:auto}
+.pw-sb-menu{display:flex;flex-direction:column;gap:4px;list-style:none;margin:0;padding:0}
+.pw-sb-foot{padding:12px 24px 24px}
+.pw-navrow{display:flex;align-items:center;gap:8px;width:100%;height:44px;min-width:44px;padding:8px;border:0;border-radius:8px;background:transparent;color:var(--sol-text-secondary);font:500 14px/20px Inter;cursor:pointer;overflow:hidden;transition:background-color .3s ease-in-out,box-shadow .3s ease-in-out,color .3s ease-in-out}
+.pw-navrow:hover{background:var(--sol-states-background-pressed)}
+.pw-navrow:active{transform:scale(.95)}
+.pw-navrow[data-active=true]{background:var(--sol-backgrounds-ui-high);color:var(--sol-text-primary);font-weight:400;box-shadow:var(--pw-shadow-xs)}
+.pw-navicon{margin-left:5px;flex:0 0 18px;width:18px;height:18px}
+.pw-navlabel{flex:1;min-width:0;text-align:left;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;transition:opacity .3s ease-in-out}
+.pw-caret{flex:0 0 18px;width:18px;height:18px;transition:transform .3s ease-in-out,opacity .3s ease-in-out}
+.pw-sub{margin:4px 0 0;padding:0 0 0 32px;list-style:none;display:flex;flex-direction:column;gap:4px;overflow:hidden;transition:height .2s ease-in-out}
+.pw-subrow{display:flex;align-items:center;width:100%;height:44px;padding:0 8px;border:0;border-radius:8px;background:transparent;color:var(--sol-text-secondary);font:500 14px/20px Inter;cursor:pointer;text-align:left;transition:background-color .2s ease-in-out,box-shadow .2s ease-in-out,color .2s ease-in-out}
+.pw-subrow:hover{background:var(--sol-states-background-pressed)}
+.pw-subrow[data-active=true]{background:var(--sol-backgrounds-ui-high);color:var(--sol-text-primary);font-weight:400;box-shadow:var(--pw-shadow-xs)}
+.pw-account{display:flex;align-items:center;gap:8px;width:100%;height:44px;padding:8px;border:0;border-radius:8px;background:transparent;cursor:pointer;overflow:hidden}
+.pw-account:hover{background:var(--sol-states-background-pressed)}
+.pw-avatar{flex:0 0 28px;width:28px;height:28px;border-radius:999px;background:var(--sol-backgrounds-accent-purple);color:var(--sol-actions-button);display:flex;align-items:center;justify-content:center;font:600 11px/1 Inter}
+.pw-inset{position:relative;z-index:10;flex:1;min-width:0;display:flex;background:var(--sol-backgrounds-ui-high);overflow:hidden;box-shadow:var(--pw-shadow-xl)}
+.pw-scroll{flex:1;min-width:0;overflow-y:auto}
+.pw-page{display:flex;flex-direction:column;min-height:100%;background:var(--sol-backgrounds-ui-high);padding:20px}
+@media(min-width:650px){.pw-page{padding:40px;padding-top:32px}}
+.pw-stack{display:flex;flex-direction:column;gap:24px}
+@media(min-width:650px){.pw-stack{gap:32px}}
+.pw-titlerow{display:flex;align-items:center;gap:24px;flex-wrap:wrap}
+.pw-actions{display:flex;gap:12px;flex-wrap:wrap;margin-left:auto}
+
+
+/* table */
+.pw-tablewrap{position:relative;width:100%;overflow-x:auto}
+.pw-table{width:100%;table-layout:fixed;border-collapse:separate;border-spacing:0;font:400 14px/20px Inter}
+.pw-table th{border-bottom:1px solid var(--sol-borders-ui-subtle);padding:12px 16px 12px 0;text-align:left;vertical-align:middle;font:700 14px/20px Inter;color:var(--sol-text-secondary);background:var(--sol-backgrounds-ui-high);height:56px;white-space:nowrap}
+.pw-table td{position:relative;overflow:hidden;border-bottom:1px solid var(--sol-borders-ui-subtle);padding:12px 16px 12px 0;vertical-align:middle;color:var(--pw-ink);background:var(--sol-backgrounds-ui-high);overflow-wrap:break-word}
+.pw-table tbody tr{height:56px}
+.pw-table th:first-child,.pw-table td:first-child{padding-left:8px}
+.pw-table .brk{word-break:break-all}
+.pw-table .pw-nowrap{white-space:nowrap}
+.pw-table tbody tr{transition:background-color .25s}
+.pw-table tbody tr[data-clickable=true]{cursor:pointer}
+.pw-table tbody tr:hover td{background:var(--sol-states-background-hover)}
+.pw-table tbody tr:active td{background:var(--sol-states-background-pressed)}
+.pw-table .sticky{position:sticky;z-index:20}
+.pw-table .laststicky{border-right:1px solid var(--sol-backgrounds-ui-medium);box-shadow:8px 13px 14px -10px rgba(43,20,120,calc(.18*var(--sticky-shadow-opacity,0))),8px 21px 32px -4px rgba(64,28,142,calc(.15*var(--sticky-shadow-opacity,0)))}
+.pw-sorthead{display:flex;align-items:center;gap:8px;height:100%;cursor:pointer;border:0;background:none;padding:0;font:inherit;color:inherit}
+.pw-sorthead:hover{background:var(--sol-backgrounds-interactive-hover);color:var(--pw-ink)}
+.pw-num{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+.pw-pager{display:flex;align-items:center;justify-content:flex-end;gap:16px;padding:16px 0 0;font:500 14px/20px Inter;color:var(--sol-text-secondary)}
+.pw-empty{display:flex;flex-direction:column;align-items:center;gap:12px;padding:64px 24px;text-align:center}
+
+/* popover / panel */
+.pw-pop{position:absolute;top:calc(100% + 8px);left:0;z-index:60;min-width:240px;max-height:380px;overflow-y:auto;padding:8px;border:1px solid var(--sol-borders-ui-subtle);border-radius:12px;background:var(--sol-backgrounds-ui-high);box-shadow:var(--pw-shadow-menu),var(--pw-shadow-sm)}
+.pw-check{display:flex;align-items:center;gap:10px;width:100%;padding:6px 8px;border-radius:8px;cursor:pointer;font:400 14px/20px Inter;color:var(--pw-ink);text-align:left}
+.pw-check:hover{background:var(--sol-states-background-hover)}
+.pw-poplabel{padding:8px 8px 4px;font:700 12px/18px Inter;text-transform:uppercase;letter-spacing:.04em;color:var(--sol-text-secondary)}
+.pw-chipbtn{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 8px 0 12px;border:1px solid var(--sol-borders-ui-default);border-radius:80px;background:var(--sol-backgrounds-ui-medium);font:500 14px/20px Inter;color:var(--pw-ink);cursor:pointer}
+.pw-chipbtn:hover{background:var(--sol-states-background-pressed)}
+.pw-chipx{display:flex;align-items:center;border:0;background:none;padding:0;color:var(--sol-text-secondary);cursor:pointer}
+.pw-linkbtn{border:0;background:none;padding:0;font:500 14px/20px Inter;color:var(--sol-actions-link);cursor:pointer}
+.pw-linkbtn:hover{text-decoration:underline}
+.pw-filterbtn{position:relative;display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 12px;border:1px solid var(--sol-borders-ui-default);border-radius:8px;background:var(--sol-backgrounds-ui-high);font:500 14px/20px Inter;color:var(--pw-ink);cursor:pointer}
+.pw-filterbtn:hover{background:var(--sol-states-background-hover)}
+.pw-filterbtn[data-on=true]{border-color:var(--sol-actions-button);box-shadow:0 0 0 1px var(--sol-actions-button) inset}
+.pw-count{display:inline-flex;align-items:center;justify-content:center;min-width:20px;height:20px;padding:0 6px;border-radius:999px;background:var(--sol-actions-button);color:var(--sol-text-inverse);font:600 11px/1 Inter}
+
+/* filter bar (proposed primitive) */
+.pw-bar{border:1px solid var(--sol-borders-ui-subtle);border-radius:12px;background:var(--sol-backgrounds-ui-high);box-shadow:var(--pw-shadow-sm)}
+.pw-barrow{display:flex;align-items:stretch;gap:0;flex-wrap:wrap}
+.pw-barseg{display:flex;flex-direction:column;gap:2px;justify-content:center;flex:1 1 160px;min-width:0;padding:10px 16px;border:0;border-right:1px solid var(--sol-borders-ui-subtle);background:none;cursor:pointer;text-align:left}
+.pw-barseg:hover{background:var(--sol-states-background-hover)}
+.pw-barseg[data-on=true]{background:var(--sol-backgrounds-accent-purple)}
+.pw-barseg-k{font:700 11px/16px Inter;text-transform:uppercase;letter-spacing:.04em;color:var(--sol-text-secondary)}
+.pw-barseg-v{font:500 14px/20px Inter;color:var(--pw-ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pw-barlead,.pw-bartail{display:flex;align-items:center;gap:10px;padding:10px 16px;flex:0 0 auto}
+.pw-barlead{border-right:1px solid var(--sol-borders-ui-subtle);color:var(--sol-text-secondary);font:700 12px/18px Inter;text-transform:uppercase;letter-spacing:.04em}
+.pw-barpanel{border-top:1px solid var(--sol-borders-ui-subtle);padding:20px 16px;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:24px}
+.pw-bargroup{display:flex;flex-direction:column;gap:6px;min-width:0}
+.pw-bargroup h4{margin:0 0 2px;font:700 12px/18px Inter;text-transform:uppercase;letter-spacing:.04em;color:var(--sol-text-secondary)}
+.pw-barfoot{border-top:1px solid var(--sol-borders-ui-subtle);padding:12px 16px;display:flex;justify-content:flex-end;gap:12px;align-items:center}
+.pw-dates{display:flex;gap:8px}
+.pw-dates>div{flex:1;min-width:0}
+
+/* sheet */
+.pw-section{display:flex;flex-direction:column;gap:12px}
+.pw-drow{display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:8px 0;border-bottom:1px solid var(--sol-borders-ui-subtle)}
+.pw-drow:last-child{border-bottom:0}
+.pw-drow dt{font:500 14px/20px Inter;color:var(--sol-text-secondary);margin:0}
+.pw-drow dd{margin:0;font:400 14px/20px Inter;color:var(--pw-ink);text-align:right;word-break:break-word}
+.pw-timeline{list-style:none;margin:0;padding:0 0 0 20px;display:flex;flex-direction:column;gap:18px;position:relative}
+.pw-timeline:before{content:'';position:absolute;left:4px;top:6px;bottom:6px;width:1px;background:var(--sol-borders-ui-subtle)}
+.pw-timeline li{position:relative}
+.pw-timeline li:before{content:'';position:absolute;left:-20px;top:5px;width:9px;height:9px;border-radius:999px;background:var(--sol-backgrounds-ui-high);border:2px solid var(--sol-actions-button)}
+/* dropdown-menu.tsx: content rounded-lg, 1px ui-subtle, py-2, shadow-md, offset 4;
+   item p-3 gap-3 at paragraph-medium, focus/active on the interactive tokens. */
+.pw-menu{position:absolute;top:calc(100% + 4px);right:0;z-index:1040;min-width:200px;max-height:70vh;overflow-x:hidden;overflow-y:auto;padding:8px 0;border:1px solid var(--sol-borders-ui-subtle);border-radius:8px;background:var(--sol-backgrounds-ui-high);color:var(--pw-ink);box-shadow:0px 1px 12px 0px #0000000f}
+.pw-menuitem{position:relative;display:flex;align-items:center;gap:12px;width:100%;padding:12px;border:0;background:none;font:400 16px/24px Inter;color:inherit;text-align:left;cursor:pointer;outline:none;user-select:none}
+.pw-menuitem:hover,.pw-menuitem:focus{background:var(--sol-backgrounds-interactive-hover);color:var(--pw-ink)}
+.pw-menuitem:active{background:var(--sol-backgrounds-interactive-pressed)}
+.pw-menuitem svg{flex:0 0 auto;color:var(--sol-text-secondary);pointer-events:none}
+.pw-embed{border:1px dashed var(--sol-borders-ui-strong);border-radius:12px;padding:20px;background:var(--sol-backgrounds-ui-medium)}
+/* Origin frames its AI blocks in a blue-to-teal Lumos "agent gradient"
+   (--twd-agent-blue / --twd-agent-teal). Sol has no agent or gradient token, so
+   these use the accent-purple surface. */
+.pw-insight{display:flex;flex-direction:column;gap:12px;padding:16px;border:1px solid var(--sol-borders-ui-subtle);border-radius:12px;background:var(--sol-backgrounds-accent-purple)}
+.pw-insight-label{font:700 12px/18px Inter;text-transform:uppercase;letter-spacing:.06em;color:var(--sol-actions-button)}
+.pw-remrow{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+.pw-iconlink{display:flex;align-items:center;border:0;background:none;padding:4px;border-radius:8px;color:var(--sol-text-secondary);cursor:pointer}
+.pw-iconlink:hover{background:var(--sol-states-background-hover);color:var(--pw-ink)}
+.pw-note{display:flex;gap:10px;padding:12px 14px;border-radius:12px;background:var(--sol-backgrounds-accent-purple);color:var(--pw-ink);font:400 14px/20px Inter}
+.pw-note strong{font-weight:600}
+
+/* subscription plans block — Origin renders a 2-col bordered grid with the
+   total row on neutral-l5; here the border is sol-borders-ui-subtle and the
+   total sits on backgrounds-ui-medium. */
+.pw-plans{border:1px solid var(--sol-borders-ui-subtle);border-radius:8px;overflow:hidden}
+.pw-planrow{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:8px 12px;font:400 14px/20px Inter}
+.pw-planrow[data-addon=true]{color:var(--sol-text-secondary);border-top:1px solid var(--sol-borders-ui-subtle)}
+.pw-plantotal{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:10px 12px;font:500 14px/20px Inter;background:var(--sol-backgrounds-ui-medium)}
+
+/* ── customer record + job view ───────────────────────────────────────────── */
+/* Section blocks. Merlin's page-layout stacks sections with a rule between; the
+   record is nine of them, so the rhythm has to be cheap to read. */
+.pw-mblk{border-top:1px solid var(--sol-borders-ui-subtle);padding-top:20px;display:flex;flex-direction:column;gap:14px}
+.pw-mblk:first-of-type{border-top:0;padding-top:0}
+.pw-mblk-h{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.pw-mblk-h h2{font:700 18px/24px Inter;margin:0}
+.pw-mblk-h .t-l4{white-space:nowrap}
+/* Segmented control. ToggleGroup with spacing=0 gives these joined segments;
+   its on-state resolves to bg-accent, a Tailwind name outside Sol that does not
+   compile, so the selected segment uses what the sidebar's active row uses. */
+.pw-seg{display:inline-flex;border:1px solid var(--sol-borders-ui-subtle);border-radius:8px;overflow:hidden;background:var(--sol-backgrounds-ui-medium)}
+.pw-segi{border:0;border-right:1px solid var(--sol-borders-ui-subtle);background:transparent;padding:6px 12px;font:400 14px/20px Inter;color:var(--sol-text-secondary);cursor:pointer;white-space:nowrap}
+.pw-segi:last-child{border-right:0}
+.pw-segi:hover{background:var(--sol-states-background-hover)}
+.pw-segi[data-on=true]{background:var(--sol-backgrounds-ui-high);color:var(--sol-text-primary);font-weight:500;box-shadow:var(--pw-shadow-xs)}
+/* Peer-list rows. Nothing indents under anything — memo 1's central claim — so
+   every row sits at the same left edge and the links carry the structure. */
+.pw-lrow{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:16px;align-items:center;padding:12px 0;border-bottom:1px solid var(--sol-borders-ui-subtle)}
+.pw-lrow:last-child{border-bottom:0}
+.pw-lrow[data-clickable=true]{cursor:pointer;margin:0 -8px;padding:12px 8px;border-radius:8px}
+.pw-lrow[data-clickable=true]:hover{background:var(--sol-states-background-hover)}
+.pw-lname{font:400 14px/20px Inter;color:var(--pw-ink);min-width:0}
+.pw-lsub{display:block;font:400 12px/18px Inter;color:var(--sol-text-secondary)}
+.pw-lval{font:500 14px/20px Inter;color:var(--pw-ink);font-variant-numeric:tabular-nums;white-space:nowrap;text-align:right}
+/* Expanded proposal: its sections, on the accent surface, additive and totalled. */
+.pw-sects{background:var(--sol-backgrounds-accent-purple);border:1px solid var(--sol-borders-ui-subtle);border-radius:8px;padding:4px 14px 12px;margin:0 0 12px}
+.pw-sectr{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:12px;align-items:center;padding:9px 0;border-bottom:1px solid var(--sol-borders-ui-subtle);font:400 13px/18px Inter}
+.pw-sectr:last-of-type{border-bottom:0}
+.pw-sectr .po{font:500 12px/18px Inter;color:var(--sol-actions-button);white-space:nowrap}
+.pw-secttot{display:flex;justify-content:space-between;gap:12px;padding-top:10px;border-top:1px solid var(--sol-borders-ui-strong);font:600 13px/18px Inter;font-variant-numeric:tabular-nums}
+/* Activity: master invoice, payment request and transaction in one stream. */
+.pw-actrow{display:grid;grid-template-columns:32px minmax(0,1fr) auto auto;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--sol-borders-ui-subtle)}
+.pw-actrow:last-child{border-bottom:0}
+.pw-acttile{width:32px;height:32px;border-radius:8px;background:var(--sol-backgrounds-ui-medium);display:flex;align-items:center;justify-content:center;color:var(--sol-text-secondary)}
+/* Pinned notes are facts, not events, so they sit above the stream and outside it. */
+.pw-pinned{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border:1px solid var(--sol-borders-ui-subtle);border-radius:8px;background:var(--sol-backgrounds-ui-medium);font:400 14px/20px Inter}
+.pw-note-item{padding:12px 0;border-bottom:1px solid var(--sol-borders-ui-subtle)}
+.pw-note-item:last-child{border-bottom:0}
+.pw-note-h{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px}
+.pw-ph{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;border:1px dashed var(--sol-borders-ui-strong);border-radius:8px;font:400 14px/20px Inter;color:var(--sol-text-secondary)}
+.pw-kv{display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:9px 0;border-bottom:1px solid var(--sol-borders-ui-subtle);font:400 14px/20px Inter}
+.pw-kv:last-child{border-bottom:0}
+.pw-kv .k{color:var(--sol-text-secondary)}
+.pw-kv .v{text-align:right;color:var(--pw-ink)}
+/* ── the stage rail ───────────────────────────────────────────────────────────
+   One bordered box of 44px hairline-separated rows, not ten cards. Memo 1's
+   .stgrow is exactly this, and the density is the point: at 58px per card with
+   a shadow and a 16px radius the rail was 580px tall and dominated a section
+   that is meant to be glanced at.
+
+   Clipped to 246px — 5.6 rows — with a fade top and bottom, as the memo draws
+   it. The fade is honest here because the box genuinely scrolls: it is the
+   overflow affordance for its own scroll container, not a hint about the page.
+   Rows open a sheet rather than expanding in place; expanding inside a clipped
+   scroller fights the clip. */
+.pw-rail{position:relative;height:246px;border:1px solid var(--sol-borders-ui-subtle);border-radius:8px;background:var(--sol-backgrounds-ui-high);overflow:hidden}
+.pw-railscroll{height:100%;overflow-y:auto;scrollbar-width:none}
+.pw-railscroll::-webkit-scrollbar{display:none}
+/* Board rows group the stages, so a stage row is one line and 36px. */
+.pw-railboard{display:flex;align-items:center;gap:8px;height:28px;padding:0 12px;background:var(--sol-backgrounds-ui-medium);border-bottom:1px solid var(--sol-borders-ui-subtle);font:700 10px/14px Inter;letter-spacing:.08em;text-transform:uppercase;color:var(--sol-text-secondary)}
+.pw-railboard .n{margin-left:auto;letter-spacing:0;text-transform:none;font-weight:400;font-size:10px;white-space:nowrap}
+.pw-stg{width:100%;height:36px;display:grid;grid-template-columns:12px minmax(0,1fr) auto;gap:11px;align-items:center;padding:0 12px;border:0;border-bottom:1px solid var(--sol-borders-ui-subtle);background:transparent;text-align:left;font:inherit;cursor:pointer}
+.pw-stg:last-child{border-bottom:0}
+.pw-stg:hover{background:var(--sol-states-background-hover)}
+.pw-stg[data-state=now]{background:var(--sol-backgrounds-accent-purple)}
+.pw-stgdot{width:11px;height:11px;border-radius:999px;border:1.5px solid var(--sol-borders-ui-strong);background:var(--sol-backgrounds-ui-high)}
+.pw-stg[data-state=done] .pw-stgdot{background:var(--sol-icons-system-success);border-color:var(--sol-icons-system-success)}
+.pw-stg[data-state=now] .pw-stgdot{background:var(--sol-actions-button);border-color:var(--sol-actions-button);box-shadow:0 0 0 3px var(--sol-states-focus)}
+.pw-stgname{font:400 13px/17px Inter;color:var(--sol-text-secondary);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pw-stg[data-state=now] .pw-stgname{color:var(--pw-ink);font-weight:500}
+.pw-stgmeta{font:400 11px/14px Inter;color:var(--sol-text-secondary);white-space:nowrap}
+.pw-stg[data-state=now] .pw-stgmeta{color:var(--sol-actions-button);font-weight:500}
+.pw-fade{position:absolute;left:0;right:0;height:34px;pointer-events:none}
+.pw-fade[data-edge=top]{top:0;background:linear-gradient(to bottom,var(--sol-backgrounds-ui-high) 20%,transparent)}
+.pw-fade[data-edge=bottom]{bottom:0;background:linear-gradient(to top,var(--sol-backgrounds-ui-high) 20%,transparent)}
+/* ── tasks: five readings ─────────────────────────────────────────────────────
+   Checkbox gives three. Not applicable (system-set), skipped (person-set) and
+   blocked have no existing representation, so the box itself carries the state
+   and only 'blocked' is allowed to use colour — it is the only one that is
+   someone's problem right now. */
+.pw-tk{display:grid;grid-template-columns:18px minmax(0,1fr);gap:10px;align-items:start;padding:5px 0;font:400 14px/20px Inter;color:var(--pw-ink)}
+.pw-tkbx{width:18px;height:18px;border-radius:4px;border:1.5px solid var(--sol-borders-ui-strong);background:var(--sol-backgrounds-ui-high);margin-top:1px;display:flex;align-items:center;justify-content:center;color:var(--sol-text-inverse);flex:0 0 18px}
+.pw-tk[data-state=complete] .pw-tkbx{background:var(--sol-icons-system-success);border-color:var(--sol-icons-system-success)}
+.pw-tk[data-state=complete]{color:var(--sol-text-secondary)}
+.pw-tk[data-state=blocked] .pw-tkbx{border-color:var(--sol-icons-system-warning);background:var(--sol-backgrounds-system-warning);color:var(--sol-text-warning)}
+.pw-tk[data-state=na] .pw-tkbx{border-style:dashed;border-color:var(--sol-borders-ui-subtle);background:transparent}
+/* NA recedes through the dashed empty box and the italic, not through low
+   contrast: borders-ui-strong on ui-high is 2.4:1, and a row nobody can read is
+   not "marked not applicable", it is just faint. */
+.pw-tk[data-state=na]{color:var(--sol-text-secondary);font-style:italic}
+.pw-tk[data-state=na] .pw-tksub{color:var(--sol-text-secondary)}
+.pw-tk[data-state=skipped] .pw-tkbx{border-color:var(--sol-text-secondary);background:var(--sol-backgrounds-ui-medium);color:var(--sol-text-secondary)}
+.pw-tk[data-state=skipped] .pw-tklabel{text-decoration:line-through;text-decoration-color:var(--sol-borders-ui-strong)}
+.pw-tk[data-state=skipped]{color:var(--sol-text-secondary)}
+.pw-tksub{display:block;font:400 12px/18px Inter;color:var(--sol-text-secondary)}
+/* ── sub-status: satisfied · working toward · not applicable ──────────────────
+   DataList renders the pairs but styles label and value identically, so a
+   settled value and a pending one read the same. The value carries the register
+   instead: a rule under 'working toward' is the only decoration, because that
+   is the only row anyone has to act on. */
+.pw-ss{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid var(--sol-borders-ui-subtle);font:400 14px/20px Inter}
+.pw-ss:last-child{border-bottom:0}
+.pw-ss .k{color:var(--sol-text-secondary)}
+.pw-ss .v{font-weight:600;text-align:right}
+/* Satisfied carries no colour. Sol's only green is #008f30 — 4.2:1 as 14px
+   text, under AA — and both --sol-text-success and --sol-icons-system-success
+   resolve to it, so there is no compliant success text token to reach for.
+   Dropping the colour is the better answer regardless: a settled row needs no
+   attention, and leaving amber as the only colour in the block makes the one
+   row anybody has to act on the only row that reads as coloured. */
+.pw-ss[data-reg=done] .v{color:var(--pw-ink)}
+.pw-ss[data-reg=working] .v{color:var(--sol-text-warning);text-decoration:underline;text-decoration-style:dotted;text-underline-offset:3px}
+.pw-ss[data-reg=na] .k,.pw-ss[data-reg=na] .v{color:var(--sol-text-secondary);font-weight:400;font-style:italic}
+.pw-ssnote{margin:8px 0 0;font:400 12px/18px Inter;color:var(--sol-text-secondary)}
+/* canvas frames for the tier comparison */
+.pw-frame{background:var(--sol-backgrounds-ui-high);border:1px solid var(--sol-borders-ui-subtle);border-radius:12px;overflow:hidden}
+.pw-framecap{font:700 12px/18px Inter;letter-spacing:.06em;text-transform:uppercase;color:var(--sol-text-secondary);margin:0 0 10px}
+
+.pw-sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+/* Three cards across the current stage: what just finished, what is left, and
+   the change order that one of the remaining tasks is waiting on. All three are
+   PwJobCard now — the same shell as the pair above — so MerlinCard supplies the
+   surface, radius and padding, and only the grid stays here. */
+.pw-cds{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;align-items:start}
+.pw-cds > *{min-width:0}
+/* Warning tone. The surface itself is set in JS via a style override, because
+   MerlinCard writes background and border inline and no stylesheet rule can
+   beat that. Only the heading colour is styleable from here. */
+[data-tone=warning] .pw-cardstack h5{color:var(--sol-text-warning)}
+.pw-dn{display:flex;justify-content:space-between;gap:12px;padding:5px 0;font:400 14px/20px Inter;border-bottom:1px solid var(--sol-borders-ui-subtle)}
+.pw-dn:last-of-type{border-bottom:0}
+.pw-dn .dd{color:var(--sol-text-secondary);font:400 12px/18px Inter;white-space:nowrap}
+.pw-cdi{display:flex;flex-direction:column;gap:1px}
+.pw-cdi .cdl{font:400 12px/18px Inter;color:var(--sol-text-warning);margin:0}
+.pw-cdi .cdv{font:500 14px/20px Inter;color:var(--pw-ink);margin:0;font-variant-numeric:tabular-nums}
+
+/* inline link inside a paragraph — pw-linkbtn is a flex button and breaks flow */
+.pw-inlink{display:inline;border:0;background:none;padding:0;font:inherit;color:var(--sol-actions-link);text-decoration:underline;text-underline-offset:2px;cursor:pointer}
+.pw-inlink:hover{color:var(--sol-actions-button)}
+
+/* Gate notice, collapsed by default. Values are Alert's own warning variant from
+   the bundle — bg system-warning, border icons-system-warning, radius 8,
+   padding 16 — rebuilt as a Collapsible because Alert has no trigger. */
+.pw-gate{border:1px solid var(--sol-icons-system-warning);border-radius:8px;background:var(--sol-backgrounds-system-warning);overflow:hidden}
+.pw-gate-h{width:100%;display:flex;align-items:center;gap:10px;padding:12px 16px;border:0;background:none;font:600 14px/20px Inter;color:var(--sol-text-warning);text-align:left;cursor:pointer}
+.pw-gate-h:hover{background:color-mix(in srgb,var(--sol-icons-system-warning) 8%,transparent)}
+.pw-gate-h .cv{margin-left:auto;flex:0 0 auto;transition:transform .2s}
+.pw-gate-b{padding:0 16px 14px;font:400 14px/20px Inter;color:var(--sol-text-warning)}
+.pw-gate-b strong{font-weight:600}
+
+/* ── customer record ─────────────────────────────────────────────────────────
+   Overview cards. Card's 24px radius and 32px padding are too generous for
+   three glance cards in a row, so these carry Card's surface and border at the
+   section's own density. */
+.pw-ocs{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.pw-oc{border:1px solid var(--sol-borders-ui-subtle);border-radius:12px;background:var(--sol-backgrounds-ui-medium);padding:14px 16px;min-width:0}
+.pw-oc h3{font:700 11px/16px Inter;letter-spacing:.07em;text-transform:uppercase;color:var(--sol-text-secondary);margin:0 0 8px}
+.pw-oc .big{font:700 20px/26px Inter;margin:0 0 8px;color:var(--pw-ink)}
+.pw-ocl{display:flex;justify-content:space-between;gap:10px;font:400 13px/20px Inter;color:var(--sol-text-secondary)}
+.pw-ocl span:last-child{color:var(--pw-ink);font-variant-numeric:tabular-nums;white-space:nowrap}
+.pw-ocw{padding:4px 0;font:400 13px/18px Inter;color:var(--sol-text-secondary)}
+.pw-ocw b{display:block;color:var(--pw-ink);font-weight:500}
+.pw-latest{border:1px solid var(--sol-borders-ui-subtle);border-radius:12px;background:var(--sol-backgrounds-ui-medium);padding:14px 16px}
+.pw-latest h4{font:700 11px/16px Inter;letter-spacing:.07em;text-transform:uppercase;color:var(--sol-text-secondary);margin:0 0 8px}
+/* Three note cards abreast. auto-fit rather than a fixed 3-track grid so they
+   stack on a narrow canvas frame instead of squeezing to unreadable. Cards sit
+   on ui-high inside the block's ui-medium — the same figure/ground the balance
+   card uses inside its section. */
+.pw-latestcards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.pw-latestcard{border:1px solid var(--sol-borders-ui-subtle);border-radius:10px;background:var(--sol-backgrounds-ui-high);padding:11px 13px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.pw-latestcard-h{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.pw-latestcard .d{font:500 12px/18px Inter;color:var(--sol-text-secondary)}
+/* Three lines, then ellipsis: enough to carry the substance of a note without
+   letting one long note set the height of all three. */
+.pw-latestcard .b{margin:0;font:400 13px/19px Inter;color:var(--pw-ink);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.pw-latestcard .m{margin:0;font:400 11px/16px Inter;color:var(--sol-text-secondary)}
+/* Running balance */
+.pw-bal{max-width:340px;border:1px solid var(--sol-borders-ui-subtle);border-radius:12px;background:var(--sol-backgrounds-ui-high);padding:14px 16px}
+.pw-balr{display:flex;justify-content:space-between;gap:12px;padding:5px 0;font:400 14px/20px Inter;color:var(--sol-text-secondary)}
+.pw-balr .v{color:var(--pw-ink);font-weight:500;font-variant-numeric:tabular-nums}
+.pw-balr.tot{border-top:1px solid var(--sol-borders-ui-subtle);margin-top:6px;padding-top:10px;color:var(--pw-ink);font-weight:600}
+.pw-balr.tot .v{font-size:18px}
+.pw-vall{display:flex;justify-content:space-between;align-items:center;gap:12px;border-top:1px solid var(--sol-borders-ui-subtle);padding-top:10px;font:400 12px/18px Inter;color:var(--sol-text-secondary)}
+
+/* ── card-style sections ──────────────────────────────────────────────────────
+   Values from Daidipya's Customer Profile: M.Card, an h5 700 16/24 heading, a
+   14px-gap stack of label/value rows, a 1px borders-ui-subtle rule, and a final
+   row whose label goes bold and whose value steps to 20/28. */
+.pw-cardstack{display:flex;flex-direction:column;gap:16px}
+.pw-cardstack h5{margin:0;font:700 16px/24px Inter;color:var(--sol-text-primary)}
+.pw-cardhead{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.pw-cardrows{display:flex;flex-direction:column;gap:14px}
+.pw-crow{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.pw-crow .cl{font:400 14px/20px Inter;color:var(--sol-text-secondary)}
+.pw-crow .cv{font:700 16px/24px Inter;color:var(--sol-text-primary);font-variant-numeric:tabular-nums}
+.pw-crow.tot .cl{font:700 14px/20px Inter;color:var(--sol-text-primary)}
+.pw-crow.tot .cv{font:700 20px/28px Inter}
+.pw-crule{height:1px;background:var(--sol-borders-ui-subtle)}
+/* Two cards abreast. Opportunities and proposals are the same kind of question —
+   what might this customer buy, and what have we asked them to buy — so they
+   read side by side rather than one after the other. */
+/* Always two columns. Two earlier attempts were worse: auto-fit with a 420px
+   minimum collapsed to one column at any content width under ~860px, and a
+   1024px media query keyed off the viewport, so a preview pane narrower than
+   that never showed the pair at all. Side by side is the decision, so it is
+   unconditional; the cards shrink and the segment row wraps under its heading.
+   Rows stay legible to ~330px a card. */
+.pw-pair{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}
+.pw-pair > *{min-width:0}
+@media(max-width:700px){.pw-pair{grid-template-columns:1fr}}
+/* Rows inside a card: no bottom rule on the last, because Card's own padding
+   already ends the list. */
+.pw-crowlist{display:flex;flex-direction:column}
+.pw-crowlist .pw-lrow{padding:12px 0;grid-template-columns:minmax(0,1fr) auto;row-gap:6px}
+.pw-crowlist .pw-lrow > span:last-child{grid-column:1/-1;justify-self:start}
+.pw-crowlist .pw-lrow:first-child{padding-top:0}
+.pw-crowlist .pw-lrow[data-clickable=true]{margin:0 -8px;padding:12px 8px}
+.pw-crowlist .pw-lrow[data-clickable=true]:first-child{padding-top:8px}
+/* Sections table inside the proposal sheet */
+.pw-shsect{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 16px;padding:12px 0;border-bottom:1px solid var(--sol-borders-ui-subtle)}
+.pw-shsect:last-of-type{border-bottom:0}
+.pw-shsect .n{font:400 12px/18px Inter;color:var(--sol-text-secondary);grid-column:1/-1}
+.pw-shsect .nm{font:500 14px/20px Inter;color:var(--pw-ink)}
+.pw-shsect .vl{font:600 14px/20px Inter;color:var(--pw-ink);text-align:right;font-variant-numeric:tabular-nums}
+.pw-shsect .po{font:500 12px/18px Inter;color:var(--sol-actions-button);grid-column:1/-1}
+
+/* Group header over a card pair. Same 18px/700 as a section h2 so the two kinds
+   of heading do not compete, but with no rule above it — the cards below carry
+   their own edges, so a rule would draw a box around a box. */
+.pw-group{display:flex;flex-direction:column;gap:14px}
+.pw-grouphead{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.pw-grouphead h2{margin:0;font:700 18px/24px Inter;color:var(--pw-ink)}
+
+/* Activity rows in a card. The 32px icon tile and the amount column both have to
+   give at half width, so the tile drops and the amount moves under the label. */
+.pw-crowlist .pw-actrow{grid-template-columns:32px minmax(0,1fr) auto;row-gap:4px;padding:10px 0}
+.pw-crowlist .pw-actrow:first-child{padding-top:0}
+.pw-crowlist .pw-actrow .pw-lval{grid-column:2/-1;justify-self:start;font-weight:600}
+
+/* Segments inside a card. The four-segment Activity control is 317px intrinsic
+   against 300px of card content, and .pw-seg needs overflow:hidden for its 8px
+   radius on the joined segments — so the excess was clipping "Transactions"
+   mid-word rather than wrapping. Tightened padding and a 13px label inside a
+   card only; the three shorter controls are untouched at their own scale.
+   Scoped to .pw-cardhead so the full-width sections keep the 14px label. */
+.pw-cardhead .pw-seg{max-width:100%}
+.pw-cardhead .pw-segi{padding:6px 9px;font-size:13px;min-width:0;overflow:hidden;text-overflow:ellipsis}
+
+/* ── job header pair ───────────────────────────────────────────────────────── */
+/* Rail left, synopsis right. The wider track goes to the rail: it holds a fixed
+   640px object plus the gate notice, while the synopsis is six two-column
+   values that reflow freely. */
+.pw-jobpair{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:20px;align-items:start}
+@media(max-width:900px){.pw-jobpair{grid-template-columns:1fr}}
+/* Synopsis: two columns of three, label above value. Six stacked rows with
+   rules made the card twice the height of the rail beside it; two columns halve
+   it and the rules go, because a 2×3 grid does not need them to be read. Type
+   steps down 12/13 from 12/14 — this is reference material, not the page's
+   argument. */
+.pw-syn{display:grid;grid-template-columns:1fr 1fr;gap:10px 16px}
+.pw-synr{min-width:0}
+.pw-synr .k{display:block;font:400 11px/16px Inter;color:var(--sol-text-secondary)}
+.pw-synr .v{display:block;font:500 13px/18px Inter;color:var(--pw-ink);text-wrap:pretty}
+@media(max-width:520px){.pw-syn{grid-template-columns:1fr}}
+/* Site and mock-up, side by side. Fixed 88px plates rather than a 4:3 ratio of
+   the card width — a ratio meant the images grew with the column and drove the
+   card's height. Captioned, because before/after is the whole reason both are
+   here. */
+.pw-shots{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.pw-shot{display:flex;flex-direction:column;gap:4px;min-width:0}
+.pw-plate{height:88px;border:1px solid var(--sol-borders-ui-subtle);border-radius:8px;background:var(--sol-backgrounds-ui-medium);display:flex;align-items:center;justify-content:center;color:var(--sol-borders-ui-strong)}
+.pw-shot .cap{font:400 11px/15px Inter;color:var(--sol-text-secondary)}
+/* The header facts, moved off the page title into the synopsis card. */
+.pw-facts{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 8px;margin-top:-6px;font:400 13px/20px Inter;color:var(--sol-text-secondary)}
+/* Each fact wraps as a unit — "P-1042, section 1 of 2" was breaking before the
+   "2". The separator is a flex child, so it can never end a line alone either. */
+.pw-facts > *{white-space:nowrap}
+.pw-facts .sep{color:var(--sol-borders-ui-strong)}
+
+
+/* Tabs: the bundle's variants set a border shorthand in the base style and only
+   the colour longhand when active, and React treats the two as separate
+   properties — so a trigger going active → inactive keeps a border that computes
+   to black. Seen at 2px on the line variant's bottom border; the default variant
+   has the same shape on its full border. Both are neutralised here rather than
+   only the one that bit. Upstream defect, not ours. */
+[role=tab][aria-selected=false]{border-color:transparent !important}
+
+/* Lead rows carry gaps as content. Missing information is italic and secondary —
+   readable, clearly not a value, and never mistaken for one. Amber is reserved
+   for the two states that are somebody's job right now: an unassigned owner and
+   an ageing lead. */
+.pw-missing{font:italic 400 12px/18px Inter;color:var(--sol-text-secondary)}
+.pw-src{font:400 11px/16px Inter;color:var(--sol-text-secondary)}
+.pw-int{display:flex;align-items:baseline;gap:6px;min-width:0;max-width:100%}
+.pw-int .nm{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pw-int .more{flex:0 0 auto;font:500 12px/18px Inter;color:var(--sol-text-secondary)}
+
+/* ── Model C ─────────────────────────────────────────────────────────────────
+   Only what Model A had no equivalent for. Everything else on these screens is
+   Model A's CSS unchanged. */
+.pwc-tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.pwc-tile{border:1px solid var(--sol-borders-ui-subtle);border-radius:12px;background:var(--sol-backgrounds-ui-medium);padding:14px 16px;min-width:0}
+.pwc-tile[data-tone=warning]{background:var(--sol-backgrounds-system-warning);border-color:var(--sol-icons-system-warning)}
+.pwc-tile h6{font:700 11px/16px Inter;letter-spacing:.07em;text-transform:uppercase;color:var(--sol-text-secondary);margin:0 0 8px}
+.pwc-tile[data-tone=warning] h6{color:var(--sol-text-warning)}
+.pwc-tile .big{font:700 22px/28px Inter;margin:0 0 8px;color:var(--pw-ink)}
+.pwc-tile[data-tone=warning] .big{color:var(--sol-text-warning)}
+.pwc-tl{display:flex;justify-content:space-between;gap:10px;font:400 13px/20px Inter;color:var(--sol-text-secondary)}
+.pwc-tl span:last-child{color:var(--pw-ink);font-variant-numeric:tabular-nums;white-space:nowrap}
+/* A gate sits on a transition, so it is its own row rather than a stage's
+   property. Alert's warning values, without Alert's title/description pair —
+   a gate is one sentence. */
+.pwc-gate{display:flex;align-items:flex-start;gap:10px;background:var(--sol-backgrounds-system-warning);border:1px solid var(--sol-icons-system-warning);border-radius:8px;padding:10px 13px;font:400 13px/19px Inter;color:var(--sol-text-warning)}
+.pwc-gate svg{flex:0 0 auto;margin-top:2px}
+.pwc-gate b{font-weight:600}
+/* The operations phase before it exists. Dashed and receded, but readable —
+   its whole job is to tell you what winning brings. */
+.pwc-locked{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;border:1px dashed var(--sol-borders-ui-strong);border-radius:8px;padding:13px 15px;font:400 14px/20px Inter;color:var(--sol-text-secondary);background:var(--sol-backgrounds-ui-medium)}
+.pwc-locked span:last-child{font-size:12px;white-space:nowrap}
+/* Scope toggle rows. Switch is 44×24, so the first track is fixed to it. */
+.pwc-tog{display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:14px;align-items:center;padding:13px 0;border-bottom:1px solid var(--sol-borders-ui-subtle)}
+.pwc-tog:last-of-type{border-bottom:0}
+.pwc-tog .tn{font:500 14px/20px Inter;color:var(--pw-ink)}
+.pwc-tog .td{display:block;font:400 12px/18px Inter;color:var(--sol-text-secondary)}
+.pwc-tog .tv{font:500 15px/22px Inter;color:var(--pw-ink);font-variant-numeric:tabular-nums;white-space:nowrap}
+.pwc-tog[data-off=true] .tn{color:var(--sol-text-secondary)}
+/* The off scope's price recedes by shape, not by contrast — the switch is
+   visibly off and the name is already secondary, so nothing is lost by keeping
+   the number readable. borders-ui-strong was 2.37:1 here, under AA, on the one
+   figure frame C exists to show: memo 4's claim is that a declined scope stays
+   visible *with its price*. Second time this project has made this exact
+   mistake with this exact token; see CHANGES.md on not-applicable. */
+.pwc-tog[data-off=true] .tv{color:var(--sol-text-secondary)}
+.pwc-tot{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding-top:12px;margin-top:4px;border-top:1px solid var(--sol-borders-ui-strong);font:600 14px/20px Inter}
+.pwc-tot .big{font:700 22px/28px Inter;font-variant-numeric:tabular-nums}
+/* Financing options. The selected one is filled, not just outlined — it is a
+   choice the customer made, not a state the row is in. */
+.pwc-fin{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+.pwc-fin .pwc-tile[data-sel=true]{background:var(--sol-backgrounds-accent-purple);border-color:var(--sol-actions-button)}
+.pwc-lin{display:block;width:100%;height:auto}
+.pwc-linwrap{border:1px solid var(--sol-borders-ui-subtle);border-radius:8px;background:var(--sol-backgrounds-ui-medium);padding:16px 18px}
+/* Won opportunities recede below a rule: anyone opening this record is deciding
+   what to do next, and what to do next is the one still open. The recession is
+   shape and position only — a rule, a "kept for context" label, and a neutral
+   Won badge on every row. No opacity: it composites over descendants already at
+   the --sol-text-secondary floor and took the sub-line to 3.21:1, which is the
+   third time this project has dimmed load-bearing text below AA. A floor is
+   only a floor if nothing downstream multiplies through it. */
+.pwc-archived{margin:14px 0 0;padding-top:12px;border-top:1px solid var(--sol-borders-ui-subtle);font:400 12px/18px Inter;color:var(--sol-text-secondary)}
+.pwc-dim .pw-lname,.pwc-dim .pw-lval{color:var(--sol-text-secondary);font-weight:400}
+.pwc-pair{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;align-items:start}
+/* A 3:1 pair. The narrow side is a card with one or two rows in it — a project
+   list, a locked phase — and an even split gave it four times the room its
+   content needs. Collapses to one column below the fold-in width so the narrow
+   card never gets squeezed under ~240px. */
+.pwc-pair[data-split=quarter]{grid-template-columns:minmax(0,3fr) minmax(0,1fr);align-items:stretch}
+/* The narrow card matches the row's height rather than shrinking to its one
+   line. `align-items:stretch` does the work and the grid item must keep
+   `height:auto` for it to apply — an explicit height:100% here silently
+   disables stretch and the card sizes to its own content again. Only the stack
+   inside takes a height, so the card's padding box is what fills. */
+.pwc-pair[data-split=quarter] > * > .pw-cardstack{height:100%}
+/* The dashed placeholder grows with the card rather than leaving dead space
+   under it — an empty state that stops halfway down its own card reads as a
+   layout accident. */
+.pwc-pair[data-split=quarter] .pw-ph{flex:1;align-items:center}
+/* Container query, not a media query. A canvas frame is a fixed 1180px page
+   inside a viewport that is usually narrower, so a viewport media query
+   collapsed the split in every frame while the page itself was plenty wide.
+   The page establishes the context and the query asks about the page. */
+/* Named, not anonymous. An unnamed @container binds to the nearest ancestor
+   container, so the moment .pw-cardstack became a container it captured every
+   unnamed query inside it — including the ProposalCard's md breakpoint, which
+   then evaluated 743px against the page's 1098px and dropped the card to its
+   mobile stack. Names make each query say which box it is asking about. */
+.pw-page{container-type:inline-size;container-name:page}
+@container page (max-width:820px){.pwc-pair[data-split=quarter]{grid-template-columns:1fr}}
+/* Collapsible card body. The trigger is the card's own head, so the whole
+   header row is the hit target rather than a caret nobody aims at. */
+.pw-cardhead[data-toggle=true]{cursor:pointer;user-select:none}
+.pw-cardhead[data-toggle=true]:hover h5{color:var(--sol-actions-button)}
+.pwc-cv{margin-left:auto;flex:0 0 auto;color:var(--sol-text-secondary);transition:transform .2s}
+.pwc-cv[data-open=true]{transform:rotate(180deg)}
+/* Notes as cards, matching the record's latest-notes block. */
+.pwc-notes{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.pwc-note{border:1px solid var(--sol-borders-ui-subtle);border-radius:10px;background:var(--sol-backgrounds-ui-high);padding:11px 13px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.pwc-note[data-pinned=true]{background:var(--sol-backgrounds-ui-medium)}
+.pwc-note-h{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.pwc-note .b{margin:0;font:400 13px/19px Inter;color:var(--pw-ink)}
+.pwc-note .m{margin:0;font:400 11px/16px Inter;color:var(--sol-text-secondary)}
+
+/* ── the proposal page ───────────────────────────────────────────────────────
+   Values from merlin's proposal-page.tsx, proposal-content.tsx,
+   estimate-section.tsx and offer-details-section.tsx. */
+.pwc-proposal-top{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.pwc-tabhead{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.pwc-inc{display:flex;align-items:center;gap:10px;font:400 14px/20px Inter;color:var(--sol-text-secondary);cursor:pointer}
+.pwc-summary{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;flex-wrap:wrap;padding-top:8px}
+.pwc-summary-r{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+/* Full-bleed band. Upstream is -mx-10 px-10 py-22 on ui-medium; the negative
+   margin has to match PwPageLayout's own padding, not Merlin's, so it is a
+   variable rather than a literal. */
+.pwc-band{--bleed:40px;margin:0 calc(var(--bleed) * -1);padding:56px var(--bleed);background:var(--sol-backgrounds-ui-medium)}
+/* Full-bleed hero, same --bleed as the estimate band so both edges line up.
+   16:6 rather than 16:9: a house rendering is wide and short, and 16:9 pushed
+   the scopes card below the fold on every frame. */
+.pwc-hero{--bleed:40px;margin:4px calc(var(--bleed) * -1) 8px;aspect-ratio:16/6;background:var(--sol-backgrounds-ui-medium);overflow:hidden}
+.pwc-hero image-slot{display:block;width:100%;height:100%}
+.pwc-bandinner{max-width:1280px;display:flex;flex-direction:column;gap:24px}
+.pwc-bandhead{display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.pwc-bandhead h2{margin:0;font:700 28px/34px Inter;letter-spacing:-.01em}
+/* estimate-section.tsx's card: rounded-3xl bg-ui-high p-6 shadow-sm */
+.pwc-bandcard{background:var(--sol-backgrounds-ui-high);border-radius:24px;padding:24px;box-shadow:var(--pw-shadow-xs)}
+.pwc-est{width:100%;border-collapse:collapse;font:400 14px/20px Inter}
+.pwc-est th{text-align:left;font:600 12px/18px Inter;letter-spacing:.04em;text-transform:uppercase;color:var(--sol-text-secondary);padding:0 12px 10px 0;border-bottom:1px solid var(--sol-borders-ui-subtle)}
+.pwc-est th.r,.pwc-est td.r{text-align:right;padding-right:0}
+.pwc-est td{padding:9px 12px 9px 0;border-bottom:1px solid var(--sol-borders-ui-subtle);color:var(--pw-ink);font-variant-numeric:tabular-nums}
+.pwc-est td.q{color:var(--sol-text-secondary)}
+/* A scope heading row inside the table: the estimate is grouped by scope now,
+   which is the visible consequence of the layer above it. */
+.pwc-est tr.grp td{font:600 14px/20px Inter;padding-top:18px;color:var(--pw-ink);border-bottom-color:var(--sol-borders-ui-strong)}
+.pwc-est tbody:first-of-type tr.grp td{padding-top:10px}
+/* financing-section.tsx: mt-15, wrapping row of offer cards */
+.pwc-finsec{display:flex;flex-direction:column;gap:24px;margin-top:20px}
+.pwc-fin{display:flex;flex-wrap:wrap;gap:24px}
+/* offer-details-section.tsx: rounded-3xl bg-ui-medium px-10 py-6 */
+.pwc-offer{flex:1 1 260px;min-width:0;background:var(--sol-backgrounds-ui-medium);border-radius:24px;padding:24px 32px;display:flex;flex-direction:column;gap:14px}
+.pwc-offer[data-sel=true]{background:var(--sol-backgrounds-accent-purple);box-shadow:inset 0 0 0 1.5px var(--sol-actions-button)}
+.pwc-offer h3{margin:0 0 2px}
+.pwc-offr{display:flex;justify-content:space-between;gap:12px;font:400 14px/20px Inter;color:var(--sol-text-secondary)}
+.pwc-offr b{font-weight:500;color:var(--pw-ink);font-variant-numeric:tabular-nums;text-align:right}
+/* proposal-page.tsx: PageFooter, sticky bottom-0 z-30 */
+.pwc-footer{position:sticky;bottom:0;z-index:30;margin:32px -40px -40px;padding:16px 40px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;background:var(--sol-backgrounds-ui-high);border-top:1px solid var(--sol-borders-ui-subtle)}
+
+/* ── ProposalCard, on OverviewCard ───────────────────────────────────────────
+   Values lifted from widgets/card/overview-card/overview-card.tsx,
+   widgets/card/proposal-card/proposal-card.tsx and widgets/section/metric.tsx.
+   The first version of this was hand-drawn while the real component sat in the
+   repo listing already in context — this replaces it. */
+.pwc-ovc{display:flex;width:100%;cursor:pointer;flex-direction:column;gap:16px;overflow:hidden;border-radius:16px;border:1px solid var(--sol-borders-ui-subtle);background:var(--sol-backgrounds-ui-high);padding:16px}
+.pwc-ovc:hover{background:var(--sol-states-background-hover)}
+.pwc-ovc:active{background:var(--sol-states-background-pressed)}
+@container page (min-width:750px){.pwc-ovc{flex-direction:row;align-items:center;gap:32px;padding:24px}}
+/* px-12.5 py-8.5 = 50px / 34px around a 32px icon */
+.pwc-ovc-img{display:flex;align-items:center;justify-content:center;overflow:hidden;border-radius:16px;border:1px solid var(--sol-borders-ui-subtle);background:var(--sol-backgrounds-ui-medium);padding:34px 50px;color:var(--sol-text-secondary);flex-shrink:0}
+.pwc-ovc-content{display:flex;flex:1;flex-direction:column;gap:16px;min-width:0}
+.pwc-ovc-head{display:flex;width:100%;align-items:center;gap:4px;flex-wrap:wrap}
+@container page (min-width:750px){.pwc-ovc-head{flex-wrap:nowrap;gap:16px}}
+.pwc-ovc-title{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font:700 16px/24px Inter;color:var(--pw-ink)}
+.pwc-ovc-menu{margin-left:auto;order:99;display:flex;width:32px;height:32px;flex-shrink:0;cursor:pointer;align-items:center;justify-content:center;border:0;border-radius:999px;background:transparent;color:var(--sol-text-secondary);transition:background-color .15s}
+.pwc-ovc-menu:hover{background:var(--sol-borders-ui-subtle)}
+.pwc-ovc-badges{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.pwc-ovc-body{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 40px}
+@container page (min-width:750px){.pwc-ovc-body{display:flex;flex-wrap:wrap;align-items:center;gap:40px}}
+/* metric.tsx, default variant: p3 secondary label over a p2 semibold value */
+.pwc-metric{display:flex;flex-direction:column;gap:4px;min-width:0}
+.pwc-metric .ml{font:400 13px/20px Inter;color:var(--sol-text-secondary)}
+.pwc-metric .mv{font:600 14px/20px Inter;color:var(--sol-text-secondary);font-variant-numeric:tabular-nums}
+/* The Model C addition: the drafted scopes, inside the card's content column.
+   Upstream's card has no scope concept — logged in CHANGES.md. */
+.pwc-ovc-scopes{display:flex;flex-direction:column;gap:0;border-top:1px solid var(--sol-borders-ui-subtle);padding-top:12px}
+.pwc-ovc-s{display:flex;justify-content:space-between;gap:12px;padding:6px 0;font:400 13px/19px Inter;color:var(--pw-ink)}
+.pwc-ovc-s .v{font-weight:500;font-variant-numeric:tabular-nums;white-space:nowrap}
+.pwc-ovc-slab{font:400 13px/20px Inter;color:var(--sol-text-secondary);margin:0 0 2px}
+
+/* Peer rows inside a narrow card stack. The 3-track grid (name | value | badge)
+   needs ~380px; below that the value and badge drop under the name rather than
+   squeezing the name to two words. */
+.pw-cardstack{container-type:inline-size;container-name:card}
+@container card (max-width:340px){
+  .pw-cardstack .pw-lrow{grid-template-columns:minmax(0,1fr);gap:6px}
+  .pw-cardstack .pw-lrow .pw-lval{text-align:left}
+  .pw-cardstack .pw-lrow > span:last-child{justify-self:start}
+}

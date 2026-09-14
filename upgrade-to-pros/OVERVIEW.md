@@ -120,7 +120,8 @@ job and service plan. **Memo 7 adds fourteen more against S14**, ten drawn and f
 | **Earlier model work** | `earlier/` | Superseded. The A against B comparison, the customer model proposal, the open decisions list and the convergence one-pager. Kept because the reasoning is still cited |
 | **Claude Design handoff** | `design-handoff/` | History. The August prompt and the two memos that produced the standalone Pros Web screens. Superseded on structure |
 | **Claude Design context** | `CLAUDE-DESIGN-CONTEXT.md` | **Current, version 3.0 of 14 Sep.** Rewritten after version 2.0 was wrong in three places. Opens with what changed since CD was last briefed |
-| **Claude Design briefs** | `CD-PROMPT-s14-canvas.md` | Round one build brief: fourteen frames, two placeholders, the proposal excluded |
+| **Claude Design briefs** | `CD-PROMPT-s14-canvas.md` | Round one build brief. History |
+| | `CD-PROMPT-s14-round-two.md` | **Current.** Round two: eight frames drawn new, five carried, one redrawn with two moves |
 | **S14 round two** | `memo-8-s14-round-two.html` | **Current.** Six screens reworked from Andrew's review. Memo 7 is round one and is superseded in part |
 | **Review responses** | `CD-REVIEW-01-responses.md` | Twenty five comments, verbatim, with routing. Four needed rulings; two have landed |
 | **Origin financing page migration** | not started | Parked. Two of the pages were located, the third repository never was. See global sources |

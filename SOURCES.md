@@ -80,6 +80,9 @@ editable locally but **not pushable from a session**.
 | **Figma, design system bundles** | A standalone export of a Claude Design prototype is a self-unpacking bundle. The page source and its data are gzipped inside a manifest, not in the visible markup. Extract the manifest and decompress to read them |
 | **Atlassian** | Confluence is reachable through the connector. A tiny link identifier works directly as a page identifier. A parent page may return an empty body, in which case fetch its descendants |
 | **The Linux sandbox** | Has no outbound network access to Figma or GitHub. Fetch through the connectors, not through the shell |
+| **The Linux sandbox, deleting files** | **Deletion in a connected folder is blocked until permission is granted, and the error just says "Operation not permitted".** It does not say permission can be asked for. Ask for the delete permission first rather than probing, or you leave files behind that you also cannot remove. Found 14 Sep 2026 clearing a stale git lock |
+| **Git locks** | A zero-byte `index.lock` a few minutes old, with a readable index and a clean object database, is an interrupted git command rather than damage. **Check nothing is holding it before removing it**, and remember the sandbox cannot see processes on the Mac |
+| **Canvases carried from the design surface** | They link the bound design system project by a path that does not exist in this repository. **Repoint that one line to `reference/merlin-sol-tokens.css`** at the moment of carrying, and verify the tokens the canvas uses are all defined in the mirror |
 
 ---
 

@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="design_doc_mode" content="canvas">
+<title>S14 canvas, fourteen frames</title>
+<!-- Repointed 14 Sep 2026 when the canvas was carried into the repository.
+     On the design surface this line loaded the bound Merlin Design System project.
+     Here it loads our extracted mirror, which is the same 113 semantic Sol tokens
+     and is still missing the radius, spacing and font scales. -->
+<link rel="stylesheet" href="../../reference/merlin-sol-tokens.css">
+<link rel="stylesheet" href="s14-kit.css">
+</head>
+<body>
+
+<!-- ============================== intro ============================== -->
+<section class="fr" style="left:0;width:560px">
+  <div class="fr-label"><span class="n">S14</span><span class="nm">Read this first</span></div>
+  <div class="intro" style="min-height:1010px">
+    <p class="eyebrow">Upgrade to Pros · Iteration 3 · 14 September 2026</p>
+    <h1>One customer, twenty six days, fourteen frames</h1>
+    <p>Carla Brenner calls Brightline Heating and Air at 7:50am on Tuesday 14 July with no cooling in a heat wave. She is a brand new customer. Twenty six days later the county green tags the job and it completes itself. <strong>Read the strip left to right.</strong></p>
+    <p>Frames 01 and 02 are new and are what this round is testing: what a CSR actually does in the first ninety seconds of a call. Frames 03 to 14 are memo 7 drawn as a sequence. <strong>Data is the S14 worked example. Nothing here is invented.</strong></p>
+    <hr>
+    <h2>The three questions this is for</h2>
+    <ol>
+      <li><strong>Does anything tell anyone the container exists?</strong> It is created at 7:52am on frame 03, it holds nothing until frame 08, and no frame mentions it. Frames 05, 08 and 14 are where that bites.</li>
+      <li><strong>Can four status levels be hidden?</strong> S14 has one interest, so no frame shows more than two.</li>
+      <li><strong>Does the strip read as one journey</strong> without the memo open.</li>
+    </ol>
+    <hr>
+    <h2>What is not here</h2>
+    <p>The kitchen table proposal, the payment promise and the two night stall are out of scope this round. The labelled block between frames 07 and 08 holds their place. Frames 06 and 11 are phone surfaces, placeholdered at phone size.</p>
+    <hr>
+    <h2>Conventions</h2>
+    <p><strong>[i]</strong> marks annotation inside a frame and is never interface copy. Labels above and notes below a frame are canvas furniture, not screen copy. No reference codes anywhere. Colour appears where somebody has to act, once per frame at most.</p>
+  </div>
+</section>
+
+<!-- ============================== 01 ============================== -->
+<section class="fr" style="left:648px;width:1440px" data-screen-label="01">
+  <div class="fr-label"><span class="n">01</span><span class="nm">Looking her up</span><span class="w">Tue 14 Jul, 7:50am · Dana Whitlock, front desk · New</span></div>
+  <div class="frame">
+    <div class="pw-page">
+      <div class="pw-crumbs"><a href="#">Customers</a><span class="s">/</span><span>Find</span></div>
+      <div class="pw-titlerow">
+        <div>
+          <h1 class="t-h1">Who is calling</h1>
+          <p class="pw-meta">Inbound call<span class="s">·</span>Taken by Dana Whitlock<span class="s">·</span><span class="now">On the call, 7:50am</span></p>
+        </div>
+        <div class="pw-actions"><button class="pw-btn pri" data-state="off">Take it down as new</button></div>
+      </div>
+      <div class="pw-stack" style="margin-top:22px">
+        <div class="pw-search"><span class="q">Brenner &nbsp; 2214 Tulare Street &nbsp; (559) 555-0173</span><span class="car"></span><span class="cnt">One near match on the address</span></div>
+        <div class="pw-group">
+          <div class="pw-grouphead"><h2>Is she already here</h2></div>
+          <div class="pw-pair wide-l">
+            <div class="pw-card pw-cardstack">
+              <div class="pw-cardhead"><h5>Nearest match</h5><span class="pw-bdg">Needs a look</span></div>
+              <div class="pw-crowlist">
+                <div class="pw-lrow"><div class="pw-lname med">Brenner, W &amp; C<span class="pw-lsub">2214 Tulare St. Matched on the address. Different spelling, no phone on file</span></div><div class="pw-r"><div class="pw-rowacts"><button class="pw-tbtn">Open</button><button class="pw-tbtn" data-on="true">Not the same</button></div></div></div>
+              </div>
+              <div class="pw-crule"></div>
+              <div class="pw-syn one">
+                <div class="pw-synr"><span class="k">Why it is not the same</span><span class="v" style="font-weight:400">Different household. Spelling does not match and there is no phone on file to check it against.<span class="car" style="display:inline-block;vertical-align:-3px;margin-left:2px"></span></span></div>
+              </div>
+            </div>
+            <div class="pw-card pw-cardstack">
+              <div class="pw-cardhead"><h5>What she has given</h5></div>
+              <div class="pw-syn">
+                <div class="pw-synr"><span class="k">Name</span><span class="v">Carla Brenner</span></div>
+                <div class="pw-synr"><span class="k">Mobile</span><span class="v">(559) 555-0173</span></div>
+                <div class="pw-synr"><span class="k">Address</span><span class="v">2214 Tulare Street, Fresno CA 93721</span></div>
+                <div class="pw-synr"><span class="k">Email</span><span class="v none">Not asked for</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="annrow"><span class="ann">[i] The dismissal is an act with a reason, and the reason is what frame 03 shows two minutes later. Nothing here says no duplicates were found, because that would be explanatory copy about a thing that did not happen.</span></p>
+    </div>
+  </div>
+  <p class="fr-note"><strong>New frame.</strong> The first act is a search, not a form, so creating a customer reads as the second choice. One near match exists and it is the whole reason the frame exists: under time pressure a CSR either creates a duplicate or merges two households by accident, and which one happens is decided here.</p>
+</section>
+
+<!-- ============================== 02 ============================== -->
+<section class="fr" style="left:2176px;width:1440px" data-screen-label="02">
+  <div class="fr-label"><span class="n">02</span><span class="nm">Taking it down</span><span class="w">Tue 14 Jul, 7:51am · Still on the call · New</span></div>
+  <div class="frame">
+    <div class="pw-page">
+      <div class="pw-crumbs"><a href="#">Customers</a><span class="s">/</span><a href="#">Find</a><span class="s">/</span><span>New</span></div>
+      <div class="pw-titlerow">
+        <div>
+          <h1 class="t-h1">Take it down</h1>
+          <p class="pw-meta">Inbound call<span class="s">·</span>Dana Whitlock<span class="s">·</span><span class="now">Still on the call, 7:51am</span></p>
+        </div>
+        <div class="pw-actions"><button class="pw-btn">Save and close</button><button class="pw-btn pri" data-state="off">Qualify</button></div>
+      </div>
+      <div class="pw-stack" style="margin-top:22px">
+        <div class="pw-pair wide-l">
+          <div class="pw-card pw-cardstack">
+            <div class="pw-cardhead"><h5>The caller</h5></div>
+            <div class="pw-fldgrid">
+              <div class="pw-fld"><span class="fl">Name</span><span class="fv">Carla Brenner</span></div>
+              <div class="pw-fld"><span class="fl">Mobile</span><span class="fv">(559) 555-0173</span></div>
+              <div class="pw-fld" style="grid-column:1/-1"><span class="fl">Address</span><span class="fv">2214 Tulare Street, Fresno CA 93721</span></div>
+              <div class="pw-fld"><span class="fl">Email</span><span class="fv empty">Not asked for</span></div>
+              <div class="pw-fld"><span class="fl">Second contact</span><span class="fv empty">None yet</span></div>
+            </div>
+            <div class="pw-crule"></div>
+            <div class="pw-syn one">
+              <div class="pw-synr"><span class="k">In their words</span><span class="v q">"Our AC died overnight. How soon can someone look at it?"</span></div>
+            </div>
+          </div>
+          <div class="pw-card pw-cardstack">
+            <div class="pw-cardhead"><h5>One more question</h5></div>
+            <div class="pw-ask">
+              <p class="qq">How old is the system?</p>
+              <div class="pw-opts">
+                <button class="pw-opt">Under 10 years<span class="os">Repair is likely</span></button>
+                <button class="pw-opt">10 to 15 years<span class="os">Could go either way</span></button>
+                <button class="pw-opt">More than 15<span class="os">Replacement conversation</span></button>
+              </div>
+              <p class="qw">Carla is answering. "About seventeen, I think."</p>
+            </div>
+            <div class="pw-crule"></div>
+            <div class="pw-cardhead"><h5 style="font:700 13px/20px var(--inter)">Where this goes</h5><span class="t-p4 muted">Waiting on the answer</span></div>
+            <div class="pw-crowlist">
+              <div class="pw-lrow dim"><div class="pw-lname">Comfort advisor<span class="pw-lsub">A replacement conversation, priced at the house</span></div><div class="pw-r"><span class="pw-lval">&nbsp;</span></div></div>
+              <div class="pw-lrow dim"><div class="pw-lname">Service technician<span class="pw-lsub">Diagnose and repair</span></div><div class="pw-r"><span class="pw-lval">&nbsp;</span></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="annrow"><span class="ann">[i] Three fields and one question, drawn to two different patterns on purpose. The fields are capture. The question is a routing decision, and until it is answered the primary action does not exist. Frame 03 is this screen finished.</span></p>
+    </div>
+  </div>
+  <p class="fr-note"><strong>New frame, drawn mid flight.</strong> The system age question decides whether this goes to an advisor or a technician, so it must not look like the three fields beside it. The pair of frames is what makes beat 1 read as a triage rather than a capture.</p>
+</section>
+
+<!-- ============================== 03 ============================== -->
+<section class="fr" style="left:3704px;width:1440px" data-screen-label="03">
+  <div class="fr-label"><span class="n">03</span><span class="nm">The inquiry, ready to qualify</span><span class="w">Tue 14 Jul, 7:52am · Memo section A</span></div>
+  <div class="frame">
+    <div class="pw-page">
+      <div class="pw-crumbs"><a href="#">Inquiries</a><span class="s">/</span><span>New</span></div>
+      <div class="pw-titlerow">
+        <div>
+          <h1 class="t-h1">New inquiry</h1>
+          <p class="pw-meta">Inbound call<span class="s">·</span>Taken by Dana Whitlock<span class="s">·</span><span class="now">7:50am</span></p>
+        </div>
+        <div class="pw-actions"><button class="pw-btn">Save and close</button><button class="pw-btn pri">Qualify</button></div>
+      </div>
+      <div class="pw-stack" style="margin-top:22px">
+        <div class="pw-group">
+          <div class="pw-grouphead"><h2>Who is calling</h2></div>
+          <div class="pw-pair wide-l">
+            <div class="pw-card pw-cardstack">
+              <div class="pw-cardhead"><h5>Caller</h5><span class="pw-bdg">No match</span></div>
+              <div class="pw-syn">
+                <div class="pw-synr"><span class="k">Name</span><span class="v">Carla Brenner</span></div>
+                <div class="pw-synr"><span class="k">Mobile</span><span class="v">(559) 555-0173</span></div>
+                <div class="pw-synr"><span class="k">Email</span><span class="v none">Not given</span></div>
+                <div class="pw-synr"><span class="k">Address</span><span class="v">2214 Tulare Street, Fresno CA 93721</span></div>
+              </div>
+              <div class="pw-crule"></div>
+              <div class="pw-crowlist">
+                <div class="pw-lrow dim"><div class="pw-lname">Brenner, W &amp; C · 2214 Tulare St<span class="pw-lsub">Closest match on address. Different spelling, no phone on file</span></div><div class="pw-r"><span class="pw-lval">Not the same</span><span class="pw-lst">Dismissed 7:51am</span></div></div>
+              </div>
+            </div>
+            <div class="pw-card pw-cardstack">
+              <div class="pw-cardhead"><h5>The property</h5></div>
+              <div class="pw-syn one">
+                <div class="pw-synr"><span class="k">Address, as given on the call</span><span class="v">2214 Tulare Street, Fresno CA 93721</span></div>
+              </div>
+              <div class="pw-crule"></div>
+              <div class="pw-syn">
+                <div class="pw-synr"><span class="k">Built</span><span class="v none">Unknown</span></div>
+                <div class="pw-synr"><span class="k">Size</span><span class="v none">Unknown</span></div>
+              </div>
+              <p class="pw-missing" style="margin:2px 0 0">Nothing else is known about this address.</p>
+            </div>
+          </div>
+        </div>
+        <div class="pw-group">
+          <div class="pw-grouphead"><h2>What they want</h2></div>
+          <div class="pw-pair">
+            <div class="pw-card pw-cardstack">
+              <div class="pw-cardhead"><h5>In their words</h5></div>
+              <div class="pw-syn one">
+                <div class="pw-synr"><span class="v q">"Our AC died overnight. How soon can someone look at it?"</span></div>
+              </div>
+              <div class="pw-crule"></div>
+              <div class="pw-syn">
+                <div class="pw-synr"><span class="k">Trade</span><span class="v">Air conditioning</span></div>
+                <div class="pw-synr"><span class="k">Cooling now</span><span class="v">None at all</span></div>
+                <div class="pw-synr"><span class="k">System age</span><span class="v">About 17 years</span></div>
+                <div class="pw-synr"><span class="k">Refrigerant</span><span class="v">R-22</span></div>
+              </div>
+            </div>
+            <div class="pw-card pw-cardstack">
+              <div class="pw-cardhead"><h5>Where this goes</h5></div>
+              <div class="pw-crowlist">
+                <div class="pw-lrow"><div class="pw-lname med">Comfort advisor<span class="pw-lsub">Seventeen years and R-22. A replacement conversation</span></div><div class="pw-r"><span class="pw-lval">Selected</span></div></div>
+                <div class="pw-lrow dim"><div class="pw-lname">Service technician<span class="pw-lsub">Diagnose and repair</span></div><div class="pw-r"><span class="pw-lval">&nbsp;</span></div></div>
+              </div>
+              <div class="pw-crule"></div>
+              <div class="pw-syn one">
+                <div class="pw-synr"><span class="k">Dana's note</span><span class="v" style="font-weight:400">AC out overnight, no cooling at all. System is about seventeen years old, R-22. Sending to an advisor rather than a tech. Carla is home this afternoon.</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="annrow"><span class="ann">[i] Qualify is the only primary action. Pressing it creates the customer, the property, the lead and the container, in that order, and none of those four words appear on this screen.</span></p>
+    </div>
+  </div>
+  <p class="fr-note">The dismissed match from frame 01 is now a row with a reason and a time. One badge on the screen: a CSR needs to know they are about to create a customer before they read anything.</p>
+</section>
+
+<!-- ============================== 04 ============================== -->
+<section class="fr" style="left:5232px;width:1440px" data-screen-label="04">
+  <div class="fr-label"><span class="n">04</span><span class="nm">Booking the advisor</span><span class="w">Tue 14 Jul, 7:54am · Memo section B</span></div>
+  <div class="frame">
+    <div class="pw-page">
+      <div class="pw-crumbs"><a href="#">Customers</a><span class="s">/</span><a href="#">Carla Brenner</a><span class="s">/</span><span>Air conditioning</span></div>
+      <div class="pw-titlerow">
+        <div>
+          <h1 class="t-h1">Book a sales visit</h1>
+          <p class="pw-meta">Air conditioning<span class="s">·</span>2214 Tulare Street<span class="s">·</span><span class="now">Carla is home this afternoon</span></p>
+        </div>
+        <div class="pw-actions"><button class="pw-btn">Skip for now</button><button class="pw-btn pri">Book and text Carla</button></div>
+      </div>
+      <div class="pw-stack" style="margin-top:22px">
+        <div class="pw-pair wide-l">
+          <div class="pw-card pw-cardstack">
+            <div class="pw-cardhead"><h5>Who can go</h5><div class="pw-seg"><button class="pw-segi" data-on="true">Today 2</button><button class="pw-segi">Tomorrow 5</button><button class="pw-segi">This week 11</button></div></div>
+            <div class="pw-crowlist">
+              <div class="pw-lrow"><div class="pw-lname med">Terrell Boyd<span class="pw-lsub">4:00pm. Two jobs before this one, last one ends at 3:10 in Sunnyside</span></div><div class="pw-r"><span class="pw-lval">4:00pm</span><span class="pw-lst">22 minutes away</span></div></div>
+              <div class="pw-lrow"><div class="pw-lname">Terrell Boyd<span class="pw-lsub">6:30pm. After his last call</span></div><div class="pw-r"><span class="pw-lval">6:30pm</span><span class="pw-lst">Outside Carla's window</span></div></div>
+              <div class="pw-lrow dim"><div class="pw-lname">Nia Okonkwo<span class="pw-lsub">Booked solid until Thursday</span></div><div class="pw-r"><span class="pw-lval">Thu 8:00am</span><span class="pw-lst">Two days out</span></div></div>
+            </div>
+          </div>
+          <div class="pw-card pw-cardstack">
+            <div class="pw-cardhead"><h5>What Carla will get</h5></div>
+            <div class="pw-syn one">
+              <div class="pw-synr"><span class="k">Text to (559) 555-0173</span><span class="v" style="font-weight:400">Brightline Heating and Air: Terrell will be with you today between 4 and 5pm. Reply to this message if anything changes.</span></div>
+            </div>
+            <div class="pw-crule"></div>
+            <div class="pw-syn">
+              <div class="pw-synr"><span class="k">Arrival window</span><span class="v">4:00 to 5:00pm</span></div>
+              <div class="pw-synr"><span class="k">Reminder</span><span class="v">One hour before</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="annrow"><span class="ann">[i] Availability, travel time and the confirmation text are all drawn. None of the three exists in any model, ours or theirs.</span></p>
+    </div>
+  </div>
+  <p class="fr-note">Same day booking is the product here, not a detail: the call is at 7:50am in a heat wave and the advisor arrives at 4:10pm. The second Terrell row is deliberate, because the choice is a slot rather than a person.</p>
+</section>
+
+<!-- ============================== 05 ============================== -->
+<section class="fr" style="left:6760px;width:1440px" data-screen-label="05">
+  <div class="fr-label"><span class="n">05</span><span class="nm">What exists when she puts the phone down</span><span class="w">Tue 14 Jul, 7:56am · Memo section C</span></div>
+  <div class="frame">
+    <div class="pw-page">
+      <div class="pw-crumbs"><a href="#">Customers</a><span class="s">/</span><a href="#">Carla Brenner</a><span class="s">/</span><span>Air conditioning</span></div>
+      <div class="pw-titlerow">
+        <div>
+          <h1 class="t-h1">Air conditioning</h1>
+          <p class="pw-meta">Carla Brenner<span class="s">·</span>2214 Tulare Street, Fresno<span class="s">·</span><span class="now">Inbound call, 21 minutes ago</span></p>
+        </div>
+        <div class="pw-actions"><button class="pw-btn">Add another interest</button><button class="pw-kebab">&#8943;</button></div>
+      </div>
+      <div class="pw-stack" style="margin-top:22px">
+        <div class="pw-pair wide-l">
+          <div class="pw-card pw-cardstack">
+            <div class="pw-cardhead"><h5>What they asked about</h5></div>
+            <div class="pw-crowlist">
+              <div class="pw-lrow"><div class="pw-lname med">Air conditioning<span class="pw-lsub">Inbound call, 14 Jul. System is 17 years old, R-22, no cooling</span></div><div class="pw-r"><span class="pw-lval">Not yet priced</span><span class="pw-lst">Pursuing</span></div></div>
+            </div>
+            <p class="pw-missing" style="margin:2px 0 0">One interest. Nothing else has been mentioned.</p>
+          </div>
+          <div class="pw-card pw-cardstack">
+            <div class="pw-cardhead"><h5>What happens next</h5></div>
+            <div class="pw-crowlist">
+              <div class="pw-lrow"><div class="pw-lname">Sales visit<span class="pw-lsub">Terrell Boyd, today between 4 and 5pm</span></div><div class="pw-r"><span class="pw-lval">Today</span><span class="pw-lst">Confirmed by text</span></div></div>
+              <div class="pw-lrow dim"><div class="pw-lname">Site assessment<span class="pw-lsub">Terrell works it on the visit</span></div><div class="pw-r"><span class="pw-lval">&nbsp;</span><span class="pw-lst">Not started</span></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="pw-pair">
+          <div class="pw-card pw-cardstack">
+            <div class="pw-cardhead"><h5>Customer</h5><span class="pw-bdg">New</span></div>
+            <div class="pw-syn">
+              <div class="pw-synr"><span class="k">Carla Brenner</span><span class="v">(559) 555-0173</span></div>
+              <div class="pw-synr"><span class="k">Customer since</span><span class="v">Today, 7:52am</span></div>
+            </div>
+            <div class="pw-crule"></div>
+            <p class="pw-missing" style="margin:0">No past work, no service plan, no equipment on file.</p>
+          </div>
+          <div class="pw-card pw-cardstack">
+            <div class="pw-cardhead"><h5>Notes</h5></div>
+            <div class="pw-note-item">
+              <div class="pw-note-h"><span class="ty">Intake</span><span>Dana Whitlock</span><span>7:52am</span></div>
+              <p>AC out overnight, no cooling at all. System is about seventeen years old, R-22. Sending to an advisor rather than a tech. Carla is home this afternoon.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="annrow"><span class="ann">[i] Treatment 1 of 3. The container exists, is four minutes old, and is not mentioned. The page is the lead, titled by its one interest.</span></p>
+    </div>
+  </div>
+  <p class="fr-note"><strong>First of the three places the open question bites.</strong> Two treatments are not drawn: name the container from the first minute, or never show it at all. Titling the page by its single interest does not survive the Thompson case, where there are three.</p>
+</section>
+
+<!-- ============================== 06 placeholder ============================== -->
+<section class="fr" style="left:8288px;width:390px" data-screen-label="06">
+  <div class="fr-label"><span class="n">06</span><span class="nm">The assessment, in the attic</span></div>
+  <div class="phone">
+    <span class="t">Site assessment, on a phone</span>
+    <p>Not drawn. A trade specific capture flow worked one handed in an attic, with a camera step, and the question of what happens when the signal drops.</p>
+    <p style="margin-top:14px">Tue 14 Jul, 4:10pm. Terrell Boyd.</p>
+  </div>
+  <p class="fr-note"><strong>Placeholder.</strong> What a site assessment is has not been settled and is running as its own thread, so drawing a form would pick an answer by accident. It stands in for three or four screens, not one.</p>
+</section>
+
+<!-- ============================== 07 ============================== -->
+<section class="fr" style="left:8766px;width:1440px" data-screen-label="07">
+  <div class="fr-label"><span class="n">07</span><span class="nm">The assessment, from the office</span><span class="w">Wed 15 Jul, 8:15am · Memo section E</span></div>
+  <div class="frame">
+    <div class="pw-page">
+      <div class="pw-crumbs"><a href="#">Customers</a><span class="s">/</span><a href="#">Carla Brenner</a><span class="s">/</span><a href="#">Air conditioning</a><span class="s">/</span><span>Site assessment</span></div>
+      <div class="pw-titlerow">
+        <div>
+          <h1 class="t-h1">Site assessment</h1>
+          <p class="pw-meta">Terrell Boyd<span class="s">·</span>Worked on site 14 Jul, 4:12 to 4:38pm<span class="s">·</span><span class="now">Complete</span></p>
+        </div>
+        <div class="pw-actions"><button class="pw-btn">Open the proposal</button></div>
+      </div>
+      <div class="pw-stack" style="margin-top:22px">
+        <div class="pw-pair">
+          <div class="pw-card pw-cardstack">
+            <div class="pw-cardhead"><h5>The existing system</h5></div>
+            <div class="pw-syn">
+              <div class="pw-synr"><span class="k">Age</span><span class="v">17 years</span></div>
+              <div class="pw-synr"><span class="k">Refrigerant</span><span class="v">R-22</span></div>
+              <div class="pw-synr"><span class="k">Tonnage</span><span class="v">2.5 ton</span></div>
+              <div class="pw-synr"><span class="k">Coil</span><span class="v">Rusted</span></div>
+            </div>
+            <div class="pw-crule"></div>
+            <div class="pw-syn one">
+              <div class="pw-synr"><span class="k">Nameplate</span><span class="v" style="font-weight:400">One photograph, taken on site</span></div>
+            </div>
+          </div>
+          <div class="pw-card pw-cardstack">
+            <div class="pw-cardhead"><h5>The house around it</h5></div>
+            <div class="pw-syn">
+              <div class="pw-synr"><span class="k">Ductwork</span><span class="v">Sound</span></div>
+              <div class="pw-synr"><span class="k">Electrical panel</span><span class="v">One free slot</span></div>
+              <div class="pw-synr"><span class="k">Pad location</span><span class="v">West elevation</span></div>
+              <div class="pw-synr"><span class="k">Driveway to pad</span><span class="v">About 40 feet</span></div>
+            </div>
+            <div class="pw-crule"></div>
+            <p class="pw-missing" style="margin:0">No remedial work needed before a replacement.</p>
+          </div>
+        </div>
+        <div class="pw-card pw-cardstack">
+          <div class="pw-cardhead"><h5>What Terrell wrote</h5></div>
+          <div class="pw-note-item">
+            <div class="pw-note-h"><span class="ty">Assessment</span><span>Terrell Boyd</span><span>14 Jul, 5:10pm</span></div>
+            <p>Seventeen-year-old 2.5-ton R-22 unit, coil badly rusted, not worth repairing. Ducts are sound and the panel has a free slot, so a straight replacement with no remedial work. Nameplate photographed.</p>
+          </div>
+        </div>
+      </div>
+      <p class="annrow"><span class="ann">[i] No live indicator and no partial state. Rosa is reading a finished record the morning after, which is what the script describes.</span></p>
+    </div>
+  </div>
+  <p class="fr-note">The office review only, as asked. Two people on one record does not mean two people on it at once, so this is a completed record with an author and a time. The findings split into the system, which drives what gets sold, and the house, which drives what the install has to cope with.</p>
+</section>
+
+<!-- ============================== out of scope ============================== -->
+<section class="fr" style="left:10294px;width:380px">
+  <div class="fr-label"><span class="n">gap</span><span class="nm">Out of scope this round</span></div>
+  <div class="gapblk">
+    <p class="k">Memo sections F and G</p>
+    <span class="t">The proposal, the payment promise and the two night stall are not on this canvas.</span>
+    <p>Good, better and best at the kitchen table on Tuesday at 4:40pm. The promise of half by cheque at the start and half at the end. Two nights with no answer, and the signature from Wes's phone on Thursday at 8:04am.</p>
+    <p style="margin-top:10px"><strong>Frame 08 opens with the work already sold.</strong> The sale does not happen by magic; it happens here, and it is excluded from this round rather than missing.</p>
+  </div>
+  <p class="fr-note">Seven of the twenty six days sit in this gap, and so does the money conversation that frame 12 refers back to.</p>
+</section>
+
+<!-- ============================== 08 ============================== -->
+<section class="fr" style="left:10762px;width:1440px" data-screen-label="08">
+  <div class="fr-label"><span class="n">08</span><span class="nm">The hand-off</span><span class="w">Thu 16 Jul, 8:30am · Memo section H</span></div>
+  <div class="frame">
+    <div class="pw-page">
+      <div class="pw-crumbs"><a href="#">Work</a><span class="s">/</span><a href="#">To plan</a><span class="s">/</span><span>Air conditioning, Brenner</span></div>
+      <div class="pw-titlerow">
+        <div>
+          <h1 class="t-h1">Air conditioning replacement</h1>
+          <p class="pw-meta">Carla and Wes Brenner<span class="s">·</span>2214 Tulare Street, Fresno<span class="s">·</span><span class="now">Sold 26 minutes ago</span></p>
+        </div>
+        <div class="pw-actions"><button class="pw-btn">Save draft</button><button class="pw-btn pri">Ready to schedule</button></div>
+      </div>
+      <div class="pw-stack" style="margin-top:22px">
+        <div class="pw-pair wide-r">
+          <div class="pw-card pw-cardstack">
+            <div class="pw-cardhead"><h5>What was sold</h5></div>
+            <div class="pw-syn one">
+              <div class="pw-synr"><span class="k">Option</span><span class="v">Better, a two-stage condenser, matched coil, new pad and surge protector</span></div>
+            </div>
+            <div class="pw-crule"></div>
+            <div class="pw-cardrows">
+              <div class="pw-crow"><span class="cl">Contract</span><span class="cv">$12,800</span></div>
+              <div class="pw-crow"><span class="cl">Signed</span><span class="cv">Both, 8:04am</span></div>
+            </div>
+            <div class="pw-crule"></div>
+            <div class="pw-crowlist">
+              <div class="pw-lrow"><div class="pw-lname">Site assessment<span class="pw-lsub">Terrell Boyd, 14 Jul. Six findings, one photograph</span></div><div class="pw-r"><span class="pw-lval">Read</span></div></div>
+              <div class="pw-lrow"><div class="pw-lname">Notes from selling<span class="pw-lsub">Three, from Dana and Terrell</span></div><div class="pw-r"><span class="pw-lval">Read</span></div></div>
+            </div>
+          </div>
+          <div class="pw-card pw-cardstack">
+            <div class="pw-cardhead"><h5>The work, as Rosa writes it</h5></div>
+            <div class="pw-syn one">
+              <div class="pw-synr"><span class="v" style="font-weight:400">Pull the old condenser and coil. Set the new pad. Set the two-stage condenser and matched coil. Evacuate and charge. Tie into the existing ducts. Land the surge protector in the free slot. Commission.</span></div>
+            </div>
+            <div class="pw-crule"></div>
+            <div class="pw-cardhead"><h5 style="font:700 13px/20px var(--inter)">Materials</h5><span class="t-p4 muted">Four of seven came from the option</span></div>
+            <div class="pw-crowlist">
+              <div class="pw-lrow"><div class="pw-lname">Two-stage 2.5 ton condenser<span class="pw-lsub">From the option</span></div><div class="pw-r"><span class="pw-lval">$2,940</span></div></div>
+              <div class="pw-lrow"><div class="pw-lname">Matched evaporator coil<span class="pw-lsub">From the option</span></div><div class="pw-r"><span class="pw-lval">$1,180</span></div></div>
+              <div class="pw-lrow"><div class="pw-lname">Line set and fittings<span class="pw-lsub">Added by Rosa</span></div><div class="pw-r"><span class="pw-lval">$240</span></div></div>
+              <div class="pw-lrow"><div class="pw-lname">Refrigerant, R-454B<span class="pw-lsub">Added by Rosa</span></div><div class="pw-r"><span class="pw-lval">$150</span></div></div>
+              <div class="pw-lrow dim"><div class="pw-lname">Pad, whip and disconnect, surge protector<span class="pw-lsub">From the option</span></div><div class="pw-r"><span class="pw-lval">$325</span></div></div>
+              <div class="pw-lrow dim"><div class="pw-lname">Disposal of the old unit<span class="pw-lsub">Added by Rosa</span></div><div class="pw-r"><span class="pw-lval">$95</span></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="pw-pair wide-l">
+          <div class="pw-card pw-cardstack">
+            <div class="pw-cardhead"><h5>What has to happen</h5><span class="t-p4 muted">Air conditioning replacement</span></div>
+            <div>
+              <div class="pw-tk"><span class="pw-tkbx"></span><span>Confirm equipment model and location</span></div>
+              <div class="pw-tk"><span class="pw-tkbx"></span><span>Pull electrical permits</span></div>
+              <div class="pw-tk"><span class="pw-tkbx"></span><span>Schedule disposal</span></div>
+              <div class="pw-tk"><span class="pw-tkbx"></span><span>Schedule crew</span></div>
+              <div class="pw-tk"><span class="pw-tkbx"></span><span>Close electrical permit<span class="pw-tksub">After inspection</span></span></div>
+            </div>
+            <div class="pw-crule"></div>
+            <p class="pw-missing" style="margin:0">Add a step, or start from a different job type.</p>
+          </div>
+          <div class="pw-card pw-cardstack">
+            <div class="pw-cardhead"><h5>Stage</h5></div>
+            <div class="pw-rail">
+              <div class="pw-railboard">Air conditioning replacement<span class="n">Brightline</span></div>
+              <div class="pw-stg" data-state="now"><span class="pw-stgdot"></span><span class="pw-stgname">To plan</span><span class="pw-stgmeta">26 minutes</span></div>
+              <div class="pw-stg"><span class="pw-stgdot"></span><span class="pw-stgname">Ready to schedule</span><span class="pw-stgmeta">&nbsp;</span></div>
+              <div class="pw-stg"><span class="pw-stgdot"></span><span class="pw-stgname">Scheduled</span><span class="pw-stgmeta">&nbsp;</span></div>
+              <div class="pw-stg"><span class="pw-stgdot"></span><span class="pw-stgname">On site</span><span class="pw-stgmeta">&nbsp;</span></div>
+              <div class="pw-stg"><span class="pw-stgdot"></span><span class="pw-stgname">Waiting on the county</span><span class="pw-stgmeta">&nbsp;</span></div>
+              <div class="pw-stg"><span class="pw-stgdot"></span><span class="pw-stgname">Complete</span><span class="pw-stgmeta">&nbsp;</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="annrow"><span class="ann">[i] One screen, four acts. Reading the sale, writing the scope, itemising materials and authoring a task list are one beat in the script and four decisions here.</span></p>
+    </div>
+  </div>
+  <p class="fr-note"><strong>Drawn as one screen to show that it should not be.</strong> Ready to schedule is available before any of the four acts is finished. The material provenance is the value of the hand-off: it says what the sale committed to and what production worked out afterwards. Second place the open question bites: the container now holds a signed contract and a job, and is still not mentioned.</p>
+</section>
+
+<!-- ============================== 09 ============================== -->
+<section class="fr" style="left:12290px;width:1440px" data-screen-label="09">
+  <div class="fr-label"><span class="n">09</span><span class="nm">Getting it ready</span><span class="w">Fri 17 Jul, 9:05 to 9:40am · Memo section I</span></div>
+  <div class="frame">
+    <div class="pw-page">
+      <div class="pw-crumbs"><a href="#">Work</a><span class="s">/</span><a href="#">Ready to schedule</a><span class="s">/</span><span>Air conditioning, Brenner</span></div>
+      <div class="pw-titlerow">
+        <div>
+          <h1 class="t-h1">Air conditioning replacement</h1>
+          <p class="pw-meta">2214 Tulare Street, Fresno<span class="s">·</span><span class="now">Scheduled for Thu 23 Jul</span></p>
+        </div>
+        <div class="pw-actions"><button class="pw-btn">Message the crew</button><button class="pw-kebab">&#8943;</button></div>
+      </div>
+      <div class="pw-stack" style="margin-top:22px">
+        <div class="pw-group">
+          <div class="pw-grouphead"><h2>The visit</h2></div>
+          <div class="pw-pair">
+            <div class="pw-card pw-cardstack">
+              <div class="pw-cardhead"><h5>When and who</h5></div>
+              <div class="pw-syn">
+                <div class="pw-synr"><span class="k">Date</span><span class="v">Thursday 23 July</span></div>
+                <div class="pw-synr"><span class="k">Arrival</span><span class="v">7:30am</span></div>
+                <div class="pw-synr"><span class="k">Expected</span><span class="v">One day</span></div>
+                <div class="pw-synr"><span class="k">Booked</span><span class="v">17 Jul, 9:05am</span></div>
+              </div>
+              <div class="pw-crule"></div>
+              <div class="pw-crowlist">
+                <div class="pw-lrow"><div class="pw-lname">Vic Santoro<span class="pw-lsub">Crew lead</span></div><div class="pw-r"><span class="pw-lval">Assigned</span></div></div>
+                <div class="pw-lrow"><div class="pw-lname">Eli Nakamura<span class="pw-lsub">Installer</span></div><div class="pw-r"><span class="pw-lval">Assigned</span></div></div>
+              </div>
+            </div>
+            <div class="pw-card pw-cardstack">
+              <div class="pw-cardhead"><h5>Ready for the day</h5><div class="pw-seg"><button class="pw-segi" data-on="true">Blocking 0</button><button class="pw-segi">All 3</button></div></div>
+              <div class="pw-crowlist">
+                <div class="pw-lrow"><div class="pw-lname">Equipment on order<span class="pw-lsub">Valley Mechanical Supply, sent by email 9:20am</span></div><div class="pw-r"><span class="pw-lval">Due 22 Jul</span><span class="pw-lst">One day before</span></div></div>
+                <div class="pw-lrow"><div class="pw-lname">Mechanical permit<span class="pw-lsub">Fresno County, filed 9:40am</span></div><div class="pw-r"><span class="pw-lval">Filed</span></div></div>
+                <div class="pw-lrow"><div class="pw-lname">Electrical permit<span class="pw-lsub">Fresno County, filed 9:40am</span></div><div class="pw-r"><span class="pw-lval">Filed</span></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="pw-group">
+          <div class="pw-grouphead"><h2>The order</h2></div>
+          <div class="pw-pair wide-l">
+            <div class="pw-card pw-cardstack">
+              <div class="pw-cardhead"><h5>Valley Mechanical Supply</h5><span class="t-p4 muted">Emailed 17 Jul</span></div>
+              <div class="pw-crowlist">
+                <div class="pw-lrow"><div class="pw-lname">Two-stage 2.5 ton condenser</div><div class="pw-r"><span class="pw-lval">$2,940</span><span class="pw-lst">Due 22 Jul</span></div></div>
+                <div class="pw-lrow"><div class="pw-lname">Matched evaporator coil</div><div class="pw-r"><span class="pw-lval">$1,180</span><span class="pw-lst">Due 22 Jul</span></div></div>
+                <div class="pw-lrow"><div class="pw-lname">Line set and fittings</div><div class="pw-r"><span class="pw-lval">$240</span><span class="pw-lst">Due 22 Jul</span></div></div>
+                <div class="pw-lrow"><div class="pw-lname">Condenser pad</div><div class="pw-r"><span class="pw-lval">$85</span><span class="pw-lst">Due 22 Jul</span></div></div>
+              </div>
+              <div class="pw-crule"></div>
+              <div class="pw-crow tot"><span class="cl">Ordered</span><span class="cv">$4,445</span></div>
+            </div>
+            <div class="pw-card pw-cardstack">
+              <div class="pw-cardhead"><h5>What has happened</h5></div>
+              <ul class="pw-timeline">
+                <li><p class="e">Permits filed with Fresno County</p><p class="dt">17 Jul, 9:40am · Rosa Iglesias</p></li>
+                <li><p class="e">Purchase order emailed to the distributor</p><p class="dt">17 Jul, 9:20am · Rosa Iglesias</p></li>
+                <li><p class="e">Visit booked and crew assigned</p><p class="dt">17 Jul, 9:05am · Rosa Iglesias</p></li>
+                <li><p class="e">Job created at the hand-off</p><p class="dt">16 Jul, 8:04am</p></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="annrow"><span class="ann">[i] The readiness card is the one invention on this screen. Nothing in either model links an order or a permit to the visit that depends on it.</span></p>
+    </div>
+  </div>
+  <p class="fr-note">No colour anywhere, because nothing needs acting on. That is what makes the amber on frame 10 mean something. The segment reads Blocking 0 so the card answers its question before anything is clicked.</p>
+</section>
+
+<!-- ============================== 10 ============================== -->
+<section class="fr" style="left:13818px;width:1440px" data-screen-label="10">
+  <div class="fr-label"><span class="n">10</span><span class="nm">The backorder</span><span class="w">Mon 20 Jul, 11:15am · Memo section J</span></div>
+  <div class="frame">
+    <div class="pw-page">
+      <div class="pw-crumbs"><a href="#">Work</a><span class="s">/</span><a href="#">Scheduled</a><span class="s">/</span><span>Air conditioning, Brenner</span></div>
+      <div class="pw-titlerow">
+        <div>
+          <h1 class="t-h1">Air conditioning replacement</h1>
+          <p class="pw-meta">2214 Tulare Street, Fresno<span class="s">·</span><span class="now">Moved to Thu 30 Jul</span></p>
+        </div>
+        <div class="pw-actions"><button class="pw-btn">Message the crew</button><button class="pw-kebab">&#8943;</button></div>
+      </div>
+      <div class="pw-stack" style="margin-top:22px">
+        <div class="pw-attn"><span class="ic">&#9888;</span><div><strong>The condenser will not arrive before Thursday.</strong> Valley Mechanical now say the 28th. The visit and the crew have moved to 30 July; Carla has not been told.</div><a href="#">Call Carla</a></div>
+        <div class="pw-pair">
+          <div class="pw-card pw-cardstack">
+            <div class="pw-cardhead"><h5>Ready for the day</h5><div class="pw-seg"><button class="pw-segi" data-on="true">Blocking 1</button><button class="pw-segi">All 3</button></div></div>
+            <div class="pw-crowlist">
+              <div class="pw-lrow"><div class="pw-lname med">Two-stage condenser<span class="pw-lsub">Backordered. Valley Mechanical, 20 Jul</span></div><div class="pw-r"><span class="pw-lval">Due 28 Jul</span><span class="pw-lst attn">Was 22 Jul</span></div></div>
+              <div class="pw-lrow dim"><div class="pw-lname">Everything else on the order<span class="pw-lsub">Coil, line set, pad</span></div><div class="pw-r"><span class="pw-lval">Due 22 Jul</span></div></div>
+              <div class="pw-lrow dim"><div class="pw-lname">Both permits<span class="pw-lsub">Filed 17 Jul</span></div><div class="pw-r"><span class="pw-lval">Filed</span></div></div>
+            </div>
+          </div>
+          <div class="pw-card pw-cardstack">
+            <div class="pw-cardhead"><h5>What moved with it</h5></div>
+            <div class="pw-crowlist">
+              <div class="pw-lrow"><div class="pw-lname">Install visit<span class="pw-lsub">Thu 23 Jul, 7:30am</span></div><div class="pw-r"><span class="pw-lval">Thu 30 Jul</span><span class="pw-lst">Moved by Rosa</span></div></div>
+              <div class="pw-lrow"><div class="pw-lname">Vic Santoro and Eli Nakamura<span class="pw-lsub">Both were booked for the 23rd</span></div><div class="pw-r"><span class="pw-lval">Thu 30 Jul</span><span class="pw-lst">Moved with the visit</span></div></div>
+              <div class="pw-lrow"><div class="pw-lname">Disposal<span class="pw-lsub">Booked for the same day</span></div><div class="pw-r"><span class="pw-lval">Thu 30 Jul</span><span class="pw-lst">Moved with the visit</span></div></div>
+              <div class="pw-lrow"><div class="pw-lname med">Telling Carla<span class="pw-lsub">She was promised the 23rd</span></div><div class="pw-r"><span class="pw-lval">Not done</span><span class="pw-lst attn">Nothing has been sent</span></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="pw-card pw-cardstack">
+          <div class="pw-cardhead"><h5>Notes</h5></div>
+          <div class="pw-note-item">
+            <div class="pw-note-h"><span class="ty">Delay</span><span>Rosa Iglesias</span><span>20 Jul, 11:20am</span></div>
+            <p>Condenser backordered to the 28th. Moved the install to the 30th and called Carla. She was fine about it but asked whether anything could be done in the meantime, and there is not.</p>
+          </div>
+        </div>
+      </div>
+      <p class="annrow"><span class="ann">[i] Drawn at 11:15am, four minutes before Rosa writes her note. The customer row reads Not done because in the script the call is a separate act with no record behind it.</span></p>
+    </div>
+  </div>
+  <p class="fr-note"><strong>Same card as frame 09.</strong> Blocking 0 becomes Blocking 1 and nothing else about it moves: one component with declared states, not two near-identical siblings. Telling Carla is an unmodelled obligation sitting in a list next to three modelled ones, which is uncomfortable on purpose.</p>
+</section>
+
+<!-- ============================== 11 placeholder ============================== -->
+<section class="fr" style="left:15346px;width:390px" data-screen-label="11">
+  <div class="fr-label"><span class="n">11</span><span class="nm">Install day</span></div>
+  <div class="phone">
+    <span class="t">The day, on a phone in a side yard</span>
+    <p>Not drawn. Three checklists, two photo sets, a registry entry and a warranty registration, worked outdoors in July by somebody wearing gloves.</p>
+    <p style="margin-top:14px">Thu 30 Jul, 7:30am to 4:30pm. Vic Santoro.</p>
+  </div>
+  <p class="fr-note"><strong>Placeholder.</strong> A field surface, and this round is testing demand. The one structural thing inside it matters to the strip: model and serial go into the registry against the property, and the rebate filing on frame 13 reads that entry a day later.</p>
+</section>
+
+<!-- ============================== 12 ============================== -->
+<section class="fr" style="left:15824px;width:1440px" data-screen-label="12">
+  <div class="fr-label"><span class="n">12</span><span class="nm">The close, and the cheque</span><span class="w">Thu 30 Jul, 4:45pm · Memo section L</span></div>
+  <div class="frame">
+    <div class="pw-page">
+      <div class="pw-crumbs"><a href="#">Work</a><span class="s">/</span><a href="#">On site</a><span class="s">/</span><span>Air conditioning, Brenner</span></div>
+      <div class="pw-titlerow">
+        <div>
+          <h1 class="t-h1">Close the visit</h1>
+          <p class="pw-meta">Vic Santoro<span class="s">·</span>On site since 7:28am<span class="s">·</span><span class="now">2214 Tulare Street</span></p>
+        </div>
+        <div class="pw-actions"><button class="pw-btn">Back</button><button class="pw-btn pri">Close the visit</button></div>
+      </div>
+      <div class="pw-stack" style="margin-top:22px">
+        <div class="pw-pair">
+          <div class="pw-card pw-cardstack">
+            <div class="pw-cardhead"><h5>Before you go</h5></div>
+            <div>
+              <div class="pw-tk" data-state="complete"><span class="pw-tkbx">&#10003;</span><span>Startup checklist<span class="pw-tksub">Subcooling, static pressure, delta-T. All in range</span></span></div>
+              <div class="pw-tk" data-state="complete"><span class="pw-tkbx">&#10003;</span><span>Photographs<span class="pw-tksub">Pad, line set, nameplate</span></span></div>
+              <div class="pw-tk" data-state="complete"><span class="pw-tkbx">&#10003;</span><span>Equipment registered<span class="pw-tksub">Model and serial on the property. Ten-year parts warranty</span></span></div>
+              <div class="pw-tk" data-state="blocked"><span class="pw-tkbx">&#9888;</span><span>County inspection<span class="pw-tksub">Cannot be done today. Brightline requests it after you close</span></span></div>
+            </div>
+          </div>
+          <div class="pw-card pw-cardstack">
+            <div class="pw-cardhead"><h5>What the customer owes</h5></div>
+            <div class="pw-syn one">
+              <div class="pw-synr"><span class="k">Agreed at the kitchen table</span><span class="v" style="font-weight:400">Half at the start, half on completion. By cheque.</span></div>
+            </div>
+            <div class="pw-crule"></div>
+            <p class="pw-missing" style="margin:0">Brightline collects cheques outside this system. Nothing is recorded here and nothing becomes due.</p>
+          </div>
+        </div>
+      </div>
+      <p class="annrow"><span class="ann">[i] The second card is the whole argument of this frame. It exists, it is honest, and it does nothing.</span></p>
+    </div>
+  </div>
+  <p class="fr-note flag"><strong>Knowing rule break, kept deliberately.</strong> The last line of the money card is explanatory copy inside a screen, which the density standard forbids as an Always. It stays because a crew lead standing in a driveway holding $6,400 will not read a memo, and the thing being explained is why a money card does nothing. Withdrawable, and recorded in the deviations register.</p>
+</section>
+
+<!-- ============================== 13 ============================== -->
+<section class="fr" style="left:17352px;width:1440px" data-screen-label="13">
+  <div class="fr-label"><span class="n">13</span><span class="nm">The county, the rebate, and completion</span><span class="w">Fri 31 Jul to Fri 7 Aug · Memo section M</span></div>
+  <div class="frame">
+    <div class="pw-page">
+      <div class="pw-crumbs"><a href="#">Work</a><span class="s">/</span><a href="#">Waiting on the county</a><span class="s">/</span><span>Air conditioning, Brenner</span></div>
+      <div class="pw-titlerow">
+        <div>
+          <h1 class="t-h1">Air conditioning replacement</h1>
+          <p class="pw-meta">2214 Tulare Street, Fresno<span class="s">·</span><span class="now">Complete, 7 Aug</span></p>
+        </div>
+        <div class="pw-actions"><button class="pw-kebab">&#8943;</button></div>
+      </div>
+      <div class="pw-stack" style="margin-top:22px">
+        <div class="pw-pair wide-l">
+          <div class="pw-card pw-cardstack">
+            <div class="pw-cardhead"><h5>Why this reads complete</h5></div>
+            <div>
+              <div class="pw-tk" data-state="complete"><span class="pw-tkbx">&#10003;</span><span>Visit closed<span class="pw-tksub">Vic Santoro, 30 Jul, 4:45pm</span></span></div>
+              <div class="pw-tk" data-state="complete"><span class="pw-tkbx">&#10003;</span><span>Startup checklist complete<span class="pw-tksub">30 Jul, 4:20pm</span></span></div>
+              <div class="pw-tk" data-state="complete"><span class="pw-tkbx">&#10003;</span><span>Both permits passed<span class="pw-tksub">Fresno County, 7 Aug, 2:20pm</span></span></div>
+            </div>
+            <div class="pw-crule"></div>
+            <p class="pw-missing" style="margin:0">Nobody marked this complete. It became complete when the last of the three arrived.</p>
+          </div>
+          <div class="pw-card pw-cardstack">
+            <div class="pw-cardhead"><h5>The county and the utility</h5></div>
+            <div class="pw-crowlist">
+              <div class="pw-lrow"><div class="pw-lname">Mechanical permit<span class="pw-lsub">Filed 17 Jul, inspected 7 Aug</span></div><div class="pw-r"><span class="pw-lval">Passed</span></div></div>
+              <div class="pw-lrow"><div class="pw-lname">Electrical permit<span class="pw-lsub">Filed 17 Jul, inspected 7 Aug</span></div><div class="pw-r"><span class="pw-lval">Passed</span></div></div>
+              <div class="pw-lrow"><div class="pw-lname">Efficiency rebate<span class="pw-lsub">Valley Public Power, filed 31 Jul from the registry entry</span></div><div class="pw-r"><span class="pw-lval">Filed</span><span class="pw-lst">Nothing since</span></div></div>
+            </div>
+            <div class="pw-crule"></div>
+            <p class="pw-missing" style="margin:0">The rebate is paid by the utility to the Brenners. Brightline never sees it.</p>
+          </div>
+        </div>
+      </div>
+      <p class="annrow"><span class="ann">[i] The first card is the receipt for a derived status, which has been an open need since the Thompson work. This is the first time it has been drawn.</span></p>
+    </div>
+  </div>
+  <p class="fr-note">A derived status has to show its evidence or nobody will trust it. Three records agreeing is what makes this job complete, and a person who did none of the three needs to see which three they were and when each landed. On the red tag branch the same card shows two ticks and one failure, which is why it is a checklist and not prose.</p>
+</section>
+
+<!-- ============================== 14 ============================== -->
+<section class="fr" style="left:18880px;width:1440px" data-screen-label="14">
+  <div class="fr-label"><span class="n">14</span><span class="nm">The tail</span><span class="w">Mon 10 to Tue 11 Aug · Memo section N</span></div>
+  <div class="frame">
+    <div class="pw-page">
+      <div class="pw-crumbs"><a href="#">Customers</a><span class="s">/</span><a href="#">Carla and Wes Brenner</a><span class="s">/</span><span>Air conditioning</span></div>
+      <div class="pw-titlerow">
+        <div>
+          <h1 class="t-h1">Air conditioning</h1>
+          <p class="pw-meta">Complete 7 Aug<span class="s">·</span>2214 Tulare Street, Fresno<span class="s">·</span><span class="now">Customer since 14 July</span></p>
+        </div>
+        <div class="pw-actions"><button class="pw-btn">Add an interest</button><button class="pw-kebab">&#8943;</button></div>
+      </div>
+      <div class="pw-stack" style="margin-top:22px">
+        <div class="pw-pair">
+          <div class="pw-card pw-cardstack">
+            <div class="pw-cardhead"><h5>What it cost</h5></div>
+            <div class="pw-cardrows">
+              <div class="pw-crow"><span class="cl">Materials and disposal</span><span class="cv">$4,930</span></div>
+              <div class="pw-crow"><span class="cl">Labour</span><span class="cv">$1,150</span></div>
+              <div class="pw-crow"><span class="cl">Permits</span><span class="cv">$310</span></div>
+              <div class="pw-crule"></div>
+              <div class="pw-crow tot"><span class="cl">Cost</span><span class="cv">$6,390</span></div>
+            </div>
+          </div>
+          <div class="pw-card pw-cardstack">
+            <div class="pw-cardhead"><h5>What it sold for</h5></div>
+            <div class="pw-cardrows">
+              <div class="pw-crow"><span class="cl">Contract</span><span class="cv">$12,800</span></div>
+              <div class="pw-crow"><span class="cl">Collected here</span><span class="cv">&mdash;</span></div>
+            </div>
+            <div class="pw-crule"></div>
+            <p class="pw-missing" style="margin:0">Brightline collects outside this system, so nothing on this job can be reconciled against the contract.</p>
+          </div>
+        </div>
+        <div class="pw-pair">
+          <div class="pw-card pw-cardstack">
+            <div class="pw-cardhead"><h5>On the property now</h5></div>
+            <div class="pw-crowlist">
+              <div class="pw-lrow"><div class="pw-lname">Two-stage 2.5 ton condenser and matched coil<span class="pw-lsub">Installed 30 Jul. Ten-year parts warranty to 2036</span></div><div class="pw-r"><span class="pw-lval">Registered</span></div></div>
+            </div>
+            <div class="pw-crule"></div>
+            <p class="pw-missing" style="margin:0">Nothing else is on file for this address.</p>
+          </div>
+          <div class="pw-card pw-cardstack">
+            <div class="pw-cardhead"><h5>History</h5><div class="pw-seg"><button class="pw-segi" data-on="true">History</button><button class="pw-segi">Notes 6</button></div></div>
+            <div class="pw-dn"><span>Both permits passed. Job complete</span><span class="dd">7 Aug</span></div>
+            <div class="pw-dn"><span>Efficiency rebate filed</span><span class="dd">31 Jul</span></div>
+            <div class="pw-dn"><span>Visit closed. Equipment registered</span><span class="dd">30 Jul</span></div>
+            <div class="pw-dn"><span>Install moved from 23 to 30 July</span><span class="dd">20 Jul</span></div>
+            <div class="pw-dn"><span>Better accepted at $12,800 and signed</span><span class="dd">16 Jul</span></div>
+            <div class="pw-dn"><span>Inquiry raised by telephone and qualified</span><span class="dd">14 Jul</span></div>
+          </div>
+        </div>
+      </div>
+      <p class="annrow"><span class="ann">[i] Two money cards that cannot be added together. The follow-up call and the review request are in the script and are not drawn, because nothing in the model can hold either.</span></p>
+    </div>
+  </div>
+  <p class="fr-note"><strong>Third place the open question bites.</strong> Cost and price sit side by side because they cannot be combined: the cost is real and on-system, the price is a contract with nothing behind it. The roll-up is not broken, it is correctly refusing to complete. One interest, one job, one piece of equipment, six notes: the empty case one journey later.</p>
+</section>
+
+</body>
+</html>

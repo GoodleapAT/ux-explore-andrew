@@ -111,6 +111,18 @@ step with the canvas from the moment it is drawn.
 
 ---
 
+## S14 canvas · built 14 Sep 2026 on CD · against `WORKED-EXAMPLE-S14.md` and memo 7, both as at 14 Sep 2026
+
+**Carried across from CD's write-back block.** No value on any frame is outside the worked example.
+
+| What deviates | Why | Kind |
+|---|---|---|
+| **Frames 01 and 02 make the near-match a search; memo 7 section A implies background matching** | Already recorded before the canvas existed and now confirmed by it. The canvas makes the match something Dana finds, and the dismissal an act with a reason captured at the time | **Memo 7 is the thing that should change.** Section A's dismissed row is correct as a receipt; its argument should say the match was searched for |
+| **Memo 7's own introduction is wrong about itself.** It says ten drawn and four placeholdered. The file has **three** placeholders, sections D, F and K, so eleven are drawn | Found by CD while building the frame table. **Our error, not the scenario's** | **Corrected** in the memo, 14 Sep |
+| **Memo sections F and G are absent from the canvas** | Andrew excluded the proposal screens from this round | Drawn as a labelled block in the strip at frame height, saying what is missing and that frame 08 opens with the work already sold. **The gap is visible rather than silent**, which is the right treatment and worth reusing |
+
+---
+
 ## Checked on
 
 Every time somebody runs the drift check, record it here as well, because a deviation register nobody
@@ -120,3 +132,20 @@ has revalidated is a list of claims about the past.
 |---|---|---|---|
 | 13 Sep 2026 | C | S15, and every other scenario we have used | No. All unmoved since they were read |
 | 14 Sep 2026 | C | S14, read fresh from Confluence | **Yes.** S14 was modified about three hours before it was read, and the modification is the 12 Sep elaboration of the assessment beats. Built against that version |
+| 14 Sep 2026 | CD | S14, via the canvas build | No. Built against the worked example and memo 7 as they stood, and both were hours old |
+
+---
+
+## One repointing, recorded because it will recur
+
+**The canvas was carried from the design surface into `prototypes/s14-canvas/` on 14 Sep 2026.** It
+linked two stylesheets: its own kit, which came with it, and the **bound Merlin Design System project
+on the design surface**, which does not exist here.
+
+**Repointed to our extracted mirror** at `reference/merlin-sol-tokens.css`. Verified: the canvas uses
+26 Sol tokens and all 26 are defined in the mirror, so nothing broke. **The mirror is still missing
+the radius, spacing and font scales**, which the canvas does not use because the kit carries its own.
+
+**Every canvas carried across will need the same one-line change.** Worth doing at the point of
+carrying rather than discovering it when somebody opens the file months later and the page renders
+unstyled.

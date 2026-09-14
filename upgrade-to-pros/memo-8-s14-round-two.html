@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>S14 round two</title>
+<style>
+/* ============================================================================
+   Memo 8 · S14, round two.  Built 14 Sep 2026.
+
+   Tokens: Merlin / Sol, light only, from reference/merlin-sol-tokens.css.
+   That file is the Merlin mirror and is missing the radius, spacing and font
+   scales, so those values are carried over from the standalone Pros Web
+   recreations rather than invented here.
+
+   Standards held in this memo:
+   - No reference codes or record identifiers anywhere.
+   - No explanatory copy inside a mock. Messages worth considering are listed
+     under the mock instead.
+   - Badges only where a state must be seen before the row is read. Three or
+     four per screen, never twelve. Corrected rule of 13 Sep, not the earlier ban.
+   - Colour only where somebody has to act, at most one region per screen.
+   - Cards in pairs under a group heading. Two abreast is unconditional.
+   - [i] marks annotation inside a mockup, and only inside a mockup.
+   - Annotation belongs to a MEMO, not to a canvas. New Always, 14 Sep, at
+     Andrew's request. When CD redraws these frames the [i] lines do not go
+     with them; the argument stays here.
+   ========================================================================= */
+:root{
+  color-scheme:light;
+  --sol-actions-button:#161051; --sol-actions-link:#382ca5; --sol-actions-interaction:#382ca5;
+  --sol-backgrounds-accent-purple:#e2e1fe; --sol-backgrounds-accent-yellow:#fffaf0;
+  --sol-backgrounds-system-warning:#fffaf0;
+  --sol-backgrounds-ui-high:#ffffff; --sol-backgrounds-ui-low:#e3e3ed; --sol-backgrounds-ui-medium:#f5f5f9;
+  --sol-borders-accent-purple:#6d62d5; --sol-borders-accent-yellow:#f5b638;
+  --sol-borders-ui-default:#c8c8d5; --sol-borders-ui-strong:#a7a7b9; --sol-borders-ui-subtle:#e3e3ed;
+  --sol-elevation-md:0px 1px 12px 0px #0000000f;
+  --sol-icons-accent-purple:#382ca5; --sol-icons-system-success:#008f30; --sol-icons-system-warning:#b88723;
+  --sol-icons-ui-secondary:#4b4b58;
+  --sol-states-focus:#144eb8;
+  --sol-text-primary:#14141a; --sol-text-secondary:#4b4b58; --sol-text-warning:#8f5f00;
+  --sol-text-disabled:#a7a7b9;
+  --pw-ink:#2c1b3c;
+  --pw-shadow-xs:0 1px 2px 0 rgb(0 0 0/.05);
+  --inter:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+  --m-bg:#ffffff; --m-paper:#fbfbfc; --m-bd:#e6e6ea; --m-bds:#d3d3da;
+  --m-tx:#1b1b20; --m-tx2:#55555e; --m-tx3:#86868f;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--m-bg);color:var(--m-tx);font-family:var(--inter);font-size:15px;line-height:1.62;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1360px;margin:0 auto;padding:56px 40px 96px}
+
+/* ---------- editorial frame ---------- */
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.04em;color:var(--m-tx3);margin:0 0 16px;text-transform:uppercase}
+.eyebrow span{margin-right:26px}
+h1{font-size:40px;line-height:1.12;font-weight:500;letter-spacing:-.02em;margin:0 0 18px;max-width:750px}
+.lede{max-width:750px;color:var(--m-tx2);font-size:15.5px;margin:0 0 18px}
+.lede:last-of-type{margin-bottom:40px}
+.conv{max-width:750px;font-family:var(--mono);font-size:11.5px;color:var(--m-tx3);margin:0 0 40px;padding-top:14px;border-top:1px solid var(--m-bd)}
+
+/* settled / to-decide cards */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(420px,1fr));gap:20px;margin:0 0 56px}
+.ecard{border:1px solid var(--m-bds);border-radius:12px;padding:22px 24px;background:var(--m-paper)}
+.ecard h3{margin:0 0 4px;font-size:12px;font-family:var(--mono);text-transform:uppercase;letter-spacing:.05em;color:var(--m-tx3);font-weight:400}
+.ecard .sub{margin:0 0 14px;font-size:13px;color:var(--m-tx3)}
+.ecard ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:11px}
+.ecard li{font-size:13.5px;line-height:1.55;color:var(--m-tx2)}
+.ecard li strong{color:var(--m-tx);font-weight:500}
+.ecard p.tail{margin:14px 0 0;padding-top:13px;border-top:1px solid var(--m-bd);font-size:13px;color:var(--m-tx2)}
+
+/* sections */
+.sec{margin:0 0 72px}
+.sec-head{display:flex;align-items:baseline;gap:11px;padding-bottom:12px;border-bottom:1px solid var(--m-bd);margin-bottom:8px}
+.badge-l{flex:0 0 auto;width:20px;height:20px;border:1px solid var(--sol-borders-accent-purple);border-radius:4px;color:var(--sol-icons-accent-purple);font-family:var(--mono);font-size:10.5px;display:flex;align-items:center;justify-content:center;background:var(--sol-backgrounds-accent-purple);position:relative;top:2px}
+.sec-title{font-size:19px;font-weight:500;margin:0;letter-spacing:-.01em}
+.sec-when{font-size:13px;color:var(--m-tx3);margin-left:auto;white-space:nowrap}
+.sec-beat{font-family:var(--mono);font-size:11px;color:var(--m-tx3);margin:0 0 18px}
+
+/* the mockup frame */
+.frame{border:1px solid var(--m-bds);border-radius:12px;overflow:hidden;background:var(--sol-backgrounds-ui-high)}
+.ph{border:1px dashed var(--sol-borders-ui-strong);border-radius:12px;background:var(--sol-backgrounds-ui-medium);padding:46px 38px;display:flex;flex-direction:column;gap:9px;align-items:flex-start}
+.ph .t{font:500 15px/22px var(--inter);color:var(--sol-text-secondary)}
+.ph .d{font:400 13.5px/20px var(--inter);color:var(--sol-text-secondary);max-width:620px;margin:0}
+
+/* argument blocks */
+.arg{margin:26px 0 0;padding-top:22px;border-top:1px solid var(--m-bd);display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:22px 34px}
+.arg .b{min-width:0}
+.arg .k{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.04em;color:var(--m-tx3);margin:0 0 5px}
+.arg p{margin:0;font-size:13.5px;line-height:1.55;color:var(--m-tx2)}
+.arg p strong{color:var(--m-tx);font-weight:500}
+.qs{margin:24px 0 0;padding-top:20px;border-top:1px solid var(--m-bd)}
+.qs h4{margin:0 0 10px;font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.04em;color:var(--m-tx3);font-weight:400}
+.qs ol{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:8px}
+.qs li{font-size:13.5px;line-height:1.55;color:var(--m-tx2)}
+.qs li strong{color:var(--m-tx);font-weight:500}
+
+/* ---------- Pros Web mock kit ---------- */
+.pw-page{display:flex;flex-direction:column;background:var(--sol-backgrounds-ui-high);padding:26px 32px 32px;font-family:var(--inter);color:var(--pw-ink)}
+.pw-stack{display:flex;flex-direction:column;gap:26px}
+.t-p4{font:400 12px/18px var(--inter)}
+.muted{color:var(--sol-text-secondary)}
+.pw-crumbs{display:flex;align-items:center;gap:8px;font:400 12px/18px var(--inter);color:var(--sol-text-secondary);margin-bottom:12px}
+.pw-crumbs a{color:var(--sol-actions-link);text-decoration:none}
+.pw-crumbs .s{color:var(--sol-borders-ui-strong)}
+.pw-titlerow{display:flex;align-items:flex-start;gap:24px;flex-wrap:wrap}
+.t-h1{font:700 24px/34px var(--inter);margin:0}
+.pw-meta{margin:5px 0 0;font:400 13px/20px var(--inter);color:var(--sol-text-secondary)}
+.pw-meta .now{color:var(--pw-ink);font-weight:500}
+.pw-meta a{color:var(--sol-actions-link);text-decoration:none;border-bottom:1px solid var(--sol-borders-ui-default)}
+.pw-meta .s{color:var(--sol-borders-ui-strong);margin:0 7px}
+.pw-actions{display:flex;gap:10px;flex-wrap:wrap;margin-left:auto;align-items:center}
+.pw-btn{border:1px solid var(--sol-borders-ui-default);border-radius:8px;background:var(--sol-backgrounds-ui-high);padding:7px 13px;font:500 13px/18px var(--inter);color:var(--pw-ink)}
+.pw-btn.pri{background:var(--sol-actions-button);border-color:var(--sol-actions-button);color:#fff}
+.pw-kebab{width:34px;height:34px;border:1px solid var(--sol-borders-ui-default);border-radius:8px;background:var(--sol-backgrounds-ui-high);color:var(--sol-icons-ui-secondary);display:flex;align-items:center;justify-content:center;font-size:15px;line-height:1}
+.pw-attn{display:flex;align-items:flex-start;gap:11px;border:1px solid var(--sol-icons-system-warning);border-left-width:3px;border-radius:8px;background:var(--sol-backgrounds-system-warning);padding:12px 15px;font:400 14px/20px var(--inter);color:var(--sol-text-warning)}
+.pw-attn .ic{flex:0 0 auto;margin-top:2px;color:var(--sol-icons-system-warning)}
+.pw-attn strong{font-weight:600}
+.pw-attn a{color:var(--sol-text-warning);margin-left:auto;white-space:nowrap;border-bottom:1px solid currentColor;text-decoration:none}
+.pw-card{background:var(--sol-backgrounds-ui-high);border:1px solid var(--sol-borders-ui-subtle);border-radius:12px;box-shadow:var(--sol-elevation-md);padding:18px}
+.pw-cardstack{display:flex;flex-direction:column;gap:14px}
+.pw-cardstack h5{margin:0;font:700 15px/22px var(--inter);color:var(--sol-text-primary)}
+.pw-cardhead{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.pw-group{display:flex;flex-direction:column;gap:12px}
+.pw-grouphead{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.pw-grouphead h2{margin:0;font:700 17px/24px var(--inter);color:var(--pw-ink)}
+.pw-pair{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start}
+.pw-pair>*{min-width:0}
+.pw-pair.wide-l{grid-template-columns:minmax(0,1.35fr) minmax(0,1fr)}
+.pw-pair.wide-r{grid-template-columns:minmax(0,1fr) minmax(0,1.35fr)}
+.pw-seg{display:inline-flex;border:1px solid var(--sol-borders-ui-subtle);border-radius:8px;overflow:hidden;background:var(--sol-backgrounds-ui-medium)}
+.pw-segi{border:0;border-right:1px solid var(--sol-borders-ui-subtle);background:transparent;padding:5px 9px;font:400 13px/19px var(--inter);color:var(--sol-text-secondary);white-space:nowrap}
+.pw-segi:last-child{border-right:0}
+.pw-segi[data-on=true]{background:var(--sol-backgrounds-ui-high);color:var(--sol-text-primary);font-weight:500;box-shadow:var(--pw-shadow-xs)}
+.pw-crowlist{display:flex;flex-direction:column}
+.pw-lrow{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:18px;align-items:baseline;padding:10px 0;border-bottom:1px solid var(--sol-borders-ui-subtle)}
+.pw-lrow:last-child{border-bottom:0}
+.pw-lrow:first-child{padding-top:0}
+.pw-lname{font:400 14px/20px var(--inter);color:var(--pw-ink);min-width:0}
+.pw-lname.med{font-weight:500}
+.pw-lsub{display:block;font:400 12px/18px var(--inter);color:var(--sol-text-secondary);margin-top:1px}
+.pw-r{text-align:right;white-space:nowrap}
+.pw-lval{display:block;font:500 14px/20px var(--inter);color:var(--pw-ink);font-variant-numeric:tabular-nums}
+.pw-lst{display:block;font:400 12px/18px var(--inter);color:var(--sol-text-secondary);margin-top:1px}
+.pw-lst.attn{color:var(--sol-text-warning);font-weight:500}
+.pw-lrow.dim .pw-lname,.pw-lrow.dim .pw-lval{color:var(--sol-text-secondary);font-weight:400}
+.pw-missing{font:italic 400 13px/18px var(--inter);color:var(--sol-text-secondary)}
+.pw-cardrows{display:flex;flex-direction:column;gap:12px}
+.pw-crow{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+.pw-crow .cl{font:400 14px/20px var(--inter);color:var(--sol-text-secondary)}
+.pw-crow .cv{font:500 15px/22px var(--inter);color:var(--sol-text-primary);font-variant-numeric:tabular-nums;text-align:right}
+.pw-crow.tot .cl{font:700 14px/20px var(--inter);color:var(--sol-text-primary)}
+.pw-crow.tot .cv{font:700 20px/28px var(--inter)}
+.pw-crule{height:1px;background:var(--sol-borders-ui-subtle)}
+.pw-syn{display:grid;grid-template-columns:1fr 1fr;gap:11px 18px}
+.pw-syn.one{grid-template-columns:1fr}
+.pw-syn.three{grid-template-columns:1fr 1fr 1fr}
+.pw-synr{min-width:0}
+.pw-synr .k{display:block;font:400 11px/16px var(--inter);color:var(--sol-text-secondary)}
+.pw-synr .v{display:block;font:500 13px/18px var(--inter);color:var(--pw-ink);text-wrap:pretty}
+.pw-synr .v.q{font-weight:400;color:var(--sol-text-secondary);font-style:italic}
+.pw-synr .v.none{font-weight:400;color:var(--sol-text-secondary)}
+.pw-rail{border:1px solid var(--sol-borders-ui-subtle);border-radius:8px;background:var(--sol-backgrounds-ui-high);overflow:hidden}
+.pw-railboard{display:flex;align-items:center;gap:8px;height:27px;padding:0 12px;background:var(--sol-backgrounds-ui-medium);border-bottom:1px solid var(--sol-borders-ui-subtle);font:700 10px/14px var(--inter);letter-spacing:.08em;text-transform:uppercase;color:var(--sol-text-secondary)}
+.pw-railboard .n{margin-left:auto;letter-spacing:0;text-transform:none;font-weight:400;font-size:10px;white-space:nowrap}
+.pw-stg{width:100%;height:33px;display:grid;grid-template-columns:12px minmax(0,1fr) auto;gap:11px;align-items:center;padding:0 12px;border-bottom:1px solid var(--sol-borders-ui-subtle)}
+.pw-stg:last-child{border-bottom:0}
+.pw-stg[data-state=now]{background:var(--sol-backgrounds-accent-purple)}
+.pw-stgdot{width:11px;height:11px;border-radius:999px;border:1.5px solid var(--sol-borders-ui-strong);background:var(--sol-backgrounds-ui-high)}
+.pw-stg[data-state=done] .pw-stgdot{background:var(--sol-icons-system-success);border-color:var(--sol-icons-system-success)}
+.pw-stg[data-state=now] .pw-stgdot{background:var(--sol-actions-button);border-color:var(--sol-actions-button)}
+.pw-stgname{font:400 13px/17px var(--inter);color:var(--sol-text-secondary);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pw-stg[data-state=now] .pw-stgname{color:var(--pw-ink);font-weight:500}
+.pw-stgmeta{font:400 11px/14px var(--inter);color:var(--sol-text-secondary);white-space:nowrap}
+.pw-stg[data-state=now] .pw-stgmeta{color:var(--sol-actions-button);font-weight:500}
+.pw-tk{display:grid;grid-template-columns:18px minmax(0,1fr);gap:10px;align-items:start;padding:5px 0;font:400 14px/20px var(--inter);color:var(--pw-ink)}
+.pw-tkbx{width:18px;height:18px;border-radius:4px;border:1.5px solid var(--sol-borders-ui-strong);background:var(--sol-backgrounds-ui-high);margin-top:1px;display:flex;align-items:center;justify-content:center;color:#fff;flex:0 0 18px;font-size:11px}
+.pw-tk[data-state=complete] .pw-tkbx{background:var(--sol-icons-system-success);border-color:var(--sol-icons-system-success)}
+.pw-tk[data-state=complete]{color:var(--sol-text-secondary)}
+.pw-tk[data-state=blocked] .pw-tkbx{border-color:var(--sol-icons-system-warning);background:var(--sol-backgrounds-system-warning);color:var(--sol-text-warning)}
+.pw-tksub{display:block;font:400 12px/18px var(--inter);color:var(--sol-text-secondary)}
+.pw-dn{display:flex;justify-content:space-between;gap:12px;padding:6px 0;font:400 14px/20px var(--inter);border-bottom:1px solid var(--sol-borders-ui-subtle)}
+.pw-dn:last-of-type{border-bottom:0}
+.pw-dn .dd{color:var(--sol-text-secondary);font:400 12px/18px var(--inter);white-space:nowrap}
+.pw-note-item{padding:10px 0;border-bottom:1px solid var(--sol-borders-ui-subtle)}
+.pw-note-item:last-child{border-bottom:0}
+.pw-note-item:first-child{padding-top:0}
+.pw-note-h{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap;margin-bottom:3px;font:400 12px/18px var(--inter);color:var(--sol-text-secondary)}
+.pw-note-h .ty{color:var(--pw-ink);font-weight:500}
+.pw-note-item p{margin:0;font:400 13.5px/20px var(--inter);color:var(--pw-ink)}
+.pw-timeline{list-style:none;margin:0;padding:0 0 0 20px;display:flex;flex-direction:column;gap:13px;position:relative}
+.pw-timeline:before{content:'';position:absolute;left:4px;top:6px;bottom:6px;width:1px;background:var(--sol-borders-ui-subtle)}
+.pw-timeline li{position:relative}
+.pw-timeline li:before{content:'';position:absolute;left:-20px;top:5px;width:9px;height:9px;border-radius:999px;background:var(--sol-backgrounds-ui-high);border:2px solid var(--sol-borders-ui-strong)}
+.pw-timeline .e{margin:0;font:400 13px/19px var(--inter);color:var(--pw-ink)}
+.pw-timeline .dt{margin:1px 0 0;font:400 12px/18px var(--inter);color:var(--sol-text-secondary)}
+.pw-tog{display:grid;grid-template-columns:36px minmax(0,1fr) auto;gap:14px;align-items:center;padding:12px 0;border-bottom:1px solid var(--sol-borders-ui-subtle)}
+.pw-tog:last-of-type{border-bottom:0}
+.pw-tog:first-of-type{padding-top:0}
+.pw-sw{width:34px;height:19px;border-radius:20px;background:var(--sol-actions-button);position:relative}
+.pw-sw.off{background:var(--sol-backgrounds-ui-low);border:1px solid var(--sol-borders-ui-default)}
+.pw-sw i{position:absolute;top:3px;right:3px;width:13px;height:13px;border-radius:50%;background:#fff;display:block}
+.pw-sw.off i{right:auto;left:3px;background:var(--sol-borders-ui-strong)}
+.pw-tog .tn{font:500 14px/20px var(--inter);color:var(--pw-ink)}
+.pw-tog .td{display:block;font:400 12px/18px var(--inter);color:var(--sol-text-secondary);margin-top:1px}
+.pw-tog.off .tn{color:var(--sol-text-secondary);font-weight:400}
+.pw-tog .tv{font:500 14px/20px var(--inter);color:var(--pw-ink);font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+.pw-tog.off .tv{color:var(--sol-text-secondary);font-weight:400}
+
+/* badge, neutral by default. Limited use per the corrected density rule. */
+.pw-bdg{display:inline-flex;align-items:center;border:1px solid var(--sol-borders-ui-default);border-radius:5px;background:var(--sol-backgrounds-ui-medium);padding:1px 6px;font:500 11px/17px var(--inter);color:var(--sol-text-secondary);white-space:nowrap;margin-left:7px;position:relative;top:-1px}
+.pw-bdg.warn{border-color:var(--sol-borders-accent-yellow);background:var(--sol-backgrounds-system-warning);color:var(--sol-text-warning)}
+
+/* in-mock annotation */
+.ann{font-family:var(--mono);font-size:10.5px;line-height:1.5;color:var(--sol-icons-accent-purple);background:var(--sol-backgrounds-accent-purple);border:1px solid var(--sol-borders-accent-purple);border-radius:5px;padding:4px 8px;display:inline-block;max-width:100%}
+.annrow{margin-top:10px}
+
+/* form fields */
+.pw-form{display:flex;flex-direction:column;gap:12px}
+.pw-fld{display:flex;flex-direction:column;gap:4px;min-width:0}
+.pw-fld .fl{font:400 12px/18px var(--inter);color:var(--sol-text-secondary)}
+.pw-fld .fi{border:1px solid var(--sol-borders-ui-default);border-radius:8px;background:var(--sol-backgrounds-ui-high);padding:8px 11px;font:400 14px/20px var(--inter);color:var(--pw-ink);min-height:37px}
+.pw-fld .fi.ph{color:var(--sol-text-disabled)}
+.pw-fld .fi.ro{background:var(--sol-backgrounds-ui-medium);border-style:dashed;color:var(--sol-text-secondary)}
+.pw-fld .fh{font:400 11px/16px var(--inter);color:var(--sol-text-secondary)}
+.pw-fldrow{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.pw-fldrow>*{min-width:0}
+/* a nested block inside a card */
+.pw-nest{border:1px solid var(--sol-borders-ui-subtle);border-radius:10px;background:var(--sol-backgrounds-ui-medium);padding:12px 13px;display:flex;flex-direction:column;gap:9px}
+.pw-nest h6{margin:0;font:700 11px/16px var(--inter);letter-spacing:.06em;text-transform:uppercase;color:var(--sol-text-secondary)}
+.pw-nest .pw-lrow{padding:8px 0}
+.pw-nest .pw-lrow:first-child{padding-top:0}
+.tip{border-bottom:1px dotted var(--sol-borders-ui-strong);cursor:help}
+
+/* change ribbon above a mockup */
+.chg{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--sol-borders-accent-purple);border-left-width:3px;border-radius:8px;background:var(--sol-backgrounds-accent-purple);padding:10px 14px;margin:0 0 14px;font-size:13px;line-height:1.5;color:var(--sol-icons-accent-purple)}
+.chg b{font-weight:600}
+.quote{border-left:2px solid var(--m-bds);padding:2px 0 2px 14px;margin:0 0 14px;font-size:13.5px;line-height:1.55;color:var(--m-tx2);font-style:italic;max-width:760px}
+.unchanged{border:1px dashed var(--m-bds);border-radius:10px;padding:16px 20px;background:var(--m-paper);font-size:13.5px;line-height:1.55;color:var(--m-tx2)}
+.unchanged b{color:var(--m-tx);font-weight:500}
+
+/* a phone-shaped placeholder */
+.phone{max-width:390px;border:1px dashed var(--sol-borders-ui-strong);border-radius:22px;background:var(--sol-backgrounds-ui-medium);padding:34px 24px;min-height:300px;display:flex;flex-direction:column;gap:8px;justify-content:center}
+.phone .t{font:500 14px/20px var(--inter);color:var(--sol-text-secondary)}
+.phone p{margin:0;font:400 13px/19px var(--inter);color:var(--sol-text-secondary)}
+.phrow{display:grid;grid-template-columns:390px minmax(0,1fr);gap:30px;align-items:start}
+@media (max-width:900px){.phrow{grid-template-columns:1fr}.pw-pair{grid-template-columns:1fr}}
+</style>
+</head><body>
+<div class="wrap">
+
+<p class="eyebrow"><span>Upgrade to Pros</span><span>S14, round two</span><span>Mockup · 14 September 2026</span></p>
+
+<h1>S14 round two: the first ninety seconds, and the page where the container finally earns its name</h1>
+
+<p class="lede">Memo 7 walked all twenty beats. The canvas drew fourteen frames from it. <strong>This
+memo carries every screen</strong>, so it is one input rather than a diff: the nine that changed are
+drawn, and the five you did not comment on are carried at the end with what stands and why. Rebuilding
+a canvas from a diff means holding two memos and a comment file at once, which is the context loss
+this arrangement exists to prevent.</p>
+
+<p class="lede">Three things landed while writing it. <strong>Start selling is the act that moves
+interests from new to pursuing.</strong> <strong>The container becomes visible at the hand-off.</strong>
+And <strong>one or more trades are selected at the inquiry</strong>, which drives the inquiry questions,
+the site assessment and the hand-off from a single choice.</p>
+
+<p class="lede">The trade selection turned out to be the most consequential of the three, so the first
+three sections are one screen at three moments: <strong>blank, the trade resolving, and the trade-typed
+form being worked</strong>. The transformation is the argument, and drawing only the end state hides it.</p>
+
+<p class="conv">Annotation inside a mockup is prefixed <strong>[i]</strong>. <strong>It does not travel
+to the canvas</strong>; the argument stays in this memo. Data is from the S14 worked example. Editorial,
+not interactive.</p>
+
+<div class="cards">
+  <div class="ecard">
+    <h3>Settled, for this memo</h3>
+    <p class="sub">Five of these are new since memo 7 and all five are yours</p>
+    <ul>
+      <li><strong>One or more trades are selected at the inquiry.</strong> That selection makes the inquiry questions available, makes the site assessment templates available, and affects the hand-off. One choice, three consequences.</li>
+      <li><strong>The inquiry and the assessment may be one continued capture</strong> rather than two forms, so shared fields are not entered twice and the advisor is not re-asking what the CSR already took down.</li>
+      <li><strong>A qualified inquiry is a lead, and a lead has a project from that moment.</strong> During selling the two are coextensive, so the distinction has no visible content until a second lead or a job arrives. <strong>Calling that page the project page is correct.</strong></li>
+      <li><strong>The container becomes visible at the hand-off and not before.</strong> The customer record lists leads only under selling, then groups by project with jobs nested once work exists.</li>
+      <li><strong>Start selling moves interests from new to pursuing.</strong> It creates nothing. The bundling question it asks is which interests, not which other leads.</li>
+      <li><strong>Matching is live and continuous</strong>, not a separate act before capture.</li>
+      <li><strong>Qualifying leads into booking.</strong> One flow, not two screens with a gap.</li>
+    </ul>
+  </div>
+  <div class="ecard">
+    <h3>To decide, before anything gets built</h3>
+    <p class="sub">A model question that falls straight out of the template answer</p>
+    <ul>
+      <li><strong>Do the trades chosen at the inquiry become the interests?</strong> The vocabulary says an interest is one trade inside a lead. If trades are chosen at the inquiry they exist before the lead does, so either the inquiry holds proto-interests or the choice is a form setting that becomes interests at qualification.</li>
+      <li><strong>It matters because of what happens when nothing is qualified.</strong> If they are interests, a disqualified inquiry leaves dead interests behind and something has to say so. If they are a form setting, the trades vanish with the inquiry and what a customer once asked about has no answer.</li>
+      <li><strong>And because of the assessment merge.</strong> A capture continued from the inquiry into the assessment only works if the thing being continued is one object. Two forms sharing a name is a weaker claim than one capture in two sittings.</li>
+      <li><strong>No screen here can settle it.</strong> Sections A to C are drawn assuming a form setting, because it is the weaker claim and the one that survives being wrong.</li>
+    </ul>
+    <p class="tail">Everything else is arguable without it. Sections A, C and H are where it would change something.</p>
+  </div>
+</div>
+
+<!-- ============================= A ============================= -->
+<section class="sec">
+  <div class="sec-head"><span class="badge-l">A</span><h2 class="sec-title">A fresh inquiry, before anything is known</h2><span class="sec-when">Tue 14 Jul, 7:50am</span></div>
+  <p class="sec-beat">Dana Whitlock answers · Carla is talking · Nothing has been typed</p>
+
+  <div class="chg"><span>&#9670;</span><div><b>What changed.</b> Canvas frames 01 and 02 merge, and then split again by time rather than by act. This is the first of three moments on one screen. <b>The blank state is drawn because the transformation is the argument</b>, and a screen only ever shown full hides it.</div></div>
+
+  <div class="frame">
+    <div class="pw-page">
+      <div class="pw-crumbs"><a href="#">Inquiries</a><span class="s">/</span><span>New</span></div>
+      <div class="pw-titlerow">
+        <div>
+          <h1 class="t-h1">New inquiry</h1>
+          <p class="pw-meta">Inbound call<span class="s">·</span>Dana Whitlock<span class="s">·</span><span class="now">On the line, 8 seconds</span></p>
+        </div>
+        <div class="pw-actions"><button class="pw-btn">Save and close</button><button class="pw-btn" style="opacity:.45">Mark as qualified</button></div>
+      </div>
+      <div class="pw-stack" style="margin-top:22px">
+        <div class="pw-pair wide-l">
+          <div class="pw-card pw-cardstack">
+            <div class="pw-cardhead"><h5>What are they calling about?</h5></div>
+            <div class="pw-crowlist">
+              <div class="pw-lrow"><div class="pw-lname">Air conditioning</div><div class="pw-r"><span class="pw-lval">&nbsp;</span></div></div>
+              <div class="pw-lrow"><div class="pw-lname">Heating</div><div class="pw-r"><span class="pw-lval">&nbsp;</span></div></div>
+              <div class="pw-lrow"><div class="pw-lname">Water heater</div><div class="pw-r"><span class="pw-lval">&nbsp;</span></div></div>
+              <div class="pw-lrow"><div class="pw-lname">Indoor air quality</div><div class="pw-r"><span class="pw-lval">&nbsp;</span></div></div>
+              <div class="pw-lrow"><div class="pw-lname">Something else</div><div class="pw-r"><span class="pw-lval">&nbsp;</span></div></div>
+            </div>
+            <div class="pw-crule"></div>
+            <p class="pw-missing" style="margin:0">Pick one or more. The questions follow.</p>
+          </div>
+          <div class="pw-card pw-cardstack">
+            <div class="pw-cardhead"><h5>Who is calling</h5></div>
+            <div class="pw-form">
+              <div class="pw-fld"><span class="fl">Name</span><span class="fi ph">&nbsp;</span></div>
+              <div class="pw-fldrow">
+                <div class="pw-fld"><span class="fl">Mobile</span><span class="fi">(559) 555-0173</span><span class="fh">From the call</span></div>
+                <div class="pw-fld"><span class="fl">Email</span><span class="fi ph">&nbsp;</span></div>
+              </div>
+              <div class="pw-fld"><span class="fl">Address</span><span class="fi ph">&nbsp;</span></div>
+            </div>
+            <div class="pw-crule"></div>
+            <p class="pw-missing" style="margin:0">Nothing matched on this number.</p>
+          </div>
+        </div>
+      </div>
+      <p class="annrow"><span class="ann">[i] The mobile number is already there because the call carried it. Everything else is empty, the primary action is unavailable, and the left card is the only thing asking for anything.</span></p>
+    </div>
+  </div>
+
+  <div class="arg">
+    <div class="b"><p class="k">The claim</p><p><strong>The first question is what they are calling about, not who they are.</strong> Everything downstream depends on the trade, and a CSR asks it first anyway because it is the natural opening. Putting identity first would mean typing three fields before the screen can offer anything useful.</p></div>
+    <div class="b"><p class="k">Why one or more, and not one</p><p>Because a customer can mention two things in the first sentence, and because the trades chosen here are what makes the inquiry questions, the assessment templates and the hand-off available. <strong>One choice with three consequences is worth drawing as a list rather than hiding in a dropdown.</strong></p></div>
+    <div class="b"><p class="k">The number is already there</p><p>The call carried it, so the first thing the screen does is tell Dana that nothing matched it. <strong>That is the cheapest possible match</strong> and it runs before a single keystroke.</p></div>
+    <div class="b"><p class="k">What is deliberately absent</p><p>No empty questions, no placeholder form, no greyed section saying questions will appear. <strong>The screen shows nothing about the trade because no trade has been chosen</strong>, and drawing the shape of what is coming would be explaining the interface to the person using it.</p></div>
+    <div class="b"><p class="k">The cost of this choice</p><p>A contractor with one trade sees a list with one item on it. <strong>The card should be absent there and the questions unconditional</strong>, which is a tier and stage position the component record has to declare.</p></div>
+  </div>
+  <div class="qs">
+    <h4>Open</h4>
+    <ol>
+      <li><strong>Where does the trade list come from?</strong> Drawn as the organisation's. A contractor who sells three things should not see nine.</li>
+      <li><strong>What is "Something else" for?</strong> Drawn as a trade with no template, which quietly assumes an empty template is legal.</li>
+      <li><strong>Should Dana be able to type before choosing a trade?</strong> Drawn as yes for identity, no for the questions. A customer who gives their name first should not be blocked.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============================= B ============================= -->
+<section class="sec">
+  <div class="sec-head"><span class="badge-l">B</span><h2 class="sec-title">The trade resolves, and the screen changes under her</h2><span class="sec-when">Tue 14 Jul, 7:50am, twenty seconds later</span></div>
+  <p class="sec-beat">"Our AC died overnight" · Air conditioning selected · The moment the template arrives</p>
+
+  <div class="chg"><span>&#9670;</span><div><b>Why this is its own screen.</b> You asked to see the moment the trade is determined. <b>It is the only moment in the flow where a screen rearranges itself</b>, and it is the whole return on trades being chosen at the inquiry.</div></div>
+
+  <div class="frame">
+    <div class="pw-page">
+      <div class="pw-crumbs"><a href="#">Inquiries</a><span class="s">/</span><span>New</span></div>
+      <div class="pw-titlerow">
+        <div>
+          <h1 class="t-h1">New inquiry</h1>
+          <p class="pw-meta">Inbound call<span class="s">·</span>Dana Whitlock<span class="s">·</span><span class="now">Air conditioning</span></p>
+        </div>
+        <div class="pw-actions"><button class="pw-btn">Save and close</button><button class="pw-btn" style="opacity:.45">Mark as qualified</button></div>
+      </div>
+      <div class="pw-stack" style="margin-top:22px">
+        <div class="pw-pair wide-l">
+          <div class="pw-card pw-cardstack">
+            <div class="pw-cardhead"><h5>Air conditioning</h5><div class="pw-seg"><button class="pw-segi" data-on="true">Air conditioning</button><button class="pw-segi">+ another trade</button></div></div>
+            <div class="pw-cardrows">
+              <div class="pw-crow"><span class="cl">Is it cooling at all?</span><span class="cv" style="font-weight:400;color:var(--sol-text-disabled)">Not answered</span></div>
+              <div class="pw-crow"><span class="cl">How old is the system?</span><span class="cv" style="font-weight:400;color:var(--sol-text-disabled)">Not answered</span></div>
+              <div class="pw-crow"><span class="cl">Refrigerant, if the label is readable</span><span class="cv" style="font-weight:400;color:var(--sol-text-disabled)">Not answered</span></div>
+              <div class="pw-crow"><span class="cl">Is anyone home today?</span><span class="cv" style="font-weight:400;color:var(--sol-text-disabled)">Not answered</span></div>
+            </div>
+            <div class="pw-crule"></div>
+            <div class="pw-syn one">
+              <div class="pw-synr"><span class="k">Anything else Carla said</span><span class="v none">&mdash;</span></div>
+            </div>
+          </div>
+          <div class="pw-card pw-cardstack">
+            <div class="pw-cardhead"><h5>Who is calling</h5></div>
+            <div class="pw-form">
+              <div class="pw-fld"><span class="fl">Name</span><span class="fi">Carla Brenner</span></div>
+              <div class="pw-fldrow">
+                <div class="pw-fld"><span class="fl">Mobile</span><span class="fi">(559) 555-0173</span><span class="fh">From the call</span></div>
+                <div class="pw-fld"><span class="fl">Email</span><span class="fi ph">&nbsp;</span></div>
+              </div>
+              <div class="pw-fld"><span class="fl">Address</span><span class="fi ph">&nbsp;</span></div>
+            </div>
+            <div class="pw-crule"></div>
+            <p class="pw-missing" style="margin:0">One name, no address yet. Nothing matched.</p>
+          </div>
+        </div>
+      </div>
+      <p class="annrow"><span class="ann">[i] Four questions have arrived and none is answered. The trade picker has collapsed into the card header with a way to add a second trade beside it. Nothing else on the screen moved.</span></p>
+    </div>
+  </div>
+
+  <div class="arg">
+    <div class="b"><p class="k">The claim</p><p><strong>Choosing the trade fills the card rather than navigating anywhere.</strong> Dana is still on the same screen, still on the same call, and the thing that changed is that the left card now knows what to ask. No step, no page, no confirmation.</p></div>
+    <div class="b"><p class="k">The picker becomes a header</p><p>Once a trade is chosen the list has done its job, so it collapses to the card's own heading with the add control beside it. <strong>That is what makes a second trade cheap</strong>: it is a control that is already on screen rather than a way back to a previous state.</p></div>
+    <div class="b"><p class="k">Why the questions show as unanswered rather than as empty fields</p><p>Because they are questions, not fields. <strong>Not answered is a true statement about a conversation</strong>, and it reads correctly if the call ends here, which fields do not.</p></div>
+    <div class="b"><p class="k">This is the screen that justifies the whole idea</p><p>If the template did not exist, this moment would be a CSR typing a questionnaire while a customer waits. <strong>The three seconds between A and B are the entire return on trades being chosen at the inquiry</strong>, and they also make the assessment continuation possible.</p></div>
+    <div class="b"><p class="k">And the part that is uncomfortable</p><p><strong>A screen that rearranges under somebody mid-sentence is disorienting if it does too much.</strong> Four questions appearing is fine. Four questions appearing while the right card also reorganises would not be, which is why nothing else moves.</p></div>
+  </div>
+  <div class="qs">
+    <h4>Open</h4>
+    <ol>
+      <li><strong>What happens with two trades?</strong> Drawn as a second card, not a longer one, but not drawn. S14 never has it and the Thompsons always do.</li>
+      <li><strong>Can a trade be removed after questions are answered?</strong> Drawn as possible and the consequence is unstated.</li>
+      <li><strong>Does the template version get recorded?</strong> If an organisation edits its questions, an old inquiry was captured against an old set, and nothing holds which.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============================= C ============================= -->
+<section class="sec">
+  <div class="sec-head"><span class="badge-l">C</span><h2 class="sec-title">The air conditioning inquiry, being worked</h2><span class="sec-when">Tue 14 Jul, 7:51am</span></div>
+  <p class="sec-beat">Answers arriving · One close match found and dismissed · Ready to qualify</p>
+
+  <div class="chg"><span>&#9670;</span><div><b>What changed from the canvas.</b> The capture is trade-typed, matching runs live in the right column, there is free text for anything the questions did not ask, and the button says Mark as qualified.</div></div>
+
+  <p class="quote">"On this screen, I want to the right column to show type: Air conditioning and then a form under is with questions and dropdowns to select answers. There should also be a rich text field for other notes"</p>
+
+  <div class="frame">
+    <div class="pw-page">
+      <div class="pw-crumbs"><a href="#">Inquiries</a><span class="s">/</span><span>New</span></div>
+      <div class="pw-titlerow">
+        <div>
+          <h1 class="t-h1">New inquiry</h1>
+          <p class="pw-meta">Inbound call<span class="s">·</span>Dana Whitlock<span class="s">·</span><span class="now">On the line, 1m 40s</span></p>
+        </div>
+        <div class="pw-actions"><button class="pw-btn">Save and close</button><button class="pw-btn pri">Mark as qualified</button></div>
+      </div>
+      <div class="pw-stack" style="margin-top:22px">
+        <div class="pw-pair wide-l">
+
+          <div class="pw-card pw-cardstack">
+            <div class="pw-cardhead"><h5>Air conditioning</h5><div class="pw-seg"><button class="pw-segi" data-on="true">Air conditioning</button><button class="pw-segi">+ another trade</button></div></div>
+            <div class="pw-cardrows">
+              <div class="pw-crow"><span class="cl">Is it cooling at all?</span><span class="cv">Not at all</span></div>
+              <div class="pw-crow"><span class="cl">How old is the system?</span><span class="cv">About 17 years</span></div>
+              <div class="pw-crow"><span class="cl">Refrigerant, if the label is readable</span><span class="cv">R-22</span></div>
+              <div class="pw-crow"><span class="cl">Is anyone home today?</span><span class="cv">Yes, this afternoon</span></div>
+            </div>
+            <div class="pw-crule"></div>
+            <div class="pw-syn one">
+              <div class="pw-synr"><span class="k">Anything else Carla said</span><span class="v" style="font-weight:400">"Our AC died overnight. How soon can someone look at it?" Went off in the night, nothing since. She sounds hot and she is not cross.</span></div>
+            </div>
+          </div>
+
+          <div class="pw-card pw-cardstack">
+            <div class="pw-cardhead"><h5>Who is calling</h5></div>
+            <div class="pw-form">
+              <div class="pw-fld"><span class="fl">Name</span><span class="fi">Carla Brenner</span></div>
+              <div class="pw-fldrow">
+                <div class="pw-fld"><span class="fl">Mobile</span><span class="fi">(559) 555-0173</span></div>
+                <div class="pw-fld"><span class="fl">Email</span><span class="fi ph">&nbsp;</span></div>
+              </div>
+              <div class="pw-fld"><span class="fl">Address</span><span class="fi">2214 Tulare Street, Fresno CA 93721</span></div>
+            </div>
+            <div class="pw-nest">
+              <h6>Potential matches &nbsp;1</h6>
+              <div class="pw-crowlist">
+                <div class="pw-lrow"><div class="pw-lname">Brenner, W &amp; C<span class="pw-lsub">Same address. No phone on file, no work since 2019</span></div><div class="pw-r"><span class="pw-lval">Open</span><span class="pw-lst"><span class="tip" title="Previous owners. Carla says they bought in 2021.">Not the same</span></span></div></div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <p class="annrow"><span class="ann">[i] Potential matches is nested inside the form because it is a consequence of what was typed, not a peer of it. The dismissal reason sits on a tooltip rather than as a block, so it is kept without taking a row.</span></p>
+    </div>
+  </div>
+
+  <div class="arg">
+    <div class="b"><p class="k">The claim</p><p><strong>The search was never a separate act.</strong> Dana types an address because she needs it anyway, and matching is something the system does with what she typed. A first screen that asked her to look somebody up before taking a message got the order wrong.</p></div>
+    <div class="b"><p class="k">Routing is gone from this screen</p><p>You did not want to see advisor against technician here yet. <strong>So the four questions are captured and the destination is not drawn</strong>, which means the routing decision happens somewhere later or is derived from the answers without being shown. Either way this screen no longer claims it.</p></div>
+    <div class="b"><p class="k">The free text is where the customer survives</p><p>Her actual words, and the fact that she is hot and not cross. <strong>None of the four questions would have caught either</strong>, and the second is what the advisor wants to know before knocking on the door at four o'clock.</p></div>
+    <div class="b"><p class="k">The dismissal reason survives as a tooltip</p><p>"Previous owners, Carla says they bought in 2021" is knowable for ninety seconds and then never again, so it is still captured. <strong>It just does not take a row on a screen somebody is typing into.</strong> Nothing in either model holds a judgement that something is not a relationship, which is why it was worth keeping at all.</p></div>
+    <div class="b"><p class="k">Potential matches is nested, not a peer</p><p>It sits inside the form, in a tinted block with its own count, because <strong>it is produced by what was typed rather than being another thing to fill in.</strong> The badge on the card header is gone with it: the count lives on the block that holds the matches.</p></div>
+    <div class="b"><p class="k">Where this breaks</p><p><strong>Four questions fit beside identity. Eight would not</strong>, and a trade with eight is not unusual. The cards would have to stack, which contradicts two abreast being unconditional, and that is a real collision rather than a hypothetical one.</p></div>
+  </div>
+  <div class="qs">
+    <h4>Open</h4>
+    <ol>
+      <li><strong>Where does routing happen now?</strong> Removed from this screen at your request. If it is derived from the answers nobody ever sees it; if it is a later act, something has to carry it. <strong>Unresolved and it is a flow question rather than a layout one.</strong></li>
+      <li><strong>Does a potential match block Mark as qualified until it is resolved?</strong> Drawn as no. The risk is a duplicate; the cost of yes is a gate on a live call.</li>
+      <li><strong>Does the free text become a note on the inquiry, and does it survive qualification?</strong> Drawn as yes to both, and it is the only place her words exist.</li>
+      <li><strong>What happens to the questions at the assessment?</strong> If the capture continues, Terrell should see these four answered rather than asking again. <strong>That is the merge you raised and nothing here draws it.</strong></li>
+      <li><strong>Eight questions.</strong> Named above. The answer is probably that the questions card goes full width and identity moves up into the header, which is a different screen.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============================= D ============================= -->
+<section class="sec">
+  <div class="sec-head"><span class="badge-l">D</span><h2 class="sec-title">Qualified, and the question that follows immediately</h2><span class="sec-when">Tue 14 Jul, 7:52am</span></div>
+  <p class="sec-beat">New · The prompt you asked for · Still on the call</p>
+
+  <div class="chg"><span>&#9670;</span><div><b>What changed.</b> Canvas frame 03 had no job once the capture and the match merged. You said that pressing Mark as qualified should lead straight into booking rather than landing on a summary.</div></div>
+
+  <p class="quote">"This whole step confuses me. And I think the wrong CTAs on the top right were used. On the previous page, when I tap 'Mark as qualified', I would want to be asked if I want to book for this homeowner on this qualified lead."</p>
+
+  <div class="frame">
+    <div class="pw-page" style="background:var(--sol-backgrounds-ui-medium);padding:44px 32px">
+      <div style="max-width:560px;margin:0 auto">
+        <div class="pw-card pw-cardstack">
+          <div class="pw-cardhead"><h5>Carla Brenner is qualified</h5></div>
+          <div class="pw-syn one">
+            <div class="pw-synr"><span class="v" style="font-weight:400">Air conditioning, 2214 Tulare Street. Going to a comfort advisor.</span></div>
+          </div>
+          <div class="pw-crule"></div>
+          <div class="pw-crowlist">
+            <div class="pw-lrow"><div class="pw-lname med">Book a sales visit now<span class="pw-lsub">Terrell Boyd is free at 4pm today. Carla said she is home this afternoon</span></div><div class="pw-r"><span class="pw-lval">&nbsp;</span></div></div>
+            <div class="pw-lrow"><div class="pw-lname">Leave it for someone to pick up<span class="pw-lsub">It goes to the sales queue unbooked</span></div><div class="pw-r"><span class="pw-lval">&nbsp;</span></div></div>
+          </div>
+        </div>
+      </div>
+      <p class="annrow" style="max-width:560px;margin-left:auto;margin-right:auto"><span class="ann">[i] The 4pm slot is on the prompt because the answer to "is anyone home today" was yes. Without that answer the prompt offers the queue first.</span></p>
+    </div>
+  </div>
+
+  <div class="arg">
+    <div class="b"><p class="k">The claim</p><p><strong>The prompt is the cheapest possible version of the booking screen.</strong> It offers the one slot the answers already imply, and everything else is one tap away. A CSR who takes the offer never sees a scheduling surface at all.</p></div>
+    <div class="b"><p class="k">Why this is a prompt and not a page</p><p>Carla is still on the phone. <strong>A page implies a decision worth navigating to</strong>, and this is a yes or a no with a sensible default. If the answer is book, section C is the booking screen you already approved, unchanged.</p></div>
+    <div class="b"><p class="k">What the second option admits</p><p>Plenty of inquiries qualify and do not get booked on the call. <strong>Naming the queue is what stops that becoming a silent abandonment</strong>, and it is the first time any screen has mentioned that the queue exists.</p></div>
+    <div class="b"><p class="k">What is not here</p><p><strong>No mention of a project, and none of a lead either.</strong> Both were created at the moment this prompt appeared. The prompt names the customer and the trade, which is what Dana is holding in her head.</p></div>
+    <div class="b"><p class="k">And what this reveals about Start selling</p><p>In S14 the interest goes to pursuing at the same moment it is qualified, because an advisor is booked within four minutes. <strong>So S14 never exercises the Start selling act at all.</strong> It is invisible here and it is a separate moment in S15, three weeks after the leads arrive. Worth knowing before it is drawn.</p></div>
+  </div>
+  <div class="qs">
+    <h4>Open</h4>
+    <ol>
+      <li><strong>Is a prompt the right device, or should qualifying just open the booking screen?</strong> Drawn as a prompt because the second option is real and a booking screen hides it.</li>
+      <li><strong>What does the sales queue look like?</strong> Named here and drawn nowhere. It is the same missing surface as the deferred-lead revive date.</li>
+      <li><strong>Does a disqualified inquiry need this moment too?</strong> Drawn as no, and disqualifying is not on any screen yet.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============================= E ============================= -->
+<section class="sec">
+  <div class="sec-head"><span class="badge-l">E</span><h2 class="sec-title">Booking the advisor</h2><span class="sec-when">Tue 14 Jul, 7:54am</span></div>
+  <p class="sec-beat">Canvas frame 04 · Unchanged</p>
+
+  <div class="unchanged">
+    <p style="margin:0 0 8px"><b>Not redrawn.</b> Your comment was "This screen is fine."</p>
+    <p style="margin:0">It stands as built: advisor availability with travel time from the previous call, the same person appearing twice because the choice is a slot rather than a person, and the confirmation text composed and shown. <b>Three things on it still have no model behind them</b>: availability, travel and communications. Availability and travel are now in the object register; communications has been there since the Thompson work and surfaced four more times today.</p>
+  </div>
+</section>
+
+<!-- ============================= F ============================= -->
+<section class="sec">
+  <div class="sec-head"><span class="badge-l">F</span><h2 class="sec-title">The customer record, four minutes in</h2><span class="sec-when">Tue 14 Jul, 7:56am</span></div>
+  <p class="sec-beat">New · The empty case · One lead, one interest, and a container nobody mentions</p>
+
+  <div class="chg"><span>&#9670;</span><div><b>What changed.</b> You asked to see the customer page after the inquiry was qualified, and then for it after every beat that follows. <b>This is that page at the first of two moments that matter.</b> The second is section E.</div></div>
+
+  <p class="quote">"I also want to see, on a seperate screen, what the customer page looks like after the inquiry was qualified."</p>
+
+  <div class="frame">
+    <div class="pw-page">
+      <div class="pw-crumbs"><a href="#">Customers</a><span class="s">/</span><span>Carla Brenner</span></div>
+      <div class="pw-titlerow">
+        <div>
+          <h1 class="t-h1">Carla Brenner</h1>
+          <p class="pw-meta">2214 Tulare Street, Fresno CA<span class="s">·</span><a href="#">1 contact</a><span class="s">·</span><span class="now">Customer since today</span></p>
+        </div>
+        <div class="pw-actions"><button class="pw-btn pri">New inquiry</button><button class="pw-kebab">&#8943;</button></div>
+      </div>
+      <div class="pw-stack" style="margin-top:22px">
+
+        <div class="pw-group">
+          <div class="pw-grouphead"><h2>What they want</h2></div>
+          <div class="pw-pair wide-l">
+            <div class="pw-card pw-cardstack">
+              <div class="pw-cardhead"><h5>Leads</h5><div class="pw-seg"><button class="pw-segi" data-on="true">Open 1</button><button class="pw-segi">All 1</button></div></div>
+              <div class="pw-crowlist">
+                <div class="pw-lrow"><div class="pw-lname med">Air conditioning<span class="pw-lsub">Inbound call, this morning. 17 year old system, R-22, no cooling</span></div><div class="pw-r"><span class="pw-lval">Not yet priced</span><span class="pw-lst">Pursuing</span></div></div>
+              </div>
+            </div>
+            <div class="pw-card pw-cardstack">
+              <div class="pw-cardhead"><h5>Coming up</h5></div>
+              <div class="pw-crowlist">
+                <div class="pw-lrow"><div class="pw-lname">Sales visit<span class="pw-lsub">Terrell Boyd, air conditioning</span></div><div class="pw-r"><span class="pw-lval">Today, 4pm</span><span class="pw-lst">Confirmed by text</span></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pw-group">
+          <div class="pw-grouphead"><h2>Record</h2></div>
+          <div class="pw-pair">
+            <div class="pw-card pw-cardstack">
+              <div class="pw-cardhead"><h5>Activity</h5></div>
+              <div class="pw-note-item">
+                <div class="pw-note-h"><span class="ty">Lead created</span><span>Dana Whitlock</span><span>7:52am</span></div>
+                <p>Air conditioning. Qualified from the call and sent to a comfort advisor.</p>
+              </div>
+              <div class="pw-note-item">
+                <div class="pw-note-h"><span class="ty">Note</span><span>Dana Whitlock</span><span>7:52am</span></div>
+                <p>AC out overnight, no cooling at all. System is about seventeen years old, R-22. Sending to an advisor rather than a tech. Carla is home this afternoon.</p>
+              </div>
+              <div class="pw-note-item">
+                <div class="pw-note-h"><span class="ty">Customer created</span><span>Dana Whitlock</span><span>7:52am</span></div>
+                <p>From an inbound call. One close match on the address dismissed: previous owners.</p>
+              </div>
+            </div>
+            <div class="pw-card pw-cardstack">
+              <div class="pw-cardhead"><h5>The property</h5></div>
+              <div class="pw-syn">
+                <div class="pw-synr"><span class="k">2214 Tulare Street</span><span class="v">Fresno CA 93721</span></div>
+                <div class="pw-synr"><span class="k">Bought</span><span class="v">2021, per Carla</span></div>
+              </div>
+              <div class="pw-crule"></div>
+              <p class="pw-missing" style="margin:0">Nothing installed on file. No previous work at this address under these owners.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <p class="annrow"><span class="ann">[i] No Operations group, no Financials group, and no mention of a project anywhere. All three are correct: there is nothing sold, nothing owed, and the container holds one lead that already says everything it would.</span></p>
+    </div>
+  </div>
+
+  <div class="arg">
+    <div class="b"><p class="k">The claim</p><p><strong>Two groups, not four.</strong> A four-minute-old customer has demand and a record and nothing else. Drawing empty Operations and Financials groups would be drawing the product's capabilities rather than this customer.</p></div>
+    <div class="b"><p class="k">Which is a departure, and it is deliberate</p><p>The absence rule says a capability that will exist advertises. <strong>Here it does not, and the reason is that everything would advertise.</strong> A customer four minutes old would show three empty panels describing a product they have not bought. The rule holds inside a page; it should not turn a page into a brochure.</p></div>
+    <div class="b"><p class="k">Latest notes became Activity, as you asked</p><p>And the consequence is visible immediately: <strong>two of the three entries are object creations, not notes.</strong> The lead being created and the customer being created are the things that actually happened this morning, and the note is one of three.</p></div>
+    <div class="b"><p class="k">Which raises a question the decision log half answers</p><p>Notes and history are already recorded as one store read two ways. <strong>Activity looks like a third reading of the same store</strong>, filtered to recent and including creations. If it is, it should be described that way rather than becoming a new thing.</p></div>
+    <div class="b"><p class="k">The dismissal survives here</p><p>"One close match on the address dismissed: previous owners" is on the customer record at 7:56am because it was captured at 7:51am. <strong>That is the only reason anybody will ever be able to answer why there are two Brenner records at that address.</strong></p></div>
+    <div class="b"><p class="k">What is not tested</p><p>One lead, one interest. <strong>The four status grains cannot collide here</strong>, and neither can the naming problem, because a page with one lead has nothing to title. Both need the Thompsons.</p></div>
+  </div>
+  <div class="qs">
+    <h4>Open</h4>
+    <ol>
+      <li><strong>Is Activity a third reading of the notes and history store, or a new one?</strong> Drawn as a reading. If it is new, three stores hold overlapping events.</li>
+      <li><strong>Should an empty customer advertise anything at all?</strong> Drawn as no. The counter-argument is that this is exactly where a payments-only contractor would learn selling exists.</li>
+      <li><strong>Is "New inquiry" the right primary action on a customer?</strong> It is the only thing anybody would do here today.</li>
+      <li><strong>Where does the property live?</strong> Drawn as a card under Record. It is arguably an anchor and belongs in the header beside contacts.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============================= G ============================= -->
+<section class="sec">
+  <div class="sec-head"><span class="badge-l">G</span><h2 class="sec-title">The same page, after the hand-off</h2><span class="sec-when">Thu 30 Jul</span></div>
+  <p class="sec-beat">New · Where the ruling is tested · The container is named for the first time</p>
+
+  <div class="chg"><span>&#9670;</span><div><b>What changed.</b> Your section proposal, ruled this afternoon: <b>leads only under selling, and once work exists the page groups by project with jobs nested underneath.</b> Plus four from your latest pass: a Closed segment on Leads, the installed equipment card removed, Coming up nested inside the project card, and Activity moved up beside Leads so the Record group is history alone.</div></div>
+
+  <p class="quote">"So instead of a 'Jobs' under 'Operations', there is an 'Active projects' and 'Jobs' are nested in each project."</p>
+
+  <div class="frame">
+    <div class="pw-page">
+      <div class="pw-crumbs"><a href="#">Customers</a><span class="s">/</span><span>Carla and Wes Brenner</span></div>
+      <div class="pw-titlerow">
+        <div>
+          <h1 class="t-h1">Carla and Wes Brenner</h1>
+          <p class="pw-meta">2214 Tulare Street, Fresno CA<span class="s">·</span><a href="#">2 contacts</a><span class="s">·</span><span class="now">Customer since 14 July</span></p>
+        </div>
+        <div class="pw-actions"><button class="pw-btn">New inquiry</button><button class="pw-kebab">&#8943;</button></div>
+      </div>
+      <div class="pw-stack" style="margin-top:22px">
+
+        <div class="pw-group">
+          <div class="pw-grouphead"><h2>What they want</h2></div>
+          <div class="pw-pair wide-l">
+            <div class="pw-card pw-cardstack">
+              <div class="pw-cardhead"><h5>Leads</h5><div class="pw-seg"><button class="pw-segi">Open 0</button><button class="pw-segi" data-on="true">Closed 1</button><button class="pw-segi">All 1</button></div></div>
+              <div class="pw-crowlist">
+                <div class="pw-lrow dim"><div class="pw-lname">Air conditioning<span class="pw-lsub">Inbound call, 14 Jul. Won 16 July</span></div><div class="pw-r"><span class="pw-lval">$12,800</span><span class="pw-lst">Won</span></div></div>
+              </div>
+            </div>
+            <div class="pw-card pw-cardstack">
+              <div class="pw-cardhead"><h5>Activity</h5><div class="pw-seg"><button class="pw-segi" data-on="true">Recent</button><button class="pw-segi">Notes 6</button><button class="pw-segi">All</button></div></div>
+              <div class="pw-note-item">
+                <div class="pw-note-h"><span class="ty">Note</span><span>Vic Santoro</span><span>Today, 4:50pm</span></div>
+                <p>Commissioned and running. Subcooling and delta-T both in range. Took the balance cheque from Carla and left it with the office.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pw-group">
+          <div class="pw-grouphead"><h2>Work</h2></div>
+          <div class="pw-card pw-cardstack">
+            <div class="pw-cardhead"><h5>Air conditioning, Brenner</h5><span class="pw-lst">Sold 16 July</span></div>
+            <div class="pw-crowlist">
+              <div class="pw-lrow"><div class="pw-lname med">Air conditioning replacement<span class="pw-lsub">Vic Santoro. Installed today, waiting on the county</span></div><div class="pw-r"><span class="pw-lval">In progress</span><span class="pw-lst">Visit closed 4:45pm</span></div></div>
+            </div>
+            <div class="pw-nest">
+              <h6>Coming up</h6>
+              <div class="pw-crowlist">
+                <div class="pw-lrow"><div class="pw-lname">County inspection<span class="pw-lsub">Requested this afternoon</span></div><div class="pw-r"><span class="pw-lval">Awaiting a date</span></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pw-group">
+          <div class="pw-grouphead"><h2>Record</h2></div>
+          <div class="pw-pair">
+            <div class="pw-card pw-cardstack">
+              <div class="pw-cardhead"><h5>History</h5></div>
+              <div class="pw-dn"><span>Visit closed. Equipment registered</span><span class="dd">Today</span></div>
+              <div class="pw-dn"><span>Install visit ran</span><span class="dd">Today</span></div>
+              <div class="pw-dn"><span>Install moved from 23 to 30 July</span><span class="dd">20 Jul</span></div>
+              <div class="pw-dn"><span>Job created at the hand-off</span><span class="dd">16 Jul</span></div>
+              <div class="pw-dn"><span>Inquiry raised and qualified</span><span class="dd">14 Jul</span></div>
+            </div>
+            <div class="pw-card pw-cardstack">
+              <div class="pw-cardhead"><h5>The property</h5></div>
+              <div class="pw-syn">
+                <div class="pw-synr"><span class="k">2214 Tulare Street</span><span class="v">Fresno CA 93721</span></div>
+                <div class="pw-synr"><span class="k">Built</span><span class="v">1998</span></div>
+                <div class="pw-synr"><span class="k">Bought</span><span class="v">2021, per Carla</span></div>
+                <div class="pw-synr"><span class="k">Size</span><span class="v">1,640 sq ft</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <p class="annrow"><span class="ann">[i] The container is a card header grouping one job, with what is coming up nested inside it. There is still no Financials group: Brightline runs its money elsewhere, so there is nothing to derive.</span></p>
+    </div>
+  </div>
+
+  <div class="arg">
+    <div class="b"><p class="k">The claim</p><p><strong>The container earns its name by holding something.</strong> On section D it held one lead and would have been a second title for the same thing. Here it holds a job, and once there are two jobs it is the only thing that says they were sold together.</p></div>
+    <div class="b"><p class="k">And here is the honest problem with testing it on S14</p><p><strong>One project with one job nested inside is indistinguishable from a flat list.</strong> S14 cannot show why the grouping is right; it can only show that it is not wrong. <strong>The Thompsons are the test</strong>, with two committed scopes under one container and a third interest that never became either.</p></div>
+    <div class="b"><p class="k">Selling did not become Sales, and Operations did not stay</p><p>You said Sales was not helpful. The groups are now <strong>What they want</strong> and <strong>Work</strong>, which describe the customer's side and ours. The first survives being empty and the second only appears when there is work.</p></div>
+    <div class="b"><p class="k">Coming up is nested in the container, not beside it</p><p>You asked for it inside the project card, and it is the right call: <strong>a county inspection is not a thing the customer wants, it is a thing this piece of work is waiting on.</strong> Nesting it says whose it is, and it stops the page implying that upcoming events are their own category.</p></div>
+    <div class="b"><p class="k">The installed equipment card is gone</p><p>Removed at your request. <strong>The consequence is that nothing on this page says a new system exists at that address</strong>, which is a real loss and probably belongs to the property rather than to the customer. Worth deciding where the asset registry surfaces, rather than leaving it only on the job.</p></div>
+    <div class="b"><p class="k">And the Work group is now a single card</p><p>Which is the pairs-rule collision again, for the second time in this memo. <strong>Drawn without a pair and keeping its group heading</strong>, which is the opposite of what section I does. That inconsistency is deliberate so the two versions can be compared, and the standard should pick one.</p></div>
+    <div class="b"><p class="k">Leads gained a Closed segment, as you asked</p><p>Three segments now: open, closed, all, and the card defaults to closed here because that is where the only lead is. <strong>A won lead is worth seeing rather than vanishing</strong>, and on the Thompsons this card is where the deferred roof lives for eight months while the other two are closed.</p></div>
+    <div class="b"><p class="k">What this page still cannot answer</p><p>Whether the container needs naming <strong>before</strong> the hand-off in a case where it holds several leads and a proposal across two of them. S14 never has that shape. The ruling is drawn here and tested properly only on S15.</p></div>
+  </div>
+  <div class="qs">
+    <h4>Open</h4>
+    <ol>
+      <li><strong>Where does installed equipment surface now?</strong> Removed from this page. It is a property fact, and the property has no page in any memo.</li>
+      <li><strong>Does the container get a card each, or one card with several inside?</strong> Drawn as a card per container, which will not survive a customer with four projects.</li>
+      <li><strong>What happens when the project closes?</strong> Drawn as still present. A fifteen-year customer with thirty closed projects is the same problem the leads card already has.</li>
+      <li><strong>Is "Work" right when the group contains a container and an asset?</strong> The equipment card is not work; it is what the work left behind.</li>
+      <li><strong>Should the container be tappable to a page of its own?</strong> Not drawn either way, and it is the next question after this one.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============================= H ============================= -->
+<section class="sec">
+  <div class="sec-head"><span class="badge-l">H</span><h2 class="sec-title">The assessment, on the project page</h2><span class="sec-when">Wed 15 Jul, 8:15am</span></div>
+  <p class="sec-beat">Replaces canvas frame 07 · Rosa Iglesias reads it from the office</p>
+
+  <div class="chg"><span>&#9670;</span><div><b>What changed.</b> The assessment was its own page four levels down a breadcrumb. You asked for it to be an overview on the project page with the detail in a side panel.</div></div>
+
+  <p class="quote">"I want to see the site assessment on the 'Air conditioning' project page - an overview and more details pulled up in the side panel."</p>
+
+  <div class="frame">
+    <div class="pw-page">
+      <div class="pw-crumbs"><a href="#">Customers</a><span class="s">/</span><a href="#">Carla Brenner</a><span class="s">/</span><span>Air conditioning</span></div>
+      <div class="pw-titlerow">
+        <div>
+          <h1 class="t-h1">Air conditioning</h1>
+          <p class="pw-meta">Carla Brenner<span class="s">·</span>2214 Tulare Street<span class="s">·</span><span class="now">Assessed yesterday</span></p>
+        </div>
+        <div class="pw-actions"><button class="pw-btn pri">Build a proposal</button><button class="pw-kebab">&#8943;</button></div>
+      </div>
+      <div class="pw-stack" style="margin-top:22px">
+        <div class="pw-pair wide-l">
+          <div class="pw-card pw-cardstack">
+            <div class="pw-cardhead"><h5>Site assessment</h5><span class="pw-lst">Terrell Boyd, yesterday 4:12pm</span></div>
+            <div class="pw-syn three">
+              <div class="pw-synr"><span class="k">System</span><span class="v">2.5 ton, 17 years, R-22</span></div>
+              <div class="pw-synr"><span class="k">Coil</span><span class="v">Rusted</span></div>
+              <div class="pw-synr"><span class="k">Ductwork</span><span class="v">Sound</span></div>
+              <div class="pw-synr"><span class="k">Panel</span><span class="v">One free slot</span></div>
+              <div class="pw-synr"><span class="k">Pad</span><span class="v">West elevation</span></div>
+              <div class="pw-synr"><span class="k">Photographs</span><span class="v">One, the nameplate</span></div>
+            </div>
+            <div class="pw-crule"></div>
+            <div class="pw-syn one">
+              <div class="pw-synr"><span class="k">Terrell's summary</span><span class="v" style="font-weight:400">Straight replacement with no remedial work.</span></div>
+            </div>
+            <div class="pw-crule"></div>
+            <p class="pw-missing" style="margin:0">Open the full assessment</p>
+          </div>
+          <div class="pw-card pw-cardstack">
+            <div class="pw-cardhead"><h5>What they asked about</h5></div>
+            <div class="pw-crowlist">
+              <div class="pw-lrow"><div class="pw-lname med">Air conditioning<span class="pw-lsub">Inbound call, 14 Jul. Assessed, not yet priced</span></div><div class="pw-r"><span class="pw-lval">Not yet priced</span><span class="pw-lst">Pursuing</span></div></div>
+            </div>
+            <div class="pw-crule"></div>
+            <div class="pw-cardhead"><h5 style="font:700 13px/20px var(--inter)">What has happened</h5></div>
+            <ul class="pw-timeline">
+              <li><p class="e">Site assessment completed</p><p class="dt">14 Jul, 4:38pm · Terrell Boyd</p></li>
+              <li><p class="e">Sales visit</p><p class="dt">14 Jul, 4:10pm · Terrell Boyd</p></li>
+              <li><p class="e">Qualified from an inbound call</p><p class="dt">14 Jul, 7:52am · Dana Whitlock</p></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <p class="annrow"><span class="ann">[i] Lead and project are the same thing here, one to one, so this page is both. The full assessment opens sideways into a sheet rather than downward.</span></p>
+    </div>
+  </div>
+
+  <div class="arg">
+    <div class="b"><p class="k">The claim</p><p><strong>The assessment is a card, not a destination.</strong> Six facts and a summary answer what Rosa opens it for. The fourteen window measurements, or here the detail behind each finding, go sideways into a sheet, which is what the composition standard says for detail that does not fit.</p></div>
+    <div class="b"><p class="k">You called it the project page and that is right</p><p><strong>A qualified inquiry is a lead, and a lead has a project from that moment.</strong> During selling the two are one to one, so calling this the project page is accurate and my earlier correction was wrong. The distinction only acquires visible content when a second lead or a job arrives, which is why the hand-off is where the container gets a name of its own.</p></div>
+    <div class="b"><p class="k">Why the second card is history</p><p>Because the first card is an outcome and somebody reading it needs to know how it got there. <strong>Three events, one of them yesterday morning</strong>, which is exactly the provenance a coordinator is checking before she trusts a finding.</p></div>
+    <div class="b"><p class="k">The primary action moved</p><p>It is now Build a proposal, which is what this page is for. <strong>That act is excluded from this round</strong>, so the button is drawn and goes nowhere, which the memo would rather say than hide.</p></div>
+  </div>
+  <div class="qs">
+    <h4>Open</h4>
+    <ol>
+      <li><strong>Can the office open a part-finished assessment?</strong> Still drawn as no, unchanged from memo 7.</li>
+      <li><strong>Is a sheet enough for a fourteen-window assessment?</strong> S14 has six findings; S15 would have far more.</li>
+      <li><strong>What titles this page when the lead has three interests?</strong> The same question as section F, and it does not go away.</li>
+      <li><strong>Should the assessment show the four inquiry answers already given?</strong> If the capture continues rather than restarting, it should. Not drawn, and it is the merge you raised.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============================= I ============================= -->
+<section class="sec">
+  <div class="sec-head"><span class="badge-l">I</span><h2 class="sec-title">Getting it ready, corrected</h2><span class="sec-when">Fri 17 Jul, 9:05 to 9:40am</span></div>
+  <p class="sec-beat">Canvas frame 09 · Two composition fixes, no new argument</p>
+
+  <div class="chg"><span>&#9670;</span><div><b>What changed.</b> The group heading becomes Install day, and the activity timeline stops living under The order. Both are yours and both are composition rather than content.</div></div>
+
+  <p class="quote">"Should be 'install day'" &nbsp;·&nbsp; "Should not fall under the 'The order' section.Maybe this goes at the top of the page."</p>
+
+  <div class="unchanged" style="margin-bottom:18px">
+    <p style="margin:0 0 8px"><b>Not redrawn in full.</b> The screen stands as built apart from two moves, and redrawing it would invite comment on cards you have already accepted.</p>
+    <p style="margin:0 0 8px"><b>One.</b> The group headed "The visit" becomes <b>Install day</b>. It holds when and who, and the readiness card that reads Blocking 0.</p>
+    <p style="margin:0"><b>Two.</b> The "What has happened" timeline leaves the group headed "The order" and goes to the top of the page, above both groups, as a full-width strip. <b>It is not part of the order and it is not part of install day</b>; it is the page's own history, and putting it at the top means it reads before the detail rather than after it.</p>
+  </div>
+
+  <div class="arg" style="margin-top:0;padding-top:0;border-top:0">
+    <div class="b"><p class="k">Why the timeline goes up rather than down</p><p>You said "maybe this goes at the top of the page". <strong>Agreed, and the reason is that it is the only card that answers what state this is in.</strong> Everything below it is detail about one aspect. A history at the bottom is a footnote; at the top it is an orientation.</p></div>
+    <div class="b"><p class="k">What this costs</p><p>A full-width strip breaks the two-abreast rule, which is a Default rather than an Always. <strong>The reason is that it pairs with nothing</strong>: there is no second card that answers the same kind of question, and inventing one to fill the pair would be worse than the exception.</p></div>
+    <div class="b"><p class="k">And it collides with a rule, which is worth saying</p><p>The composition standard says cards go in pairs under a group heading. This is one card and no group heading. <strong>CD named this collision before it bit</strong>, on a frame that was a search with one thing on it. It has now bitten. The answer wanted is whether a lone card drops its group heading, which is what is drawn here.</p></div>
+  </div>
+  <div class="qs">
+    <h4>Open</h4>
+    <ol>
+      <li><strong>Does a lone card keep its group heading or lose it?</strong> Drawn as losing it. This is the collision, and the answer should go in the composition standard rather than being decided per screen.</li>
+      <li><strong>Is Install day right before anything is scheduled?</strong> The group is named for a day that only exists once a date is set.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============================= close ============================= -->
+<section class="sec">
+  <div class="sec-head"><span class="badge-l">J</span><h2 class="sec-title">Carried unchanged, and why</h2><span class="sec-when">Canvas frames 10 to 14</span></div>
+  <p class="sec-beat">Not redrawn · Not omitted · Each one with what stands</p>
+
+  <div class="chg"><span>&#9670;</span><div><b>These are here so this memo is a complete input.</b> You did not comment on any of them, and redrawing them would invite feedback on screens already accepted. <b>Rebuild them from the canvas as they stand</b>, with the notes below applied where they say something.</div></div>
+
+  <div class="unchanged" style="margin-bottom:14px">
+    <p style="margin:0 0 10px"><b>Frame 10, the backorder.</b> Stands. One status change on an order moves the visit, both crew assignments and the disposal, and the fourth row, telling the customer, is an obligation with no record behind it. <b>That row is deliberately uncomfortable</b> and should stay until communications becomes real or the row comes off.</p>
+    <p style="margin:0 0 10px"><b>Frame 11, install day.</b> Still a placeholder. A field surface worked outdoors in July with gloves on, and drawing it badly invites feedback on the wrong thing. <b>One structural fact in it matters</b>: the equipment registry entry is what the rebate filing reads a day later.</p>
+    <p style="margin:0 0 10px"><b>Frame 12, the close and the cheque.</b> Stands, <b>including its knowing rule break</b>: one line of explanatory copy saying where cheques go. It is there because a crew lead holding $6,400 will not read a memo. It is flagged in the deviations register and it comes out only if you say so.</p>
+    <p style="margin:0 0 10px"><b>Frame 13, the county and completion.</b> Stands, and it holds the best card in the set: the receipt for a derived status, three records agreeing, nobody having marked anything by hand.</p>
+    <p style="margin:0"><b>Frame 14, the tail.</b> Stands. Two money cards that cannot be added together, which is the money principle refusing to complete rather than failing.</p>
+  </div>
+
+  <div class="arg" style="margin-top:0;padding-top:0;border-top:0">
+    <div class="b"><p class="k">One thing that changes across all five</p><p>The stage rail on frames 09 and 13 should take the compact treatment you asked for on the S15 job: <strong>focus on the current stage, show there is more by fading top and bottom</strong>. That is a component amendment rather than a screen change and it applies wherever the rail appears.</p></div>
+    <div class="b"><p class="k">And one that does not change and should</p><p>Frame 14's customer record predates this afternoon's ruling, so it still groups the old way. <strong>Section G is the corrected version of that page</strong> and frame 14 should follow it: leads only under what they want, then the container grouping the job.</p></div>
+  </div>
+</section>
+
+<!-- ============================= what this cannot test ============================= -->
+<section class="sec">
+  <div class="sec-head"><span class="badge-l">&#8226;</span><h2 class="sec-title">What S14 still cannot test</h2><span class="sec-when">The argument for the Thompsons next</span></div>
+
+  <div class="unchanged">
+    <p style="margin:0 0 10px"><b>One lead, one interest, one job.</b> The four status grains never collide, the container never has to be titled with three things in it, and one job nested inside one project is indistinguishable from a flat list. <b>S14 can show these are not wrong. It cannot show they are right.</b></p>
+    <p style="margin:0 0 10px"><b>The multi-trade inquiry is drawn and never exercised.</b> Sections A and B put a second trade one control away, and S14 never takes it. The Thompsons take it twice on the first day.</p>
+    <p style="margin:0 0 10px"><b>The assessment merge cannot be shown either.</b> Continuing the capture from the inquiry into the assessment is only visibly worth anything when the inquiry asked a lot and the assessment would otherwise repeat it. Four questions is not enough to make the case.</p>
+    <p style="margin:0"><b>And Start selling does not appear at all.</b> In S14 the interest goes to pursuing at the same moment it is qualified, because an advisor is booked four minutes later. <b>The act exists and this scenario never performs it.</b> S15 separates the two by three weeks.</p>
+  </div>
+</section>
+
+</div>
+</body>
+</html>

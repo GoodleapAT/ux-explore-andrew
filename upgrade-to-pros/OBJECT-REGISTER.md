@@ -53,6 +53,8 @@ otherwise.
 | Advisor availability and travel time | Blocking | Fill, propose | Watch | Open |
 | Readiness gating between an order and a visit | Blocking | Propose | Pursue | Open |
 | A follow-up after the work is finished | Degrading | Probe | Loose | Open |
+| Near-match search before a record is created | Blocking | Fill, propose | Pursue | Open |
+| A retained reason for a dismissal | Degrading | Propose | Watch | Open |
 
 ---
 
@@ -280,3 +282,39 @@ data**, which is unusual in this register and makes it the most buildable thing 
   hold it. The script's own last beat asks the question and leaves it open: a tail step on the job, a
   checklist at the lead, or a customer-level feature.
 - **To the team.** Their question originally. Ours only inherits it.
+
+## Near-match search before a record is created
+
+- **Purpose.** A CSR under time pressure needs to know whether the person on the phone already
+  exists, before anything is created. Neither model holds a candidate, a match reason, or the act of
+  resolving one.
+- **Criticality:** Blocking. The failure mode is a duplicate customer or a wrongly merged household,
+  and it happens in the first ninety seconds of every inbound call.
+- **Intent:** Fill and propose.
+- **Hold: pursue.**
+- **Where it was needed.** Frame 01 of the S14 canvas, drawn as `CandidateMatchList`. **Everything it
+  shows already exists as records**, so the gap is the search and the judgement rather than the data,
+  which puts it in the same cheap-to-build class as readiness gating.
+- **To the team.** Worth raising. **Related to M-008**, qualifying a new inquiry into an existing
+  lead, which is the same act applied later in time.
+
+**The finding behind it.** Two frames were added to test the first ninety seconds of a call and they
+found that **the first thirty seconds are unmodelled**. Beat 1 is three acts, not two: resolve whether
+she exists, take down what she said, decide where it goes. Only the middle one is described by either
+model.
+
+## A retained reason for a dismissal
+
+- **Purpose.** Why a near-match was judged not to be the same household, kept against the act.
+- **Criticality:** Degrading, **rising to blocking the first time a duplicate is found after the fact
+  and nobody can tell who dismissed what.**
+- **Intent:** Propose.
+- **Hold: watch.**
+- **Where it was needed.** Frame 01 captures it; frame 03 shows it two minutes later with a time
+  against it. Drawn as free text, per memo 7's open question on section A. Whether it needs a reason
+  code is unsettled.
+- **To the team.** Not yet. **Nothing in either model holds a judgement that something is not a
+  relationship**, which is a more general gap than this one instance.
+
+**Cheap, and worth noting why.** It is one field on an act that does not otherwise exist, so the cost
+is the act rather than the field.

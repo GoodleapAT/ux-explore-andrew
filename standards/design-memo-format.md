@@ -31,6 +31,11 @@ why.
 - **Mark annotation inside a mockup with an `[i]` prefix** and declare the convention near the top.
   This applies only to mockups, where annotation could be mistaken for interface copy. A diagram is
   annotation throughout, so it needs neither.
+- **Annotation belongs to a memo, not to a canvas.** **Always.** A memo is read as an argument, so
+  annotation inside a mockup is part of it. **A canvas is read as a design**, so annotation on a frame
+  is noise on the thing being judged, and it competes with the reviewer's own comments. Put the
+  argument in the memo or in the frame label, never on the frame. Corrected 14 Sep 2026 at Andrew's
+  request, after a canvas was drawn carrying memo 7's `[i]` lines.
 - **Mockups look like believable UI** with real labels and values. The editorial framing is what
   signals it is not a design.
 - **Placeholder anything the current question does not touch**, and label it.
@@ -69,3 +74,17 @@ declared. The list under the mock does the work the annotation used to.
   Andrew's request.
 - **10 Sep 2026.** The mocks-only variant was asked for directly: mockups plus the removed items, with
   the rest of the memo to follow once the mocks are satisfactory.
+- **14 Sep 2026.** Andrew, on the S14 canvas: "Claude Design should be ignoring these annotations and
+  it not". The build brief did not say the `[i]` convention was memo-only, so CD carried it over from
+  memo 7, correctly by the letter of the rule. **The rule was incomplete rather than broken**, and the
+  fix is the Always above.
+
+## The collision this standard does not yet resolve
+
+**Named by CD, 14 Sep 2026, before it bit.** The composition standard says cards go in pairs under a
+group heading. **A frame that is a search, or a capture in flight, genuinely has one thing on it.**
+Both new canvas frames were drawn as honest pairs, so nothing had to be declared this time.
+
+**It will collide the first time a frame has one card and no second question to pair it with.** The
+answer wanted in advance: is a single card under a group heading acceptable, or does the group heading
+go? **Unresolved, and cheaper to settle now than in review.**

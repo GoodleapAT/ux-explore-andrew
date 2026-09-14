@@ -24,9 +24,11 @@ each record below says which level it means in words.
 Where an inquiry goes: an advisor or a technician. Two rows, one selected, each with the reason for
 the choice in the sub line.
 
-**States** undecided, where neither row is selected and the primary action is unavailable; chosen,
-where one row carries the selection and the other dims; and **derived**, where a rule picked from
-the answers and the card reports rather than asks.
+**States** **asking**, where the routing question has been put and the destinations are drawn quiet
+with no selection, which is what canvas frame 02 shows; undecided, where the destinations are
+selectable and neither is selected and the primary action is unavailable; chosen, where one row
+carries the selection and the other dims; and **derived**, where a rule picked from the answers and
+the card reports rather than asks.
 
 **Use it** at the first capture of demand, where a routing choice and a data capture happen in the
 same ninety seconds and separating them would cost a sale.
@@ -37,9 +39,14 @@ time pressure on is a radio group with extra ceremony.
 **When its subject is absent** at a contractor with one trade and one kind of visit, there is
 nothing to triage, so the card is **absent** and the primary action becomes unconditional.
 
-**Absorbs** more than two destinations, a reason code per destination, and the derived state above.
-**A new component instead** if the choice starts to carry a scheduling consequence, because then it
-is a booking surface rather than a routing one.
+**Absorbs** more than two destinations, a reason code per destination, the derived state above, and
+**a question above the destinations**, as RoutingQuestion, where the choice follows from an answer
+rather than being made directly. **A new component instead** if the choice starts to carry a
+scheduling consequence, because then it is a booking surface rather than a routing one.
+
+**Amended 14 Sep 2026 from the canvas.** Without the absorption above, the system-age question on
+frame 02 would have become a second triage component by the next round, which is exactly the failure
+the seventh field was added to catch.
 
 **Tiers** payments only: absent, no demand is captured. Selling: present. Operations: unchanged.
 
@@ -164,6 +171,113 @@ $6,400 will not read a memo. **Recorded in the deviations register and withdrawa
 
 ---
 
+## From the S14 canvas, 14 September 2026
+
+**Written on the design surface and carried across in a write-back block.** Frames 03 to 14 needed no
+new components: they are drawn on the five records above plus the iteration 2 set. **ReadinessCard
+was used twice, frames 09 and 10, in its clear and blocking states, and nothing about it moved.**
+That was the test and it passed.
+
+---
+
+## CandidateMatchList
+
+**Level** organism, meaning a card that resolves a question rather than reporting an answer.
+**New** on frame 01.
+
+What the system already holds that might be the person on the phone. A typed query shown back, a
+count, and the candidates it found, each with what it matched on and what is missing from it, and
+two actions per row: open it, or say it is not the same.
+
+**States** searching, where a query exists and candidates are still being counted; **candidates**,
+one or more found and none resolved, which is the state drawn; **resolved to existing**, where a
+candidate was opened and the create path closes; and **resolved to new**, where every candidate was
+dismissed and the create action becomes available.
+
+**Use it** immediately before any record that a person creates from something they were told, where
+the same record might already exist. Demand capture is the case that produced it; a property at a
+new address and a contact on an existing customer are the same shape.
+
+**Do not use it** as a list view or a search results page. It exists to close a question with two
+outcomes, and a screen where finding things is the whole job is a table with filters.
+
+**When its subject is absent**, at an organisation with no existing customers on its first day, the
+card is **empty and self-advertising**: the query reads back and the count reads none, because
+somebody can make candidates appear by doing business. It does not say "no duplicates found", which
+would be explanatory copy about a thing that did not happen.
+
+**Absorbs** any number of candidates, matching on different fields, a confidence ordering, and the
+create action moving from unavailable to primary as the last candidate is resolved.
+**A new component instead** if it ever has to merge two records, or if a candidate can be resolved
+into rather than opened, because both are actions with consequences and this one has none.
+
+**Tiers** unchanged across all three. A payments-only contractor still has customers arriving twice.
+
+**Note against MatchDismissalRow.** That record's anti-rule says it is not a way of finding things,
+and it is right. The two components are the two halves of one act: this one finds and judges,
+that one is the receipt for the judgement, and frames 01 and 03 show them in that order.
+
+---
+
+## RoutingQuestion
+
+**Level** molecule, a question with its answers, sitting inside a card rather than being one.
+**New** on frame 02, and it is the thing the brief called "whatever the system-age question turns
+out to be".
+
+One question whose answer decides where a record goes, drawn at heading scale with its answers as
+choices and the consequence of each stated in the answer itself. It is not a field and must not look
+like one.
+
+**States** unasked, where the question stands alone and the destinations below it are quiet;
+**answering**, drawn on frame 02, where the answer is arriving and no destination is selected yet;
+and **answered**, where the destination resolves and the question collapses to a value in the record.
+Frame 03 shows the answered state, as "System age, about 17 years" among the facts.
+
+**Use it** where a single answer changes the route a record takes and a person is capturing data at
+the same time. The whole point is the visual break from the fields beside it.
+
+**Do not use it** for a fact that is merely useful. If the answer does not change where the record
+goes, it is a field and it belongs in the field group.
+
+**When its subject is absent**, at a contractor with one destination, the question is **absent** and
+whatever it asked becomes an ordinary field.
+
+**Absorbs** more than three answers, an answer that routes nowhere, and a free-text answer that a
+person interprets. **A new component instead** if it ever asks two questions, because two questions
+with a combined consequence is a rule and belongs to TriageCard's derived state, not here.
+
+**Tiers** payments only: absent. Selling: present. Operations: unchanged.
+
+---
+
+## CaptureFieldSet
+
+**Level** molecule, a group of fields inside a card.
+
+What is being taken down, mid flight, with what has not been asked for written out rather than left
+blank. Filled values read as values, and the ones nobody asked for read as their own answer.
+
+**States** empty; **partial**, drawn on frame 02, some values present and the rest labelled as not
+asked for; and **complete**, where every field a record needs is present.
+
+**Use it** where a person is typing while somebody talks and the screen has to show what is missing
+without accusing them of missing it.
+
+**Do not use it** to display a finished record. A record that is no longer being typed into is a
+fact list, which is what frames 03 and 07 use.
+
+**When its subject is absent** the whole card is absent, because a field set with nothing to capture
+is a form nobody opened.
+
+**Absorbs** any number of fields, a field that cannot be asked for on this route, and the not-asked
+wording. **A new component instead** the moment a field can be invalid, because validation needs
+messages and messages are a different argument.
+
+**Tiers** unchanged.
+
+---
+
 ## Learned from
 
 - **14 Sep 2026.** Built while drawing memo 7. **Five records, and the seventh field earned itself
@@ -172,3 +286,46 @@ $6,400 will not read a memo. **Recorded in the deviations register and withdrawa
 - **14 Sep 2026.** ReadinessCard is the only component here whose data already exists. Everything it
   shows is derived from an order, a permit and a visit, so **the gap it fills is a link rather than a
   record**, which makes it the cheapest thing in the object register to build.
+- **14 Sep 2026, from the canvas.** The seventh field caught its second case within a day, and this
+  time **it stopped a component rather than describing one**. The build brief predicted that frames 01
+  and 02 would produce at least two new components and expected the system-age question to be one. It
+  is not: the card that holds it already existed and only the question inside it is new. Recording the
+  widening took two sentences; the alternative was two triage cards with one difference between them.
+- **14 Sep 2026, from the canvas.** **The anti-rule did more work than the usage rule.**
+  MatchDismissalRow says plainly that it is not a way of finding things. Reading that before drawing
+  frame 01 is what produced CandidateMatchList rather than stretching the row into a search result.
+  An argument for writing the anti-rule as carefully as the rule.
+
+---
+
+## Amendments from memo 8, 14 September 2026
+
+**CaptureFieldSet becomes a form.** Andrew, on screens A and B: "Who is calling should be a form."
+The record described a field set that displays what is being taken down. **It is now fields somebody
+types into**, with labels above bordered inputs, a read-back treatment for values that arrived from
+elsewhere, and helper text under those. **States** gain **empty with one prefilled**, which is the
+opening state of every inbound call: the number came with the call and nothing else exists.
+**Absorbs** gains a value arriving from outside the form, shown as filled with its provenance
+underneath rather than as something typed.
+
+**CandidateMatchList becomes nested rather than peer.** Andrew: "The matches should be a nested
+element and called out as 'Potential matches'." It was drawn as its own card beside the capture. **It
+is now a tinted block inside the form**, with its own small heading and count. **Use it** inside the
+thing that produces it. **Do not use it** as a card of its own: a card implies a peer question, and
+this is a consequence of what was typed two seconds ago.
+
+**MatchDismissalRow loses its reason block and keeps its reason.** Andrew: the why-not-the-same block
+"can be removed or added as a tooltip". **Drawn as a tooltip on the dismissal itself.** The judgement
+is still captured, because it is knowable for ninety seconds and never again, but it no longer takes
+a row on a screen somebody is typing into. **A new component instead** if the reason ever needs to be
+searchable, because a tooltip is not a place you can find things in.
+
+**TriageCard is not used on the inquiry screen at all.** Andrew: "I don't want to see any of this yet"
+about advisor against technician. The card stands as a record and **the inquiry no longer shows a
+destination.** The routing either happens later or is derived without being seen, and neither is
+decided. **That is a flow question rather than a component one**, and it is open in memo 8 section C.
+
+**A new nested block, and it is the same shape twice.** Potential matches inside a capture, and
+Coming up inside a project card. Both are a tinted block with a small heading inside a card, holding
+rows that belong to the card rather than beside it. **Worth naming as one component before it is
+drawn a third time**, which is the thing the seventh field exists to catch.

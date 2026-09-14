@@ -76,6 +76,7 @@ until a scenario has actually been composed.
 | **Always** | The argument carries the thinking. Prose does not migrate into the mockup |
 | **Always** | Editorial, not interactive, unless asked |
 | **Always** | `[i]` marks annotation inside a mockup, and only inside a mockup |
+| **Always** | Annotation belongs to a memo, not to a canvas. A canvas is judged as a design, so annotation competes with the reviewer's comments |
 | **Default** | Mockup at full page width, argument in labelled blocks underneath, then numbered questions |
 | **Default** | Eyebrow, title, narrow intro, settled card, to-decide card, lettered sections |
 | **Default** | Mockups look like believable UI with real labels and values |

@@ -24,6 +24,7 @@ rule, not a silent choice. A collision you resolve quietly is a collision nobody
 | **Always** | No explanatory copy inside a screen. Suggested messages go in a list underneath |
 | **Always** | Placeholder what the current question does not touch, and label it |
 | **Always** | Bundle content into cards, in pairs, under a group heading. Not full-width blocks down a column |
+| **Always** | A group may contain one card, and it keeps its heading. A lone card takes the full width |
 | **Default** | Status in the second line of the right-hand column, in secondary text |
 | **Default** | Provenance and history read as prose in the sub line |
 | **Default** | Colour only where somebody has to act. At most one coloured region per screen |

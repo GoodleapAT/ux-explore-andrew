@@ -13,12 +13,18 @@
 drawn and five carried with a note saying what stands. **It is deliberately one input rather than a
 diff**, so you should not need memo 7, the old canvas or the comment file to work from.
 
-**Then read, in this order:** `upgrade-to-pros/TEAM-POSITIONS.md`, `upgrade-to-pros/OVERVIEW.md`,
-`standards/INDEX.md`, then `standards/mockup-density.md` and `standards/ui-composition.md` in full,
-then `upgrade-to-pros/WORKED-EXAMPLE-S14.md`, then `upgrade-to-pros/components/ITERATION-3.md`
-including the amendments at the foot.
+**Then read `CD-PACK.md`, uploaded with this brief.** It carries everything else you need in one
+file: the team's positions, the state of play, every rule with its rigidity marker, the S14 mock data
+and all twenty two component records including the amendments.
 
-**Say the date of the newest entry in `CHANGELOG.md` before you start**, then tell me what you have
+**Why a pack rather than a reading list.** You reported that five of seven named files were not in
+this project and that you were holding version 2.0 of the context document, which has been replaced
+and carries three wrong claims. **Seven separate uploads is how that happens.** One file is not.
+
+**Discard any stored copy of the context document.** If what you have says our model is a rival to
+the team's, or that a lead is one per trade, it is the superseded version.
+
+**Say the date of the newest entry in the changelog before you start**, then tell me what you have
 understood and where you disagree, and wait.
 
 ---
@@ -41,38 +47,52 @@ was reviewed**, and the amendments are at the foot of iteration 3.
 
 ## What to build
 
-**One canvas, replacing the round one canvas. Same strip, left to right.** Fourteen frames.
+**One canvas, replacing the round one canvas. Fifteen frames, left to right, in time order.**
 
-| # | Frame | Memo 8 | What to do |
-|---|---|---|---|
-| 01 | A fresh inquiry, before anything is known | A | **Draw new** |
-| 02 | The trade resolves | B | **Draw new** |
-| 03 | The air conditioning inquiry, being worked | C | **Draw new** |
-| 04 | Qualified, and the prompt | D | **Draw new** |
-| 05 | Booking the advisor | E | **Carry from round one, unchanged** |
-| 06 | The customer record, four minutes in | F | **Draw new** |
-| 07 | The assessment, on the project page | H | **Draw new** |
-| 08 | The hand-off | memo 7 H | Carry from round one |
-| 09 | Getting it ready, corrected | I | **Redraw with two moves.** See below |
-| 10 | The backorder | carried | Carry from round one |
-| 11 | Install day | carried | Carry, still a placeholder |
-| 12 | The close, and the cheque | carried | Carry, **keep the rule break** |
-| 13 | The county, the rebate, completion | carried | Carry |
-| 14 | The customer record after the hand-off | G | **Draw new.** This replaces round one's frame 14 |
+**Frames are numbered. Memo sections are lettered. They never share a symbol**, so the two H sections
+cannot be confused and nothing is out of order. Each frame label carries its memo section as
+provenance, for example `07 · The assessment, on the project page · memo 8 H`.
 
-**Keep the labelled out-of-scope block between the assessment and the hand-off.** The proposal, the
-payment promise and the two-night stall are still excluded, and the gap should be visible rather than
-silent.
+| # | Frame | Source | When | What to do |
+|---|---|---|---|---|
+| 01 | A fresh inquiry, before anything is known | memo 8 A | 14 Jul 7:50am | **Draw new** |
+| 02 | The trade resolves | memo 8 B | 14 Jul 7:50am | **Draw new** |
+| 03 | The air conditioning inquiry, being worked | memo 8 C | 14 Jul 7:51am | **Draw new** |
+| 04 | Qualified, and the prompt | memo 8 D | 14 Jul 7:52am | **Draw new, as a dialog** |
+| 05 | Booking the advisor | memo 8 E | 14 Jul 7:54am | Carry from round one |
+| 06 | The customer record, four minutes in | memo 8 F | 14 Jul 7:56am | **Draw new** |
+| 07 | The assessment, on the project page | memo 8 H | 15 Jul 8:15am | **Draw new** |
+| &mdash; | *Out of scope block* | | | Keep. The proposal, the promise and the stall |
+| 08 | The hand-off | memo 7 H | 16 Jul 8:30am | Carry from round one |
+| 09 | Getting it ready | memo 8 I | 17 Jul | **Redraw with two moves** |
+| 10 | The backorder | memo 7 J | 20 Jul | Carry |
+| 11 | Install day | memo 7 K | 30 Jul | Carry, still a placeholder |
+| 12 | The close, and the cheque | memo 7 L | 30 Jul 4:45pm | Carry, **keep the rule break** |
+| 13 | The customer record, after the hand-off | memo 8 G | 30 Jul, evening | **Draw new** |
+| 14 | The county, the rebate, completion | memo 7 M | 31 Jul to 7 Aug | Carry |
+| 15 | The tail | memo 7 N | 10 to 11 Aug | **Carry. Do not delete** |
 
-**Frames 01, 02 and 03 are one screen at three moments.** Blank, the trade resolving and four
-questions arriving, then the form being worked with a match found and dismissed. **The transformation
-is the argument.** If those three do not read as the same screen changing, they are wrong.
+**Three corrections to the earlier brief, all of them CD's catches.**
 
-**Frame 09 takes two moves and nothing else.** The group headed "The visit" becomes **Install day**.
-The activity timeline leaves "The order" and goes to the top of the page as a full-width strip above
-both groups. Everything else on that frame stands.
+**Frame 15 is the project page at the close, not a customer record, and it stays.** The earlier brief
+told you to replace it with memo 8 G. That was wrong and it would have deleted the only page on the
+strip that says a new system exists at that address, which is the loss memo 8 G raises as its own
+open question. **Memo 8 G is an additional frame, not a replacement.**
 
----
+**It sits at position 13, not at the end**, because it is dated 30 July and the strip reads as time.
+
+**Frame 09's stage rail takes the compact fade treatment after all.** The earlier brief said two moves
+and nothing else. That was wrong: the rail change came from Andrew's own review of the S15 job and it
+is a component-level amendment, so it applies wherever the rail appears, including frame 14.
+
+**Frames 01 to 03 are one screen at three moments**, and two things changed since you last saw them.
+**The columns are swapped**: the caller form is on the left, the trade and its questions on the right,
+which is what Andrew originally asked for and memo 8 had silently reversed. **And frame 01's trade
+list uses real checkboxes**, because with annotation banned nothing else says those five rows are a
+choice. Your catch, and the cheapest fix.
+
+**Frame 04 is a dialog over the dimmed inquiry, not a page.** Also yours, and it draws that section's
+own argument better than the memo did.
 
 ## The three questions this canvas is for
 
@@ -80,14 +100,14 @@ both groups. Everything else on that frame stands.
 capture rather than navigating anywhere. If a reviewer cannot see what changed between 02 and 03
 without being told, the trade-typed idea has not been made visible.
 
-**2. Does the container earn its name at frame 14 and nowhere earlier?** It is not mentioned on
-frames 01 to 13. On 14 it is a card header grouping a job. **Memo 8 says plainly that S14 cannot
-prove this is right, only that it is not wrong**, because one job nested in one project looks like a
-flat list. Draw it anyway and say what you find.
+**2. Does the container earn its name at frame 13 and nowhere earlier?** It is not mentioned on
+frames 01 to 12. On 13 it is a card header grouping a job, and on 15 it is the page itself. **Memo 8
+says plainly that S14 cannot prove this is right, only that it is not wrong**, because one job nested
+in one project looks like a flat list. Draw it anyway and say what you find.
 
-**3. Is the nested block one component or two?** Potential matches inside the capture on frame 03,
-and Coming up inside the project card on frame 14. **Same shape, same job, two places.** If you draw
-two components, say so and say why; the seventh field exists to catch exactly this.
+**3. Does the strip read as one journey in time?** Fifteen frames, one customer, twenty eight days,
+left to right. You caught the earlier version running backwards at the end. **A reader should be able
+to follow it without the memo open.**
 
 ---
 
@@ -101,21 +121,29 @@ two components, say so and say why; the seventh field exists to catch exactly th
   back in would answer it by accident.
 - **Do not put the word Project on any frame.** The container is called by its contents.
 - **No reference codes**, no job or permit numbers, no identifiers.
-- **Do not reinstall the installed equipment card** on frame 14. Andrew removed it. Memo 8 records
-  the consequence, which is that nothing on that page says a new system exists at the address.
+- **Do not reinstall the installed equipment card** on frame 13. Andrew removed it. **Frame 15 still
+  carries the registry**, which is why that frame is no longer being deleted.
+- **Do not delete frame 15.** The earlier brief said to. It was wrong.
 - **Do not make it interactive.** Editorial.
 
 ---
 
-## Two things memo 8 leaves deliberately unresolved, so do not resolve them quietly
+## Two things you raised that are now settled
 
-**The lone card and the pairs rule.** Memo 8 draws it two ways on purpose: section I drops the group
-heading for its single card, section G keeps it. **Draw both as written.** They are side by side so
-Andrew can choose, and the answer belongs in the composition standard rather than in a screen.
+**The lone card keeps its group heading.** You were right that two treatments five frames apart
+cannot be compared by eye, so drawing both was waste. **Settled rather than drawn:** a group heading
+is a semantic grouping and not decoration for pairs, and a page whose structure changes shape
+according to how many cards happen to be in it is harder to hold. **Both frame 09 and frame 13 keep
+their headings**, and the composition standard now says a group may contain one card.
 
-**Whether screen C is a form or a read-back.** Andrew asked for a form on A and B. C is drawn as a
-form too, because it is the same screen still being typed into. **Flagged in the memo as C's call.**
-If you think a read-back is better, say so rather than switching it.
+**One component for the nested block, and your reasoning is adopted.** A subordinate list inside a
+card, owned by the card rather than a peer of it, with the row content varying: matches carry a
+judgement and an action, coming-up reports and does nothing. **The container absorbs that**, which is
+what the seventh field is for. Record it once, with CandidateMatchList as what fills it on frame 03.
+
+**Still open, and yours to flag rather than switch:** whether frame 03 is a form or a read-back.
+Andrew asked for a form on 01 and 02; 03 is drawn as a form too because it is the same screen still
+being typed into. Say so if you disagree rather than changing it.
 
 ---
 

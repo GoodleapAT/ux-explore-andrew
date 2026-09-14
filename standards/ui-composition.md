@@ -24,6 +24,10 @@ goes in the cards this file arranges.
 - **Bundle content into cards, in pairs, under a group heading.** Do not stack full-width blocks down
   one column. A record with eight things to show is four group headings and eight cards, not eight
   rows.
+- **A group may contain one card, and it keeps its heading.** Settled 14 Sep 2026. A group heading is
+  a semantic grouping, not decoration for a pair, and **a page whose structure changes shape according
+  to how many cards happen to be in it is harder to hold.** So a lone card sits under its heading and
+  takes the full width.
 ### Default
 
 - **Two cards abreast is unconditional.** The cards shrink rather than stacking, because side by side
@@ -84,5 +88,9 @@ them minified. They have been inferred from the accent token families. This does
   comparison: everything in rows, nothing bundled. Every rule above is read out of those two files.
 - **10 Sep 2026.** The full-width-mockup memo layout was chosen specifically so that card pairs have
   the width this composition needs. See `design-memo-format.md`.
+- **14 Sep 2026.** CD named the lone-card collision before it bit, on a canvas frame that was a search
+  with one thing on it. It bit two screens later. **Memo 8 drew both treatments to compare them and CD
+  pointed out they ended up five frames apart**, so no comparison was possible. Settled as a rule
+  instead, which is cheaper than drawing a question nobody can look at.
 - **13 Sep 2026.** Rigidity markers and a worked example added, because seven standards with no sense
   of how hard to hold any of them had become impossible to follow.

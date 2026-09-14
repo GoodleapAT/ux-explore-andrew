@@ -317,19 +317,7 @@ not interactive.</p>
         <div class="pw-actions"><button class="pw-btn">Save and close</button><button class="pw-btn" style="opacity:.45">Mark as qualified</button></div>
       </div>
       <div class="pw-stack" style="margin-top:22px">
-        <div class="pw-pair wide-l">
-          <div class="pw-card pw-cardstack">
-            <div class="pw-cardhead"><h5>What are they calling about?</h5></div>
-            <div class="pw-crowlist">
-              <div class="pw-lrow"><div class="pw-lname">Air conditioning</div><div class="pw-r"><span class="pw-lval">&nbsp;</span></div></div>
-              <div class="pw-lrow"><div class="pw-lname">Heating</div><div class="pw-r"><span class="pw-lval">&nbsp;</span></div></div>
-              <div class="pw-lrow"><div class="pw-lname">Water heater</div><div class="pw-r"><span class="pw-lval">&nbsp;</span></div></div>
-              <div class="pw-lrow"><div class="pw-lname">Indoor air quality</div><div class="pw-r"><span class="pw-lval">&nbsp;</span></div></div>
-              <div class="pw-lrow"><div class="pw-lname">Something else</div><div class="pw-r"><span class="pw-lval">&nbsp;</span></div></div>
-            </div>
-            <div class="pw-crule"></div>
-            <p class="pw-missing" style="margin:0">Pick one or more. The questions follow.</p>
-          </div>
+        <div class="pw-pair wide-r">
           <div class="pw-card pw-cardstack">
             <div class="pw-cardhead"><h5>Who is calling</h5></div>
             <div class="pw-form">
@@ -342,10 +330,23 @@ not interactive.</p>
             </div>
             <div class="pw-crule"></div>
             <p class="pw-missing" style="margin:0">Nothing matched on this number.</p>
+
+          <div class="pw-card pw-cardstack">
+            <div class="pw-cardhead"><h5>What are they calling about?</h5></div>
+            <div>
+              <div class="pw-tk"><span class="pw-tkbx"></span><span>Air conditioning</span></div>
+              <div class="pw-tk"><span class="pw-tkbx"></span><span>Heating</span></div>
+              <div class="pw-tk"><span class="pw-tkbx"></span><span>Water heater</span></div>
+              <div class="pw-tk"><span class="pw-tkbx"></span><span>Indoor air quality</span></div>
+              <div class="pw-tk"><span class="pw-tkbx"></span><span>Something else</span></div>
+            </div>
+            <div class="pw-crule"></div>
+            <p class="pw-missing" style="margin:0">Pick one or more. The questions follow.</p>
           </div>
+</div>
         </div>
       </div>
-      <p class="annrow"><span class="ann">[i] The mobile number is already there because the call carried it. Everything else is empty, the primary action is unavailable, and the left card is the only thing asking for anything.</span></p>
+      <p class="annrow"><span class="ann">[i] The trade list uses real checkboxes because with annotation banned on the canvas, nothing else says these are five things to pick from. The mobile number is already there because the call carried it.</span></p>
     </div>
   </div>
 
@@ -354,6 +355,7 @@ not interactive.</p>
     <div class="b"><p class="k">Why one or more, and not one</p><p>Because a customer can mention two things in the first sentence, and because the trades chosen here are what makes the inquiry questions, the assessment templates and the hand-off available. <strong>One choice with three consequences is worth drawing as a list rather than hiding in a dropdown.</strong></p></div>
     <div class="b"><p class="k">The number is already there</p><p>The call carried it, so the first thing the screen does is tell Dana that nothing matched it. <strong>That is the cheapest possible match</strong> and it runs before a single keystroke.</p></div>
     <div class="b"><p class="k">What is deliberately absent</p><p>No empty questions, no placeholder form, no greyed section saying questions will appear. <strong>The screen shows nothing about the trade because no trade has been chosen</strong>, and drawing the shape of what is coming would be explaining the interface to the person using it.</p></div>
+    <div class="b"><p class="k">Real checkboxes, and CD is why</p><p>The first draft drew five rows with empty right-hand cells, which reads as a list rather than a choice. <strong>With annotation banned on the canvas, the step from A to B only reads if A visibly offers something to pick.</strong> The design system has the primitive; this is the cheapest possible fix and it was CD's catch.</p></div>
     <div class="b"><p class="k">The cost of this choice</p><p>A contractor with one trade sees a list with one item on it. <strong>The card should be absent there and the questions unconditional</strong>, which is a tier and stage position the component record has to declare.</p></div>
   </div>
   <div class="qs">
@@ -384,7 +386,20 @@ not interactive.</p>
         <div class="pw-actions"><button class="pw-btn">Save and close</button><button class="pw-btn" style="opacity:.45">Mark as qualified</button></div>
       </div>
       <div class="pw-stack" style="margin-top:22px">
-        <div class="pw-pair wide-l">
+        <div class="pw-pair wide-r">
+          <div class="pw-card pw-cardstack">
+            <div class="pw-cardhead"><h5>Who is calling</h5></div>
+            <div class="pw-form">
+              <div class="pw-fld"><span class="fl">Name</span><span class="fi">Carla Brenner</span></div>
+              <div class="pw-fldrow">
+                <div class="pw-fld"><span class="fl">Mobile</span><span class="fi">(559) 555-0173</span><span class="fh">From the call</span></div>
+                <div class="pw-fld"><span class="fl">Email</span><span class="fi ph">&nbsp;</span></div>
+              </div>
+              <div class="pw-fld"><span class="fl">Address</span><span class="fi ph">&nbsp;</span></div>
+            </div>
+            <div class="pw-crule"></div>
+            <p class="pw-missing" style="margin:0">One name, no address yet. Nothing matched.</p>
+
           <div class="pw-card pw-cardstack">
             <div class="pw-cardhead"><h5>Air conditioning</h5><div class="pw-seg"><button class="pw-segi" data-on="true">Air conditioning</button><button class="pw-segi">+ another trade</button></div></div>
             <div class="pw-cardrows">
@@ -398,19 +413,7 @@ not interactive.</p>
               <div class="pw-synr"><span class="k">Anything else Carla said</span><span class="v none">&mdash;</span></div>
             </div>
           </div>
-          <div class="pw-card pw-cardstack">
-            <div class="pw-cardhead"><h5>Who is calling</h5></div>
-            <div class="pw-form">
-              <div class="pw-fld"><span class="fl">Name</span><span class="fi">Carla Brenner</span></div>
-              <div class="pw-fldrow">
-                <div class="pw-fld"><span class="fl">Mobile</span><span class="fi">(559) 555-0173</span><span class="fh">From the call</span></div>
-                <div class="pw-fld"><span class="fl">Email</span><span class="fi ph">&nbsp;</span></div>
-              </div>
-              <div class="pw-fld"><span class="fl">Address</span><span class="fi ph">&nbsp;</span></div>
-            </div>
-            <div class="pw-crule"></div>
-            <p class="pw-missing" style="margin:0">One name, no address yet. Nothing matched.</p>
-          </div>
+</div>
         </div>
       </div>
       <p class="annrow"><span class="ann">[i] Four questions have arrived and none is answered. The trade picker has collapsed into the card header with a way to add a second trade beside it. Nothing else on the screen moved.</span></p>
@@ -454,21 +457,7 @@ not interactive.</p>
         <div class="pw-actions"><button class="pw-btn">Save and close</button><button class="pw-btn pri">Mark as qualified</button></div>
       </div>
       <div class="pw-stack" style="margin-top:22px">
-        <div class="pw-pair wide-l">
-
-          <div class="pw-card pw-cardstack">
-            <div class="pw-cardhead"><h5>Air conditioning</h5><div class="pw-seg"><button class="pw-segi" data-on="true">Air conditioning</button><button class="pw-segi">+ another trade</button></div></div>
-            <div class="pw-cardrows">
-              <div class="pw-crow"><span class="cl">Is it cooling at all?</span><span class="cv">Not at all</span></div>
-              <div class="pw-crow"><span class="cl">How old is the system?</span><span class="cv">About 17 years</span></div>
-              <div class="pw-crow"><span class="cl">Refrigerant, if the label is readable</span><span class="cv">R-22</span></div>
-              <div class="pw-crow"><span class="cl">Is anyone home today?</span><span class="cv">Yes, this afternoon</span></div>
-            </div>
-            <div class="pw-crule"></div>
-            <div class="pw-syn one">
-              <div class="pw-synr"><span class="k">Anything else Carla said</span><span class="v" style="font-weight:400">"Our AC died overnight. How soon can someone look at it?" Went off in the night, nothing since. She sounds hot and she is not cross.</span></div>
-            </div>
-          </div>
+        <div class="pw-pair wide-r">
 
           <div class="pw-card pw-cardstack">
             <div class="pw-cardhead"><h5>Who is calling</h5></div>
@@ -488,6 +477,19 @@ not interactive.</p>
             </div>
           </div>
 
+          <div class="pw-card pw-cardstack">
+            <div class="pw-cardhead"><h5>Air conditioning</h5><div class="pw-seg"><button class="pw-segi" data-on="true">Air conditioning</button><button class="pw-segi">+ another trade</button></div></div>
+            <div class="pw-cardrows">
+              <div class="pw-crow"><span class="cl">Is it cooling at all?</span><span class="cv">Not at all</span></div>
+              <div class="pw-crow"><span class="cl">How old is the system?</span><span class="cv">About 17 years</span></div>
+              <div class="pw-crow"><span class="cl">Refrigerant, if the label is readable</span><span class="cv">R-22</span></div>
+              <div class="pw-crow"><span class="cl">Is anyone home today?</span><span class="cv">Yes, this afternoon</span></div>
+            </div>
+            <div class="pw-crule"></div>
+            <div class="pw-syn one">
+              <div class="pw-synr"><span class="k">Anything else Carla said</span><span class="v" style="font-weight:400">"Our AC died overnight. How soon can someone look at it?" Went off in the night, nothing since. She sounds hot and she is not cross.</span></div>
+            </div>
+          </div>
         </div>
       </div>
       <p class="annrow"><span class="ann">[i] Potential matches is nested inside the form because it is a consequence of what was typed, not a peer of it. The dismissal reason sits on a tooltip rather than as a block, so it is kept without taking a row.</span></p>
@@ -524,8 +526,20 @@ not interactive.</p>
   <p class="quote">"This whole step confuses me. And I think the wrong CTAs on the top right were used. On the previous page, when I tap 'Mark as qualified', I would want to be asked if I want to book for this homeowner on this qualified lead."</p>
 
   <div class="frame">
-    <div class="pw-page" style="background:var(--sol-backgrounds-ui-medium);padding:44px 32px">
-      <div style="max-width:560px;margin:0 auto">
+    <div class="pw-page" style="padding:0;position:relative">
+      <div style="padding:26px 32px 44px;filter:saturate(.25);opacity:.38">
+        <div class="pw-crumbs"><a href="#">Inquiries</a><span class="s">/</span><span>New</span></div>
+        <div class="pw-titlerow">
+          <div><h1 class="t-h1">New inquiry</h1><p class="pw-meta">Inbound call<span class="s">·</span>Dana Whitlock<span class="s">·</span><span class="now">On the line, 1m 52s</span></p></div>
+          <div class="pw-actions"><button class="pw-btn">Save and close</button><button class="pw-btn pri">Mark as qualified</button></div>
+        </div>
+        <div class="pw-pair wide-r" style="margin-top:22px">
+          <div class="pw-card" style="height:150px"></div>
+          <div class="pw-card" style="height:150px"></div>
+        </div>
+      </div>
+      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:24px">
+      <div style="max-width:560px;width:100%;box-shadow:0 18px 48px rgba(0,0,0,.18);border-radius:12px">
         <div class="pw-card pw-cardstack">
           <div class="pw-cardhead"><h5>Carla Brenner is qualified</h5></div>
           <div class="pw-syn one">
@@ -538,7 +552,10 @@ not interactive.</p>
           </div>
         </div>
       </div>
-      <p class="annrow" style="max-width:560px;margin-left:auto;margin-right:auto"><span class="ann">[i] The 4pm slot is on the prompt because the answer to "is anyone home today" was yes. Without that answer the prompt offers the queue first.</span></p>
+      </div>
+    </div>
+    <div class="pw-page" style="padding:14px 32px 24px">
+      <p class="annrow" style="margin:0"><span class="ann">[i] A dialog over the inquiry, dimmed behind it, not a page. That is what makes "she never left the screen" visible. CD's correction, and it draws this section's own argument better than the first version did.</span></p>
     </div>
   </div>
 
@@ -752,7 +769,7 @@ not interactive.</p>
     <div class="b"><p class="k">And here is the honest problem with testing it on S14</p><p><strong>One project with one job nested inside is indistinguishable from a flat list.</strong> S14 cannot show why the grouping is right; it can only show that it is not wrong. <strong>The Thompsons are the test</strong>, with two committed scopes under one container and a third interest that never became either.</p></div>
     <div class="b"><p class="k">Selling did not become Sales, and Operations did not stay</p><p>You said Sales was not helpful. The groups are now <strong>What they want</strong> and <strong>Work</strong>, which describe the customer's side and ours. The first survives being empty and the second only appears when there is work.</p></div>
     <div class="b"><p class="k">Coming up is nested in the container, not beside it</p><p>You asked for it inside the project card, and it is the right call: <strong>a county inspection is not a thing the customer wants, it is a thing this piece of work is waiting on.</strong> Nesting it says whose it is, and it stops the page implying that upcoming events are their own category.</p></div>
-    <div class="b"><p class="k">The installed equipment card is gone</p><p>Removed at your request. <strong>The consequence is that nothing on this page says a new system exists at that address</strong>, which is a real loss and probably belongs to the property rather than to the customer. Worth deciding where the asset registry surfaces, rather than leaving it only on the job.</p></div>
+    <div class="b"><p class="k">The installed equipment card is gone, and it is answered elsewhere</p><p>Removed at your request. Nothing on <em>this</em> page now says a new system exists at that address. <strong>The tail frame does say it</strong>, which is why that frame is no longer being replaced. The open question survives in a smaller form: the asset registry is a property fact and the property has no page anywhere.</p></div>
     <div class="b"><p class="k">And the Work group is now a single card</p><p>Which is the pairs-rule collision again, for the second time in this memo. <strong>Drawn without a pair and keeping its group heading</strong>, which is the opposite of what section I does. That inconsistency is deliberate so the two versions can be compared, and the standard should pick one.</p></div>
     <div class="b"><p class="k">Leads gained a Closed segment, as you asked</p><p>Three segments now: open, closed, all, and the card defaults to closed here because that is where the only lead is. <strong>A won lead is worth seeing rather than vanishing</strong>, and on the Thompsons this card is where the deferred roof lives for eight months while the other two are closed.</p></div>
     <div class="b"><p class="k">What this page still cannot answer</p><p>Whether the container needs naming <strong>before</strong> the hand-off in a case where it holds several leads and a proposal across two of them. S14 never has that shape. The ruling is drawn here and tested properly only on S15.</p></div>
@@ -877,19 +894,19 @@ not interactive.</p>
   <div class="sec-head"><span class="badge-l">J</span><h2 class="sec-title">Carried unchanged, and why</h2><span class="sec-when">Canvas frames 10 to 14</span></div>
   <p class="sec-beat">Not redrawn · Not omitted · Each one with what stands</p>
 
-  <div class="chg"><span>&#9670;</span><div><b>These are here so this memo is a complete input.</b> You did not comment on any of them, and redrawing them would invite feedback on screens already accepted. <b>Rebuild them from the canvas as they stand</b>, with the notes below applied where they say something.</div></div>
+  <div class="chg"><span>&#9670;</span><div><b>These are here so this memo is a complete input.</b> You did not comment on any of them, and redrawing them would invite feedback on screens already accepted. <b>Rebuild them from the canvas as they stand</b>, with the notes below applied where they say something. <b>Nothing in this group is deleted</b>, which is a correction: an earlier version told the brief to drop the tail.</div></div>
 
   <div class="unchanged" style="margin-bottom:14px">
     <p style="margin:0 0 10px"><b>Frame 10, the backorder.</b> Stands. One status change on an order moves the visit, both crew assignments and the disposal, and the fourth row, telling the customer, is an obligation with no record behind it. <b>That row is deliberately uncomfortable</b> and should stay until communications becomes real or the row comes off.</p>
     <p style="margin:0 0 10px"><b>Frame 11, install day.</b> Still a placeholder. A field surface worked outdoors in July with gloves on, and drawing it badly invites feedback on the wrong thing. <b>One structural fact in it matters</b>: the equipment registry entry is what the rebate filing reads a day later.</p>
     <p style="margin:0 0 10px"><b>Frame 12, the close and the cheque.</b> Stands, <b>including its knowing rule break</b>: one line of explanatory copy saying where cheques go. It is there because a crew lead holding $6,400 will not read a memo. It is flagged in the deviations register and it comes out only if you say so.</p>
     <p style="margin:0 0 10px"><b>Frame 13, the county and completion.</b> Stands, and it holds the best card in the set: the receipt for a derived status, three records agreeing, nobody having marked anything by hand.</p>
-    <p style="margin:0"><b>Frame 14, the tail.</b> Stands. Two money cards that cannot be added together, which is the money principle refusing to complete rather than failing.</p>
+    <p style="margin:0"><b>Frame 14, the tail.</b> Stands, and it is <b>the project page at the close, not a customer record</b>. Two money cards that cannot be added together, the equipment registry, and the full history. <b>Corrected 14 Sep after CD caught it:</b> an earlier version of this section called it a customer record and told the brief to replace it with section G. That would have deleted the only page on the strip saying a new system exists at that address, which is the loss section G raises as its own first open question.</p>
   </div>
 
   <div class="arg" style="margin-top:0;padding-top:0;border-top:0">
     <div class="b"><p class="k">One thing that changes across all five</p><p>The stage rail on frames 09 and 13 should take the compact treatment you asked for on the S15 job: <strong>focus on the current stage, show there is more by fading top and bottom</strong>. That is a component amendment rather than a screen change and it applies wherever the rail appears.</p></div>
-    <div class="b"><p class="k">And one that does not change and should</p><p>Frame 14's customer record predates this afternoon's ruling, so it still groups the old way. <strong>Section G is the corrected version of that page</strong> and frame 14 should follow it: leads only under what they want, then the container grouping the job.</p></div>
+    <div class="b"><p class="k">Section G is an extra frame, not a replacement</p><p>It is the customer record after the hand-off and nothing on the strip currently shows that page at that moment. <strong>It goes between the close and the county, because it is dated 30 July</strong> and placing it at the end would make the strip run backwards in time. Both catches are CD's.</p></div>
   </div>
 </section>
 

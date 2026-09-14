@@ -325,7 +325,39 @@ about advisor against technician. The card stands as a record and **the inquiry 
 destination.** The routing either happens later or is derived without being seen, and neither is
 decided. **That is a flow question rather than a component one**, and it is open in memo 8 section C.
 
-**A new nested block, and it is the same shape twice.** Potential matches inside a capture, and
-Coming up inside a project card. Both are a tinted block with a small heading inside a card, holding
-rows that belong to the card rather than beside it. **Worth naming as one component before it is
-drawn a third time**, which is the thing the seventh field exists to catch.
+## SubordinateList
+
+**Level** molecule. **New**, named 14 Sep 2026 after it appeared twice in one memo.
+
+A list inside a card that belongs to the card rather than sitting beside it. A tinted block with a
+small heading and a count, holding rows the card owns.
+
+**States** empty, where the block is absent rather than showing nothing; **reporting**, rows that
+state a fact and offer no action, which is Coming up inside a project card; and **resolving**, rows
+that carry a judgement and an action, which is Potential matches inside a capture.
+
+**Use it** where rows are a consequence of the card they sit in. Matches are produced by what was
+typed in the form above them; upcoming events belong to the piece of work above them.
+
+**Do not use it** for anything a reader would compare with the card beside it. **A peer question is a
+card.** The test is whether the rows would still make sense if the card around them were removed: if
+yes, it is a card of its own.
+
+**When its subject is absent** the block is **absent**. A subordinate list with nothing in it is a
+heading explaining a thing that did not happen.
+
+**Absorbs** any row content, a count in the heading, and rows that carry actions.
+**A new component instead** if the block ever needs its own segmented control or its own header
+actions, because at that point it is a card that happens to be indented.
+
+**Tiers** unchanged.
+
+**Why this is one component and not two**, adopting CD's reasoning verbatim in substance: the block on
+the capture screen and the block on the customer record are the same molecule, a subordinate list
+inside a card owned by the card rather than a peer of it. **What differs is the rows**: matches carry
+a judgement and an action, coming-up reports and does nothing. That is row content, not a second
+component, and the container absorbs it. `CandidateMatchList` is what fills it on the capture screen.
+
+**This is the seventh field working as intended.** The question was asked in the brief before the
+canvas was drawn, CD answered it up front rather than drawing two and discovering the duplication in
+review, and the answer took one record instead of two.

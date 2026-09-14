@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Model comparison, for review</title>
+<style>
+:root{
+  --bg:#ffffff; --paper:#fbfbfc; --bd:#e6e6ea; --bds:#d3d3da;
+  --tx:#1b1b20; --tx2:#55555e; --tx3:#86868f; --tx4:#adadb6;
+  --ink:#2c1b3c;
+  --conflict:#8f5f00; --conflictbg:#fffaf0; --conflictbd:#f5b638;
+  --undec:#00328f; --undecbg:#f1f7fe; --undecbd:#3d78e6;
+  --ok:#0d7731; --okbg:#f0fff5;
+  --sel:#161051; --selbg:#e2e1fe;
+  --ask:#a915b7; --askbg:#fef0ff; --askbd:#a915b7;
+  --sans:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:var(--sans);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1380px;margin:0 auto;padding:40px 32px 120px}
+
+h1{font-size:30px;line-height:1.15;font-weight:600;letter-spacing:-.02em;margin:0 0 10px}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.05em;color:var(--tx3);margin:0 0 14px;text-transform:uppercase}
+.lede{max-width:760px;color:var(--tx2);font-size:15px;margin:0 0 8px}
+.lede b{color:var(--tx)}
+
+/* sticky bar */
+.bar{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.95);backdrop-filter:blur(6px);border-bottom:1px solid var(--bd);padding:12px 0 12px;margin:22px 0 26px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{border:1px solid var(--bds);background:#fff;border-radius:20px;padding:5px 12px;font:500 12.5px/1.3 var(--sans);color:var(--tx2);cursor:pointer}
+.chip[data-on=true]{background:var(--sel);border-color:var(--sel);color:#fff}
+.prog{margin-left:auto;display:flex;align-items:center;gap:14px;font-size:13px;color:var(--tx2)}
+.progbar{width:150px;height:7px;border-radius:6px;background:var(--bd);overflow:hidden}
+.progbar i{display:block;height:100%;background:var(--ok);width:0%}
+.btn{border:1px solid var(--bds);background:#fff;border-radius:8px;padding:7px 13px;font:500 13px/1.3 var(--sans);color:var(--tx);cursor:pointer}
+.btn.pri{background:var(--sel);border-color:var(--sel);color:#fff}
+.btn:hover{border-color:var(--tx3)}
+
+/* sections */
+.sec{margin:0 0 10px}
+.sechead{display:flex;align-items:baseline;gap:12px;margin:34px 0 12px;padding-bottom:9px;border-bottom:1px solid var(--bd)}
+.sechead h2{margin:0;font-size:17px;font-weight:600;letter-spacing:-.01em}
+.sechead .n{font-family:var(--mono);font-size:11px;color:var(--tx3)}
+.sechead .acc{margin-left:auto}
+
+/* rows */
+.row{border:1px solid var(--bd);border-radius:12px;background:#fff;padding:0;margin:0 0 12px;overflow:hidden}
+.row[data-ruled=true]{border-color:#cfe6d6}
+.row[data-kind=Conflict]{border-left:4px solid var(--conflictbd)}
+.row[data-kind=Undecided]{border-left:4px solid var(--undecbd)}
+.row[data-ask=true]{border-left:4px solid var(--askbd);background:var(--askbg)}
+.rhead{display:grid;grid-template-columns:64px minmax(0,1fr) minmax(0,1fr);gap:0;align-items:stretch}
+.rid{padding:14px 12px;font-family:var(--mono);font-size:12px;color:var(--tx3);border-right:1px solid var(--bd);background:var(--paper);display:flex;flex-direction:column;gap:6px}
+.rid .tick{font-size:13px;color:var(--ok)}
+.cell{padding:13px 16px;min-width:0}
+.cell.ours{border-right:1px solid var(--bd)}
+.cell .lab{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:var(--tx4);margin:0 0 4px}
+.cell p{margin:0;font-size:13.5px;line-height:1.5;color:var(--tx2)}
+.cell p b{color:var(--tx);font-weight:600}
+
+.rmine{padding:12px 16px;border-top:1px solid var(--bd);background:var(--paper);font-size:13.5px;color:var(--tx2)}
+.rmine .lab{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:var(--tx4);margin:0 0 4px}
+.rmine b{color:var(--tx);font-weight:600}
+
+.rrule{padding:12px 16px;border-top:1px solid var(--bd);display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.rrule .lab{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:var(--tx4);margin-right:4px}
+.opt{border:1px solid var(--bds);background:#fff;border-radius:7px;padding:5px 10px;font:500 12.5px/1.3 var(--sans);color:var(--tx2);cursor:pointer;white-space:nowrap}
+.opt[data-on=true]{background:var(--sel);border-color:var(--sel);color:#fff}
+.opt[data-on=true][data-v=Conflict]{background:var(--conflict);border-color:var(--conflict)}
+.opt[data-on=true][data-v=Undecided]{background:var(--undec);border-color:var(--undec)}
+.opt[data-on=true][data-v=Confused]{background:var(--ask);border-color:var(--ask)}
+.opt.proposed{border-style:dashed}
+.pmark{font-family:var(--mono);font-size:10px;color:var(--tx4);margin-left:2px}
+
+.rnote{padding:0 16px 14px}
+textarea{width:100%;min-height:44px;border:1px solid var(--bd);border-radius:8px;padding:9px 11px;font:400 13.5px/1.5 var(--sans);color:var(--tx);resize:vertical;background:#fff}
+textarea:focus{outline:none;border-color:var(--sel)}
+textarea::placeholder{color:var(--tx4)}
+
+/* agreements */
+.agree{border:1px solid var(--bd);border-radius:12px;background:var(--okbg);padding:14px 18px;margin:0 0 8px}
+.agree h3{margin:0 0 8px;font-size:14px;font-weight:600}
+.agree ul{margin:0;padding-left:18px}
+.agree li{font-size:13.5px;color:var(--tx2);margin-bottom:4px}
+
+/* export */
+.exp{position:fixed;inset:0;background:rgba(20,20,26,.45);display:none;align-items:center;justify-content:center;z-index:50;padding:30px}
+.exp[data-open=true]{display:flex}
+.expbox{background:#fff;border-radius:14px;max-width:900px;width:100%;max-height:84vh;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,.25)}
+.exphead{padding:16px 20px;border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:12px}
+.exphead h3{margin:0;font-size:15px;font-weight:600}
+.exphead .btn{margin-left:auto}
+.expbody{padding:16px 20px;overflow:auto;flex:1}
+.expbody textarea{min-height:50vh;font-family:var(--mono);font-size:12px;line-height:1.5}
+.hint{font-size:13px;color:var(--tx2);margin:0 0 10px}
+.foot{margin-top:40px;padding-top:18px;border-top:1px solid var(--bd);font-size:13px;color:var(--tx3)}
+@media (max-width:900px){ .rhead{grid-template-columns:1fr} .cell.ours{border-right:0;border-bottom:1px solid var(--bd)} .rid{border-right:0;border-bottom:1px solid var(--bd);flex-direction:row;align-items:center} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<p class="eyebrow"><span>Upgrade to Pros</span> &nbsp;&middot;&nbsp; <span>Model comparison</span> &nbsp;&middot;&nbsp; <span>For review, 13 Sep 2026</span></p>
+<h1>Our model against DRAFT v3</h1>
+<p class="lede">Thirty seven differences, grouped by theme. <b>Every row is pre-filled with my proposed
+reading</b>, shown with a dashed outline until you confirm or change it, so you only have to touch what
+you disagree with. Comments are yours and travel with the ruling.</p>
+<p class="lede"><b>Undecided means the models genuinely disagree and neither is right yet.</b> <b>Confused means the row is badly written or you need more from me</b> before you can rule on it. The first is about the world, the second is about my explanation, and rows marked Confused come back to me to fix rather than counting as decided.</p>
+<p class="lede"><b>Adopt theirs, added 14 Sep, means the difference is real and DRAFT v3 wins.</b> Not the
+same as Agreement, which means the two models never differed and the row was listed by mistake. An
+Agreement row closes and generates nothing; an Adopt theirs row puts an entity into our model, so the
+two must not be used interchangeably.</p>
+<p class="lede"><b>Ours</b> is Andrew's Model v3 as decided, read 13 Sep. <b>Theirs</b> is DRAFT v3 as
+the team serialised it on 8 Sep, 47 entities and 59 edges. Work is saved in this browser as you go.
+<b>Press Export when you are done</b> and paste the result back to me.</p>
+
+<div class="agree">
+  <h3>Six things that are not differences, listed because several were believed to be</h3>
+  <ul>
+    <li><b>Project is the spine</b>, modelling one customer journey</li>
+    <li><b>Job is the execution of one committed scope component</b></li>
+    <li><b>Selling has no lifecycle anchor.</b> Ours calls it a grouping; theirs puts the states on the Lead, Proposal and Contract</li>
+    <li><b>The invoice sits at the project.</b> Their edge is solid. This was called the sharpest live disagreement as recently as this week</li>
+    <li><b>Jobs are created at the hand-off</b>, once the contract is signed and tender secured</li>
+    <li><b>Permits attach to the job</b>, not the project</li>
+  </ul>
+</div>
+
+<div class="bar">
+  <div class="chips" id="chips"></div>
+  <div class="prog">
+    <span id="progtext">0 of 37 confirmed</span>
+    <span class="progbar"><i id="progbar"></i></span>
+    <button class="btn" id="reset">Reset</button>
+    <button class="btn pri" id="export">Export</button>
+  </div>
+</div>
+
+<div id="rows"></div>
+
+<p class="foot">Ten things neither model has are in the object register rather than here, with
+criticality, intent and hold. All ten were checked against their forty seven on 13 September and are
+absent from theirs as well.</p>
+
+</div>
+
+<div class="exp" id="expmodal">
+  <div class="expbox">
+    <div class="exphead">
+      <h3>Paste this back to Claude</h3>
+      <button class="btn" id="copy">Copy</button>
+      <button class="btn" id="closeexp">Close</button>
+    </div>
+    <div class="expbody">
+      <p class="hint">Only rows you confirmed or changed are marked as ruled. Untouched rows are
+      reported as still proposed, so nothing looks settled that is not.</p>
+      <textarea id="expout" readonly></textarea>
+    </div>
+  </div>
+</div>
+
+<script>
+const OPTIONS = ["Conflict","Undecided","Ours omits","Ours simplifies","Theirs omits","Naming","Agreement","Adopt theirs","Confused"];
+
+const DATA = [
+ {s:"A", t:"The spine, and when it exists", rows:[
+  {id:"D-01", ours:"The project <b>mints on pursuit</b>, when somebody starts working a lead intending to write a proposal. Exists before pricing.", theirs:"A solid edge: <b>creation of the proposal mints the Project</b>.", mine:"<b>Conflict.</b> The live one. One beat apart in the scenario, and it decides whether the bundling decision leaves a trace.", k:"Conflict"},
+  {id:"D-02", ours:"The project is <b>mandatory</b>, always.", theirs:"Effectively mandatory once a proposal exists, and nothing before that. Their Lead has no edge to Project at all.", mine:"<b>Conflict</b>, downstream of D-01. Not separately arguable.", k:"Conflict"},
+  {id:"D-03", ours:"The project <b>holds the money</b>, and the customer record shows financial and project roll-ups.", theirs:"The project <b>points at nothing</b>. State is derived. But <i>Project rolls up Job Financials</i> is a real dotted edge.", mine:"<b>Undecided on our side.</b> We never ruled stored against derived. Theirs is explicit and closer to ours than the rhetoric suggests.", k:"Undecided"},
+  {id:"D-04", ours:"Under the customer; property is <b>referenced, never owned</b>.", theirs:"Two dotted edges: <i>Customer work for Project</i> and <i>Property site of Project</i>. Dual anchor.", mine:"<b>Ours simplifies.</b> Theirs is more precise and I would adopt it.", k:"Ours simplifies"}
+ ]},
+ {s:"B", t:"Demand", rows:[
+  {id:"D-05", ours:"<b>One lead per trade.</b>", theirs:"One Lead entity. Their scenarios run one lead carrying several interests by different authors.", mine:"<b>Conflict</b>, but theirs is carried in the scenarios rather than on the board. The board is silent.", k:"Conflict"},
+  {id:"D-06", ours:"A lead <b>survives being declined</b>, with a reason, a note and a revive condition.", theirs:"No status vocabulary on the board. Their scenarios say the interest stays open on the lead and that its reporting home has moved.", mine:"<b>Theirs omits</b> at the model level. Behaviour lives in their scenarios, which is a weaker place for it.", k:"Theirs omits"},
+  {id:"D-07", ours:"The lead <b>carries its origin and a line of detail</b>.", theirs:"Nothing. No origin attribute.", mine:"<b>Ours simplifies and theirs omits.</b> Neither models it properly. Already in the object register as blocking.", k:"Ours simplifies"},
+  {id:"D-08", ours:"Nothing.", theirs:"A <b>START</b> node feeding Lead.", mine:"<b>Naming.</b> A diagram device marking the entry point, not an entity.", k:"Naming"}
+ ]},
+ {s:"C", t:"Selling", rows:[
+  {id:"D-09", ours:"<b>Option</b> is implied by “multiple options per proposal”, never named.", theirs:"<b>Option (Good / Better / Best)</b> is an entity. Priced 1:1 by an Estimate, selection triggers the e-sign, and the contract pins its version.", mine:"<b>Ours simplifies.</b> Theirs is better and I would adopt Option as an entity.", k:"Ours simplifies"},
+  {id:"D-10", ours:"“Statement of work, estimate, itemisation” as one box inside the proposal.", theirs:"<b>Estimate</b> is its own entity, with line items, margin and tax, and its lines reference SKUs.", mine:"<b>Ours simplifies.</b>", k:"Ours simplifies"},
+  {id:"D-11", ours:"<b>Financing</b> is a box inside the proposal. “Presented at the proposal, modelled below it.”", theirs:"<b>Payment Plan (tender mix)</b> is a first-class entity with seven edges: set by the proposal, referenced by the contract, revised by change order, spawning a financing application, a card intent, or an external reference.", mine:"<b>Ours simplifies heavily.</b> The single biggest gap, and where the financed run will bite.", k:"Ours simplifies"},
+  {id:"D-12", ours:"<b>Site assessment</b> deliberately left out, as one of the things attaching to several objects at once.", theirs:"An entity. <i>Site Assessment informs scope on the Proposal.</i>", mine:"<b>Ours omits deliberately.</b> But our own mocks needed it, so the deliberate omission may not survive.", k:"Ours omits"},
+  {id:"D-13", ours:"Nothing.", theirs:"<b>Appointment, typed SALES</b>, hanging off the Lead.", mine:"<b>Ours omits.</b> Scope.", k:"Ours omits"},
+  {id:"D-14", ours:"“Signed against what was selected, amended by change orders.”", theirs:"Contract <b>pins the proposal version</b>, with terms and snapshots frozen. Explicit dotted edge.", mine:"<b>Naming.</b> Same intent, theirs more precisely stated.", k:"Naming"}
+ ]},
+ {s:"D", t:"The unit below the sale", rows:[
+  {id:"D-15", ours:"Job is <b>one per signed scope</b>. Scope produces job.", theirs:"<b>Two edges pointing opposite ways.</b> <i>Option hand-off seeds 0..N, one per committed scope component, to Job.</i> And <i>Job decomposes into 0..N, trades derived, to Scope Component.</i>", mine:"<b>Ambiguous in theirs</b>, and worth asking them rather than deciding. Either scope produces job or job decomposes into scopes, and their board says both.", k:"Undecided"},
+  {id:"D-16", ours:"Scope is untyped.", theirs:"<b>Scope Component is typed</b> by trade: solar, battery, roofing, HVAC.", mine:"<b>Ours omits.</b> Probably worth adopting, since our own leads are per trade.", k:"Ours omits"}
+ ]},
+ {s:"E", t:"Work", rows:[
+  {id:"D-17", ours:"“Crew and schedule”, one record on the job.", theirs:"<b>Appointment, typed WORK VISIT</b>, with <b>Crew Assignment</b> hanging off it. Two entities, and the crew attaches to the visit rather than to the job.", mine:"<b>Ours simplifies.</b> The separation matters: a job has several visits and the crew can differ per visit.", k:"Ours simplifies"},
+  {id:"D-18", ours:"“Material order and delivery”, one box.", theirs:"<b>Material Order</b> fulfils via <b>Purchase Order</b>. Two entities.", mine:"<b>Ours simplifies.</b>", k:"Ours simplifies"},
+  {id:"D-19", ours:"Not drawn, part of the deliberately omitted cross-cutting set.", theirs:"<b>Forms / Checklists</b>, an entity on the job.", mine:"<b>Ours omits deliberately</b>, and again our mocks drew task lists, so revisit.", k:"Ours omits"},
+  {id:"D-20", ours:"Nothing.", theirs:"<b>Rebate Application</b>, marked a gap in their own model.", mine:"<b>Ours omits.</b> Scope.", k:"Ours omits"},
+  {id:"D-21", ours:"“Documents and photos”.", theirs:"<b>Photos / Docs</b> on the job.", mine:"<b>Naming.</b>", k:"Naming"}
+ ]},
+ {s:"F", t:"Money", rows:[
+  {id:"D-22", ours:"<b>Payment request</b>, drawing against the master invoice or standing alone.", theirs:"No equivalent. <i>Invoice settled by 1..N Payments</i>, and nothing between.", mine:"<b>Conflict or naming, and I cannot tell which.</b> Their own open items flag two unreconciled readings of Invoice, a running total and a request for payment. Our payment request may be their second reading.", k:"Undecided"},
+  {id:"D-23", ours:"“Transactions”.", theirs:"<b>Payment is source-typed</b>, and five things create one: Card/ACH, Cash/Check, Funding Events, Supplement, and a third-party reference.", mine:"<b>Ours simplifies heavily.</b>", k:"Ours simplifies"},
+  {id:"D-24", ours:"Nothing.", theirs:"<b>Contractor Payout</b>, bundling payments by source, net of processing and dealer fees, method typed.", mine:"<b>Ours omits.</b> Scope, and it is the contractor's side of the money rather than the customer's.", k:"Ours omits"},
+  {id:"D-25", ours:"“Cost and profit” on the money card.", theirs:"<b>Job Financials</b>, a P&amp;L roll-up entity. <i>Project rolls up to it</i>, and it <i>computes Commission</i>.", mine:"<b>Ours simplifies.</b> Note this bears on D-03: they made the roll-up an entity rather than a derivation.", k:"Ours simplifies"},
+  {id:"D-26", ours:"Nothing.", theirs:"<b>Commission</b>, computed from Job Financials.", mine:"<b>Ours omits.</b>", k:"Ours omits"},
+  {id:"D-27", ours:"Nothing.", theirs:"<b>Insurance Claim</b> negotiating <b>Supplement</b>, with carrier tranches paying the invoice.", mine:"<b>Ours omits.</b> Scope, and a whole scenario we never walked.", k:"Ours omits"},
+  {id:"D-28", ours:"Nothing.", theirs:"<b>GoodLeap Financing App</b>, <b>Approval</b>, <b>Financing Agreement</b>, <b>Funding Events</b>, <b>3rd-Party Financing Ref</b>. Five entities, chained.", mine:"<b>Ours omits.</b> The financing spine, and the reason D-11 matters.", k:"Ours omits"}
+ ]},
+ {s:"G", t:"Services", rows:[
+  {id:"D-29", ours:"<b>Service is a project type.</b> One job per visit, cadence from the plan terms, no closing balance.", theirs:"<b>Service Plan sits beside Project in the Spine lane.</b> The agreement is held by the Customer, and a solid edge reads “agreement mints a service plan instead of a project”.", mine:"<b>Conflict.</b> The sharpest one after D-01, and the least settled part of both models.", k:"Conflict"},
+  {id:"D-30", ours:"Cadence comes from the plan terms. No scheduling entity.", theirs:"<b>Service Agreement schedules 0..N Recurring Service Event</b>, and <b>Recurring Service Event books a Job</b>.", mine:"<b>Ours simplifies.</b> Theirs names the thing that fires, which ours leaves implicit.", k:"Ours simplifies"},
+  {id:"D-31", ours:"Nothing.", theirs:"<b>Option sells 0..N Service Agreement</b>, labelled the flywheel.", mine:"<b>Ours omits.</b> How a plan gets sold at all.", k:"Ours omits"},
+  {id:"D-32", ours:"Nothing.", theirs:"<b>Warranty Plan</b> covering Installed Equipment.", mine:"<b>Ours omits.</b>", k:"Ours omits"},
+  {id:"D-33", ours:"Service plan has no closing balance, by design.", theirs:"Their own scenario flags that <b>a subscription invoice has no valid parent</b>, because their rule is invoice to job or project and an agreement is neither.", mine:"<b>Agreement on the problem, neither has a solution.</b> Worth saying: both models break here.", k:"Agreement"}
+ ]},
+ {s:"H", t:"Anchors, catalogue and organisation", rows:[
+  {id:"D-34", ours:"<b>Contact</b> not on the board, assumed by every mock.", theirs:"An entity, dotted from Customer.", mine:"<b>Ours omits by oversight.</b> Just add it.", k:"Ours omits"},
+  {id:"D-35", ours:"Nothing.", theirs:"<b>Installed Equipment</b>, an asset registry on the property.", mine:"<b>Ours omits.</b> Our own service mock needed it.", k:"Ours omits"},
+  {id:"D-36", ours:"Nothing. Tiers are a product concept in our notes.", theirs:"<b>Contractor Org</b> and <b>User / Role</b>.", mine:"<b>Ours omits.</b> Scope.", k:"Ours omits"},
+  {id:"D-37", ours:"Nothing.", theirs:"<b>Pricebook contains SKU</b>, and SKU lines reference the Estimate.", mine:"<b>Ours omits.</b> Scope, and it is where a price comes from.", k:"Ours omits"}
+ ]}
+];
+
+const KEY = "u2p-model-comparison-v1";
+let state = {};
+try { state = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch(e){ state = {}; }
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){} }
+
+/* Andrew's rulings, held in the file so a browser losing its storage does not lose them.
+   D-01 to D-03 came from conversation on 14 Sep. D-04 to D-07 come from his partial
+   export of 14 Sep, after his first pass was lost.
+
+   Seeded per row, only where nothing is already saved for that row, so anything he has
+   entered here always wins. Re-seeds on a later load after a reset.
+
+   D-06 carries a comment and no ruling on purpose. He typed the comment and did not
+   confirm the classification, and an unconfirmed row carries no authority. Do not
+   quietly promote it. */
+const SEED = {
+  "D-01": {
+    ruling: "Conflict",
+    note: "Carried in from conversation, 14 Sep. A position rather than a hesitation. A lead has a validation phase where notes, transcripts, documents and investigation accrue, and that is not pursuit. Sales decides the validation is done and that the customer is worth pursuing, and that decision opens the project. The difference from theirs is not that they lack validation, their Lead can reasonably hold it, but that nothing in their model marks the end of it."
+  },
+  "D-02": {
+    ruling: "Conflict",
+    note: "Carried in from conversation, 14 Sep. \"Mandatory if you want a proposal and jobs, but I don't see it being mandatory in other ways.\" My wording was wrong and has been corrected. Kept as a conflict so it travels with D-01, but it is not separately arguable and should be resolved with it rather than counted as a fifth."
+  },
+  "D-03": {
+    ruling: "Ours simplifies",
+    note: "Carried in from conversation, 14 Sep. A third position, now principle P-1: \"certain money items are stored at the project level, and certain at the job level, and those roll up. Many things ultimately roll up to the customer.\" Money is stored where it occurs and higher levels derive. Classified as ours simplifying because P-1 gives the rule but not the machinery: theirs names an entity that holds the roll-up and computes from it, which is adoptable rather than opposed."
+  },
+  "D-04": {
+    ruling: "Undecided",
+    note: "This may not be an issue, and just a lack of detail in both models. Overall, a property is an object that can be transitory in relation to the customer. A customer may move away or move to another property, or have multiple properties. And we have yet to resolve customer role and property, that is, is the customer the owner, do they just live there, etc."
+  },
+  "D-05": {
+    ruling: "Undecided",
+    note: "I have a slight preference for my model at this time. One trade per lead makes it easy to track the provenance and journey of a lead. We could possibly do the same if a lead holds multiple interests, but it would be hard to surface which interests were pursued, won, deferred, etc. With one trade per lead, it will be very clear from an experience perspective where the customer stands on each one without any digging."
+  },
+  "D-06": {
+    note: "For now, we need to be able to track leads throughout their lifecycle, so we will use what is implied in my model for now. Comment recorded, classification not confirmed."
+  },
+  "D-07": {
+    ruling: "Undecided",
+    note: "Again, tracking of a lead across its lifecycle is important, so we want to be able to note the source and other details if possible."
+  },
+  "D-08": {
+    ruling: "Naming",
+    note: "Not an issue. Start was just used in the v3 model to indicate some starting point of the selling process."
+  },
+  "D-30": {
+    ruling: "Undecided",
+    note: "Still undecided and we need to see how the experience plays out."
+  },
+  "D-33": {
+    ruling: "Undecided",
+    note: "Still undecided, especially if we decide a subscription or service agreement is a project type."
+  },
+
+  /* Comments recorded, ruling deliberately left unconfirmed. Each of these carries
+     something more than an acceptance of my reading, so none should be promoted
+     without Andrew saying so. */
+  "D-06": {
+    note: "For now, we need to be able to track leads throughout their lifecycle, so we will use what is implied in my model for now. Comment recorded, classification not confirmed."
+  },
+  "D-12": {
+    note: "We still do not have a solid idea of what a site assessment is. We know that when a tech is visiting a site they will assess certain parts of the property, especially whatever parts relate to their trades. We also know a lot of assessment detail will be taken by others dealing with a customer: CSR, sales, the installing team. So a site assessment may be a discrete object at the end of the day, or maybe a type of another object. It may also be an experience, geared towards the trade, that guides the tech or salesperson on what needs to be captured, and what needs capturing will likely be a preset or template from us, refined by the organisation over time. We also need to figure out how all these site details and notes are referenced to and by the property."
+  },
+  "D-15": {
+    note: "Scope produces a job, or one job per scope, is where I want to aim right now."
+  },
+  "D-19": {
+    note: "Forms and checklists are not really official entities at this time. We just know we want them to be part of the experience, so we will continue to include them."
+  },
+  "D-29": {
+    note: "Still up for debate. Either model might work here, but I prefer at this time having service be a type of project, with service visits likely denoted as jobs: past, current and upcoming."
+  }
+};
+
+/* Adopt theirs. Twenty two rows where Andrew's comment says our model is the thinner one
+   and DRAFT v3's entities should be used. Recorded 14 Sep on his instruction to treat the
+   comment as the ruling. D-09, D-10, D-11 and D-22 he confirmed himself; the rest he
+   commented on without confirming, and he asked for them to be counted.
+
+   This is a migration rather than a seed, because it has to correct rulings already saved
+   in the browser: D-09, D-10 and D-11 were saved as Agreement, which in this vocabulary
+   means the models never differed. They did differ. His notes are preserved untouched. */
+const ADOPT = {
+  "D-09": "This is just an artifact of my less detailed model. We should use the v3 entities here.",
+  "D-10": null, "D-11": null, "D-13": null, "D-14": null, "D-16": null,
+  "D-17": null, "D-18": null, "D-20": null, "D-22": null,
+  "D-23": "This is just an artifact of my less detailed, broken-down model. We should use the v3 entities here. Payments will have more attributes than just source, but I think source was just something detailed a bit more in the entity model.",
+  "D-24": null, "D-25": null, "D-26": null, "D-27": null, "D-28": null,
+  "D-31": null, "D-32": null, "D-34": null, "D-35": null, "D-36": null, "D-37": null
+};
+const ADOPT_DEFAULT = "This is just an artifact of my less detailed, broken-down model. We should use the v3 entities here.";
+
+(function seed(){
+  let touched = false;
+  Object.keys(SEED).forEach(id => {
+    if(state[id] && (state[id].ruling || state[id].note)) return;
+    state[id] = {...SEED[id], auto:false, seeded:true};
+    touched = true;
+  });
+  if(touched) save();
+})();
+
+/* The last six rows, ruled 14 Sep after the full pass. Each had been left with a comment
+   and no classification because the comment carried more than an acceptance. */
+const FINAL = {
+  "D-06": { ruling: "Theirs omits", note: "Use what is in ours for now. Their behaviour lives in their scenarios, which is a weaker place for it, and ours holds the reason, note and revive condition." },
+  "D-12": { ruling: "Undecided", note: "Its own thread. What a site assessment is, is genuinely to be determined: possibly a discrete object, possibly a type of another object, possibly an experience geared to the trade that guides what gets captured from a template we preset and the organisation refines. How site detail references the property is unresolved too. Not a classification question." },
+  "D-15": { ruling: "Undecided", note: "One scope equals one job. That settles our side. Their board still points both ways, so what remains undecided is theirs rather than ours, and it is a question to take to them rather than a ruling to make." },
+  "D-19": { ruling: "Ours omits", note: "Forms, checklists, documents and photos are four elements stored by the job. There will be other objects not listed here; these are some we decided to note. Not adopted as entities, and we keep drawing them." },
+  "D-21": { ruling: "Naming", note: "Same as D-19. One of four elements stored by the job, and the list is not exhaustive." },
+  "D-29": { ruling: "Conflict", note: "Deferred for now. Either model might work. Preference at this time is service as a type of project, with service visits denoted as jobs: past, current and upcoming. Deferring this leaves D-33, the subscription invoice, contingent rather than settled." }
+};
+
+(function migrate(){
+  const MK = KEY + ":mig";
+  let done = 0;
+  try { done = parseInt(localStorage.getItem(MK) || "0", 10) || 0; } catch(e){}
+  if(done >= 3) return;
+  if(done < 2){
+    Object.keys(ADOPT).forEach(id => {
+      const cur = state[id] || {};
+      state[id] = { ...cur, ruling:"Adopt theirs", note: cur.note || ADOPT[id] || ADOPT_DEFAULT, auto:false, seeded:true };
+    });
+  }
+  Object.keys(FINAL).forEach(id => {
+    const cur = state[id] || {};
+    state[id] = { ...cur, ruling: FINAL[id].ruling, note: FINAL[id].note, auto:false, seeded:true };
+  });
+  save();
+  try { localStorage.setItem(MK, "3"); } catch(e){}
+})();
+
+const ALLROWS = DATA.flatMap(s => s.rows.map(r => ({...r, sec:s.s, sect:s.t})));
+let filter = "All";
+
+function st(id){ return state[id] || {}; }
+function isRuled(id){ const x = st(id); return !!x.ruling; }
+
+function render(){
+  const host = document.getElementById("rows");
+  host.innerHTML = "";
+  DATA.forEach(sec => {
+    const visible = sec.rows.filter(r => matches(r));
+    if(!visible.length) return;
+    const wrap = document.createElement("div");
+    wrap.className = "sec";
+    const unruled = sec.rows.filter(r => !isRuled(r.id)).length;
+    wrap.innerHTML = `<div class="sechead">
+      <span class="n">${sec.s}</span><h2>${sec.t}</h2>
+      <span class="n">${sec.rows.length} rows${unruled? ", "+unruled+" unconfirmed":""}</span>
+      ${unruled? `<span class="acc"><button class="btn" data-acc="${sec.s}">Accept all proposed here</button></span>`:""}
+    </div>`;
+    visible.forEach(r => wrap.appendChild(rowEl(r)));
+    host.appendChild(wrap);
+  });
+  host.querySelectorAll("[data-acc]").forEach(b => b.onclick = () => {
+    const s = DATA.find(x => x.s === b.dataset.acc);
+    s.rows.forEach(r => { if(!isRuled(r.id)){ state[r.id] = {...st(r.id), ruling:r.k, auto:true}; } });
+    save(); render(); progress();
+  });
+  progress();
+}
+
+function matches(r){
+  if(filter === "All") return true;
+  if(filter === "Unconfirmed") return !isRuled(r.id);
+  if(filter === "Confused") return st(r.id).ruling === "Confused";
+  if(filter === "Omissions") return r.k.indexOf("omits") > -1 || r.k.indexOf("simplifies") > -1;
+  return r.k === filter;
+}
+
+function rowEl(r){
+  const el = document.createElement("div");
+  const cur = st(r.id);
+  el.className = "row";
+  el.dataset.kind = r.k;
+  el.dataset.ruled = isRuled(r.id) ? "true" : "false";
+  el.dataset.ask = (cur.ruling === "Confused") ? "true" : "false";
+  el.innerHTML = `
+    <div class="rhead">
+      <div class="rid"><span>${r.id}</span>${isRuled(r.id)?'<span class="tick">&#10003;</span>':''}</div>
+      <div class="cell ours"><p class="lab">Ours</p><p>${r.ours}</p></div>
+      <div class="cell"><p class="lab">DRAFT v3</p><p>${r.theirs}</p></div>
+    </div>
+    <div class="rmine"><p class="lab">My reading, not authoritative</p><div>${r.mine}</div></div>
+    <div class="rrule"><span class="lab">Ruling</span>${
+      OPTIONS.map(o => {
+        const on = (cur.ruling || r.k) === o;
+        const proposed = !cur.ruling && o === r.k;
+        return `<button class="opt${proposed?' proposed':''}" data-v="${o}" data-on="${on}" data-row="${r.id}">${o}</button>`;
+      }).join("")
+    }${!cur.ruling? '<span class="pmark">proposed, not confirmed</span>':''}</div>
+    <div class="rnote"><textarea data-note="${r.id}" placeholder="Comment. Why, what it depends on, who to ask.">${(cur.note||"").replace(/</g,"&lt;")}</textarea></div>`;
+  el.querySelectorAll(".opt").forEach(b => b.onclick = () => {
+    state[r.id] = {...st(r.id), ruling:b.dataset.v, auto:false};
+    save(); render();
+  });
+  el.querySelector("textarea").oninput = e => {
+    state[r.id] = {...st(r.id), note:e.target.value};
+    save(); progress();
+  };
+  return el;
+}
+
+function progress(){
+  const n = ALLROWS.filter(r => isRuled(r.id)).length;
+  const a = ALLROWS.filter(r => st(r.id).ruling === "Confused").length;
+  document.getElementById("progtext").textContent = (n-a) + " of " + ALLROWS.length + " ruled" + (a ? ", " + a + " flagged for me" : "");
+  document.getElementById("progbar").style.width = (n / ALLROWS.length * 100) + "%";
+}
+
+function chips(){
+  const host = document.getElementById("chips");
+  const counts = {
+    All: ALLROWS.length,
+    Conflict: ALLROWS.filter(r=>r.k==="Conflict").length,
+    Undecided: ALLROWS.filter(r=>r.k==="Undecided").length,
+    Omissions: ALLROWS.filter(r=>r.k.indexOf("omits")>-1||r.k.indexOf("simplifies")>-1).length,
+    Naming: ALLROWS.filter(r=>r.k==="Naming").length,
+    Confused: 0,
+    Unconfirmed: 0
+  };
+  const askn = ALLROWS.filter(r=>st(r.id).ruling==="Confused").length;
+  host.innerHTML = Object.keys(counts).map(k => {
+    const lab = k==="Unconfirmed" ? k : (k==="Confused" ? k+(askn?" "+askn:"") : k+" "+counts[k]);
+    return `<button class="chip" data-f="${k}" data-on="${filter===k}">${lab}</button>`;
+  }).join("");
+  host.querySelectorAll(".chip").forEach(b => b.onclick = () => { filter = b.dataset.f; chips(); render(); });
+}
+
+document.getElementById("reset").onclick = () => {
+  if(!confirm("Clear every ruling and comment?")) return;
+  state = {}; save(); render();
+};
+
+document.getElementById("export").onclick = () => {
+  const lines = [];
+  lines.push("# Model comparison, Andrew's rulings");
+  lines.push("");
+  lines.push("Exported " + new Date().toISOString().slice(0,10) + " from the review artifact.");
+  const n = ALLROWS.filter(r => isRuled(r.id)).length;
+  lines.push("");
+  lines.push(n + " of " + ALLROWS.length + " rows confirmed. Rows marked *proposed* were not touched and are still my reading, not a ruling.");
+  lines.push("");
+  DATA.forEach(sec => {
+    lines.push("## " + sec.s + ". " + sec.t);
+    lines.push("");
+    lines.push("| # | Ruling | Changed? | Comment |");
+    lines.push("|---|---|---|---|");
+    sec.rows.forEach(r => {
+      const c = st(r.id);
+      const ruling = c.ruling || r.k;
+      let flag;
+      if(!c.ruling) flag = "*proposed, not confirmed*";
+      else if(c.auto) flag = "accepted in bulk";
+      else if(c.ruling === r.k) flag = "confirmed";
+      else flag = "**changed from " + r.k + "**";
+      const note = (c.note || "").replace(/\|/g,"\\|").replace(/\n+/g," ");
+      lines.push("| " + r.id + " | " + ruling + " | " + flag + " | " + (note || "") + " |");
+    });
+    lines.push("");
+  });
+  const asks = ALLROWS.filter(r => st(r.id).ruling === "Confused");
+  if(asks.length){
+    lines.push("## Rows Andrew wants explained before ruling");
+    lines.push("");
+    asks.forEach(r => lines.push("- **" + r.id + "**, " + r.sect + ". " + (st(r.id).note || "No note, just unclear.")));
+    lines.push("");
+  }
+  const changed = ALLROWS.filter(r => { const c = st(r.id); return c.ruling && c.ruling !== r.k && c.ruling !== "Confused"; });
+  if(changed.length){
+    lines.push("## Rows where Andrew disagreed with my reading");
+    lines.push("");
+    changed.forEach(r => lines.push("- **" + r.id + "**: I said " + r.k + ", Andrew says " + st(r.id).ruling + (st(r.id).note ? ". " + st(r.id).note : "")));
+    lines.push("");
+  }
+  document.getElementById("expout").value = lines.join("\n");
+  document.getElementById("expmodal").dataset.open = "true";
+};
+document.getElementById("closeexp").onclick = () => document.getElementById("expmodal").dataset.open = "false";
+document.getElementById("copy").onclick = () => {
+  const ta = document.getElementById("expout");
+  ta.select();
+  try{ document.execCommand("copy"); document.getElementById("copy").textContent = "Copied"; setTimeout(()=>document.getElementById("copy").textContent="Copy",1400); }catch(e){}
+};
+document.getElementById("expmodal").onclick = e => { if(e.target.id === "expmodal") e.currentTarget.dataset.open = "false"; };
+
+chips();
+render();
+</script>
+</body>
+</html>

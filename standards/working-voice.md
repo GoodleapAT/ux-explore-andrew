@@ -4,6 +4,8 @@
 
 **Surfaces:** all.
 
+**How hard to hold this.** Everything in this file is **Always**, except the ordering advice in the last section, which is **Prefer**. Markers mean: **Always**, breaking it is a defect and you say so first. **Default**, do it unless you have a reason and say the reason. **Prefer**, a leaning.
+
 ---
 
 ## In conversation

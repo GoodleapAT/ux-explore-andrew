@@ -22,8 +22,12 @@
 | M-001 | Move | Open demand as a figure on the customer record | Raw | A session | 2026-09-11 |
 | M-002 | Move | Raise a lead from a service visit finding | Raw | A week | 2026-09-11 |
 | M-005 | Move | Read the board's UX DRAFT page designs, and decide whether to raid them | Raw | A session | 2026-09-11 |
-| M-003 | Move | One shared entity map, lit per beat from the beat's own entity list | Raw | A week | 2026-09-11 |
-| M-004 | Move | Three panes: the beat's words, the screen, and the lit map | Raw | A session | 2026-09-11 |
+| M-003 | Move | One shared entity map, lit per beat from the beat's own entity list | Raw | A week | 2026-09-14 |
+| M-004 | Move | Three panes: the beat's words, the screen, and the lit map | Raw | A session | 2026-09-14 |
+| M-006 | Move | Surface the upsell opportunity on the view where it occurs | Raw | A session | 2026-09-14 |
+| N-004 | Need | Demand that arrives later cannot join a sale already in progress | Raw | A cycle | 2026-09-14 |
+| M-007 | Move | Merge two projects | Raw | A week | 2026-09-14 |
+| M-008 | Move | Qualify a new inquiry into an existing lead | Parked | A session | 2026-09-14 |
 
 **Status values.** Raw, exploring, parked, folded in, dropped. Parked and dropped are different: a
 parked idea has a revive condition, a dropped one does not. Both require a reason.
@@ -186,6 +190,11 @@ so it carries DRAFT v3's mint rule, its single lead with several interests, and 
 Project. Borrowing the mechanism means either generating it from my own model or accepting that the
 map shows theirs.
 
+**Andrew's position, 14 Sep 2026.** This is one of the elements he wants, and it is now covered by a
+decision: the framework is not adopted, individual elements may be adopted or translated. So this
+record changes from "worth raiding" to **wanted, route undecided**. The route is the open part, and
+the decision above says which route is closed.
+
 ---
 
 ## M-004 · Three panes: the beat's words, the screen, and the lit map
@@ -206,3 +215,128 @@ map shows theirs.
 argument carries the thinking. A three-pane walkthrough puts the *scenario* there instead. They answer
 different questions: a memo argues a design, a walkthrough tests whether a flow holds. Probably both,
 not one.
+
+---
+
+## M-006 · Surface the upsell opportunity on the view where it occurs
+
+- **Kind:** Move
+- **Origin:** Andrew, 14 Sep 2026, listing what he would eventually want shown for each view. Prompted
+  by elements in Joel's UX factory, but this one is his rather than borrowed
+- **Rationale:** The other four things he named are documentation about a screen. This one is not. An
+  upsell opportunity is a claim that the screen itself should surface a moment to sell, which makes it
+  a product feature rather than an annotation. Nobody has asked for it, so this is rationale and not
+  evidence
+- **Status:** Raw
+- **Links:** Serves N-003, recurring work has no selling surface. Overlaps M-002, raising a lead from
+  a service visit finding, which is the same idea at one specific moment. **The board's wedge-first
+  rule is the adjacent external idea**, Joel's, not adopted: a dark entity renders as an empty panel
+  advertising the capability next to it
+- **Appetite:** A session, to decide whether it is an annotation or a feature. That decision is most
+  of the work
+- **Where it would land:** Unclear, and that is the point. If it is annotation it belongs beside a
+  mockup. If it is a feature it belongs in the component library as a declared position, which is the
+  same mechanism as advertising an absent capability
+- **Last touched:** 2026-09-14
+
+**The question to settle first.** Whether an upsell opportunity is something the design surfaces to a
+reviewer, or something the product surfaces to a contractor. Those are different pieces of work and
+the phrase covers both without distinguishing them.
+
+**Andrew's position, 14 Sep 2026.** Wanted. He named five things he would eventually like on each
+view: the entities in use and the connections between them, the part of the script being addressed,
+why this screen, gaps, and upsell opportunities. **Four of the five already exist somewhere in this
+system**, which is the useful finding:
+
+| What he named | Where it already is |
+|---|---|
+| Entities used, and their connections | M-003, the shared map lit per beat |
+| The part of the script addressed | This record's verbatim pane |
+| Why this screen | The argument column of the design memo format, rendered per view rather than per memo. A relocation, not a new thing |
+| Gaps | The object register, filtered to one view. A rendering of a store we keep, not a new store |
+| Upsell opportunities | **Nothing.** It is not a documentation element at all. See M-006 |
+
+So this record grows a fourth pane rather than staying at three, and the two new panes are cheap
+because their content is already written down somewhere.
+
+---
+
+## N-004 · Demand that arrives later cannot join a sale already in progress
+
+- **Kind:** Need
+- **Origin:** Fell out of the team's latest model, 14 Sep 2026, where creating a lead creates a project.
+  Andrew named the consequence himself: project merging may be needed
+- **Rationale:** A lead holds several interests, so three trades discussed in one conversation are one
+  lead and one project and nothing needs joining. **The gap is across time.** A customer who enquires
+  about a roof in July and a driveway in September has two inquiries, two leads and two projects, and
+  the second cannot be sold as part of the first. That is the same bundling this container exists for,
+  arriving late. Nobody has said they want it, so this is rationale rather than evidence
+- **Status:** Raw
+- **Links:** Served by M-007. **Note this is the original argument for the container, reappearing.** The
+  container exists so a decision to sell several things together leaves a trace; one-lead-one-project
+  handles that within a conversation and not across two
+- **Appetite:** A cycle
+- **Where it would land:** The lead, the project, and whatever a salesperson works from
+- **Last touched:** 2026-09-14
+
+**The cheap alternative worth testing first.** If a second inquiry could be qualified **into an
+existing lead** rather than into a new one, no merge is ever needed. That moves the problem from
+merging projects, which is expensive, to routing demand, which is a decision somebody makes anyway
+when they pick the thing up.
+
+---
+
+## M-007 · Merge two projects
+
+- **Kind:** Move
+- **Origin:** Andrew, 14 Sep 2026: "since a lead creates a project, project merging may be needed at
+  some point"
+- **Rationale:** The direct answer to N-004. Two projects become one, so the work can be sold,
+  scheduled and billed together
+- **Status:** Raw
+- **Links:** Serves N-004. Recorded as T-11 because it follows from a team position rather than from
+  anything we chose
+- **Appetite:** Unknown, needs shaping, and deliberately so. **The shaping is most of the work**
+- **Where it would land:** The project, and every register that carries a project reference
+- **Last touched:** 2026-09-14
+
+**The boundary is set, 14 Sep 2026: a merge is prohibited once a project has a won proposal.** That
+is what moved the appetite from unknown to a week. Every expensive case is now out of scope by
+definition, because a project holding a contract, an invoice, jobs or a payment plan has a won proposal
+behind all four. **What is left to shape is a merge of two containers that hold only demand**, which is
+mostly a question of what happens to two leads and their interests.
+
+**It may still not be the right shape.** M-008 avoids the merge entirely by qualifying a second
+inquiry into the lead that already exists. Andrew's view, 14 Sep: a good idea, for the future. So this
+record stays live and M-008 is parked rather than the other way round.
+
+---
+
+## M-008 · Qualify a new inquiry into an existing lead
+
+- **Kind:** Move
+- **Origin:** C, 14 Sep 2026, working out why project merging would be needed at all. **Endorsed by
+  Andrew the same day** as a good idea to consider in the future
+- **Rationale:** Merging projects is expensive because a project accumulates commitments. Routing
+  demand is cheap, because somebody is already making a decision at the moment they pick a new inquiry
+  up. If a second inquiry can be qualified **into the lead that already exists** rather than into a new
+  one, there is never a second project and nothing to merge. **The problem moves from repair to
+  routing.**
+- **Status:** **Parked**, with a revive condition: **revive when project merging is picked up, or when
+  demand routing is designed, whichever comes first.** It should be ruled in or out before M-007 is
+  built, because if this works M-007 is mostly unnecessary
+- **Links:** Serves N-004. **Competes with M-007** rather than complementing it
+- **Appetite:** A session to decide whether it holds
+- **Where it would land:** Whatever surface a new inquiry is worked from
+- **Last touched:** 2026-09-14
+
+**The strongest argument for it, found while restating the worked example.** The Thompson case already
+needs this on day one. Robert contacts about the roof on 21 July and Sara contacts about the siding on
+22 July: **two separate contacts, one lead.** So qualification is already an act of routing demand into
+a lead rather than minting one per inquiry, and this move is not a new mechanism. It is the same
+mechanism applied later in time.
+
+**The argument against, which is real.** Qualifying into an existing lead means the lead's scope grows
+after it has been qualified, and the project created from it grows with it. A salesperson who accepted
+a lead about a roof can find a driveway in it. That may be exactly right, or it may be the thing that
+makes people distrust the container.

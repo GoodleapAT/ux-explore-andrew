@@ -6,8 +6,9 @@
 > Never edit or delete an existing row. A reversal is a **new row** that names the row it supersedes.
 >
 > **What belongs here.** Anything that would still be true on a different project: which repository,
-> which format, where a kind of file lives, how a surface should behave. Domain decisions go in the
-> project's own decision log.
+> which format, where a kind of file lives, how a surface should behave. **Also where the work is
+> heading**, as a principle, when the destination changes how something is done today. Domain
+> decisions go in the project's own decision log.
 >
 > **What does not belong here.** Rules. A rule lives in `standards/`, and the learned-from line inside
 > it is its log. This file is for decisions that do not become a rule.
@@ -15,6 +16,39 @@
 > **Only log what was actually decided.** A recommendation nobody accepted is not a decision.
 
 ---
+
+## Principles
+
+**A principle is a rule that generates answers, not a decision about one thing.** The project decision
+log carries domain principles, numbered P. These are the global ones, numbered G, and they are about
+how the work is done rather than about the business.
+
+**A stated destination only earns a place here if it changes something now.** An ambition that changes
+nothing today is a note, and it belongs in the ideas inbox.
+
+### G-1 · The component library is the engine, not the residue
+
+The long-run aim is that an atomic design system, with enough components carrying enough variants and
+states, driven by logic that reacts to the entity model and to the scenario's own detail, can compose
+a scenario's screens rather than having each one drawn by hand.
+
+**Stated 14 Sep 2026**, by Andrew, on reading Joel's UX factory and agreeing the idea has merit while
+declining the implementation.
+
+**What it changes today, which is the only reason it is written down:**
+
+- **A component record is a specification, not a trail.** It has to be complete enough for something
+  other than its author to compose with it. The Prefer rule that says do not stop designing to build
+  the library still stands, because the cost of a component is not what makes it brittle.
+- **A record that describes a component as finished is the wrong shape.** The library will be rewritten
+  repeatedly while it is being used, so every record says what variation it absorbs and what would mean
+  a new component instead. That is the seventh field added to the component standard on this date.
+- **Flexibility is the deliverable.** A component that fits one scenario and needs a near-identical
+  sibling for the next is a failure against this principle, not merely untidy.
+
+**What it does not license.** It is a belief and it has not been demonstrated. Nothing may be justified
+on the grounds that the generative end state requires it, until a scenario has actually been composed
+from the library.
 
 | Date | Decision | Why | Supersedes | Applies to |
 |---|---|---|---|---|
@@ -38,3 +72,10 @@
 | 2026-09-11 | **The eventual output is a component repository on atomic design principles**, where each component carries its logic: level, states, when to use, when not to, and what it does when its subject is absent. Recorded at creation, never later | The usage rule and the anti-rule only exist while the reasoning is in the room. Afterwards they have to be re-derived from markup, and the anti-rules are lost entirely because a screen never shows what somebody decided not to do | | Every component and page template |
 | 2026-09-11 | **The component library is repository-resident. CD is where components are designed, not where they are kept** | Colleagues will consume it from CC and other programs and most will never open CD. A library that exists only as canvas artefacts cannot be read by the people who need it | | The library |
 | 2026-09-11 | **Surfaces are abbreviated C for Claude Cowork, CC for Claude Code, CD for Claude Design.** Used in the changelog's From column, decision rows, learned-from lines and conversation | Shorter, and it makes the From column scannable. Rows written before this date stay in full, because the changelog is append only | | Every surface |
+| 2026-09-13 | **Every rule carries a rigidity marker: Always, Default or Prefer.** Every standard carries a worked example. One index lists every rule on a single screen | Seven standards with no sense of how hard to hold any of them had become impossible to follow, and two of them contradicted each other without saying so | | Every standard |
+| 2026-09-13 | **Objects the model does not have get a register**, with criticality as three named values rather than a one-to-five scale, plus intent and a hold field | A one-to-five scale with only its endpoints defined puts everything on three. Hold exists because a possibility nobody is holding loosely quietly becomes a requirement | | Anything the model does not cover |
+| 2026-09-14 | **Every controlled vocabulary is defined in one root glossary**, added in the session that invents it, and a value word already taken is not reused | Eighteen value lists had grown up defined locally in the files that used them, and two had already collided. A word meaning one thing in a decision log and another in a register is worse than an undefined word, because nobody notices | | Every register and log |
+| 2026-09-14 | **The whole structure is called the Product Thinking System.** The working memory, the standards, the registers, the decision logs and the protocol that ties them together | It has to survive being said in a meeting by somebody who has not read any of it. A personal-register name would not. The name carries the domain; a subtitle carries the mechanism, which is that corrections become durable rules | Calling it "my way of working", which collides with the agile term of art for team agreements | Everything |
+| 2026-09-14 | **Joel's UX factory is not adopted as a framework.** Some elements will be adopted or translated. The framework is not taken outright | It would likely be too constraining, and would likely carry logic incompatible with ours. The idea has merit and is recorded as principle G-1 above; it is the implementation that is declined. **Revisit if** our own component set reaches the point where a scenario can be composed from it, or if the factory is regenerated from our model rather than theirs | | Anything generated from a scenario |
+| 2026-09-14 | **Every component record says what variation it absorbs**, and what would instead mean a new component. Seven fields now, not six | The library will be rewritten repeatedly while it is in use, so a record that presents a component as finished cannot be built on. Declared states say what it handles now; this says what it can take without being redrawn. Consequence of G-1 | The six-field rule of 11 Sep, which is extended rather than replaced | Every component and page template |
+| 2026-09-14 | **Global principles are numbered G, domain principles P**, and a principle may only be stated here if it changes something today | Two principle sets with the same numbering would collide the first time anybody cited one in a reply. The second half stops this section filling with ambitions | | Both decision logs |

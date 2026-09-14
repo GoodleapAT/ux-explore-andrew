@@ -7,11 +7,25 @@ goes in the cards this file arranges.
 
 ---
 
+## How hard to hold each rule
+
+| Marker | Meaning |
+|---|---|
+| **Always** | Breaking it is a defect. If you must break it, say so before you do, not after |
+| **Default** | Do this unless you have a reason. Having a reason is fine; not saying it is not |
+| **Prefer** | A leaning. Use judgement and move on |
+
+---
+
 ## The rules
+
+### Always
 
 - **Bundle content into cards, in pairs, under a group heading.** Do not stack full-width blocks down
   one column. A record with eight things to show is four group headings and eight cards, not eight
   rows.
+### Default
+
 - **Two cards abreast is unconditional.** The cards shrink rather than stacking, because side by side
   is the decision. Rows stay legible down to about 330 pixels of card.
 - **Pair cards that answer the same kind of question.** What might this customer buy, and what have
@@ -25,12 +39,31 @@ goes in the cards this file arranges.
   near-empty blocks if given sections, and a link if not.
 - **Facts about the thing go in a card, not in a subtitle.** A subtitle is where content goes when
   there is nowhere for it. Two columns of label-above-value, no rules between them.
+### Prefer
+
 - **Group headings do not get a rule above them.** The cards below carry their own edges, so a rule
   would draw a box around a box.
 - **Parked content goes in one full-width list at the bottom**, under a heading that says what it is,
   with each item labelled as not drawn.
 - Section order is **a function of the product tier**, not a fixed layout. A payments-only contractor
   sees financials first, because it is the only thing they have.
+
+## Worked example: a customer record
+
+Eight things to show: leads, projects, jobs, service plans, a balance, activity, notes, history.
+
+**Wrong.** Eight full-width blocks down one column. Correct, readable, and four screens tall, so
+nobody sees the relationship between any two of them.
+
+**Right.** Four group headings over eight cards in pairs. Sales pairs leads with projects, because
+they answer the same kind of question. Operations pairs jobs with service plans. Financials pairs the
+balance with the activity that produced it. Record pairs notes with history, which are one store read
+two ways. The whole thing fits in the height the four blocks took.
+
+**Then it gets harder.** The leads card needs four status segments and the card is at half width, so
+the segmented control is close to clipping. That is the cost of two abreast being unconditional, and
+the answer is shorter segment labels rather than stacking the cards, because side by side is the
+decision.
 
 ## Where the values come from
 
@@ -51,3 +84,5 @@ them minified. They have been inferred from the accent token families. This does
   comparison: everything in rows, nothing bundled. Every rule above is read out of those two files.
 - **10 Sep 2026.** The full-width-mockup memo layout was chosen specifically so that card pairs have
   the width this composition needs. See `design-memo-format.md`.
+- **13 Sep 2026.** Rigidity markers and a worked example added, because seven standards with no sense
+  of how hard to hold any of them had become impossible to follow.

@@ -81,6 +81,22 @@ crosses over until Andrew says so.
 Added by Joel in pull request 18 on the team repository, 10 September 2026, plus four commits after
 it. Built on DRAFT v3, not on the model in `../upgrade-to-pros/VOCABULARY.md`.
 
+### Andrew's position, settled 14 September 2026
+
+**The framework is not adopted. Individual elements may be adopted or translated.** The reason is that
+taking it outright would likely be too constraining and would likely carry logic incompatible with
+ours. It is in the root decision log with a revive condition.
+
+**The idea has merit and is now our own ambition**, recorded as global principle G-1: an atomic system
+with enough components, variants and states, driven by logic reacting to the entity model and the
+scenario, getting close to the same end by a different route. **That is a shared goal, not a borrowing.**
+Nothing below has crossed over, and the standard on other people's work still governs everything here.
+
+**Wanted, route undecided:** the shared entity map lit per beat, the verbatim scenario pane, and per
+view a statement of why this screen, its gaps, and its upsell opportunities. The first two are already
+recorded as ideas. The middle two turn out to be things this system already holds, rendered per view.
+The last is new and is his rather than borrowed.
+
 | Piece | Where | What it is |
 |---|---|---|
 | **ux-factory skill** | `.claude/skills/ux-factory/` in the team repository | Takes one scenario's beat script and generates a clickable beat-by-beat walkthrough. One scenario per run, one commit each |

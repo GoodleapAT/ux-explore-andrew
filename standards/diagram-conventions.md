@@ -4,6 +4,8 @@
 
 **Surfaces:** all.
 
+**How hard to hold this.** Orthogonal connectors and the `[i]` marker are **Always**. Everything else here is **Default**. Markers mean: **Always**, breaking it is a defect and you say so first. **Default**, do it unless you have a reason and say the reason. **Prefer**, a leaning.
+
 ---
 
 ## The rules

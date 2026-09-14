@@ -6,6 +6,8 @@ section Andrew did not author.
 
 **Surfaces:** all.
 
+**How hard to hold this.** Every rule in this file is **Always**. This is the one standard with no soft edges, because the failure mode is silent. Markers mean: **Always**, breaking it is a defect and you say so first. **Default**, do it unless you have a reason and say the reason. **Prefer**, a leaning.
+
 ---
 
 ## The rules
@@ -30,6 +32,16 @@ section Andrew did not author.
   Those travel. The model underneath them usually does not.
 - **A brief that mentions external work must say it is not binding.** Any surface reading about it
   will otherwise treat it as a requirement, because that is what everything else in a brief is.
+- **An external position is recorded in exactly one file, with a date, and pointed at. Never
+  restated.** Cite the row. Do not paraphrase it into a decision log, a memo, an overview or a brief,
+  even accurately. **A restated external position is a copy, and copies go stale**, which is the same
+  rule this repository already applies to renders. For Upgrade to Pros that file is
+  `upgrade-to-pros/TEAM-POSITIONS.md`.
+- **When an external position changes, change the row, not the documents.** If a document has to be
+  edited because somebody else changed their mind, the position was restated somewhere it should not
+  have been. That is the signal, and the fix is to replace the restatement with a pointer.
+- **The test for what belongs in that file: could they change it without asking Andrew?** If yes it is
+  theirs, and nothing of ours states it. If no it is ours, and it goes in a decision log.
 
 ## Why
 
@@ -40,6 +52,10 @@ arrive as facts, and by the time anyone notices, they are being designed to.
 
 ## Learned from
 
+- **14 Sep 2026.** The team changed when a project is created **twice in one afternoon**, and the
+  position had been restated in seven of our documents, so each change cost a full sweep. The mint
+  point held four positions in one day and finished close to where Andrew started. **The cost was not
+  the changes, it was the copies.** Hence the one-file rule above, and the file it names.
 - **11 Sep 2026.** A team skill and a board UX section were written up in a way that implied they
   constrained Andrew's work. The brief told a design surface not to harden a navigation model against
   a contract Andrew has never adopted, and the summary described an external effort's pace as a reason

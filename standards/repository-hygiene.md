@@ -4,6 +4,8 @@
 
 **Surfaces:** those that can run git. Read-only surfaces can skip this file.
 
+**How hard to hold this.** The first three rules are **Always**. The rest are **Default**. Markers mean: **Always**, breaking it is a defect and you say so first. **Default**, do it unless you have a reason and say the reason. **Prefer**, a leaning.
+
 ---
 
 ## The rules

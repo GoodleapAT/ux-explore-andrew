@@ -39,3 +39,15 @@
 - **2026-09-11** | Name an unmatched screen as a gap on the screen itself, with a banner, rather than improvising an archetype | Joel's ux-factory
 - **2026-09-11** | The board has a UX DRAFT section with nine page designs and a nav contract, Joel's, not mine, including a claim that Project is not a nav item. Worth reading one day | Reading team PR 18 [M-005]
 - **2026-09-11** | Our extracted Sol tokens are the Merlin mirror, missing the radius, spacing and font scales. Re-extract from Sol directly | Joel's ux-factory design-sources notes
+- **2026-09-14** | A mock cites a component, the component then changes, and nothing records that the mock is now drawn against a version that no longer exists | Andrew on building the plane while flying
+- **2026-09-14** | Each view could show the entities it uses, the part of the script it addresses, why this screen, the gaps and the upsell opportunities | Andrew, on what is worth taking from Joel's factory [M-003, M-004, M-006]
+- **2026-09-14** | An upsell opportunity on a view may be a product feature rather than an annotation, and the phrase hides which | Andrew, same conversation [M-006]
+- **2026-09-14** | A site assessment may be a discrete object, a type of another object, or an experience geared to the trade that guides what gets captured | Ruling comparison row D-12
+- **2026-09-14** | What needs capturing on a site assessment is likely a template we preset, refined by the organisation over time | Ruling comparison row D-12
+- **2026-09-14** | Customer role against a property is unresolved: owner, occupier, something else, and it decides who can authorise work | Ruling comparison row D-04
+- **2026-09-14** | A customer who enquires in July and again in September gets two leads and two projects, and the second cannot join the first | The team's lead-creates-project model [N-004, M-007]
+- **2026-09-14** | Qualifying a second inquiry into an existing lead would avoid ever needing to merge projects | Thinking through project merging [N-004]
+- **2026-09-14** | A merge is cheap before a contract and expensive after, so the real question is how late a merge is still allowed | Same [M-007]
+- **2026-09-14** | Inquiry is an event and Prospect is a party, so they may not belong side by side as peers | Reading the latest demand lane
+- **2026-09-14** | A merge should probably be prohibited once a project has a won proposal, which puts every expensive case out of scope | Andrew, on project merging
+- **2026-09-14** | The Thompson case already has two separate customer contacts becoming one lead, so qualifying into an existing lead is not a new mechanism | Restating the worked example [M-008]

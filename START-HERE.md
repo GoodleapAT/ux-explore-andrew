@@ -137,7 +137,8 @@ When it is genuinely both, it is global, and the project file notes the exceptio
 | `IDEAS-INBOX.md` | Raw capture, **for every project**. One line per idea | **Append only.** Never edit, reorder or delete |
 | `CHANGELOG.md` | What changed, when, from which surface, and who else is now stale. **The only file that answers whether anything has moved since you last looked** | **Append only.** Newest at the bottom |
 | `DECISIONS.md` | Decisions about **how the work is done and where things live**. Not domain decisions | **Append only.** A reversal is a new row |
-| `standards/` | How to work. One short file per topic | New files and in-place edits, each recording what it learned from |
+| `GLOSSARY.md` | **Every controlled vocabulary in one place.** Standing, rigidity, criticality, intent, hold, access, appetite and the rest, plus the collisions between them. Read it before filling in any status column, and **add to it in the session you invent a vocabulary**, not later | Edited in place, one section per vocabulary |
+| `standards/` | How to work. One short file per topic, each rule marked **Always**, **Default** or **Prefer**. **Start with `standards/INDEX.md`**, which is every rule on one screen | New files and in-place edits, each recording what it learned from |
 | `reference/` | Extracted material used across projects, such as the Merlin token stylesheet | Regenerated, not hand edited |
 | `renders/` | The standards rendered for a surface that cannot read this repository, such as the Claude project instructions | Regenerated when a standard changes |
 | `prototypes/` | Standalone hosted prototypes, whole-page exports. Outputs rather than working memory | Added when one is built |

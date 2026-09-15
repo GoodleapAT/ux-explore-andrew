@@ -39,6 +39,16 @@ goes in the cards this file arranges.
   counts in the segment labels, so the card answers its question before anything is clicked.
 - **Detail that does not fit goes sideways into a sheet**, not down into an accordion and not into a
   wider row. A row opens a right-hand drawer.
+
+  **One declared exception, 15 Sep 2026.** Where a person is capturing structured information **while
+  somebody else talks**, collapsible sections beat both a sheet and a segmented control. A sheet
+  covers the rest of the screen, which on a call is the transcript. A segmented control hides the
+  other sections behind a click, and a customer answering about three trades does not take them in
+  order. **Collapsible sections let a person reach any of them without losing what is on screen.**
+  **Two conditions**: the counts move onto the collapsed headers, so the card still answers its
+  question before anything is opened; and one section is open by default. Drawn on memo 9 section B.
+  **The cost is real and should be watched**: content behind a closed section is content the page no
+  longer says on its face.
 - **Small peer lists become links in the page header**, not sections. Contacts and properties are two
   near-empty blocks if given sections, and a link if not.
 - **Facts about the thing go in a card, not in a subtitle.** A subtitle is where content goes when
@@ -88,6 +98,12 @@ them minified. They have been inferred from the accent token families. This does
   comparison: everything in rows, nothing bundled. Every rule above is read out of those two files.
 - **10 Sep 2026.** The full-width-mockup memo layout was chosen specifically so that card pairs have
   the width this composition needs. See `design-memo-format.md`.
+- **15 Sep 2026.** **The accordion rule lost its first argument**, on a capture screen where somebody
+  is typing during a call. Recorded as a declared exception with two conditions rather than a
+  weakening of the rule, because the rule is right everywhere else.
+- **15 Sep 2026.** **The lone-card rule was exercised deliberately for the first time**, on memo 9
+  section A, where one opportunity is lifted into a full-width card above a pair. Settled 14 Sep and
+  until now only ever avoided.
 - **14 Sep 2026.** CD named the lone-card collision before it bit, on a canvas frame that was a search
   with one thing on it. It bit two screens later. **Memo 8 drew both treatments to compare them and CD
   pointed out they ended up five frames apart**, so no comparison was possible. Settled as a rule

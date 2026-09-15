@@ -33,7 +33,7 @@ rule, not a silent choice. A collision you resolve quietly is a collision nobody
 | **Default** | Two cards abreast is unconditional. Cards shrink rather than stacking |
 | **Default** | Pair cards that answer the same kind of question |
 | **Default** | Segmented control in the card header to collapse several lists into one card |
-| **Default** | Detail that does not fit goes sideways into a sheet, not down into an accordion |
+| **Default** | Detail that does not fit goes sideways into a sheet, not down into an accordion. **One declared exception**: capture during a live call, where collapsible sections win, with counts on the headers and one section open |
 | **Default** | Small peer lists become links in the page header, not sections |
 | **Default** | Facts about the thing go in a card, not in a subtitle |
 | **Default** | Parked content goes in one full-width list at the bottom, each item labelled not drawn |
@@ -66,6 +66,50 @@ is **left out**. The test is whether somebody could make it appear by doing some
 library complete enough to compose a scenario's screens rather than each being drawn by hand. It is a
 belief, not a demonstration, and **nothing may be justified on the grounds that it requires this**
 until a scenario has actually been composed.
+
+## Before a round starts
+
+*From `walk-the-data-first.md`.*
+
+| | Rule |
+|---|---|
+| **Always** | Walk the scenario's data in date order before drawing. Ask of every record: does this have somewhere to live at the moment it appears? |
+| **Always** | A record with nowhere to live is a model defect and is reported as one, not given a plausible parent |
+| **Default** | Check the narrative against the nouns. A story tolerates a record appearing from nowhere; a screen cannot |
+| **Default** | Read the dates as gaps, not just as events |
+| **Default** | Ask where every fact came from. Evidence predating its record means the record hangs off something else |
+
+## After a ruling
+
+*From `after-a-ruling.md`.*
+
+| | Rule |
+|---|---|
+| **Always** | Separate the principle from the mechanism, and attribute each. A test that implements a ruling is somebody's reading |
+| **Always** | Sweep for what the ruling breaks, in the same session |
+| **Always** | Sweep for what it creates. One answer usually opens two questions |
+| **Always** | Check that a superseded decision was superseded in writing, by name |
+| **Default** | Name the second-order consequence in the reply, not only in the document |
+| **Default** | Check whether the ruling dissolved the problem that prompted it. If so, find the other reason or withdraw the thing |
+| **Default** | Re-read the other scenario. Nobody is looking at it |
+
+## Working a review queue
+
+*From `review-queue.md`.*
+
+| | Rule |
+|---|---|
+| **Always** | Record the comment text verbatim before doing anything with it, typos included |
+| **Always** | Check every comment against the decision log before acting on it |
+| **Always** | Say when a comment is overtaken, name what overtook it, and do not act on it |
+| **Always** | Say when a comment reverses a settled decision. Route it as a ruling, not a task |
+| **Default** | Sort the queue into structural, visual, and cannot be acted on, before answering any of it |
+| **Default** | Report the shape of the queue. Which comments are the same argument arriving twice |
+| **Default** | Correct the count wherever it is recorded |
+| **Prefer** | Group by the region a comment is about, not the frame it landed on. The cluster is the finding |
+
+**A memo cannot carry a visual comment** and a build brief cannot carry a structural one. Half a
+queue being visual is normal and means the structure is close enough to argue about details.
 
 ## Memos
 
@@ -154,7 +198,7 @@ until a scenario has actually been composed.
 | **Always** | If you cannot write, produce a paste-able write-back block |
 | **Always** | Rules are never changed silently. A replacement records what it replaced |
 | **Always** | Append-only files are appended to. Never edited, never reordered |
-| **Always** | A new controlled vocabulary goes in `GLOSSARY.md` in the session that invents it. Check there first for a value word that is already taken |
+| **Always** | A new controlled vocabulary goes in `GLOSSARY.md` in the session that invents it. Check there first for a value word that is already taken. **Exception, and the glossary states it itself: the nouns of the business and the domain status sets live in the project's own vocabulary file.** The glossary still records the collision |
 
 ---
 

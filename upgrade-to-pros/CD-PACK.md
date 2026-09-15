@@ -2,6 +2,27 @@
 
 **Everything Claude Design needs, in one file. Generated 14 September 2026.**
 
+> # STALE. Do not upload this pack. 15 September 2026.
+>
+> **It is wrong about demand and it does not know the Opportunity exists.** A new object was added on
+> 15 September, the canonical S15 story changed with it, and the qualification routes were settled.
+> **Four things in this pack are now false:**
+>
+> - The Thompson case is described as **three leads**. It is one lead carrying three **opportunities**, and
+>   has been since 14 September.
+> - It says **one permit that sticks**. The cash telling has no permit.
+> - It describes a DeDe suggestion as a lead's **provenance**. It is an **Opportunity**, which is a
+>   record of its own hanging off the customer and the property.
+> - It says **four demand status levels**. There are still four, but they are different ones: opportunity, inquiry or prospect, lead, project. **The Interest is retired.**
+>
+> **Regenerate it now.** This is the moment the pack was waiting for: `CD-PROMPT-s15-end-to-end.md`
+> is written and it names the pack as the first thing to do before running it.
+>
+> **And the previous reason for waiting has gone.** Three rulings are still open and a memo is still
+> to be drawn, and a pack generated now would be stale again before CD reads it. **Regenerate it at
+> the moment CD is briefed, not before.** Until then, point CD at the repository and at version 3.1
+> of the context document.
+
 > **This is a render, so it goes stale.** It is a copy of six repository files at the moment it was
 > made. If the changelog in the repository is newer than the date above, ask for a fresh pack rather
 > than working from this one.

@@ -39,7 +39,7 @@ yes, it goes here and nothing else states it. If no, it is ours and it goes in t
 | **T-8** | **Every entity is anchored to both Customer and Property.** Those edges are omitted from the drawing for legibility | 14 Sep 2026 | v4 visual language note | The reading that dual anchoring was a project-level question, which is how D-04 framed it |
 | **T-9** | **A service agreement mints a service plan instead of a project**, and Service Plan sits beside Project rather than being a kind of it | 8 Sep 2026, unchanged in v4 | Board, v3 and v4 | Nothing. **This is the one live disagreement with us** |
 | **T-10** | **Permit and Rebate Application are gaps**, with no incumbent model behind them | 14 Sep 2026 | v4, marked in yellow | Nothing |
-| **T-11** | **Project merging may be needed**, as a consequence of one lead creating one project | 14 Sep 2026 | **Andrew, not the team.** Kept here because it belongs with the position it follows from | Nothing. New |
+| **T-11** | **Project merging may be needed. Withdrawn 15 Sep 2026.** It followed from one lead creating one project, and the join rule removed the case: later demand joins the open lead, and a contact arriving after one closes starts a fresh lead and project which is a different sale. **Never the team's position; Andrew's, and now retracted** | 14 Sep 2026, withdrawn 15 Sep | **Andrew, not the team** | Nothing. New, and now dead |
 
 ## Open against these rows
 
@@ -49,11 +49,20 @@ somebody who exists. Two entities of different categories, in one lane, with ide
 is usually one entity with a type, or two things at different levels that should not be peers.
 **Unasked.**
 
-**Against T-1 and T-2 together: where do several trades live?** If a lead carries several interests
-then the Thompson case is one lead, three interests, one project, and no merging is needed. **So
-merging is not the multi-trade case.** It is the case where demand arrives at different times: a fourth
-trade enquired about two months later is a new inquiry, a new lead and a new project, and only then is
-there something to merge. **That reading is ours, not theirs, and it is the thing to confirm.**
+**Against T-1: we have retired the word Interest. 15 September 2026.** Their row says a lead carries
+several interests or trades. **The behaviour is untouched**: a lead still carries several trades and a
+CSR still discusses three of them in one conversation without changing views, which is their whole
+argument. **What changed is where the trade lives.** It is an **Opportunity**, durable, hanging off the
+customer and the property, and it is on a lead while it is being sold rather than inside one.
+
+**Why that is worth raising with them rather than assuming.** A declined trade survives the lead under
+our reading and does not under theirs, and that is the case their scenarios handle in prose rather than
+in the model. **It is a vocabulary difference with a behavioural consequence**, which is the kind that
+looks small and is not.
+
+**And where several trades live is answered, which used to be open against T-1 and T-2 together.**
+Against the customer and the property, attached to a lead while being sold. **Merging is dead**: later
+demand joins the open lead if there is one, and starts a fresh lead and project if there is not.
 
 **Against T-11: merging is expensive wherever it lands.** Two projects each with a contract, an
 invoice, jobs and money cannot be merged without deciding what happens to all four. Worth knowing
@@ -96,5 +105,11 @@ says so and names T-2. It does not paraphrase T-2, because a paraphrase is a cop
 **When a position changes**, edit the row, add a history row, and the documents pointing at it are
 correct without being touched. That is the whole point.
 
-**When our position differs**, say so in the decision log and name the row it differs from. T-9 is the
-only one that currently applies.
+**When our position differs**, say so in the decision log and name the row it differs from. **T-9 is
+the only one that currently applies.**
+
+**A second divergence was recorded against T-2 on 15 September and withdrawn the same day.** C had
+inferred that one lead may have several projects over time, and Andrew corrected it: **one lead, one
+project, and the project contains multiple jobs.** We agree with T-2 completely. **Kept here as a
+note because a withdrawn divergence is worth seeing once**, so nobody goes looking for a disagreement
+that never existed.

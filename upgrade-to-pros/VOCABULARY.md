@@ -13,10 +13,11 @@ wrong in a document is worse than in conversation, because the document outlives
 |---|---|---|
 | **Customer** | A person, above the address. One customer may hold several properties | The property. A customer is not an address |
 | **Property** | The site the work happens at. Referenced by the project, never owned by it | |
-| **Inquiry** | **A customer has contacted the contractor in some way.** An event, not a party. Pre-qualification | A prospect, which is a person rather than a contact. A lead, which is qualified |
+| **Opportunity** | **A trade this customer might buy at this property. One record per customer, per property, per trade.** The durable demand object: it is created the first time anybody has a reason to think so, and **it outlives every lead and every project**. **Where the demand came from is an attribute**, so a trade the customer asked for and a trade the system recommended are the same kind of record. It goes on a lead while it is being sold and **returns to Open if it is declined**, carrying its history and a revive date. **Un-retired 15 Sep 2026** and **widened the same day**; see the decoder below | An inquiry, which is one contact event. A lead, which is one selling episode. **The Interest, which this replaced and which is retired** |
+| **Inquiry** | **A customer has contacted the contractor in some way.** An event, not a party. Pre-qualification | A prospect, which is a person rather than a contact. A lead, which is qualified. An opportunity, which nobody contacted anybody about |
 | **Prospect** | **An unverified customer, or an unverified expression of interest.** A party, not an event. Pre-qualification | An inquiry. See T-3 and the open question against it: these two may be one object with a type |
-| **Lead** | **Qualified demand.** An inquiry or prospect the contractor has verified as worth selling to. **Creating one creates a project**, per T-2. Carries several interests, each with its own origin, detail and status, surviving being declined | Opportunity, retired and carrying two old meanings; see the decoder below. An inquiry or prospect, which are not yet qualified. An interest, which is one trade inside a lead |
-| **Interest** | **One trade inside a lead.** The unit a customer says yes or no to, and the thing a proposal option is priced against | A lead, which holds several. A scope component, which only exists once something is committed |
+| **Lead** | **Qualified demand, and one selling episode.** **One open lead per customer and property**, which every new contact joins rather than multiplying. **Qualification is automatic where intent is expressed**, meaning a trade and a property are named, so most leads are created without anybody marking anything. **Creating one creates a project**, per T-2, and **one lead has one project**. It carries the opportunities being sold, and **it closes when everything on it is resolved**, which is the hand-off. A customer may have many leads over time, one at a time per property | Opportunity, which from 15 Sep 2026 is the durable per-trade record and **no longer means this**; see the decoder below. An inquiry or prospect, which are not yet qualified |
+| **Interest** | **Retired 15 Sep 2026.** It was one trade inside a lead, the unit a customer says yes or no to. **Once the opportunity carried its own status and history there was nothing left for it to hold**, so an opportunity is now on a lead or it is not, and a proposal option prices the opportunity directly | **Use Opportunity.** The word survives in the team's own position on lead granularity, and the behaviour that position describes is untouched: a lead still carries several trades |
 | **Project** | The container and the spine. Models one customer journey. **Its creation point is set by T-2** and its state is derived and one-way, per T-7. Not stated here, because it moved five times in one day | Merlin's existing Project object, a design artefact carrying a bill of materials and an electricity profile. The collision is known and accepted |
 | **Proposal** | What gets presented. Holds one or more options, each with a statement of work, an estimate and an itemisation, plus financing. Versioned | |
 | **Option** | One priced choice inside a proposal, today one per trade. Carries a presentation state, because priced is not the same as offered | |
@@ -40,8 +41,9 @@ working set and say so when you use them.
 
 | Set | Authored or derived | Values |
 |---|---|---|
-| **Inquiry** and **Prospect** | Authored | New · Qualifying · Qualified · Disqualified |
-| **Interest** | Authored | New · Pursuing · Quoted · Won · Deferred · Lost |
+| **Opportunity** | **Mixed.** On a lead and Won are derived; Dismissed is authored; Open is where it starts and where it returns | Open · On a lead · Won *(terminal)* · Dismissed *(reason required)*. **Open carries two optional attributes: a worth-raising mark and a revive date** |
+| **Inquiry** and **Prospect** | **Mostly derived from 15 Sep.** Qualified is set automatically where a trade and a property are named | New · Qualifying · Qualified · Disqualified. **Most contacts go straight to Qualified**, so New and Qualifying now describe the contact that named neither |
+| **Interest** | **Retired 15 Sep 2026** | Was New · Pursuing · Quoted · Won · Deferred · Lost. **Where each value went is in the mapping below** |
 | **Lead** | **Derived**, except the last | Active · Dormant · Closed *(authored)* |
 | **Project** | **Derived**, except the first and the last | Pursuing *(authored)* · Quoting · Presented · Sold · In progress · Complete · Paid · Stalled · Lost · Cancelled *(authored)* |
 | **Proposal, lifecycle axis** | Authored | Draft · Presented · Accepted · Declined · Expired · Superseded |
@@ -50,6 +52,25 @@ working set and say so when you use them.
 | **Job, outer state** | Authored, except Blocked | Review · Ready · In progress · Complete · Blocked *(derived)* · Cancelled |
 | **Service plan** | Authored | Active · Renewing · Suspended · Not renewed · Cancelled. **Never Paid** |
 | **Visit** | Authored | Upcoming · Scheduled · In progress · Complete · Missed · Skipped |
+
+### Where the interest's six values went
+
+**Retired 15 Sep 2026.** Nothing was lost, and two of the six turn out to have been derived all along.
+
+| Interest value | Now |
+|---|---|
+| **New** | Opportunity **Open** |
+| **Pursuing** | Opportunity **On a lead** |
+| **Quoted** | **Derived.** A priced option exists on the proposal. It was never a state of the demand |
+| **Won** | Opportunity **Won**, and terminal |
+| **Deferred** | Opportunity **Open**, with a revive date. **This is the case the whole change exists for** |
+| **Lost** | Opportunity **Dismissed**, with a reason code saying the customer refused. **C's reading, wants confirming** |
+
+**Two defects in the lead and project sets were found on 15 Sep and both are answered by this change.**
+The lead had no value for work in delivery with nothing being sold, and the project could never reach a
+final state once demand could keep joining it. **Neither can now occur**: the lead closes at the
+hand-off, and a closed lead takes no new demand, so the project stops accumulating and Paid is
+reachable. **Recorded because both were real and both went away without being fixed directly.**
 
 **A defect in the project set, found 14 Sep 2026 while walking S14.** The list contains **Paid** and
 has no path that skips it. In S14 no invoice ever exists, so the job derives complete and the project
@@ -73,15 +94,33 @@ switched on, and nothing else in the model works that way.
 **Project status derives from the proposal and the jobs, never from the demand side.** Demand statuses
 are about what a customer wants and the project's is about what they committed to, and the three are
 allowed to disagree. In the worked example the project reads Sold, the lead reads Active, and the
-roofing interest reads Deferred, all at the same time and all correct. **If this is wrong the model is
-wrong rather than the layout**, so it is the first thing to revisit if project status starts
-misbehaving.
+roofing opportunity reads Open with a revive date, all at the same time and all correct. **If this is
+wrong the model is wrong rather than the layout**, so it is the first thing to revisit if project
+status starts misbehaving.
 
-**Four levels of demand status now.** Inquiry or prospect, interest, lead, project. That is two more
-than the model had this morning, and it is the single biggest risk to a demand screen: four words that
-all look like a status and mean things at different grains. **A demand surface has to make the level
-obvious rather than just showing a word**, and if that turns out to be impossible the model is telling
-us something.
+### The grain count, and the day it finally went down
+
+**Four levels of demand status: opportunity, inquiry or prospect, lead, project.** As of the end of
+15 September 2026.
+
+**It went four, five, four in one day.** Four in the morning, when inquiry, interest, lead and project
+were the set. Five at midday, when the opportunity was added above the interest. **Four again in the
+afternoon, when the interest was retired**, because the opportunity had taken over its status and its
+history and there was nothing left for it to hold.
+
+**This is the first time this count has gone down.** Every previous move added one, and the risk of a
+demand screen showing several words that all look like a status at different grains has been the
+biggest logged risk all week. **Worth noticing which direction a model change travels in**, because a
+change that removes an object is usually worth more than one that adds a better object.
+
+**The four are now genuinely different jobs rather than different gradings.** An opportunity is a
+trade that might sell, an inquiry is one contact, a lead is one selling episode, a project is the
+delivery container. **That is the real mitigation**, and it is stronger than the one recorded at
+midday, which was that two of the five were never alive at once.
+
+**The worth-raising mark was called To discuss while it was a status.** It is now an attribute on an
+Open opportunity, so the collision that named it, against Pursue and Pursuing, no longer applies. The
+word can be reconsidered when the mark is drawn.
 
 **Corrected later the same day, after the board moved again.** The split into two sets was right and
 it was one level too high. **Qualification now happens before the lead exists**, so New, Qualifying,
@@ -92,7 +131,11 @@ worked: **Active, Dormant, Closed**.
 **Their edge names the failure case: "qualified, not disqualified".** So Disqualified stays as the
 word rather than becoming Rejected, and it sits at the level where the judgement is actually made.
 
-**The original note follows, and its reasoning still holds one level down.**
+**The two notes that follow are history. Read them for the reasoning, not the model.** They describe
+the Interest carrying a status set and the lead's status being derived from interests. **The Interest
+was retired on 15 September 2026** and the lead's set is Active, Dormant and Closed, all three read
+from the opportunities on it. **The reasoning about splitting a status across levels is what survives**,
+and it is why the opportunity carries its own set now.
 
 **Two sets, settled 14 Sep 2026.** The interest carries the statuses that used to sit on the lead,
 because won, deferred and lost are things a customer says about one trade. **The lead gets a set of
@@ -120,26 +163,45 @@ are in the root glossary. This section is only the domain.
 
 ## Reading the older material
 
-**Opportunity has meant two different things in our own work**, and the superseded folders carry both
-with no warning on them.
+**Opportunity has now meant three different things in our own work**, two of them retired and one
+live. The superseded folders carry the retired two with no warning on them.
 
 | Where you read it | What it meant there | What we call that now |
 |---|---|---|
 | **Model C**, and the board before 10 Sep | The demand object. The thing a customer might buy from | **Lead** |
-| **The Model A against B comparison**, in `earlier/` | **One element of work someone might buy.** "Siding is one, windows is another" | An **interest** on the engagement. Not a lead, and not a scope component either |
+| **The Model A against B comparison**, in `earlier/` | **One element of work someone might buy.** "Siding is one, windows is another" | An **opportunity**. See the note below: this reading has come back |
+| **Anything from 15 Sep 2026 onward** | **A trade this customer might buy at this property.** One durable record per customer, per property, per trade, with origin as an attribute. **Widened later the same day** from cross-sell only, so it now covers a trade the customer asked for as well | **Opportunity.** This is the live meaning |
 
-**The second one is the trap.** A reader who knows Opportunity was retired in favour of Lead will
-translate it that way throughout, and in the A against B material that is wrong: those opportunities
-are per-trade units inside one piece of demand, which is a level below a lead. The diagrams in that
-document show three opportunities feeding two scopes, and that only parses on the second reading.
+**The second one is the trap, and it got worse on 15 September.** A reader who knows Opportunity was
+retired in favour of Lead will translate it that way throughout, and in the A against B material that
+is wrong: those opportunities are per-trade units inside one piece of demand, which is a level below a
+lead. The diagrams in that document show three opportunities feeding two scopes, and that only parses
+on the second reading. **Now there is a third reading available**, and it is adjacent to the second
+without being the same: the A against B sense is what we call an interest, and the live sense is the
+stage before an interest.
 
-**Added 14 Sep 2026.** Found while checking whether Opportunity was free to reuse. It is not, and the
-reason is worth keeping whether or not anything is ever renamed.
+**And then, by the end of the same day, the collision closed itself.** The interest was retired and
+the opportunity took over its work. **So the A against B meaning and the live meaning have converged**:
+"one element of work someone might buy, siding is one, windows is another" is now a fair description
+of an opportunity. The decoder is down from three readings to two, and **the one that was going to
+bite has stopped biting.**
+
+**The remaining trap is only the Model C sense**, where Opportunity meant the demand object that is
+now the Lead. That one is a level up and still misreads badly.
+
+**The rule for reading it:** in anything dated before 15 September 2026, Opportunity is never the
+live meaning. In anything after, it always is. **And the A against B sense turns out to be close to
+the live one**, for the reason set out below, so that reading misleads less than it did.
+
+**Added 14 Sep 2026**, when Opportunity turned out not to be free to reuse. **Un-retired anyway on
+15 Sep 2026**, by Andrew, knowing the cost: it is the word the business uses for cross-sell and no
+invented alternative carries that. The collision is recorded in the root glossary.
 
 ## Words to avoid
 
-- **Opportunity.** Retired in favour of Lead. **See the decoder above before reading it in older
-  material**, where it sometimes means a per-trade unit rather than the demand object.
+- **Opportunity**, in either of its retired senses. **The word is live again from 15 Sep 2026 with a
+  third, narrow meaning.** See the decoder above before reading it in older material, and do not use
+  it for the demand object or for a per-trade unit of work.
 - **Sale** and **Workstream.** The previous team vocabulary, still live in six scenario pages. Do not
   introduce them into new work.
 - **Sub-job.** An earlier name for what is now a Job.
@@ -157,3 +219,7 @@ reason is worth keeping whether or not anything is ever renamed.
   object in Model C, and a per-trade unit of work in the A against B comparison. A decoder was added
   above. **The lesson is that a retired word needs its meaning recorded, not just its retirement**,
   because "retired in favour of X" invites a reader to substitute X everywhere it appears.
+- **15 Sep 2026.** Opportunity un-retired by Andrew for cross-sell demand, and the new object needed
+  it. **The decoder written the day before is what made the reversal safe to take**, because the cost
+  was already written down and could be weighed rather than discovered. An argument for recording a
+  retirement properly even when nobody expects to revisit it.

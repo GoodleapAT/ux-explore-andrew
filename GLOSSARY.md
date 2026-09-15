@@ -12,7 +12,7 @@
 
 ## Why this exists
 
-Eighteen separate value lists had grown across the standards, the decision logs and the registers,
+Nineteen separate value lists had grown across the standards, the decision logs and the registers,
 each defined in the file that used it. Two of them had already collided, and a third was about to.
 A word that means one thing in a decision log and another in a register is worse than an undefined
 word, because nobody notices.
@@ -289,6 +289,7 @@ collision nobody else can learn from.
 | **Agreed** / **Agreement** | A decision standing: the group settled it | A comparison classification: the two models do not differ | Rename the classification to **No difference**. Clearer anyway. **Costs an artefact rebuild**, so it waits for Andrew. **Now more urgent, 14 Sep:** Agreement was used on three rows to mean "no argument", which is what Agreed suggests. The confusion this collision predicted has happened |
 | **Proposal** | A deviation kind: the mock is right and the scenario should change | An entity in the model | Rename the deviation kind to **Challenge**. The mock challenges the scenario, which is what it does |
 | **Open** | A status in the object register, the deviations register and the in-depth documents | Also used loosely of a lead | Leave it. Three registers using Open to mean "not finished" is consistent, and the lead sense is domain |
+| **Opportunity** | Retired twice in the domain: the demand object, now Lead, and a per-trade unit of work, now Interest | **Un-retired 15 Sep 2026** for cross-sell demand: a trade we think they might buy that they have not mentioned | **Ruled by Andrew, knowingly.** The word is live with the third meaning only. The decoder in the project vocabulary carries all three and the rule for reading dated material. **The A against B sense is the one that will bite**, because it is adjacent to the live sense without being it |
 
 ### Noted, and deliberately left
 
@@ -296,7 +297,7 @@ collision nobody else can learn from.
 |---|---|
 | **Kind** | Three different fields are called Kind: idea, deviation, source. They never appear in the same table, and renaming the field says less than renaming its values |
 | **Working** | A decision standing, the working memory, and working a lead. Different parts of speech, and no reader has stumbled |
-| **Pursue** and **Pursuing** | A hold value and a project status. Related on purpose: both mean actively heading at something |
+| **Pursue** and **Pursuing** | A hold value and a project status. Related on purpose: both mean actively heading at something. **A third was proposed on 15 Sep, Should pursue on an opportunity, and was rejected for this reason.** The value is To discuss instead |
 | **Presented** | On the proposal lifecycle axis and again on the delivery axis, as Presented in person. The same event recorded on two axes, which is the design rather than an accident |
 | **Complete** | A job outer state and a visit state. The same idea at two levels |
 
@@ -304,7 +305,11 @@ collision nobody else can learn from.
 
 ## Learned from
 
-- **14 Sep 2026.** Andrew asked whether an agent had a glossary of the statuses. It did not. Eighteen
+- **14 Sep 2026.** Andrew asked whether an agent had a glossary of the statuses. It did not. Nineteen
   vocabularies had been defined locally in the files that used them, two had already collided, and
   nothing named the collisions. The fix is this file and a rule: **a new vocabulary is added here in
   the session that invents it.**
+- **15 Sep 2026.** The count in this file's own opening said eighteen against nineteen index rows, and
+  had said it since the file was written. **Corrected to nineteen.** Found by a verification pass.
+  Worth knowing that the file recording every controlled vocabulary miscounted its own, which is an
+  argument for counting rather than carrying a number forward.

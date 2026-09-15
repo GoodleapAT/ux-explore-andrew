@@ -26,7 +26,7 @@
 | M-004 | Move | Three panes: the beat's words, the screen, and the lit map | Raw | A session | 2026-09-14 |
 | M-006 | Move | Surface the upsell opportunity on the view where it occurs | Raw | A session | 2026-09-14 |
 | N-004 | Need | Demand that arrives later cannot join a sale already in progress | Raw | A cycle | 2026-09-14 |
-| M-007 | Move | Merge two projects | Raw | A week | 2026-09-14 |
+| M-007 | Move | Merge two projects | **Dropped 15 Sep** | A week | 2026-09-15 |
 | M-008 | Move | Qualify a new inquiry into an existing lead | Parked | A session | 2026-09-14 |
 
 **Status values.** Raw, exploring, parked, folded in, dropped. Parked and dropped are different: a
@@ -266,15 +266,21 @@ because their content is already written down somewhere.
 - **Kind:** Need
 - **Origin:** Fell out of the team's latest model, 14 Sep 2026, where creating a lead creates a project.
   Andrew named the consequence himself: project merging may be needed
-- **Rationale:** A lead holds several interests, so three trades discussed in one conversation are one
-  lead and one project and nothing needs joining. **The gap is across time.** A customer who enquires
-  about a roof in July and a driveway in September has two inquiries, two leads and two projects, and
-  the second cannot be sold as part of the first. That is the same bundling this container exists for,
-  arriving late. Nobody has said they want it, so this is rationale rather than evidence
-- **Status:** Raw
-- **Links:** Served by M-007. **Note this is the original argument for the container, reappearing.** The
-  container exists so a decision to sell several things together leaves a trace; one-lead-one-project
-  handles that within a conversation and not across two
+- **Rationale:** A lead holds several trades, so three discussed in one conversation are one
+  lead and one project and nothing needs joining. **The gap was across time.** A customer who enquires
+  about a roof in July and a driveway in September appeared to have two inquiries, two leads and two
+  projects, with the second unsellable as part of the first
+- **Status:** **Folded in, 15 Sep 2026.** The join rule answers it: the September contact lands on the
+  open lead, and what it sells becomes another proposal and another job **in the same project**. One
+  lead, one project, throughout. **The need was real and the solution is not the one this record
+  expected**, which was merging
+- **Links:** Was served by M-007, which is now dead. **Served instead by the join rule**, in the
+  decision log, 15 Sep. **Note this was the original argument for the container, reappearing**: the
+  container exists so a decision to sell several things together leaves a trace, and it now does that
+  across time as well as within a conversation
+- **What it left behind, and this is the live part.** If a project accumulates work across years, its
+  status set has no ending: it stops at Paid and nothing skips or reopens. **So the need did not
+  disappear, it turned into a question about when a lead closes.** See the open items
 - **Appetite:** A cycle
 - **Where it would land:** The lead, the project, and whatever a salesperson works from
 - **Last touched:** 2026-09-14
@@ -304,9 +310,13 @@ when they pick the thing up.
 is what moved the appetite from unknown to a week. Every expensive case is now out of scope by
 definition, because a project holding a contract, an invoice, jobs or a payment plan has a won proposal
 behind all four. **What is left to shape is a merge of two containers that hold only demand**, which is
-mostly a question of what happens to two leads and their interests.
+mostly a question of what happens to two leads and the opportunities on them.
 
-**It may still not be the right shape.** M-008 avoids the merge entirely by qualifying a second
+**Dropped, 15 September 2026.** The join rule removed the case: later demand joins the open lead if
+there is one, and starts a fresh lead and project if there is not, which is a different sale needing no
+merge. **The reasoning below is kept because it is cited.**
+
+**What it said.** M-008 avoids the merge entirely by qualifying a second
 inquiry into the lead that already exists. Andrew's view, 14 Sep: a good idea, for the future. So this
 record stays live and M-008 is parked rather than the other way round.
 
@@ -330,13 +340,34 @@ record stays live and M-008 is parked rather than the other way round.
 - **Where it would land:** Whatever surface a new inquiry is worked from
 - **Last touched:** 2026-09-14
 
-**The strongest argument for it, found while restating the worked example.** The Thompson case already
-needs this on day one. Robert contacts about the roof on 21 July and Sara contacts about the siding on
-22 July: **two separate contacts, one lead.** So qualification is already an act of routing demand into
-a lead rather than minting one per inquiry, and this move is not a new mechanism. It is the same
-mechanism applied later in time.
+**This has stopped being a move. It is the rule. 15 September 2026.**
 
-**The argument against, which is real.** Qualifying into an existing lead means the lead's scope grows
-after it has been qualified, and the project created from it grows with it. A salesperson who accepted
-a lead about a roof can find a driveway in it. That may be exactly right, or it may be the thing that
-makes people distrust the container.
+**Andrew settled it as the default behaviour of every contact:** a new contact lands on the open lead
+for that customer and property rather than creating a second one. **There is nothing left to choose.**
+The record stays because the reasoning is cited, and because it moved twice in one day, which is worth
+being able to see.
+
+**Morning of 15 Sep, it lost its evidence.** The argument had been that the Thompson case needs this
+on day one, because Robert contacted about the roof and Sara about the siding a day apart, so
+two contacts resolve into one lead. **The demand rework removed that instance**: siding became an
+opportunity rather than a customer contact, leaving one inquiry and one lead, one to one.
+
+**Afternoon of 15 Sep, it became universal.** Automatic qualification means every contact would
+otherwise make a lead, and every lead makes a project, so a returning household would accumulate both.
+**The join rule is what makes automatic qualification safe**, which promotes this from something we
+might build into how demand behaves.
+
+**What it does to project merging, M-007: it killed it.** Merging existed because demand arriving
+later made a second project that could not join the first. Under the join rule later demand joins the
+open lead, and **one lead has one project**, so there is never a second project.
+
+**Where later demand actually goes**, settled by Andrew on 15 September: into the existing project, as
+another proposal and another job. **Not a merge and not a change order.** C had proposed a sibling
+project and was corrected: the project is the container and jobs are what it holds. See
+`in-depth/lead-becomes-a-project-v4.md`, section 3b.
+
+**The argument against, which is real and is now unavoidable rather than optional.** Qualifying into an
+existing lead means the lead's scope grows after it has been qualified, and the project created from it
+grows with it. A salesperson who accepted a lead about a roof can find a driveway in it. **That may be
+exactly right, or it may be the thing that makes people distrust the container**, and there is no
+longer a way to avoid finding out.

@@ -55,8 +55,8 @@ pursue and whether to pursue them together, **so I can** put one conversation in
 instead of three.
 
 - **Roles.** Sales consultant. Owner, in a small shop where they are the same person.
-- **Evidence.** The multi-trade scenario: three trades arrive over three weeks by three routes, and
-  on 12 August the contractor decides to pursue all three together rather than one at a time. The
+- **Evidence.** The multi-trade scenario: three trades arrive over two days by two routes, and
+  at Start selling the contractor decides to pursue all three together rather than one at a time. The
   scenario records that decision as leaving no trace, which is what makes it worth designing for.
 - **Scenarios.** S15, S16.
 - **Not this.** Not qualifying a lead. The decision here is about bundling, not about whether any one

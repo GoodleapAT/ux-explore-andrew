@@ -1,6 +1,14 @@
 # Pros Web: project context for Claude Design
 
-**Version 3.0 · 14 September 2026 · Andrew Thompson, UX / Product Design**
+**Version 3.1 · 15 September 2026 · Andrew Thompson, UX / Product Design**
+
+> ## Amended 15 September 2026
+>
+> **Version 3.0 is wrong about demand.** A new object exists, **the Opportunity**, and the canonical
+> S15 story changed with it. The what-changed table and the demand paragraphs below carry the
+> amendment. **Everything else in version 3.0 stands.**
+>
+> **If you are holding a stored copy dated 14 September, it does not know the opportunity exists.**
 
 > ## Read this before starting
 >
@@ -27,7 +35,14 @@ Read this section even if you read nothing else.
 | | Then, 11 Sep | Now |
 |---|---|---|
 | **Our model** | A rival model with five differences from the team's | **Not a rival model.** The comparison was ruled: 22 of 37 rows adopt the team's version wherever ours was coarser. One deferred disagreement remains |
-| **Demand** | A Lead, one per trade | **Inquiry or Prospect, then Lead.** A lead is an engagement carrying several **interests**. T-1, T-3 |
+| **Demand** | A Lead, one per trade | **Opportunity, then Inquiry or Prospect, then Lead, then Project.** Four grains, each a different job rather than a different grading |
+| **The Opportunity**, new 15 Sep | Nothing like it | **Ours, not the team's. The durable demand object.** One record per customer, per property, per trade. **Where the demand came from is an attribute**, so a trade the customer asked for and a trade the system recommended are the same record. **It outlives every lead and every project.** Statuses: Open, On a lead, Won *(terminal)*, Dismissed. **A declined trade returns to Open** with a revive date and a history |
+| **The Interest**, retired 15 Sep | One trade inside a lead, with its own six-value status set | **Gone.** An opportunity is on a lead or it is not, and a proposal option prices the opportunity directly. **The behaviour T-1 describes is untouched**: a lead still carries several trades. Only the object is gone |
+| **The S15 story**, changed 15 Sep | Two inquiries, roofing and siding, resolving into one lead | **One inquiry and three opportunities.** Roofing from the customer, windows and siding recommended by DeDe on evidence. **Every figure, date and outcome is unchanged** |
+| **Demand status levels** | Four | **Four, having been five in between.** Opportunity, inquiry or prospect, lead, project. **First time this count has gone down** |
+| **Qualification**, settled 15 Sep | One deliberate act | **Automatic on expressed intent**, meaning a contact that names a trade and a property. **The Home App always qualifies**, because its form cannot produce a contact without both. A phone call qualifies when somebody writes both down. **So the normal case is that nobody qualifies anything**, and the discrete mark is the exception path for a contact naming neither. Booking an appointment and assigning to sales also qualify. **Completeness logic prompts but does not qualify** |
+| **One lead per customer and property**, settled 15 Sep | Implicitly one lead per contact | **A new contact joins the open lead** rather than creating a second one. **Contacts accumulate opportunities on a lead instead of multiplying leads**, which is what makes automatic qualification safe. **One lead still has one project**, and later demand that sells lands in that project as another proposal and another job. **Project merging is therefore dead**, because there is never a second project |
+| **The S15 dates**, changed 15 Sep | Lead and project born 10 August | **Born 4 August**, when the app contact qualified itself. **10 August is Start selling and creates nothing.** The lead and the project are alive for twenty two days before anything is pursued, which is the state no mock has drawn |
 | **The project** | Minted on pursuit | **Created when the lead is created.** T-2. Do not take the trigger from anywhere but that row |
 | **Estimate, Scope Component, Job Financials, Commission** | Entities | **Satellite records**: data hanging off a step, never a step itself. T-4 |
 | **Job lifecycle** | Ours | **Uniform outer states**, with trade-specific steps as sub-states inside in-progress. T-5 |
@@ -52,7 +67,12 @@ Read this section even if you read nothing else.
    `mockup-density.md` and `ui-composition.md` in full before you draw anything.
 6. **`WORKED-EXAMPLE.md`** for S15, **`WORKED-EXAMPLE-S14.md`** for S14. Use the data, invent nothing.
 7. **`memo-7-s14-end-to-end.html`** if you are working on S14. Fourteen sections, ten drawn.
-8. **`components/ITERATION-2.md`** and **`ITERATION-3.md`**. Nineteen records.
+8. **`components/ITERATION-2.md`** and **`ITERATION-3.md`**. **Twenty three records**, fourteen and
+   nine. Corrected 15 Sep; this line said nineteen.
+9. **`CD-REVIEW-02-routing.md`**, if you are acting on review comments. **Where the twenty four
+   comments of 15 September go**, sorted into structural, visual and unactionable. **Read the routing
+   before the two verbatim files beside it**, because one comment is overtaken by a model change and
+   must not be acted on as written.
 
 **The registers, when you need them:** `OBJECT-REGISTER.md` for things no model has,
 `DEVIATIONS.md` for where a mock departs from a scenario, `JOBS-TO-BE-DONE.md` for what people are
@@ -63,9 +83,31 @@ trying to accomplish, `DRIFT-CHECK.md` for what somebody else can change under u
 
 ## Where the model stands
 
-**Demand.** A customer contacts the contractor: that is an **Inquiry**. A **Prospect** is an
-unverified customer or expression of interest. Either becomes a **Lead** when qualified. A lead
-carries several **interests**, one per trade, each with its own origin, detail and status.
+**Demand starts with the Opportunity.** Added 15 September and **ours rather than the team's**. One
+record per customer, per property, per trade: a thing this household might buy at this address. **It
+hangs off the customer and the property**, so a customer with no live demand still carries
+opportunities, and they belong on the customer record.
+
+**Where the demand came from is an attribute of it.** A trade the customer asked for through the app
+and a trade the system recommended are the same kind of record with different origins. **That is the
+part to hold onto**, because it means the screen does not need two ways of showing a trade.
+
+**It outlives everything.** A trade that is offered and declined goes **back to Open** with a revive
+date and its history intact, so roofing appears under the customer, free-standing, and opening it
+shows the customer raised it in July, it went on a sale, it was priced, and they declined for the
+season. **Nothing else in either model can answer "what has happened with the roof" in one place.**
+
+**Then a customer contacts the contractor: that is an Inquiry.** A **Prospect** is an unverified
+customer or expression of interest. **Either qualifies automatically where intent is expressed**,
+meaning a trade and a property are named, and qualification creates a **Lead**.
+
+**A lead is one selling episode.** One open lead per customer and property, which every new contact
+joins. It carries the opportunities being sold and **it closes when everything on it is resolved**,
+which is the hand-off. A customer has many leads over time, one at a time per property.
+
+**The Interest is retired.** An opportunity is on a lead or it is not. The reasoning for all of this
+is in `in-depth/the-opportunity.md`, which is worth reading once because it was written three times
+in one day and the route explains the shape.
 
 **The container.** Creating a lead creates a **Project**. It is the spine, it models one customer
 journey, its state is **derived and one-way**, and every record carries a reference back to it.
@@ -79,10 +121,15 @@ becomes one **Job** at the hand-off.
 at the customer. That is principle P-1 and it explains why per-job margin is unavailable rather than
 missing.
 
-**Four status levels now exist** on the demand side: inquiry or prospect, interest, lead, project.
-**That is the single biggest risk to any demand screen** and it is why S14 matters: with one interest,
-a screen showing four status words would be absurd. If the levels cannot be hidden, the model is
-telling us something.
+**Four status levels exist** on the demand side: **opportunity**, inquiry or prospect, lead, project.
+**It went four, five, four in one day**, and the retirement of the interest is what brought it back
+down. **This has been the single biggest risk to any demand screen all week and it is the first time
+it has moved in the right direction.**
+
+**The mitigation is now structural rather than a caveat.** The four are genuinely different jobs: an
+opportunity is a trade that might sell, an inquiry is one contact, a lead is one selling episode, a
+project is the delivery container. **A screen showing several of them is showing different things, not
+the same thing at different grains**, which is what made five uncomfortable.
 
 ---
 
@@ -96,7 +143,7 @@ telling us something.
 | **Customer role against a property**: owner, occupier, something else | Object register, blocking |
 | **Where a service agreement sits.** The one live disagreement | T-9 |
 | **The project status set has no money-absent path** | `VOCABULARY.md`, and it is our defect |
-| **Project merging**, and whether routing demand avoids needing it | N-004 and M-007 |
+| **Project merging.** **Closed 15 Sep: not needed.** Later demand joins the open lead, and a contact after one closes starts a fresh lead and project | M-007, dropped |
 
 ---
 
@@ -109,7 +156,7 @@ only where somebody must act, at most one region per screen. Badges only where a
 before the row is read, three or four a page.
 
 **From the model.** Nothing indents on the customer record. A project may hold several proposals. A
-deferred interest stays alive on its lead with a reason and a revive date. Templates flex by product
+declined trade returns to being an open opportunity with a reason and a revive date. Templates flex by product
 tier **and** by lifecycle stage. Every component declares what it does when its subject is absent.
 
 **Three product tiers**, set per organisation: payments only; payments and selling; payments, selling

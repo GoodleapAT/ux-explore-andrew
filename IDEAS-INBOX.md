@@ -51,3 +51,7 @@
 - **2026-09-14** | Inquiry is an event and Prospect is a party, so they may not belong side by side as peers | Reading the latest demand lane
 - **2026-09-14** | A merge should probably be prohibited once a project has a won proposal, which puts every expensive case out of scope | Andrew, on project merging
 - **2026-09-14** | The Thompson case already has two separate customer contacts becoming one lead, so qualifying into an existing lead is not a new mechanism | Restating the worked example [M-008]
+- **2026-09-15.** Correcting the line above about two customer contacts becoming one lead: that instance no longer exists. Siding became an opportunity, so S15 has one inquiry. **And the mechanism is no longer a move at all**: a new contact joins the open lead for that customer and property, by rule. See the catalogue under M-008.
+- **2026-09-15.** A lead may need to close for a later contact to start a fresh engagement, and nothing says what closes one. Open, and the join rule has no end condition without it.
+- **2026-09-15.** The container's name grows and then shrinks in S15, and a shrinking name reads as loss rather than decision. Open.
+- **2026-09-15.** Qualification and pursuit are two minutes apart in S14 and twenty two days apart in S15. Three orders of magnitude, one component set. Possibly the best test in the pair.

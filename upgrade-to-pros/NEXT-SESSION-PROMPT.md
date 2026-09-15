@@ -1,5 +1,11 @@
 # Prompt for the next session
 
+> **This prompt has been used. 15 September 2026.** It is kept as the record of what the session was
+> asked to do. **Two things in it are now out of date:** demand has **five** status grains, not four,
+> and **the multi-trade inquiry is no longer taken twice on day one**, because siding and windows
+> became opportunities rather than customer contacts. The multi-trade conversation happens on the
+> intake call instead. **Do not use this prompt to start another session**; write a fresh one.
+
 **Paste this into a new chat. 15 September 2026.**
 
 ---

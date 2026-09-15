@@ -59,7 +59,7 @@ modified, and it is what a mock records itself as built against.**
 
 | Scenario | Last modified when read | Checked | Used by |
 |---|---|---|---|
-| **S15**, multi-trade cash | 4 Sep 2026 | 13 Sep 2026 | The worked example. The S15 grid. **The one that matters most right now** |
+| **S15**, multi-trade cash | **14 Sep 2026, rewritten into v4** | **15 Sep 2026** | The worked example. The S15 grid. **The one that matters most right now** |
 | **S16**, multi-trade financed | 9 Sep 2026 | 11 Sep 2026 | The worked example's financed telling. The five views memo |
 | **S8**, membership flywheel | 9 Sep 2026 | 10 Sep 2026 | The service plan view |
 | **S17**, membership-first sale | 9 Sep 2026 | 10 Sep 2026 | The service plan view |
@@ -137,3 +137,33 @@ rendered screenshot.
 is clipped in the render and reads only as far as "intent to sell to customer is ex", and an
 Ownership versus Provenance panel is referenced in the visual language note but is not in the node we
 looked at.
+
+---
+
+## Drift found on 15 September 2026, and it had been sitting for two days
+
+**S15 was rewritten into the v4 model on 14 September** and our register said 4 September. Found
+while writing the S15B page, not by running the routine. **Three things in that rewrite matter.**
+
+**Two of our positions turn out to be theirs already.** Their beat 2 now reads "Project, a new
+Project, minted by the Lead", which is T-2 and which we agree with. And their beat 4 has **the system
+pointing out that the Thompsons are due for new windows**, so the recommendation is in their script
+rather than being our invention. **What is ours is making it a durable record rather than an interest
+inside a lead.**
+
+**They still run Interest as a live object throughout**, which we retired on 15 September. The
+vocabulary difference is real and is recorded against T-1.
+
+**And they carry two open items our Opportunity answers, in their own words.** Reporting must
+distinguish deferred from lost, and telling an interest on an existing lead apart from a genuinely
+new lead when the arrivals are not in the same thread. **That is the argument to take to Joel**, and
+it is stronger than anything we would have written ourselves.
+
+**The lesson, and it is the second time today.** The routine was not run because nothing prompted
+it. **Writing something that had to cite their page is what prompted it**, which suggests the check
+should be attached to an act rather than to a date: read their page whenever you write a document
+that cites it.
+
+**Also noted:** most of the scenario set was modified on 14 and 15 September. S14 and S14B both
+moved. **Anything built against S14 should be rechecked before the next round on it.**
+

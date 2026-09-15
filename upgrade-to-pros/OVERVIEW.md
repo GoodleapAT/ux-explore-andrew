@@ -13,7 +13,92 @@ The root of this repository carries how the work is done. This file carries what
 
 ---
 
+## State of play, 15 September 2026, end of day
+
+**The demand side was rebuilt. One object added, one retired, and the grain count went down for the
+first time this week.** Everything below happened in one day, in four passes, and the route is worth
+reading once in `in-depth/the-opportunity.md`.
+
+### The Opportunity, and it is ours rather than the team's
+
+**One record per customer, per property, per trade.** A thing this household might buy at this
+address, created the first time anybody has a reason to think so, and **it outlives every lead and
+every project.**
+
+**Where the demand came from is an attribute of it, not a different kind of object.** A trade the
+customer asked for through the app and a trade the system recommended are the same record with
+different origins. **That is the part worth defending**, and it answers lead origin as a first-class
+attribute, which had been blocking in the object register all week.
+
+**Statuses are Open, On a lead, Won and Dismissed, and Won is the only terminal one.** A trade that is
+offered and declined **goes back to Open** with a revive date and a history entry. That is the whole
+point: roofing appears under the customer, free-standing, and opening it shows that the customer
+raised it in July, it went on a sale, it was priced at $38,900, and they declined for the season.
+
+### The Interest is retired
+
+**Once the opportunity carried its own status and history, the interest had nothing left to hold.** An
+opportunity is on a lead or it is not, and a proposal option prices the opportunity directly.
+
+**Four demand grains instead of five**: opportunity, inquiry or prospect, lead, project. **This is the
+first time that count has gone down.** Every previous move added one, and it has been the biggest
+logged risk to a demand screen all week. **The four are now genuinely different jobs** rather than
+different gradings of the same idea.
+
+**The word survives in the team's own position on lead granularity**, and the behaviour that position
+describes is untouched. **Only the object is gone**, which is a vocabulary difference to raise rather
+than a disagreement.
+
+### Qualification is automatic, and the lead is a selling episode
+
+**Qualification tests expressed intent**, which means a contact naming a trade and a property. The
+Home App always qualifies; a phone call qualifies when somebody writes both down. **The discrete mark
+survives as the exception path.** *The definition of the test is C's reading rather than Andrew's
+ruling and wants confirming.*
+
+**A new contact joins the open lead** for that customer and property. **And the lead closes when
+everything on it is resolved, which is the hand-off.** So the join rule applies only while a lead is
+open, and a contact during delivery starts a new lead with its own project, which is correct because
+it is a different sale.
+
+**Project merging is dead.** One lead has one project, later demand joins the open lead, so there is
+never a second project. Later demand that sells lands in the existing project as another proposal and
+another job.
+
+### What the canonical example looks like now
+
+**The lead and the project are born 4 August**, when Robert's app contact qualifies itself, with nobody
+at Northgate present. **Roofing goes on the lead at once; windows and siding stay Open until Start
+selling on 10 August.** Roofing returns to Open on 18 August when it is declined. **The lead closes on
+24 August at the hand-off**, and the project delivers until 5 October with no lead behind it.
+
+**One state nothing has ever drawn.** A project delivering for six weeks with its lead already
+closed. **A second one was removed rather than solved**: the lead and project used to sit for
+twenty two days holding one opportunity, and Andrew compressed the front of the story to six days so
+that state stops being a problem worth a screen.
+
+**Every figure, date and outcome is unchanged through all four rewrites.**
+
+### Open
+
+**Four things, and none of them blocks a first pass at a memo.** Where a customer's final no lives,
+whether Start selling is what attaches an opportunity or qualification is, whether the container's
+name may shrink when a trade is declined, and confirmation of the qualification test.
+
+**Two defects logged earlier the same day went away without being fixed**: the lead's status hole and
+the project never reaching a final state, both answered by the lead closing at the hand-off.
+
+**The review queue is forty nine comments across two rounds.** Half of the newest twenty four are
+visual and routed to a build brief rather than a memo. **All five rulings that were blocking are
+closed.** See `CD-REVIEW-02-routing.md`.
+
+
 ## State of play, 14 September 2026, end of day
+
+> **History. Do not design from this section.** It says a lead carries several interests, that
+> qualification is the boundary between an inquiry and a lead, and that two questions about where
+> several trades live are open. **All three were overtaken on 15 September.** Kept because its
+> reasoning about the team's position is still cited.
 
 **The team's positions are not restated here.** They are in `TEAM-POSITIONS.md`, each with a date and
 a source, and that is the only place they are stated. This changed today because the mint point moved
@@ -122,7 +207,8 @@ job and service plan. **Memo 7 adds fourteen more against S14**, ten drawn and f
 | **Claude Design context** | `CLAUDE-DESIGN-CONTEXT.md` | **Current, version 3.0 of 14 Sep.** Rewritten after version 2.0 was wrong in three places. Opens with what changed since CD was last briefed |
 | **Claude Design briefs** | `CD-PROMPT-s14-canvas.md` | Round one build brief. History |
 | | `CD-PROMPT-s14-round-two.md` | **Current.** Round two: eight frames drawn new, five carried, one redrawn with two moves |
-| **S14 round two** | `memo-8-s14-round-two.html` | **Current.** Six screens reworked from Andrew's review. Memo 7 is round one and is superseded in part |
+| **S14 round two** | `memo-8-s14-round-two.html` | **Current for S14.** Six screens reworked from Andrew's review. **Its qualification frames are now wrong**: qualification became automatic on 15 Sep |
+| **S15 end to end** | `memo-9-s15-end-to-end.html` | **Current. Eleven screens, 15 Sep.** The first pass at the run end to end, and **the first time a scenario has been composed from the library rather than drawn.** Money is placeholdered throughout |
 | **Review responses** | `CD-REVIEW-01-responses.md` | Twenty five comments, verbatim, with routing. Four needed rulings; two have landed |
 | **Origin financing page migration** | not started | Parked. Two of the pages were located, the third repository never was. See global sources |
 
@@ -130,7 +216,8 @@ job and service plan. **Memo 7 adds fourteen more against S14**, ten drawn and f
 
 | File | What it holds |
 |---|---|
-| `WORKED-EXAMPLE.md` | The complete Thompson mock data, S15. Use it, invent nothing |
+| `WORKED-EXAMPLE.md` | The complete Thompson mock data, S15. Use it, invent nothing. **Demand section restated 15 Sep: one inquiry, two opportunities** |
+| `CD-REVIEW-02-routing.md` | **Where the twenty four comments of 15 Sep go.** Structural, visual, or cannot be acted on. Read this before the two verbatim files beside it |
 | `WORKED-EXAMPLE-S14.md` | **The Brenner mock data, S14.** A different org, a single trade and a first-time customer, so none of the Thompson data survives. Four flagged inconsistencies in the source script |
 | `MODEL-SNAPSHOT.md` | What our model contains, on a date, and the diff against DRAFT v3 |
 | `OPEN-ITEMS.md` | **One index of everything unresolved.** Read it first in a cold session. An index, not a store: each row points at where the thing lives |
@@ -141,7 +228,7 @@ job and service plan. **Memo 7 adds fourteen more against S14**, ten drawn and f
 | `OBJECT-REGISTER.md` | Things a screen needed that neither model has |
 | `JOBS-TO-BE-DONE.md` | What people are trying to accomplish, for cross-referencing solutions against |
 | `IDEAS-CATALOGUE.md` | Curated needs and moves |
-| `components/` | Component records, moved out of CD because the library is repository-resident |
+| `components/` | Component records, moved out of CD because the library is repository-resident. **`ITERATION-4.md` carries the G-1 finding**: nine components across both scenarios unchanged, one dead, one failing in the opposite direction to the one predicted |
 | `in-depth/` | **Documents that answer one question and then stop changing.** A register is never finished; these are. When one concludes, its settlements go to the decision log and the document stays as the reasoning |
 
 ---
@@ -150,7 +237,12 @@ job and service plan. **Memo 7 adds fourteen more against S14**, ten drawn and f
 
 Every memo, diagram and mock uses the same scenario, and keeping it consistent is worth more than
 variety. Contractor **Northgate Home Services**, customers **Robert and Sara Thompson**, 1428 Maple
-Ave, Sacramento CA. Three leads, two sold, one deferred, one change order, one permit that sticks.
+Ave, Sacramento CA. **One inquiry and three opportunities, one lead that closes at the hand-off.** Two sold,
+one deferred, one change order, and **no permit**, which the cash telling is explicit about.
+
+**Corrected 15 Sep 2026.** This paragraph said three leads, which the model stopped having on
+14 September, and "one permit that sticks", which belongs to the financed telling and was contradicted
+by the worked example's own refinement list and its waiting-on register.
 
 It is adopted in the team repository as scenario **S15**. **All of the data lives in
 `WORKED-EXAMPLE.md` beside this file**, which carries the shared spine plus two tellings, cash and

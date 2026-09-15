@@ -38,10 +38,11 @@ otherwise.
 | Object | Criticality | Intent | Hold | Status |
 |---|---|---|---|---|
 | Communications | Degrading | Fill, propose | Loose | Open |
-| Lead origin as a first-class attribute | Blocking | Propose | Pursue | Open |
+| Live call transcription | Degrading | Fill, probe | Watch | Open |
+| Lead origin as a first-class attribute | Blocking | Propose | Pursue | **Folded into the model, 15 Sep 2026** |
 | A lead nobody has raised with the customer | Degrading | Probe | Watch | Open |
 | A receipt for a derived status | Degrading | Propose | Watch | Open |
-| A queue that surfaces a revive date | Blocking | Propose | Pursue | Open |
+| A queue that surfaces a revive date | Blocking | Propose | Pursue | **Folded into the model, 15 Sep 2026** |
 | After-render of the property | Exploratory | Fill, probe | Loose | Open |
 | Per-customer profit | Degrading | Probe | Loose | Open |
 | Pipeline value from open leads | Degrading | Fill, propose | Watch | Open |
@@ -72,6 +73,26 @@ otherwise.
   objects created and edited, and communications.
 - **To the team.** Yes, eventually. The team's own scenarios flag it repeatedly as having no entity
   anywhere, so this is a shared gap rather than ours.
+
+## Live call transcription
+
+- **Purpose.** Show what is being said while a call is happening, beside the form somebody is typing
+  into, so the person taking the call is not the only record of it. Andrew asked for it on the capture
+  screen on 15 September, in place of the trade picker.
+- **Criticality:** Degrading. The screen works without it. **But the capture screen's whole problem is
+  that somebody is typing while somebody else talks**, and a transcript is the only thing on the page
+  that addresses that directly rather than organising around it.
+- **Intent:** Fill and probe. Drawn so the layout can be judged, and drawn to find out whether a
+  transcript beside a form helps or competes.
+- **Hold: watch.** Stronger than loose, because if transcription exists the capture screen is a
+  different design, and weaker than pursue, because nobody has said it exists.
+- **Where it was needed.** The S14 canvas, frame 01, in Andrew's comment of 15 September: "let's
+  simulate a live transcript of the call".
+- **To the team.** Not yet. **This is a capability question before it is a model question**, and the
+  first thing to establish is whether calls are recorded at all, which is a platform fact rather than
+  a design one.
+- **Note.** Drawn as a proposal and labelled as one, per the ruling of 15 September. **Anything that
+  shows it must not imply the transcript is a fact.**
 
 ## Lead origin as a first-class attribute
 
@@ -318,3 +339,25 @@ model.
 
 **Cheap, and worth noting why.** It is one field on an act that does not otherwise exist, so the cost
 is the act rather than the field.
+
+---
+
+## Two rows folded into the model, 15 September 2026
+
+**Both were blocking and both were answered by the same change**, the Opportunity becoming the durable
+demand object. Recorded here rather than deleted, because the register's rule is that nothing is
+deleted and because what closed them is worth knowing.
+
+**Lead origin as a first-class attribute.** The row asked for which surface and which party raised a
+lead to be recorded, countable and routable, rather than being prose in a sub line. **The opportunity
+carries origin as an attribute**, and a trade the customer asked for and a trade the system
+recommended are now the same kind of record differing only in that attribute. **That is a stronger
+answer than the row asked for**, because it also removes the need for two ways of drawing a trade.
+
+**A queue that surfaces a revive date.** The row asked for somewhere a deferred trade coming back into
+season would appear. **The opportunity list under the customer, filtered by revive date, is that
+queue.** It needs no new object: a declined trade returns to Open carrying its revive date, so the
+queue is a filter over records that already exist.
+
+**Worth noticing that neither was built.** Both were answered by a modelling change made for another
+reason, which is an argument for keeping a register of gaps rather than working through it in order.

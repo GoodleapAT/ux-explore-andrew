@@ -1,0 +1,1368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>S15 end to end</title>
+<style>
+/* ============================================================================
+   Memo 9 · S15, the Thompsons, end to end.  Built 15 Sep 2026.
+
+   Built against the demand model as it stood at the END of 15 September:
+   the Opportunity is the durable record, the Interest is retired, and the
+   lead closes at the hand-off.  If any of those has moved, this memo is wrong.
+
+   Standards held:
+   - No reference codes or record identifiers anywhere.
+   - No explanatory copy inside a mock.  Suggested messages listed under it.
+   - Badges only where a state must be seen before the row is read.
+   - Colour only where somebody must act, at most one region per screen.
+     This telling has no blocked state anywhere except section J.
+   - Cards in pairs under a group heading.  Two abreast is unconditional.
+   - [i] marks annotation inside a mockup, and only inside a mockup.
+   - Full-width mockup, argument underneath.  Departure of 10 Sep, recorded.
+   ========================================================================= */
+:root{
+  color-scheme:light;
+  --sol-actions-button:#161051; --sol-actions-link:#382ca5;
+  --sol-backgrounds-accent-purple:#e2e1fe; --sol-backgrounds-system-warning:#fffaf0;
+  --sol-backgrounds-ui-high:#ffffff; --sol-backgrounds-ui-low:#e3e3ed; --sol-backgrounds-ui-medium:#f5f5f9;
+  --sol-borders-accent-purple:#6d62d5; --sol-borders-accent-yellow:#f5b638;
+  --sol-borders-ui-default:#c8c8d5; --sol-borders-ui-strong:#a7a7b9; --sol-borders-ui-subtle:#e3e3ed;
+  --sol-elevation-md:0px 1px 12px 0px #0000000f;
+  --sol-icons-accent-purple:#382ca5; --sol-icons-system-success:#008f30; --sol-icons-system-warning:#b88723;
+  --sol-icons-ui-secondary:#4b4b58;
+  --sol-text-primary:#14141a; --sol-text-secondary:#4b4b58; --sol-text-warning:#8f5f00;
+  --sol-text-placeholder:#a7a7b9;
+  --sol-text-disabled:#a7a7b9;
+  --pw-ink:#2c1b3c;
+  --pw-shadow-xs:0 1px 2px 0 rgb(0 0 0/.05);
+  --inter:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+  --m-bg:#ffffff; --m-paper:#fbfbfc; --m-bd:#e6e6ea; --m-bds:#d3d3da;
+  --m-tx:#1b1b20; --m-tx2:#55555e; --m-tx3:#86868f;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--m-bg);color:var(--m-tx);font-family:var(--inter);font-size:15px;line-height:1.62;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1360px;margin:0 auto;padding:56px 40px 96px}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.04em;color:var(--m-tx3);margin:0 0 16px;text-transform:uppercase}
+.eyebrow span{margin-right:26px}
+h1{font-size:40px;line-height:1.12;font-weight:500;letter-spacing:-.02em;margin:0 0 18px;max-width:750px}
+.lede{max-width:750px;color:var(--m-tx2);font-size:15.5px;margin:0 0 18px}
+.lede:last-of-type{margin-bottom:40px}
+.conv{max-width:750px;font-family:var(--mono);font-size:11.5px;color:var(--m-tx3);margin:0 0 40px;padding-top:14px;border-top:1px solid var(--m-bd)}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(420px,1fr));gap:20px;margin:0 0 56px}
+.ecard{border:1px solid var(--m-bds);border-radius:12px;padding:22px 24px;background:var(--m-paper)}
+.ecard h3{margin:0 0 4px;font-size:12px;font-family:var(--mono);text-transform:uppercase;letter-spacing:.05em;color:var(--m-tx3);font-weight:400}
+.ecard .sub{margin:0 0 14px;font-size:13px;color:var(--m-tx3)}
+.ecard ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:11px}
+.ecard li{font-size:13.5px;line-height:1.55;color:var(--m-tx2)}
+.ecard li strong{color:var(--m-tx);font-weight:500}
+.ecard p.tail{margin:14px 0 0;padding-top:13px;border-top:1px solid var(--m-bd);font-size:13px;color:var(--m-tx2)}
+.sec{margin:0 0 72px}
+.sec-head{display:flex;align-items:baseline;gap:11px;padding-bottom:12px;border-bottom:1px solid var(--m-bd);margin-bottom:8px}
+.badge-l{flex:0 0 auto;width:20px;height:20px;border:1px solid var(--sol-borders-accent-purple);border-radius:4px;color:var(--sol-icons-accent-purple);font-family:var(--mono);font-size:10.5px;display:flex;align-items:center;justify-content:center;background:var(--sol-backgrounds-accent-purple);position:relative;top:2px}
+.sec-title{font-size:19px;font-weight:500;margin:0;letter-spacing:-.01em}
+.sec-when{font-size:13px;color:var(--m-tx3);margin-left:auto;white-space:nowrap}
+.sec-beat{font-family:var(--mono);font-size:11px;color:var(--m-tx3);margin:0 0 10px}
+.sec-meta{display:flex;flex-wrap:wrap;gap:6px 22px;font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.04em;color:var(--m-tx3);margin:0 0 18px;padding:7px 0 0;border-top:1px dotted var(--m-bd)}
+.sec-meta b{font-weight:400;color:var(--m-tx2);text-transform:none;letter-spacing:0;font-size:11px}
+.sec-meta .k{color:var(--sol-icons-accent-purple)}
+.frame{border:1px solid var(--m-bds);border-radius:12px;overflow:hidden;background:var(--sol-backgrounds-ui-high)}
+.ph{border:1px dashed var(--sol-borders-ui-strong);border-radius:12px;background:var(--sol-backgrounds-ui-medium);padding:34px 30px;display:flex;flex-direction:column;gap:7px;align-items:flex-start}
+.ph .t{font:500 14px/21px var(--inter);color:var(--sol-text-secondary)}
+.ph .d{font:400 13px/19px var(--inter);color:var(--sol-text-secondary);max-width:620px;margin:0}
+.arg{margin:26px 0 0;padding-top:22px;border-top:1px solid var(--m-bd);display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:22px 34px}
+.arg .b{min-width:0}
+.arg .k{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.04em;color:var(--m-tx3);margin:0 0 5px}
+.arg p{margin:0;font-size:13.5px;line-height:1.55;color:var(--m-tx2)}
+.arg p strong{color:var(--m-tx);font-weight:500}
+.qs{margin:24px 0 0;padding-top:20px;border-top:1px solid var(--m-bd)}
+.qs h4{margin:0 0 10px;font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.04em;color:var(--m-tx3);font-weight:400}
+.qs ol{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:8px}
+.qs li{font-size:13.5px;line-height:1.55;color:var(--m-tx2)}
+.qs li strong{color:var(--m-tx);font-weight:500}
+.pw-page{display:flex;flex-direction:column;background:var(--sol-backgrounds-ui-high);padding:26px 32px 32px;font-family:var(--inter);color:var(--pw-ink)}
+.pw-stack{display:flex;flex-direction:column;gap:26px}
+.pw-crumbs{display:flex;align-items:center;gap:8px;font:400 12px/18px var(--inter);color:var(--sol-text-secondary);margin-bottom:12px}
+.pw-crumbs a{color:var(--sol-actions-link);text-decoration:none}
+.pw-crumbs .s{color:var(--sol-borders-ui-strong)}
+.pw-titlerow{display:flex;align-items:flex-start;gap:24px;flex-wrap:wrap}
+.t-h1{font:700 24px/34px var(--inter);margin:0}
+.pw-meta{margin:5px 0 0;font:400 13px/20px var(--inter);color:var(--sol-text-secondary)}
+.pw-meta .now{color:var(--pw-ink);font-weight:500}
+.pw-meta a{color:var(--sol-actions-link);text-decoration:none;border-bottom:1px solid var(--sol-borders-ui-default)}
+.pw-meta .s{color:var(--sol-borders-ui-strong);margin:0 7px}
+.pw-actions{display:flex;gap:10px;flex-wrap:wrap;margin-left:auto;align-items:center}
+.pw-btn{border:1px solid var(--sol-borders-ui-default);border-radius:8px;background:var(--sol-backgrounds-ui-high);padding:7px 13px;font:500 13px/18px var(--inter);color:var(--pw-ink)}
+.pw-btn.pri{background:var(--sol-actions-button);border-color:var(--sol-actions-button);color:#fff}
+.pw-kebab{width:34px;height:34px;border:1px solid var(--sol-borders-ui-default);border-radius:8px;background:var(--sol-backgrounds-ui-high);color:var(--sol-icons-ui-secondary);display:flex;align-items:center;justify-content:center;font-size:15px;line-height:1}
+.pw-attn{display:flex;align-items:flex-start;gap:11px;border:1px solid var(--sol-icons-system-warning);border-left-width:3px;border-radius:8px;background:var(--sol-backgrounds-system-warning);padding:12px 15px;font:400 14px/20px var(--inter);color:var(--sol-text-warning)}
+.pw-attn .ic{flex:0 0 auto;margin-top:2px;color:var(--sol-icons-system-warning)}
+.pw-attn strong{font-weight:600}
+.pw-card{background:var(--sol-backgrounds-ui-high);border:1px solid var(--sol-borders-ui-subtle);border-radius:12px;box-shadow:var(--sol-elevation-md);padding:18px}
+.pw-cardstack{display:flex;flex-direction:column;gap:14px}
+.pw-cardstack h5{margin:0;font:700 15px/22px var(--inter);color:var(--sol-text-primary)}
+.pw-cardhead{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.pw-group{display:flex;flex-direction:column;gap:12px}
+.pw-grouphead{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.pw-grouphead h2{margin:0;font:700 17px/24px var(--inter);color:var(--pw-ink)}
+.pw-pair{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start}
+.pw-pair>*{min-width:0}
+.pw-pair.wide-l{grid-template-columns:minmax(0,1.35fr) minmax(0,1fr)}
+.pw-pair.wide-r{grid-template-columns:minmax(0,1fr) minmax(0,1.35fr)}
+.pw-one{display:grid;grid-template-columns:1fr}
+.pw-seg{display:inline-flex;border:1px solid var(--sol-borders-ui-subtle);border-radius:8px;overflow:hidden;background:var(--sol-backgrounds-ui-medium)}
+.pw-segi{border:0;border-right:1px solid var(--sol-borders-ui-subtle);background:transparent;padding:5px 9px;font:400 13px/19px var(--inter);color:var(--sol-text-secondary);white-space:nowrap}
+.pw-segi:last-child{border-right:0}
+.pw-segi[data-on=true]{background:var(--sol-backgrounds-ui-high);color:var(--sol-text-primary);font-weight:500;box-shadow:var(--pw-shadow-xs)}
+.pw-crowlist{display:flex;flex-direction:column}
+.pw-lrow{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:18px;align-items:baseline;padding:10px 0;border-bottom:1px solid var(--sol-borders-ui-subtle)}
+.pw-lrow:last-child{border-bottom:0}
+.pw-lrow:first-child{padding-top:0}
+.pw-lrow.nest{padding-left:18px;border-left:2px solid var(--sol-borders-ui-subtle);margin-left:2px}
+.pw-lname{font:400 14px/20px var(--inter);color:var(--pw-ink);min-width:0}
+.pw-lname.med{font-weight:500}
+.pw-lsub{display:block;font:400 12px/18px var(--inter);color:var(--sol-text-secondary);margin-top:1px}
+.pw-r{text-align:right;white-space:nowrap}
+.pw-lval{display:block;font:500 14px/20px var(--inter);color:var(--pw-ink);font-variant-numeric:tabular-nums}
+.pw-lst{display:block;font:400 12px/18px var(--inter);color:var(--sol-text-secondary);margin-top:1px}
+.pw-lst.attn{color:var(--sol-text-warning);font-weight:500}
+.pw-lrow.dim .pw-lname,.pw-lrow.dim .pw-lval{color:var(--sol-text-secondary);font-weight:400}
+.pw-more{display:flex;align-items:baseline;gap:10px;padding-top:11px;margin-top:2px;border-top:1px solid var(--sol-borders-ui-subtle);font:400 12px/18px var(--inter);color:var(--sol-text-secondary)}
+.pw-more a{color:var(--sol-actions-link);text-decoration:none}
+.pw-empty{border:1px dashed var(--sol-borders-ui-default);border-radius:9px;background:var(--sol-backgrounds-ui-medium);padding:16px;font:400 13px/19px var(--inter);color:var(--sol-text-secondary)}
+.pw-cardrows{display:flex;flex-direction:column;gap:12px}
+.pw-crow{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+.pw-crow .cl{font:400 14px/20px var(--inter);color:var(--sol-text-secondary)}
+.pw-crow .cv{font:500 15px/22px var(--inter);color:var(--sol-text-primary);font-variant-numeric:tabular-nums;text-align:right}
+.pw-crow.tot .cl{font:700 14px/20px var(--inter);color:var(--sol-text-primary)}
+.pw-crow.tot .cv{font:700 20px/28px var(--inter)}
+.pw-crule{height:1px;background:var(--sol-borders-ui-subtle)}
+.pw-syn{display:grid;grid-template-columns:1fr 1fr;gap:11px 18px}
+.pw-syn.one{grid-template-columns:1fr}
+.pw-syn.three{grid-template-columns:1fr 1fr 1fr}
+.pw-synr{min-width:0}
+.pw-synr .k{display:block;font:400 11px/16px var(--inter);color:var(--sol-text-secondary)}
+.pw-synr .v{display:block;font:500 13px/18px var(--inter);color:var(--pw-ink);text-wrap:pretty}
+.pw-synr .v.q{font-weight:400;color:var(--sol-text-secondary);font-style:italic}
+.pw-synr .v.none{font-weight:400;color:var(--sol-text-secondary)}
+.pw-note-item{padding:10px 0;border-bottom:1px solid var(--sol-borders-ui-subtle)}
+.pw-note-item:last-child{border-bottom:0}
+.pw-note-item:first-child{padding-top:0}
+.pw-note-h{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap;margin-bottom:3px;font:400 12px/18px var(--inter);color:var(--sol-text-secondary)}
+.pw-note-h .ty{color:var(--pw-ink);font-weight:500}
+.pw-note-item p{margin:0;font:400 13.5px/20px var(--inter);color:var(--pw-ink)}
+.pw-fade{position:relative;max-height:112px;overflow:hidden}
+.pw-fade:after{content:'';position:absolute;left:0;right:0;bottom:0;height:34px;background:linear-gradient(to bottom,#fff0,#fff)}
+.pw-timeline{list-style:none;margin:0;padding:0 0 0 20px;display:flex;flex-direction:column;gap:13px;position:relative}
+.pw-timeline:before{content:'';position:absolute;left:4px;top:6px;bottom:6px;width:1px;background:var(--sol-borders-ui-subtle)}
+.pw-timeline li{position:relative}
+.pw-timeline li:before{content:'';position:absolute;left:-20px;top:5px;width:9px;height:9px;border-radius:999px;background:var(--sol-backgrounds-ui-high);border:2px solid var(--sol-borders-ui-strong)}
+.pw-timeline .e{margin:0;font:400 13px/19px var(--inter);color:var(--pw-ink)}
+.pw-timeline .dt{margin:1px 0 0;font:400 12px/18px var(--inter);color:var(--sol-text-secondary)}
+.pw-bdg{display:inline-flex;align-items:center;border:1px solid var(--sol-borders-ui-default);border-radius:5px;background:var(--sol-backgrounds-ui-medium);padding:1px 6px;font:500 11px/17px var(--inter);color:var(--sol-text-secondary);white-space:nowrap;margin-left:7px;position:relative;top:-1px}
+.pw-bdg.warn{border-color:var(--sol-borders-accent-yellow);background:var(--sol-backgrounds-system-warning);color:var(--sol-text-warning)}
+.ann{font-family:var(--mono);font-size:10.5px;line-height:1.5;color:var(--sol-icons-accent-purple);background:var(--sol-backgrounds-accent-purple);border:1px solid var(--sol-borders-accent-purple);border-radius:5px;padding:4px 8px;display:inline-block;max-width:100%}
+.annrow{margin-top:10px}
+.pw-form{display:flex;flex-direction:column;gap:12px}
+.pw-fld{display:flex;flex-direction:column;gap:4px;min-width:0}
+.pw-fld .fl{font:400 12px/18px var(--inter);color:var(--sol-text-secondary)}
+.pw-fld .fi{border:1px solid var(--sol-borders-ui-default);border-radius:8px;background:var(--sol-backgrounds-ui-high);padding:8px 11px;font:400 14px/20px var(--inter);color:var(--pw-ink);min-height:37px}
+.pw-fld .fi.ro{background:var(--sol-backgrounds-ui-medium);border-style:dashed;color:var(--sol-text-secondary)}
+.pw-fld .fh{font:400 11px/16px var(--inter);color:var(--sol-text-secondary)}
+.pw-fldrow{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.pw-fldrow>*{min-width:0}
+.pw-pencil{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:6px;color:var(--sol-text-placeholder);font-size:13px;line-height:1;position:relative;top:-3px;margin-left:8px}
+.pw-multi{display:inline-flex;border:1px solid var(--sol-actions-button);border-radius:8px;overflow:hidden}
+.pw-multi .m{background:var(--sol-actions-button);color:#fff;padding:7px 13px;font:500 13px/18px var(--inter)}
+.pw-multi .c{background:var(--sol-actions-button);color:#fff;padding:7px 9px;border-left:1px solid rgba(255,255,255,.28);font-size:10px;display:flex;align-items:center}
+.pw-menu{border:1px solid var(--sol-borders-ui-default);border-radius:9px;background:var(--sol-backgrounds-ui-high);box-shadow:var(--sol-elevation-md);padding:5px;width:200px;margin-top:6px;margin-left:auto}
+.pw-menu .mi{padding:7px 10px;border-radius:6px;font:400 13.5px/20px var(--inter);color:var(--pw-ink)}
+.pw-menu .mi:first-child{background:var(--sol-backgrounds-ui-medium)}
+.pw-jobhead{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+.pw-jobhead h5{margin:0}
+.pw-jobhead .st{font:500 13px/19px var(--inter);color:var(--sol-text-secondary);white-space:nowrap}
+.pw-jl{display:grid;grid-template-columns:96px minmax(0,1fr);gap:7px 12px;font:400 13px/19px var(--inter)}
+.pw-jl dt{color:var(--sol-text-secondary)}
+.pw-jl dd{margin:0;color:var(--pw-ink)}
+.pw-lrow.lead{padding:4px 0 10px}
+.pw-lrow.lead .pw-lname{font:500 16px/24px var(--inter)}
+.pw-lrow.lead .pw-lsub{font:400 12.5px/19px var(--inter);margin-top:3px}
+.pw-lrow.lead .pw-lval{font:500 15px/22px var(--inter)}
+.pw-acc{border:1px solid var(--sol-borders-ui-subtle);border-radius:10px;overflow:hidden;background:var(--sol-backgrounds-ui-high)}
+.pw-acc+.pw-acc{margin-top:10px}
+.pw-acch{display:grid;grid-template-columns:12px minmax(0,1fr) auto;gap:10px;align-items:center;padding:10px 13px;background:var(--sol-backgrounds-ui-medium);font:500 14px/20px var(--inter);color:var(--pw-ink)}
+.pw-acc[data-open=true] .pw-acch{border-bottom:1px solid var(--sol-borders-ui-subtle)}
+.pw-acch .chev{color:var(--sol-icons-ui-secondary);font-size:10px;line-height:1}
+.pw-acch .cnt{font:400 12px/18px var(--inter);color:var(--sol-text-secondary);white-space:nowrap}
+.pw-accb{padding:13px}
+.pw-nest{border:1px solid var(--sol-borders-ui-subtle);border-radius:10px;background:var(--sol-backgrounds-ui-medium);padding:12px 13px;display:flex;flex-direction:column;gap:9px}
+.pw-nest h6{margin:0;font:700 11px/16px var(--inter);letter-spacing:.06em;text-transform:uppercase;color:var(--sol-text-secondary)}
+.pw-tr{display:flex;flex-direction:column;gap:9px;max-height:250px;overflow:hidden;position:relative}
+.pw-tr .l{display:grid;grid-template-columns:54px minmax(0,1fr);gap:10px;font:400 13px/19px var(--inter)}
+.pw-tr .l .w{color:var(--sol-text-secondary);font-size:11.5px;padding-top:2px}
+.pw-tr .l .x{color:var(--pw-ink)}
+.pw-tr .l.them .x{color:var(--sol-text-secondary)}
+.pw-sheet{border:1px solid var(--sol-borders-ui-default);border-radius:12px;background:var(--sol-backgrounds-ui-high);box-shadow:var(--sol-elevation-md);max-width:560px;margin-left:auto}
+.pw-sheethead{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;border-bottom:1px solid var(--sol-borders-ui-subtle)}
+.pw-sheethead h4{margin:0;font:700 16px/23px var(--inter);color:var(--pw-ink)}
+.pw-sheetbody{padding:18px;display:flex;flex-direction:column;gap:14px}
+.pw-sheetfoot{display:flex;gap:10px;justify-content:flex-end;padding:14px 18px;border-top:1px solid var(--sol-borders-ui-subtle);background:var(--sol-backgrounds-ui-medium);border-radius:0 0 11px 11px}
+.pw-chk{display:grid;grid-template-columns:20px minmax(0,1fr) auto;gap:12px;align-items:start;padding:11px 0;border-bottom:1px solid var(--sol-borders-ui-subtle)}
+.pw-chk:last-of-type{border-bottom:0}
+.pw-chkbx{width:18px;height:18px;border-radius:4px;border:1.5px solid var(--sol-borders-ui-strong);background:var(--sol-backgrounds-ui-high);margin-top:1px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px}
+.pw-chk[data-on=true] .pw-chkbx{background:var(--sol-actions-button);border-color:var(--sol-actions-button)}
+.pw-chk .cn{font:500 14px/20px var(--inter);color:var(--pw-ink)}
+.pw-chk .cd{display:block;font:400 12px/18px var(--inter);color:var(--sol-text-secondary);margin-top:1px}
+.pw-chk .cv{font:500 14px/20px var(--inter);color:var(--pw-ink);font-variant-numeric:tabular-nums;white-space:nowrap}
+.foot{margin-top:24px;padding-top:26px;border-top:1px solid var(--m-bd);max-width:760px}
+.foot h3{font-size:13px;font-family:var(--mono);text-transform:uppercase;letter-spacing:.05em;color:var(--m-tx3);font-weight:400;margin:0 0 12px}
+.foot p{font-size:13.5px;color:var(--m-tx2);margin:0 0 12px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<p class="eyebrow"><span>Upgrade to Pros</span><span>S15, the Thompsons, end to end</span><span>Mockup</span><span>15 September 2026</span></p>
+
+<h1>Twelve screens, one customer, and an object that has never been drawn</h1>
+
+<p class="lede">This memo walks S15B from a quiet Monday when nothing is happening to the morning the
+money clears, and it is the first pass at the run end to end. <strong>It opens on the same page
+twice, a day apart</strong>, because everything the second one gains, it gains by itself. <strong>It is not really testing the screens.</strong>
+It is testing whether one set of components carries a three trade sale with the money on, having
+already carried a single trade sale with the money off, without breeding near identical siblings.</p>
+
+<p class="lede">It runs against <strong>S15B</strong>, our variant, which now has a scenario page of its own so that
+S15 can be left alone. It is also the first time the <strong>Opportunity</strong> has been drawn at all. That
+object was settled today, it solves six modelling problems on paper, and until it is on a screen
+nobody knows whether it earns the room it takes.</p>
+
+<p class="conv">[i] marks annotation. It belongs to this memo and never travels onto a canvas.
+Dashed regions are placeholders for things this round does not touch, and they are labelled.
+Each section carries the S15B beats it covers and who is on the screen.</p>
+
+<div class="cards">
+  <div class="ecard">
+    <h3>Settled, for the purposes of this memo</h3>
+    <p class="sub">Working assumptions carried in. None of it is ratified by anybody but Andrew.</p>
+    <ul>
+      <li><strong>The Opportunity is the durable record.</strong> One per customer, per property,
+        per trade. Origin is an attribute, so a trade the customer asked for and a trade the system
+        recommended are the same kind of record. It outlives every lead and every project.</li>
+      <li><strong>Open, On a lead, Won, Dismissed.</strong> Won is the only terminal state. A trade
+        that is offered and declined goes back to Open with a revive date and its history.</li>
+      <li><strong>The Interest is retired.</strong> An opportunity is on a lead or it is not, and a
+        proposal option prices it directly. Four demand grains, not five.</li>
+      <li><strong>Qualification is automatic</strong> where a contact names a trade and a property.
+        The lead and the project exist from the first contact, and nobody makes them.</li>
+      <li><strong>A lead is one selling episode</strong> and it closes at the hand-off. In this run
+        that is 24 August, six weeks before the project closes.</li>
+      <li><strong>The money is drawn</strong>, in four states across five screens: no tender chosen,
+        cash part paid, cash read-only at a job, and settled. <strong>S14 runs the same story with the
+        money switched off</strong>, so this is the comparison that decides whether the two money
+        cards should be one component.</li>
+      <li><strong>The scenario is S15B</strong>, not S15. Ours differs from the team's in four named
+        ways and now has a page of its own, so S15 can be left alone.</li>
+      <li><strong>Two recommendations have been open for eleven months.</strong> Made two days after
+        the heat pump job closed, off photographs Northgate's own crew took, and never mentioned to
+        anybody until the intake call.</li>
+    </ul>
+  </div>
+  <div class="ecard">
+    <h3>To decide, before anything is built</h3>
+    <p class="sub">Two things, and a failure in the first means the model is wrong rather than the
+      layout.</p>
+    <ul>
+      <li><strong>Does the opportunity survive being drawn?</strong> It appears on four of these
+        seven of these twelve screens and it opens the whole strip. If that reads as
+        clutter, or if a person cannot tell an opportunity from a lead at a glance, <strong>the
+        object is wrong and not the page.</strong> It was settled on paper this afternoon and this
+        is the first look at it.</li>
+      <li><strong>Does a project delivering with no lead behind it have a template?</strong> Section H
+        is a consequence of today's rulings and was not designed for: the lead closed at the hand-off
+        and the project runs on for six weeks without it, <strong>so the only route back to how the
+        sale happened is one row in a provenance card.</strong> Five of the twelve screens are in that
+        state.</li>
+      <li><strong>And does an eleven month old recommendation still belong on the page?</strong>
+        Screens A and B open with two of them, and the memo takes no position on whether anything
+        should age one out. <strong>Nothing in the model does.</strong> If the answer is that they
+        should expire, the opportunity needs something it does not have.</li>
+    </ul>
+    <p class="tail">Everything else that is open is listed at the foot, per the departure of
+      10 September.</p>
+  </div>
+</div>
+
+<!-- ============================== A ============================== -->
+<section class="sec">
+  <div class="sec-head"><span class="badge-l">A</span>
+    <h2 class="sec-title">The household on an ordinary Monday</h2>
+    <span class="sec-when">Mon 3 August</span></div>
+  <p class="sec-beat">Nothing is happening and nothing has happened since March. Two trades have
+    been sitting here unmentioned since the week the heat pump job closed.</p>
+  <p class="sec-meta"><span><span class="k">S15B</span> <b>Beats 1 and 2</b></span><span><span class="k">Who</span> <b>Nobody. This is the record at rest</b></span></p>
+
+  <div class="frame"><div class="pw-page">
+    <div class="pw-crumbs"><a href="#">Customer</a><span class="s">/</span><span>Sara Thompson</span></div>
+    <div class="pw-titlerow">
+      <div><h1 class="t-h1">Sara Thompson<span class="pw-pencil">&#9998;</span></h1>
+        <p class="pw-meta">Customer since Aug 2025<span class="s">&middot;</span><a href="#">1428 Maple Ave</a><span class="s">&middot;</span><a href="#">2 contacts</a></p></div>
+      <div class="pw-actions"><button class="pw-btn">Log a call</button><span class="pw-kebab">&#8943;</span></div>
+    </div>
+
+    <div class="pw-stack" style="margin-top:22px">
+      <div class="pw-group">
+        <div class="pw-pair">
+          <div class="pw-card"><div class="pw-cardstack">
+            <h5>Property and equipment</h5>
+            <div class="pw-syn">
+              <div class="pw-synr"><span class="k">1428 Maple Ave</span><span class="v">Two storey, 2,140 sq ft, built 1978</span></div>
+              <div class="pw-synr"><span class="k">Heat pump</span><span class="v">Carrier, installed Sep 2025</span></div>
+              <div class="pw-synr"><span class="k">Parts warranty</span><span class="v">To Sep 2035</span></div>
+              <div class="pw-synr"><span class="k">Access</span><span class="v">Gate code on file, dog in the yard</span></div>
+            </div>
+          </div></div>
+          <div class="pw-card"><div class="pw-cardstack">
+            <h5>Latest activity</h5>
+            <div class="pw-fade">
+              <div class="pw-note-item"><div class="pw-note-h"><span class="ty">Service visit</span><span>18 Mar</span><span>Danny Cho</span></div><p>Condenser fan motor noisy and the unit is six months old, so it is a warranty question rather than a repair. Flagged to watch at the autumn visit.</p></div>
+              <div class="pw-note-item"><div class="pw-note-h"><span class="ty">Service visit</span><span>14 Oct 2025</span><span>Danny Cho</span></div><p>First maintenance visit. No findings.</p></div>
+              <div class="pw-note-item"><div class="pw-note-h"><span class="ty">Project closed</span><span>24 Sep 2025</span><span>Alicia Moss</span></div><p>Heat pump conversion paid and closed. Maintenance plan sold at closeout.</p></div>
+            </div>
+            <div class="pw-more"><a href="#">See all activity</a></div>
+          </div></div>
+        </div>
+      </div>
+
+      <div class="pw-group">
+        <div class="pw-grouphead"><h2>Selling</h2></div>
+        <div class="pw-pair">
+          <div class="pw-card"><div class="pw-cardstack">
+            <h5>Opportunities</h5>
+            <div class="pw-crowlist">
+              <div class="pw-lrow"><div><span class="pw-lname">Siding</span><span class="pw-lsub">Suggested 26 Sep 2025, from the heat pump install photos</span></div><div class="pw-r"><span class="pw-lst">Open<span class="pw-bdg">11 months</span></span></div></div>
+              <div class="pw-lrow"><div><span class="pw-lname">Windows</span><span class="pw-lsub">Suggested 26 Sep 2025, from the 1978 build and its original glazing</span></div><div class="pw-r"><span class="pw-lst">Open<span class="pw-bdg">11 months</span></span></div></div>
+            </div>
+            <div class="pw-more"><span>Neither has been raised with the customer</span><a href="#">Mark worth raising</a></div>
+          </div></div>
+          <div class="pw-card"><div class="pw-cardstack">
+            <h5>Leads</h5>
+            <div class="pw-empty">No open lead. A new enquiry will start one.</div>
+          </div></div>
+        </div>
+      </div>
+
+      <div class="pw-group">
+        <div class="pw-grouphead"><h2>Operations</h2></div>
+        <div class="pw-pair">
+          <div class="pw-card"><div class="pw-cardstack">
+            <h5>Active projects</h5>
+            <div class="pw-empty">Nothing in delivery.</div>
+            <div class="pw-more"><span>1 closed project, 1 job</span><a href="#">See previous work</a></div>
+          </div></div>
+          <div class="pw-card"><div class="pw-cardstack">
+            <h5>Service plans</h5>
+            <div class="pw-crowlist">
+              <div class="pw-lrow"><div><span class="pw-lname">Maintenance plan</span><span class="pw-lsub">Two visits a year. Both taken. Renews 24 Sep</span></div><div class="pw-r"><span class="pw-lval">$29 / mo</span><span class="pw-lst">Active</span></div></div>
+            </div>
+          </div></div>
+        </div>
+        <p class="annrow"><span class="ann">[i] Two opportunities, no demand, one live plan and a closed project. This is the state the customer record spends most of its life in and nothing has ever drawn it.</span></p>
+      </div>
+    </div>
+  </div></div>
+
+  <div class="arg">
+    <div class="b"><p class="k">The claim</p><p>A customer record with nothing going on is <strong>not an empty page</strong>. Two opportunities, a live service plan, a closed project and a thin trail of quiet activity. The page has content without having any demand on it.</p></div>
+    <div class="b"><p class="k">Why this screen exists at all</p><p>It is the before half of a pair. <strong>Everything the next screen gains, it gains by itself</strong>, and that cannot be seen without this one. It is also the commonest state the template will be in, and until now it had never been drawn.</p></div>
+    <div class="b"><p class="k">Eleven months is the finding, not the decoration</p><p>Both recommendations were made two days after the heat pump job closed, off photographs Northgate's own crew took. <strong>Nobody has looked at either since.</strong> The badge says eleven months because a rep needs to know that before reading the row, which is the badge test being passed rather than stretched.</p></div>
+    <div class="b"><p class="k">Two empty cards, and neither apologises</p><p>No open lead, nothing in delivery. Each says what would put something there, and the operations one carries a count of what came before. <strong>An empty state that knows its own history is a different claim from an empty state that does not.</strong></p></div>
+    <div class="b"><p class="k">What is uncomfortable</p><p>The only action on the page is Mark worth raising, on two recommendations nobody has thought about since last September. <strong>The page offers the thing that has already been ignored for eleven months</strong>, and says nothing about why or what would change that.</p></div>
+  </div>
+
+  <div class="qs"><h4>Open</h4><ol>
+    <li><strong>Should an eleven month old recommendation still be sitting here?</strong> This is the expiry question with a number on it. Nothing ages an opportunity out, and this screen is the argument that something should.</li>
+    <li>Is a duration badge right, or should the age be a sort? Two rows is not enough to tell.</li>
+    <li><strong>Where would a rep ever see this page?</strong> Nothing surfaces a quiet household. The record is findable and nothing makes anybody go and find it.</li>
+  </ol></div>
+</section>
+
+<!-- ============================== B ============================== -->
+<section class="sec">
+  <div class="sec-head"><span class="badge-l">B</span>
+    <h2 class="sec-title">The same page, one day later</h2>
+    <span class="sec-when">Tue 4 August, 7:12am</span></div>
+  <p class="sec-beat">Robert submits a roofing enquiry through the Home App. It names a trade and a
+    property, so it qualifies itself. Nobody at Northgate is awake, let alone present.</p>
+  <p class="sec-meta"><span><span class="k">S15B</span> <b>Beat 3</b></span><span><span class="k">Who</span> <b>Nobody. Robert submits from the Home App</b></span></p>
+
+  <div class="frame"><div class="pw-page">
+    <div class="pw-crumbs"><a href="#">Customer</a><span class="s">/</span><span>Sara Thompson</span></div>
+    <div class="pw-titlerow">
+      <div><h1 class="t-h1">Sara Thompson<span class="pw-pencil">&#9998;</span></h1>
+        <p class="pw-meta">Customer since Aug 2025<span class="s">&middot;</span><a href="#">1428 Maple Ave</a><span class="s">&middot;</span><a href="#">2 contacts</a></p></div>
+      <div class="pw-actions"><button class="pw-btn">Log a call</button><span class="pw-kebab">&#8943;</span></div>
+    </div>
+
+    <div class="pw-stack" style="margin-top:22px">
+      <div class="pw-group">
+        <div class="pw-grouphead"><h2>Selling</h2></div>
+        <div class="pw-pair">
+          <div class="pw-card"><div class="pw-cardstack">
+            <h5>Opportunities</h5>
+            <div class="pw-crowlist">
+              <div class="pw-lrow"><div><span class="pw-lname med">Roofing</span><span class="pw-lsub">Raised by Robert in the Home App, 7:12 this morning</span></div><div class="pw-r"><span class="pw-lst">On a lead<span class="pw-bdg">New</span></span></div></div>
+              <div class="pw-lrow"><div><span class="pw-lname">Siding</span><span class="pw-lsub">Suggested 26 Sep 2025, from the heat pump install photos</span></div><div class="pw-r"><span class="pw-lst">Open<span class="pw-bdg">11 months</span></span></div></div>
+              <div class="pw-lrow"><div><span class="pw-lname">Windows</span><span class="pw-lsub">Suggested 26 Sep 2025, from the 1978 build and its original glazing</span></div><div class="pw-r"><span class="pw-lst">Open<span class="pw-bdg">11 months</span></span></div></div>
+            </div>
+          </div></div>
+          <div class="pw-card"><div class="pw-cardstack">
+            <h5>Leads</h5>
+            <div class="pw-crowlist">
+              <div class="pw-lrow"><div><span class="pw-lname med">Roofing, Thompson</span><span class="pw-lsub">Opened 7:12 this morning from the Home App. Unassigned</span></div><div class="pw-r"><span class="pw-lval">1 opportunity</span><span class="pw-lst">Active</span></div></div>
+            </div>
+          </div></div>
+        </div>
+        <p class="annrow"><span class="ann">[i] Three rows changed and a person did none of it. The roofing opportunity, the lead and the project behind it were all created by a form submission.</span></p>
+      </div>
+
+      <div class="pw-group">
+        <div class="pw-grouphead"><h2>Not drawn this round</h2></div>
+        <div class="ph"><span class="t">The rest of the page</span><p class="d">Property and equipment, latest activity and operations are unchanged from the screen above. <strong>Only the Selling group moved.</strong> Financials is not drawn on either screen.</p></div>
+      </div>
+    </div>
+  </div></div>
+
+  <div class="arg">
+    <div class="b"><p class="k">The claim</p><p>Between these two screens <strong>nobody at Northgate did anything</strong>. A customer filled in a form at ten past seven in the morning. Three rows appeared, a lead opened, and a project was created behind it that the page does not mention.</p></div>
+    <div class="b"><p class="k">The new row is a different kind of thing from the two below it</p><p>Roofing came from the customer and is already being sold. Siding and windows came from us and have been ignored for eleven months. <strong>Same card, same component, one status word apart</strong>, and the sub lines carry the whole difference.</p></div>
+    <div class="b"><p class="k">Three badges, one new and two old</p><p>New on the roofing row, because it arrived overnight and nobody has touched it. Eleven months on the other two. <strong>Three badges on one card is the limit</strong>, and they survive because they say three different things about time.</p></div>
+    <div class="b"><p class="k">The lead is unassigned and the page says so</p><p>It exists, it has a name taken from its contents, and it belongs to nobody. <strong>That is the state the whole model produces</strong> and the one everything downstream has to tolerate.</p></div>
+    <div class="b"><p class="k">What is uncomfortable, and it is the same discomfort as the screen before</p><p>The opportunities card now has a row being sold and two that are not, with no divider and no filter. <strong>At three rows that is legible and at twelve it is not</strong>, and the next screen splits it into two cards precisely because of that.</p></div>
+  </div>
+
+  <div class="qs"><h4>Open</h4><ol>
+    <li><strong>Should the customer record split its opportunities the way the lead does?</strong> The lead page separates what is being sold from what is not. This page does not, and the two screens now disagree about the same content.</li>
+    <li>Does the page need to say a project was created? It was, and nothing here mentions it, which is the naming decision working as intended and worth checking once.</li>
+    <li><strong>What surfaces this to a person?</strong> The lead is unassigned at 7:12am. Nothing on this screen is the thing that gets somebody to open it.</li>
+  </ol></div>
+</section>
+
+<!-- ============================== C ============================== -->
+<section class="sec">
+  <div class="sec-head"><span class="badge-l">C</span>
+    <h2 class="sec-title">The lead nobody created, tapped from the record</h2>
+    <span class="sec-when">Tue 4 August, 8:40am</span></div>
+  <p class="sec-beat">Renata opens the lead from the customer record above, an hour and a half after
+    it appeared. <strong>This is where the two old recommendations get looked at for the first time
+    in eleven months.</strong></p>
+  <p class="sec-meta"><span><span class="k">S15B</span> <b>Beat 4</b></span><span><span class="k">Who</span> <b>Renata Silva, front desk. Robert raised it and is not present</b></span><span><span class="k">From</span> <b>Screen B, tapping the lead</b></span></p>
+
+  <div class="frame"><div class="pw-page">
+    <div class="pw-crumbs"><a href="#">Customer</a><span class="s">/</span><a href="#">Sara Thompson</a><span class="s">/</span><span>Roofing</span></div>
+    <div class="pw-titlerow">
+      <div>
+        <h1 class="t-h1">Roofing, Thompson<span class="pw-pencil">&#9998;</span></h1>
+        <p class="pw-meta">Home App, this morning<span class="s">·</span>1428 Maple Ave<span class="s">·</span><span class="now">Unassigned</span></p>
+      </div>
+      <div class="pw-actions">
+        <div style="display:flex;flex-direction:column;align-items:flex-end">
+          <span class="pw-multi"><span class="m">Engage customer</span><span class="c">&#9660;</span></span>
+          <div class="pw-menu"><div class="mi">Intake call</div><div class="mi">Sales call</div><div class="mi">Book a visit</div></div>
+        </div>
+        <span class="pw-kebab">&#8943;</span></div>
+    </div>
+
+    <div class="pw-stack" style="margin-top:22px">
+      <div class="pw-group">
+        <div class="pw-pair wide-l">
+          <div class="pw-card"><div class="pw-cardstack">
+            <h5>What they said</h5>
+            <div class="pw-syn one">
+              <div class="pw-synr"><span class="k">In their words</span><span class="v q">&ldquo;Found shingles in the yard after the storm last night. Someone should look at it before winter.&rdquo;</span></div>
+            </div>
+            <div class="pw-syn">
+              <div class="pw-synr"><span class="k">Raised by</span><span class="v">Robert Thompson</span></div>
+              <div class="pw-synr"><span class="k">Route</span><span class="v">Home App</span></div>
+              <div class="pw-synr"><span class="k">Roof</span><span class="v">Asphalt shingle, near end of life</span></div>
+              <div class="pw-synr"><span class="k">Storm damage</span><span class="v">August 2026</span></div>
+            </div>
+          </div></div>
+          <div class="pw-card"><div class="pw-cardstack">
+            <h5>The property</h5>
+            <div class="pw-syn one">
+              <div class="pw-synr"><span class="k">Address</span><span class="v">1428 Maple Ave, Sacramento CA 95818</span></div>
+            </div>
+            <div class="pw-syn">
+              <div class="pw-synr"><span class="k">Built</span><span class="v">1978</span></div>
+              <div class="pw-synr"><span class="k">Size</span><span class="v">2,140 sq ft, two storey</span></div>
+              <div class="pw-synr"><span class="k">Access</span><span class="v">Dumpster on the north driveway</span></div>
+              <div class="pw-synr"><span class="k">Exterior colour</span><span class="v">HOA approval needed</span></div>
+            </div>
+          </div></div>
+        </div>
+      </div>
+
+      <div class="pw-group">
+        <div class="pw-grouphead"><h2>Opportunities</h2></div>
+        <div class="pw-one">
+          <div class="pw-card"><div class="pw-cardstack">
+            <h5>On this lead</h5>
+            <div class="pw-crowlist">
+              <div class="pw-lrow lead"><div><span class="pw-lname">Roofing</span><span class="pw-lsub">Raised by Robert in the Home App at 7:12 this morning. Storm damage, shingles in the yard</span></div>
+                <div class="pw-r"><span class="pw-lval">Estimate to come</span><span class="pw-lst">Nothing priced yet</span></div></div>
+            </div>
+          </div></div>
+        </div>
+        <div class="pw-pair wide-l">
+          <div class="pw-card"><div class="pw-cardstack">
+            <h5>Other opportunities at this property</h5>
+            <div class="pw-crowlist">
+              <div class="pw-lrow"><div><span class="pw-lname">Siding</span><span class="pw-lsub">Suggested 26 Sep 2025, from the heat pump install photos</span></div>
+                <div class="pw-r"><span class="pw-lst">Open<span class="pw-bdg">11 months</span></span></div></div>
+              <div class="pw-lrow"><div><span class="pw-lname">Windows</span><span class="pw-lsub">Suggested 26 Sep 2025, from the 1978 build and its original glazing</span></div>
+                <div class="pw-r"><span class="pw-lst">Open<span class="pw-bdg">11 months</span></span></div></div>
+            </div>
+            <div class="pw-more"><span>Neither has been raised with the customer</span><a href="#">Mark both worth raising</a></div>
+          </div></div>
+          <div class="pw-card"><div class="pw-cardstack">
+            <h5>Notes</h5>
+            <div class="pw-empty">Nothing yet. The first note will come from the intake call.</div>
+          </div></div>
+        </div>
+        <p class="annrow"><span class="ann">[i] Siding and windows are recommendations, not demand. They sit against the customer and the property and are shown here, not owned here.</span></p>
+      </div>
+
+
+    </div>
+  </div></div>
+
+  <div class="arg">
+    <div class="b"><p class="k">The claim</p><p>A page can open on a record <strong>nobody made</strong> without saying so. The meta line reads "Home App, this morning" and "Unassigned", and neither of those is an apology. <strong>The lead and the project both exist here</strong> and the page mentions neither word.</p></div>
+    <div class="b"><p class="k">Why the title is the trade</p><p>The container is named by its contents and it holds one thing, so it reads "Roofing, Thompson". <strong>It will grow to three and then shrink to two</strong>, which is section G's problem and is not solved here.</p></div>
+    <div class="b"><p class="k">Two cards, not one list</p><p>Roofing is lifted out into a card of its own and the recommendations sit below it. <strong>The difference between demand being sold and a trade somebody thinks might sell is now structural</strong>, not a phrase in a status column. It was one card with three rows and a filter, and this reads better.</p></div>
+    <div class="b"><p class="k">A lone card under a group heading</p><p>The roofing card takes the full width with nothing beside it, which is the case settled on 14 September: <strong>a group may contain one card and it keeps its heading.</strong> This is the first time that rule has been exercised deliberately rather than avoided.</p></div>
+    <div class="b"><p class="k">The filter is gone, and that is a decision with a delayed cost</p><p>With three opportunities nothing is lost. <strong>With a household carrying a dozen, including dismissed ones, this card has no way to hide anything.</strong> The segmented control was doing a job that does not exist yet.</p></div>
+    <div class="b"><p class="k">The sub lines carry the evidence and the age</p><p>"Suggested 26 Sep 2025, from the heat pump install photos" is provenance read as prose, per the density rule. <strong>It is also the argument</strong>: a recommendation with evidence behind it is worth raising and one without is noise. The badge carries the eleven months, because that is the part a rep has to see before reading the row.</p></div>
+    <div class="b"><p class="k">This is where the marking happens</p><p>The card is headed "Other opportunities at this property", not "worth raising", <strong>because nothing has been marked yet.</strong> The footer offers it. The previous version of this memo had the heading claim the marking was done while the footer offered to do it, which was the page arguing with itself.</p></div>
+    <div class="b"><p class="k">There is no money card, and that is the rule working</p><p>No proposal, no contract, no invoice. <strong>A capability that will exist advertises and a gap the model cannot answer is left out</strong>, and this is neither: money will exist here and there is simply nothing in it yet, so the card is absent and the overview pairs with the property instead. The component record says exactly that.</p></div>
+    <div class="b"><p class="k">No badges on this screen</p><p>Nothing here needs to be seen before the row is read. The two open opportunities are already in a card headed Opportunities, and <strong>position is doing the work a badge would do.</strong></p></div>
+    <div class="b"><p class="k">What is uncomfortable</p><p><strong>Engage customer is the only real action on the page</strong>, and two of the three trades on it have never been mentioned to anybody. Nothing says which of the three routes is right when that is true, <strong>and nothing says what happens if you pick the wrong one.</strong></p></div>
+  </div>
+
+  <div class="qs"><h4>Open</h4><ol>
+    <li><strong>Should Start selling be available at all on day one?</strong> The story has it happen six days later, and nothing on this page explains the gap.</li>
+    <li><strong>Is "Mark worth raising" a bulk action in the card footer, or a per row control?</strong> Drawn as the first. A per row control on a card with two rows is two controls doing one job.</li>
+    <li><strong>Where do dismissed opportunities go, now there is no filter?</strong> A third card would be three cards for one idea. Folding them into the second card contradicts its heading, since a dismissed trade is by definition not worth raising.</li>
+    <li>At what count does the second card need its own filter back? Two is comfortable and twelve is not, and nothing says where the line is.</li>
+  </ol></div>
+</section>
+
+<!-- ============================== D ============================== -->
+<section class="sec">
+  <div class="sec-head"><span class="badge-l">D</span>
+    <h2 class="sec-title">The intake call, with all three trades on the table</h2>
+    <span class="sec-when">Wed 5 August, 2:15pm</span></div>
+  <p class="sec-beat">Renata on the front desk telephones Sara. The exteriors template runs with the
+    roofing questions, and now also with siding and windows, because both are marked worth raising.
+    She hands the lead to Priya afterwards.</p>
+  <p class="sec-meta"><span><span class="k">S15B</span> <b>Beat 5</b></span><span><span class="k">Who</span> <b>Renata Silva, front desk, on the phone to Sara Thompson</b></span></p>
+
+  <div class="frame"><div class="pw-page">
+    <div class="pw-crumbs"><a href="#">Customer</a><span class="s">/</span><a href="#">Sara Thompson</a><span class="s">/</span><span>Roofing</span><span class="s">/</span><span>Call</span></div>
+    <div class="pw-titlerow">
+      <div><h1 class="t-h1">Call with Sara Thompson</h1>
+        <p class="pw-meta">Outbound<span class="s">·</span>Started 2:15pm<span class="s">·</span><span class="now">Renata Silva, front desk</span></p></div>
+      <div class="pw-actions"><button class="pw-btn">Save and close</button><button class="pw-btn pri">End call</button></div>
+    </div>
+
+    <div class="pw-stack" style="margin-top:22px">
+      <div class="pw-pair">
+        <div class="pw-card"><div class="pw-cardstack">
+          <div class="pw-cardhead"><h5>Live transcript</h5><span class="pw-bdg">Proposal</span></div>
+          <div class="pw-tr">
+            <div class="l them"><span class="w">2:16</span><span class="x">Sara: Yes, Robert mentioned he'd put something in the app about the roof.</span></div>
+            <div class="l"><span class="w">2:16</span><span class="x">Renata: That's right. Before I book someone out, can I ask about the south side?</span></div>
+            <div class="l them"><span class="w">2:17</span><span class="x">Sara: The south side is looking really tired, it's cracking in places. What would a full wrap cost, and could you do it at the same time as the roof?</span></div>
+            <div class="l"><span class="w">2:18</span><span class="x">Renata: We took photos of it when we put your heat pump in last year, so we've got a decent look at it already.</span></div>
+            <div class="l them"><span class="w">2:19</span><span class="x">Sara: And the windows? They're original, but they still work. I've never really thought about them.</span></div>
+          </div>
+          <p class="annrow"><span class="ann">[i] Transcription does not exist. Drawn as a proposal, recorded in the object register with hold: watch.</span></p>
+        </div></div>
+        <div class="pw-card"><div class="pw-cardstack">
+          <h5>What we are asking about</h5>
+          <div>
+            <div class="pw-acc" data-open="true">
+              <div class="pw-acch"><span class="chev">&#9660;</span><span>Roofing</span><span class="cnt">4 of 4 answered</span></div>
+              <div class="pw-accb"><div class="pw-form">
+                <div class="pw-fldrow">
+                  <div class="pw-fld"><span class="fl">Roof age</span><div class="fi">About 19 years</div></div>
+                  <div class="pw-fld"><span class="fl">Leaking</span><div class="fi">Not yet</div></div>
+                </div>
+                <div class="pw-fld"><span class="fl">What prompted it</span><div class="fi">Shingles in the yard after the August storm</div></div>
+                <div class="pw-fld"><span class="fl">Notes</span><div class="fi">Wants it looked at before winter. Robert raised it, Sara decides.</div></div>
+              </div></div>
+            </div>
+            <div class="pw-acc" data-open="false">
+              <div class="pw-acch"><span class="chev">&#9654;</span><span>Siding</span><span class="cnt">4 of 6 answered</span></div>
+            </div>
+            <div class="pw-acc" data-open="false">
+              <div class="pw-acch"><span class="chev">&#9654;</span><span>Windows</span><span class="cnt">2 of 5 answered</span></div>
+            </div>
+          </div>
+          <p class="annrow"><span class="ann">[i] Three sections, roofing open. A declared departure from the rule that detail goes sideways into a sheet rather than down into an accordion.</span></p>
+        </div></div>
+      </div>
+    </div>
+  </div></div>
+
+  <div class="arg">
+    <div class="b"><p class="k">The claim, and it breaks a rule on purpose</p><p>Three collapsible sections, roofing open. <strong>The composition standard says detail that does not fit goes sideways into a sheet, not down into an accordion</strong>, and this goes down into an accordion. Declared here rather than done quietly, which is what a Default marker asks for.</p></div>
+    <div class="b"><p class="k">Why the rule loses here</p><p>A segmented control hides two trades behind a click while somebody is talking. <strong>The customer answers about all three in one conversation and does not take them in order</strong>, so a person typing has to be able to reach any of them without losing what is on screen. A sheet would cover the transcript, which is worse.</p></div>
+    <div class="b"><p class="k">The counts moved onto the headers</p><p>"Siding, 4 of 6 answered" on a collapsed section. <strong>The card still answers its question before anything is opened</strong>, which is the thing the segmented control was carrying and the thing an accordion usually loses.</p></div>
+    <div class="b"><p class="k">What it cost, and this is the reason to watch it</p><p>The nested block has gone. Siding and windows used to appear inside the roofing card as a subordinate list, showing what the customer said about each. <strong>That content is now behind two closed headers</strong>, so the page no longer says on its face that the customer was keen on one and lukewarm on the other.</p></div>
+    <div class="b"><p class="k">Why the transcript is on the left</p><p>Andrew asked for it in place of the trade picker. It is on the left because the person is reading it and typing on the right, and <strong>reading left while typing right is the only arrangement that does not cross the hands.</strong></p></div>
+
+    <div class="b"><p class="k">Nothing converts here</p><p>Both stay Open. The detail is captured against them and the customer has engaged, but <strong>they do not go on the lead until Start selling</strong>, which is section F. That is C's reading and it is what gives the six days something to be.</p></div>
+    <div class="b"><p class="k">This screen is crowded and it is the second warning</p><p>Three regions compete: the transcript, the three trade sections, and the page furniture. <strong>Andrew flagged the same crowding on the S14 capture screen.</strong> It is worse here because there are three trades rather than one.</p></div>
+    <div class="b"><p class="k">Every section gets a notes field</p><p>The template asks what it can ask, and <strong>the useful half of a call is always the part no field anticipated.</strong> One free box per trade, so the note lands against the opportunity it is about rather than in a single pile at the end.</p></div>
+    <div class="b"><p class="k">The not-asked treatment has gone with the field that carried it</p><p>A dashed "Not asked" field was the only demonstration of it, and removing that field removes the demonstration. <strong>The treatment is still in the component record and still right</strong>, and this memo no longer shows it.</p></div>
+    <div class="b"><p class="k">This is the front desk, not the sales consultant</p><p>Renata takes the call and hands the lead to Priya afterwards. <strong>That is a change to the worked example rather than to this screen</strong>, and it puts a hand-off into the gap before Start selling that previously had nothing in it.</p></div>
+  </div>
+
+  <div class="qs"><h4>Open</h4><ol>
+    <li><strong>Is the transcript worth the width it takes?</strong> It is half the screen and it is a capability nobody has confirmed exists. The cheap alternative is a collapsed strip that expands.</li>
+    <li><strong>Does the temperature belong on the collapsed header?</strong> "Siding, keen" would say what matters commercially, where "4 of 6 answered" says how full the form is. The second is drawn because it does not change while somebody types.</li>
+    <li><strong>Where does the call itself live afterwards?</strong> Communications has surfaced six times in two days and is still a register row.</li>
+  </ol></div>
+</section>
+
+<!-- ============================== E ============================== -->
+<section class="sec">
+  <div class="sec-head"><span class="badge-l">E</span>
+    <h2 class="sec-title">The customer record, a returning household</h2>
+    <span class="sec-when">Wed 5 August, after the call</span></div>
+  <p class="sec-beat">The restructure asked for in the review, plus the thing the review could not
+    have asked for: opportunities as a section of their own.</p>
+  <p class="sec-meta"><span><span class="k">S15B</span> <b>Beats 1, 5 and 6</b></span><span><span class="k">Who</span> <b>Renata Silva, front desk</b></span></p>
+
+  <div class="frame"><div class="pw-page">
+    <div class="pw-crumbs"><a href="#">Customer</a><span class="s">/</span><span>Sara Thompson</span></div>
+    <div class="pw-titlerow">
+      <div><h1 class="t-h1">Sara Thompson<span class="pw-pencil">&#9998;</span></h1>
+        <p class="pw-meta">Customer since Aug 2025<span class="s">·</span><a href="#">1428 Maple Ave</a><span class="s">·</span><a href="#">2 contacts</a></p></div>
+      <div class="pw-actions"><button class="pw-btn">Log a call</button><span class="pw-kebab">&#8943;</span></div>
+    </div>
+
+    <div class="pw-stack" style="margin-top:22px">
+      <div class="pw-group">
+        <div class="pw-pair">
+          <div class="pw-card"><div class="pw-cardstack">
+            <h5>Property and equipment</h5>
+            <div class="pw-syn">
+              <div class="pw-synr"><span class="k">1428 Maple Ave</span><span class="v">Two storey, 2,140 sq ft, built 1978</span></div>
+              <div class="pw-synr"><span class="k">Heat pump</span><span class="v">Carrier, installed Sep 2025</span></div>
+              <div class="pw-synr"><span class="k">Parts warranty</span><span class="v">To Sep 2035</span></div>
+              <div class="pw-synr"><span class="k">Access</span><span class="v">Gate code on file, dog in the yard</span></div>
+            </div>
+          </div></div>
+          <div class="pw-card"><div class="pw-cardstack">
+            <h5>Latest activity</h5>
+            <div class="pw-fade"><div class="pw-note-item"><div class="pw-note-h"><span class="ty">Intake call</span><span>5 Aug</span><span>Renata Silva</span></div>
+              <p>Worked the exteriors template. Raised the siding and the windows from the recommendations. Sara was keen on the siding once she heard we had photos from the heat pump job.</p></div>
+              <div class="pw-note-item"><div class="pw-note-h"><span class="ty">Enquiry</span><span>4 Aug</span><span>Home App</span></div>
+              <p>Robert raised the roof after the storm. It qualified itself and the lead opened at 7:12am.</p></div>
+              <div class="pw-note-item"><div class="pw-note-h"><span class="ty">Service visit</span><span>18 Mar</span><span>Danny Cho</span></div><p>Condenser fan motor noisy.</p></div></div>
+            <div class="pw-more"><a href="#">See all activity</a></div>
+          </div></div>
+        </div>
+      </div>
+
+      <div class="pw-group">
+        <div class="pw-grouphead"><h2>Selling</h2></div>
+        <div class="pw-pair">
+          <div class="pw-card"><div class="pw-cardstack">
+            <div class="pw-cardhead"><h5>Opportunities</h5>
+              <div class="pw-seg"><button class="pw-segi" data-on="true">All 3</button><button class="pw-segi">Open 2</button><button class="pw-segi">Won 0</button></div></div>
+            <div class="pw-crowlist">
+              <div class="pw-lrow"><div><span class="pw-lname med">Roofing</span><span class="pw-lsub">Robert, Home App, 4 Aug</span></div><div class="pw-r"><span class="pw-lst">On a lead</span></div></div>
+              <div class="pw-lrow"><div><span class="pw-lname">Siding</span><span class="pw-lsub">Suggested 26 Sep 2025</span></div><div class="pw-r"><span class="pw-lst">Open<span class="pw-bdg">Worth raising</span></span></div></div>
+              <div class="pw-lrow"><div><span class="pw-lname">Windows</span><span class="pw-lsub">Suggested 26 Sep 2025</span></div><div class="pw-r"><span class="pw-lst">Open<span class="pw-bdg">Worth raising</span></span></div></div>
+            </div>
+          </div></div>
+          <div class="pw-card"><div class="pw-cardstack">
+            <h5>Leads</h5>
+            <div class="pw-crowlist">
+              <div class="pw-lrow"><div><span class="pw-lname med">Roofing, Thompson</span><span class="pw-lsub">Opened 4 Aug from the Home App</span></div><div class="pw-r"><span class="pw-lval">1 opportunity</span><span class="pw-lst">Active</span></div></div>
+            </div>
+          </div></div>
+        </div>
+      </div>
+
+      <div class="pw-group">
+        <div class="pw-grouphead"><h2>Operations</h2></div>
+        <div class="pw-pair">
+          <div class="pw-card"><div class="pw-cardstack">
+            <h5>Active projects</h5>
+            <div class="pw-empty">Nothing in delivery. Work appears here once something is sold.</div>
+            <div class="pw-more"><span>1 closed project, 1 job</span><a href="#">See previous work</a></div>
+          </div></div>
+          <div class="pw-card"><div class="pw-cardstack">
+            <h5>Service plans</h5>
+            <div class="pw-crowlist">
+              <div class="pw-lrow"><div><span class="pw-lname">Maintenance plan</span><span class="pw-lsub">Two visits a year. Both taken. Renews 24 Sep</span></div><div class="pw-r"><span class="pw-lval">$29 / mo</span><span class="pw-lst">Active</span></div></div>
+            </div>
+          </div></div>
+        </div>
+      </div>
+
+      <div class="pw-group">
+        <div class="pw-grouphead"><h2>Financials, and what is not drawn</h2></div>
+        <div class="pw-pair">
+          <div class="pw-card"><div class="pw-cardstack">
+            <h5>Financials</h5>
+            <div class="pw-cardrows">
+              <div class="pw-crow"><span class="cl">Owed now</span><span class="cv">$0</span></div>
+              <div class="pw-crow"><span class="cl">Maintenance plan</span><span class="cv">$29 / mo</span></div>
+              <div class="pw-crow"><span class="cl">Paid to date, all time</span><span class="cv">$15,148</span></div>
+            </div>
+          </div></div>
+          <div class="ph"><span class="t">Notes and history</span><p class="d">One pair, one group. Neither is touched by the questions this memo asks.</p></div>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <div class="arg">
+    <div class="b"><p class="k">The claim</p><p>Opportunities is a card in Selling, paired with Leads, <strong>and the pairing is the argument</strong>: what might they buy, and what are we selling them. Those answer the same kind of question, which is the composition rule's own test.</p></div>
+    <div class="b"><p class="k">What the review asked for, and got</p><p>Property and equipment moved left of latest activity. Service plans moved into Operations. Activity is two deep with a fade rather than growing. <strong>Active projects shows a placeholder</strong> and the previous work line is left aligned with a link beside it.</p></div>
+    <div class="b"><p class="k">Two badges, and they are the only ones</p><p>Worth raising appears twice, in neutral tone. It passes the test: a rep scanning this record needs to know which recommendations somebody has already judged, <strong>and that fact cannot be read from the row.</strong></p></div>
+    <div class="b"><p class="k">The empty state is doing real work</p><p>"Nothing in delivery" is the thinnest this household will ever be on the operations side, and it still has a service plan beside it. <strong>The pair survives one card being empty</strong>, which the lone-card rule predicted and this is the first check of.</p></div>
+    <div class="b"><p class="k">Where the grains collide, and it is mild</p><p>Three demand words appear on this page: Open, On a lead, Active. <strong>They are on different cards under one heading</strong> and each belongs to a different object. That is the four grain risk in its easiest form and it reads.</p></div>
+    <div class="b"><p class="k">What is uncomfortable</p><p>Roofing appears twice, as an opportunity and as the lead named after it. <strong>The page says the same trade twice in one group</strong>, and a reader may reasonably ask which one to click.</p></div>
+  </div>
+
+  <div class="qs"><h4>Open</h4><ol>
+    <li><strong>Does the leads card earn its place while there is one lead?</strong> It restates the opportunity beside it. A page with one lead may be better with no leads card at all.</li>
+    <li>Is Worth raising a badge or a sort? Sorting marked opportunities to the top would say the same thing without spending two badges.</li>
+    <li><strong>Where do dismissed opportunities go?</strong> The segmented control has no segment for them, so a dismissed trade currently has no home on this page.</li>
+  </ol></div>
+</section>
+
+<!-- ============================== F ============================== -->
+<section class="sec">
+  <div class="sec-head"><span class="badge-l">F</span>
+    <h2 class="sec-title">Start selling, which creates nothing</h2>
+    <span class="sec-when">Mon 10 August</span></div>
+  <p class="sec-beat">A modal over the dimmed lead. It asks which opportunities are part of this sale.
+    The lead and the project are six days old and neither is mentioned.</p>
+  <p class="sec-meta"><span><span class="k">S15B</span> <b>Beat 7</b></span><span><span class="k">Who</span> <b>Priya Raman, sales consultant, having taken the lead from Renata</b></span></p>
+
+  <div class="frame"><div class="pw-page" style="background:var(--sol-backgrounds-ui-low);align-items:center">
+    <div class="pw-sheet" style="margin:0 auto;max-width:520px">
+      <div class="pw-sheethead"><h4>Start selling</h4><span class="pw-kebab">&#215;</span></div>
+      <div class="pw-sheetbody">
+        <p style="margin:0;font:400 13px/19px var(--inter);color:var(--sol-text-secondary)">1428 Maple Ave, Sacramento</p>
+        <div>
+          <div class="pw-chk" data-on="true"><span class="pw-chkbx">&#10003;</span>
+            <div><span class="cn">Roofing</span><span class="cd">Already on this lead. Raised by Robert, 4 Aug</span></div><span class="cv">$38,900</span></div>
+          <div class="pw-chk" data-on="true"><span class="pw-chkbx">&#10003;</span>
+            <div><span class="cn">Siding</span><span class="cd">Worth raising. Sara asked about a full wrap on 5 Aug</span></div><span class="cv">$34,200</span></div>
+          <div class="pw-chk" data-on="true"><span class="pw-chkbx">&#10003;</span>
+            <div><span class="cn">Windows</span><span class="cd">Worth raising. Lukewarm on the call</span></div><span class="cv">$18,600</span></div>
+        </div>
+        <div class="pw-fld"><span class="fl">Owner</span><div class="fi">Priya Raman</div></div>
+      </div>
+      <div class="pw-sheetfoot"><button class="pw-btn">Cancel</button><button class="pw-btn pri">Start selling 3 trades</button></div>
+    </div>
+    <p class="annrow"><span class="ann">[i] Pressing this creates nothing. It moves three opportunities to On a lead and names the container after them. The project has existed since 4 August.</span></p>
+  </div></div>
+
+  <div class="arg">
+    <div class="b"><p class="k">The claim</p><p>The bundling question lives inside one lead, not across several. <strong>Three checkboxes and one button</strong>, and the expensive cross time case never appears because there is nothing to gather up.</p></div>
+    <div class="b"><p class="k">A modal, not a sheet, and the records already said so</p><p>Drawn centred over a dimmed page at Andrew's instruction. <strong>The component records were already right about this</strong>: a row opens a sheet, and a decision that needs confirming opens a dialog. This is a decision, not detail, so the sheet was the wrong shell.</p></div>
+    <div class="b"><p class="k">The estimates are the reason this works</p><p>Each row carries a figure, so the sheet answers "what is this sale worth" before anybody presses anything. <strong>Those figures come from the opportunities</strong>, which have carried them since they were recommended.</p></div>
+    <div class="b"><p class="k">Roofing is checked and cannot meaningfully be unchecked</p><p>It is already on the lead. Drawn checked with its state in the sub line. <strong>Unchecking it would be an act with no name</strong>, since taking a trade off a sale is neither a decline nor a dismissal.</p></div>
+    <div class="b"><p class="k">What the button is not called</p><p>Not "Create a project". Not "Pursue". <strong>It says what it does to the three rows above it</strong>, and the container it renames is never mentioned.</p></div>
+  </div>
+
+  <div class="qs"><h4>Open</h4><ol>
+    <li><strong>What does unchecking roofing mean?</strong> Nothing in the model names it. This is the first screen that offers an act the vocabulary has no word for.</li>
+    <li>Should the sheet show the container's new name before it is committed, given it is about to change from "Roofing" to all three trades?</li>
+    <li><strong>Is this sheet needed when only one opportunity exists?</strong> In S14 it would have one row and one checkbox, which is a dialog asking somebody to confirm what they already did.</li>
+  </ol></div>
+</section>
+
+<!-- ============================== G ============================== -->
+<section class="sec">
+  <div class="sec-head"><span class="badge-l">G</span>
+    <h2 class="sec-title">The kitchen table, and the trade that was held back</h2>
+    <span class="sec-when">Tue 18 August, evening</span></div>
+  <p class="sec-beat">Three options priced. Roofing and siding offered first, windows raised second.
+    The customer takes siding and windows and defers the roof.</p>
+  <p class="sec-meta"><span><span class="k">S15B</span> <b>Beats 8, 9 and 10</b></span><span><span class="k">Who</span> <b>Priya Raman with Sara Thompson, at the kitchen table</b></span></p>
+
+  <div class="frame"><div class="pw-page">
+    <div class="pw-crumbs"><a href="#">Customer</a><span class="s">/</span><a href="#">Sara Thompson</a><span class="s">/</span><a href="#">Roofing, siding and windows</a><span class="s">/</span><span>Proposal</span></div>
+    <div class="pw-titlerow">
+      <div><h1 class="t-h1">Proposal, version three</h1>
+        <p class="pw-meta">Presented in person, this evening<span class="s">·</span>Priya Raman<span class="s">·</span><span class="now">Accepted</span></p></div>
+      <div class="pw-actions"><button class="pw-btn">Version history</button><button class="pw-btn pri">Send a copy</button></div>
+    </div>
+
+    <div class="pw-stack" style="margin-top:22px">
+      <div class="pw-group">
+        <div class="pw-pair wide-l">
+          <div class="pw-card"><div class="pw-cardstack">
+            <h5>Options</h5>
+            <div class="pw-crowlist">
+              <div class="pw-lrow"><div><span class="pw-lname med">Siding</span><span class="pw-lsub">Full wrap, south and west. Offered first</span></div><div class="pw-r"><span class="pw-lval">$34,200</span><span class="pw-lst">Selected</span></div></div>
+              <div class="pw-lrow"><div><span class="pw-lname med">Windows</span><span class="pw-lsub">Fourteen units. Priced and held back, raised second</span></div><div class="pw-r"><span class="pw-lval">$18,600</span><span class="pw-lst">Selected</span></div></div>
+              <div class="pw-lrow dim"><div><span class="pw-lname">Roofing</span><span class="pw-lsub">Offered first, alongside siding</span></div><div class="pw-r"><span class="pw-lval">$38,900</span><span class="pw-lst">Declined this season</span></div></div>
+            </div>
+            <div class="pw-more"><span>Accepted at $52,800</span><a href="#">Itemisation</a></div>
+          </div></div>
+          <div class="pw-card"><div class="pw-cardstack">
+            <h5>The roof, for next year</h5>
+            <div class="pw-syn one">
+              <div class="pw-synr"><span class="k">Reason</span><span class="v">Budget this season</span></div>
+              <div class="pw-synr"><span class="k">Come back</span><span class="v">March 2027</span></div>
+              <div class="pw-synr"><span class="k">Price held</span><span class="v">$38,900</span></div>
+              <div class="pw-synr"><span class="k">In the room</span><span class="v q">&ldquo;Not leaking yet.&rdquo; Worth leading with the August storm photos when we call back.</span></div>
+            </div>
+          </div></div>
+        </div>
+        <p class="annrow"><span class="ann">[i] Accepting this returns roofing to Open against the customer, with the revive date. It does not stay on the lead and it does not become anything on the project.</span></p>
+      </div>
+
+      <div class="pw-group">
+        <div class="pw-grouphead"><h2>Money, and what is not drawn</h2></div>
+        <div class="pw-pair">
+          <div class="pw-card"><div class="pw-cardstack">
+            <div class="pw-cardhead"><h5>What it comes to</h5><span class="pw-bdg">No tender chosen</span></div>
+            <div class="pw-cardrows">
+              <div class="pw-crow"><span class="cl">Siding</span><span class="cv">$34,200</span></div>
+              <div class="pw-crow"><span class="cl">Windows</span><span class="cv">$18,600</span></div>
+              <div class="pw-crule"></div>
+              <div class="pw-crow tot"><span class="cl">Accepted</span><span class="cv">$52,800</span></div>
+            </div>
+          </div></div>
+          <div class="ph"><span class="t">The itemisation and the assessment findings</span><p class="d">The two findings from the 20 August assessment, the out of square openings and the confirmed siding area, produce a revised proposal on 21 August. <strong>They change what is in the scope and not what it costs</strong>: both were already priced into the $52,800, and the contract signs at that figure.</p></div>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <div class="arg">
+    <div class="b"><p class="k">The claim</p><p>Priced and offered are different facts and the rows say so. Windows reads "priced and held back, raised second" <strong>and it is the one that wins</strong>, which is the entire reason the option carries a presentation state.</p></div>
+    <div class="b"><p class="k">The declined row is dimmed, not removed</p><p>It keeps its price. <strong>A declined trade that keeps a priced option can be revived without requoting</strong>, which is the cheapest thing that makes next spring's conversation possible.</p></div>
+    <div class="b"><p class="k">The second card is the deferral, given room</p><p>Reason, revive date, held price and the customer's words. <strong>Four facts that are usually a sub line</strong>, and they are a card because this is the only moment they exist and somebody has to type them while the customer is in the room.</p></div>
+    <div class="b"><p class="k">Where the container's name breaks</p><p>The breadcrumb reads "Roofing, siding and windows". <strong>From tomorrow it reads "Siding and windows"</strong> because the contents changed. Nothing on this screen prepares anybody for a name getting shorter.</p></div>
+    <div class="b"><p class="k">The money card is present and says nothing about how it is paid</p><p>A total and no tender, which is the component's <strong>no tender chosen</strong> state. It exists here because a contract is about to, and the decision is a week away. <strong>Drawing it empty of tender is more honest than leaving it out</strong>, because somebody will ask what it comes to the moment it is accepted.</p></div>
+    <div class="b"><p class="k">No colour anywhere</p><p>A trade worth $38,900 was just declined and nothing is amber. <strong>Declining is a normal outcome, not an exception</strong>, and colouring it would spend the page's whole attention budget on a thing nobody has to act on tonight.</p></div>
+  </div>
+
+  <div class="qs"><h4>Open</h4><ol>
+    <li><strong>Does the name shrink, and does anybody see it happen?</strong> Still open, and this is the screen where it would be least welcome.</li>
+    <li>Is "Declined this season" a status or a reason? The status set says the opportunity returns to Open, so the row is showing the reason where the reader expects a state.</li>
+    <li><strong>Should the deferral card exist before there is a deferral?</strong> Drawn only in the accepted state. An empty version of it during the pitch would be a card asking to be filled in.</li>
+  </ol></div>
+</section>
+
+<!-- ============================== H ============================== -->
+<section class="sec">
+  <div class="sec-head"><span class="badge-l">H</span>
+    <h2 class="sec-title">The hand-off, and the lead closes</h2>
+    <span class="sec-when">Mon 24 August</span></div>
+  <p class="sec-beat">Contract signed, deposit taken, two jobs seeded. Everything on the lead is
+    resolved, so the lead closes. This is the screen Andrew flagged on S14 as changing too much.</p>
+  <p class="sec-meta"><span><span class="k">S15B</span> <b>Beats 13 and 14</b></span><span><span class="k">Who</span> <b>Priya Raman hands over. Marcus Ellery, production coordinator, takes it</b></span></p>
+
+  <div class="frame"><div class="pw-page">
+    <div class="pw-crumbs"><a href="#">Customer</a><span class="s">/</span><a href="#">Sara Thompson</a><span class="s">/</span><span>Siding and windows</span></div>
+    <div class="pw-titlerow">
+      <div><h1 class="t-h1">Siding and windows, Thompson<span class="pw-pencil">&#9998;</span></h1>
+        <p class="pw-meta">Contract signed today<span class="s">·</span>1428 Maple Ave<span class="s">·</span><span class="now">In progress</span></p></div>
+      <div class="pw-actions"><button class="pw-btn">Change order</button><button class="pw-btn pri">Open the work</button><span class="pw-kebab">&#8943;</span></div>
+    </div>
+
+    <div class="pw-stack" style="margin-top:22px">
+      <div class="pw-group">
+        <div class="pw-grouphead"><h2>Work</h2></div>
+        <div class="pw-pair">
+          <div class="pw-card"><div class="pw-cardstack">
+            <h5>Jobs</h5>
+            <div class="pw-crowlist">
+              <div class="pw-lrow"><div><span class="pw-lname med">Windows</span><span class="pw-lsub">Valley Glass and Trim, Hector Salas</span></div><div class="pw-r"><span class="pw-lval">Not yet scheduled</span><span class="pw-lst">Review</span></div></div>
+              <div class="pw-lrow"><div><span class="pw-lname med">Siding</span><span class="pw-lsub">Exterior crew, Dwight Okafor</span></div><div class="pw-r"><span class="pw-lval">Not yet scheduled</span><span class="pw-lst">Review</span></div></div>
+            </div>
+          </div></div>
+          <div class="pw-card"><div class="pw-cardstack">
+            <h5>Coming up</h5>
+            <div class="pw-crowlist">
+              <div class="pw-lrow"><div><span class="pw-lname">Work packages built</span></div><div class="pw-r"><span class="pw-lval">25 Aug</span></div></div>
+              <div class="pw-lrow"><div><span class="pw-lname">Post-sale inspection, both trades</span></div><div class="pw-r"><span class="pw-lval">26 Aug</span></div></div>
+              <div class="pw-lrow"><div><span class="pw-lname">Crews and dates confirmed with Sara</span></div><div class="pw-r"><span class="pw-lval">28 Aug</span></div></div>
+            </div>
+          </div></div>
+        </div>
+      </div>
+
+      <div class="pw-group">
+        <div class="pw-grouphead"><h2>Record</h2></div>
+        <div class="pw-pair">
+          <div class="pw-card"><div class="pw-cardstack">
+            <h5>How this came together</h5>
+            <ul class="pw-timeline">
+              <li><p class="e">Lead closed. Everything on it resolved</p><p class="dt">24 Aug</p></li>
+              <li><p class="e">Contract signed. Two jobs created</p><p class="dt">24 Aug</p></li>
+              <li><p class="e">Proposal accepted. Roofing returned to an open opportunity</p><p class="dt">18 Aug</p></li>
+              <li><p class="e">Three trades put on the sale</p><p class="dt">10 Aug</p></li>
+              <li><p class="e">Opened from a Home App enquiry about the roof</p><p class="dt">4 Aug</p></li>
+            </ul>
+          </div></div>
+          <div class="pw-card"><div class="pw-cardstack">
+            <h5>Still open for this customer</h5>
+            <div class="pw-crowlist">
+              <div class="pw-lrow"><div><span class="pw-lname">Roofing</span><span class="pw-lsub">Declined 18 Aug, budget this season</span></div><div class="pw-r"><span class="pw-lval">$38,900</span><span class="pw-lst">Come back March 2027</span></div></div>
+            </div>
+            <div class="pw-more"><span>Not part of this project</span><a href="#">See all opportunities</a></div>
+          </div></div>
+        </div>
+        <p class="annrow"><span class="ann">[i] The lead closed today and the breadcrumb no longer mentions it. The roofing opportunity is shown here as context, not as content: it belongs to the customer.</span></p>
+      </div>
+
+      <div class="pw-group">
+        <div class="pw-grouphead"><h2>Money</h2></div>
+        <div class="pw-pair">
+          <div class="pw-card"><div class="pw-cardstack">
+            <div class="pw-cardhead"><h5>The bill</h5><span class="pw-bdg">Cash</span></div>
+            <div class="pw-cardrows">
+              <div class="pw-crow"><span class="cl">Contract</span><span class="cv">$52,800</span></div>
+              <div class="pw-crule"></div>
+              <div class="pw-crow"><span class="cl">Collected</span><span class="cv">$10,560</span></div>
+              <div class="pw-crow tot"><span class="cl">Outstanding</span><span class="cv">$42,240</span></div>
+            </div>
+          </div></div>
+          <div class="pw-card"><div class="pw-cardstack">
+            <h5>How it is paid</h5>
+            <div class="pw-crowlist">
+              <div class="pw-lrow dim"><div><span class="pw-lname">A fifth, at signing</span><span class="pw-lsub">Cheque, today</span></div><div class="pw-r"><span class="pw-lval">$10,560</span><span class="pw-lst">Paid</span></div></div>
+              <div class="pw-lrow"><div><span class="pw-lname">Two fifths, on the first trade completing</span></div><div class="pw-r"><span class="pw-lval">$21,120</span><span class="pw-lst">Not yet due</span></div></div>
+              <div class="pw-lrow"><div><span class="pw-lname">Two fifths, on both trades completing</span></div><div class="pw-r"><span class="pw-lval">$21,120</span><span class="pw-lst">Not yet due</span></div></div>
+            </div>
+          </div></div>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <div class="arg">
+    <div class="b"><p class="k">The claim</p><p>The page did change drastically, and here it is defensible. <strong>Everything that was demand is gone and everything that is work has arrived</strong>, in one day, because that is what the hand-off is. The transformation is the content, not a failure of the template.</p></div>
+    <div class="b"><p class="k">What survives the change</p><p>The title, the property, the breadcrumb root and the record group. <strong>Four things hold across the transformation</strong> and they are enough to know it is the same page, which is the thing memo 8 could not demonstrate on S14.</p></div>
+    <div class="b"><p class="k">The lineage is a list, not a diagram</p><p>Five events in time order. <strong>The diagram component will not render below two leads or two jobs</strong>, and with one lead there is nothing to draw, so a timeline says the same thing in less space.</p></div>
+    <div class="b"><p class="k">Roofing appears on a project it is not part of</p><p>Deliberately, and it is the uncomfortable choice on this screen. <strong>It is the only place a person looking at this sale will see the trade they did not win</strong>, and it is labelled as not part of the project.</p></div>
+    <div class="b"><p class="k">Both jobs read Review</p><p>The uniform outer states, per the team's position. The trade specific steps live inside In progress and neither job has reached it. <strong>Two jobs at the same state is the cleanest possible version of the nesting test</strong>, and it gets harder in section I.</p></div>
+  </div>
+
+  <div class="qs"><h4>Open</h4><ol>
+    <li><strong>Should the lead closing be visible at all?</strong> It is one line in a timeline. A person who was working the lead yesterday may look for it and find it gone.</li>
+    <li>Does "Still open for this customer" belong on a project page, or is it borrowing the customer record's content because the project page has room?</li>
+    <li><strong>Where does the proposal live now?</strong> It belonged to the lead and the lead has closed. Nothing on this page reaches it.</li>
+  </ol></div>
+</section>
+
+<!-- ============================== I ============================== -->
+<section class="sec">
+  <div class="sec-head"><span class="badge-l">I</span>
+    <h2 class="sec-title">Two jobs, no lead</h2>
+    <span class="sec-when">Fri 11 September</span></div>
+  <p class="sec-beat">Windows complete, siding about to start, one crew internal and one a
+    subcontractor. The lead has been closed since 24 August.</p>
+  <p class="sec-meta"><span><span class="k">S15B</span> <b>Beats 19 to 21</b></span><span><span class="k">Who</span> <b>Marcus Ellery. Hector Salas for Valley Glass and Trim, Dwight Okafor for the exterior crew</b></span></p>
+
+  <div class="frame"><div class="pw-page">
+    <div class="pw-crumbs"><a href="#">Customer</a><span class="s">/</span><a href="#">Sara Thompson</a><span class="s">/</span><span>Siding and windows</span></div>
+    <div class="pw-titlerow">
+      <div><h1 class="t-h1">Siding and windows, Thompson<span class="pw-pencil">&#9998;</span></h1>
+        <p class="pw-meta">1428 Maple Ave<span class="s">·</span>Windows complete today<span class="s">·</span><span class="now">In progress</span></p></div>
+      <div class="pw-actions"><button class="pw-btn">Change order</button><span class="pw-kebab">&#8943;</span></div>
+    </div>
+
+    <div class="pw-stack" style="margin-top:22px">
+      <div class="pw-group">
+        <div class="pw-grouphead"><h2>Work</h2></div>
+        <div class="pw-pair">
+          <div class="pw-card"><div class="pw-cardstack">
+            <div class="pw-jobhead"><h5>Siding</h5><span class="st">Ready</span></div>
+            <dl class="pw-jl">
+              <dt>Where it is</dt><dd>Work package built, materials due Tuesday. Nothing started on site</dd>
+              <dt>Next</dt><dd>Tear-off on the south and west elevations, Wed 16 Sep</dd>
+              <dt>Waiting on</dt><dd>Siding materials, due 15 Sep. Nothing else</dd>
+              <dt>Crew</dt><dd>Exterior crew, Dwight Okafor. Four</dd>
+            </dl>
+          </div></div>
+          <div class="pw-card"><div class="pw-cardstack">
+            <div class="pw-jobhead"><h5>Windows</h5><span class="st">Complete</span></div>
+            <dl class="pw-jl">
+              <dt>Where it is</dt><dd>Fourteen units in, 8 to 10 Sep. Walkthrough done and warranty registered</dd>
+              <dt>Next</dt><dd>Nothing. Closed out today</dd>
+              <dt>Waiting on</dt><dd>Nothing</dd>
+              <dt>Crew</dt><dd>Valley Glass and Trim, Hector Salas. <strong>A subcontractor</strong></dd>
+            </dl>
+          </div></div>
+        </div>
+      </div>
+
+      <div class="pw-group">
+        <div class="pw-grouphead"><h2>Record</h2></div>
+        <div class="pw-pair">
+          <div class="pw-card"><div class="pw-cardstack">
+            <h5>Latest activity</h5>
+            <div class="pw-fade">
+              <div class="pw-note-item"><div class="pw-note-h"><span class="ty">Job complete</span><span>11 Sep</span><span>Hector Salas</span></div><p>Windows walkthrough with Sara. Warranty registered, review requested.</p></div>
+              <div class="pw-note-item"><div class="pw-note-h"><span class="ty">Install</span><span>8 to 10 Sep</span><span>Hector Salas</span></div><p>Fourteen units in. Before, during and after photos on the job.</p></div>
+              <div class="pw-note-item"><div class="pw-note-h"><span class="ty">Delivery</span><span>2 Sep</span><span>Marcus Ellery</span></div><p>Window units received from Delta Glazing Supply.</p></div>
+            </div>
+            <div class="pw-more"><a href="#">See all activity</a></div>
+          </div></div>
+          <div class="pw-card"><div class="pw-cardstack">
+            <h5>Provenance</h5>
+            <div class="pw-syn">
+              <div class="pw-synr"><span class="k">Came from</span><span class="v"><a href="#" style="color:var(--sol-actions-link);text-decoration:none">A Home App enquiry, 4 Aug</a></span></div>
+              <div class="pw-synr"><span class="k">Sold by</span><span class="v">Priya Raman</span></div>
+              <div class="pw-synr"><span class="k">Run by</span><span class="v">Marcus Ellery</span></div>
+              <div class="pw-synr"><span class="k">Proposal</span><span class="v"><a href="#" style="color:var(--sol-actions-link);text-decoration:none">Version three, accepted 18 Aug</a></span></div>
+            </div>
+          </div></div>
+        </div>
+        <p class="annrow"><span class="ann">[i] There is no lead behind this page any more. The Came from row is the only route back to how the sale happened.</span></p>
+      </div>
+
+      <div class="pw-group">
+        <div class="pw-grouphead"><h2>Money</h2></div>
+        <div class="pw-pair">
+          <div class="pw-card"><div class="pw-cardstack">
+            <div class="pw-cardhead"><h5>The bill</h5><span class="pw-bdg">Cash</span></div>
+            <div class="pw-cardrows">
+              <div class="pw-crow"><span class="cl">Contract</span><span class="cv">$52,800</span></div>
+              <div class="pw-crule"></div>
+              <div class="pw-crow"><span class="cl">Collected</span><span class="cv">$10,560</span></div>
+              <div class="pw-crow tot"><span class="cl">Outstanding</span><span class="cv">$42,240</span></div>
+            </div>
+          </div></div>
+          <div class="pw-card"><div class="pw-cardstack">
+            <h5>How it is paid</h5>
+            <div class="pw-crowlist">
+              <div class="pw-lrow dim"><div><span class="pw-lname">A fifth, at signing</span><span class="pw-lsub">Cheque, 24 Aug</span></div><div class="pw-r"><span class="pw-lval">$10,560</span><span class="pw-lst">Paid</span></div></div>
+              <div class="pw-lrow"><div><span class="pw-lname med">Two fifths, on the first trade completing</span><span class="pw-lsub">Windows completed today</span></div><div class="pw-r"><span class="pw-lval">$21,120</span><span class="pw-lst">Due now</span></div></div>
+              <div class="pw-lrow"><div><span class="pw-lname">Two fifths, on both trades completing</span></div><div class="pw-r"><span class="pw-lval">$21,120</span><span class="pw-lst">Not yet due</span></div></div>
+            </div>
+          </div></div>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <div class="arg">
+    <div class="b"><p class="k">The claim</p><p>A card per job, each answering three questions: where it is, what is next, what it is waiting on. <strong>Two jobs abreast is the pairing rule doing the work the nesting was supposed to do</strong>, and a reader compares them by looking rather than by expanding anything.</p></div>
+    <div class="b"><p class="k">This is the nesting test S14 could not run</p><p>One job inside one project is indistinguishable from a flat list. <strong>Two jobs at different states, with different crews, one of them external</strong>, is the case the container exists for and it reads without a diagram.</p></div>
+    <div class="b"><p class="k">Waiting on moved inside the job, and that fixes something</p><p>It was a card of its own listing four settled dependencies across both jobs, which read as four pieces of good news and said nothing. <strong>Per job it is one line, and an empty one says "Nothing", which is a fact rather than a card.</strong> Andrew's instruction answers the failure the component record predicted in the wrong direction.</p></div>
+    <div class="b"><p class="k">What a card per job costs</p><p>It scales to two and awkwardly to five. <strong>Three jobs is a pair plus a lone card</strong>, which the lone card rule allows but which reads as an odd number rather than a list. Worth knowing before a scenario with more trades.</p></div>
+    <div class="b"><p class="k">Provenance, not Attributes</p><p>Renamed at Andrew's instruction and it is the better word: every row on that card says where something came from rather than what it is. <strong>Came from is the only link on the page that reaches the demand side</strong>, because the lead is closed.</p></div>
+    <div class="b"><p class="k">Still no colour</p><p>Nothing here needs acting on. <strong>Nine screens in and the page has not spent a single unit of attention budget</strong>, which is the cash no-permit telling working exactly as the worked example predicted.</p></div>
+  </div>
+
+  <div class="qs"><h4>Open</h4><ol>
+    <li><strong>At how many jobs does a card each stop working?</strong> Two is comfortable. Five is ten cards deep and the page becomes a list of lists.</li>
+    <li>Is the subcontractor visible enough? Hector Salas is a different company working a Northgate job, and the row says so only in a sub line. Cross organisation crew assignment is still a blocking gap.</li>
+    <li><strong>Where does a person go to see the customer's other opportunities from here?</strong> Nowhere. Section H had that card and this one dropped it, and it is not obvious which is right.</li>
+  </ol></div>
+</section>
+
+<!-- ============================== J ============================== -->
+<section class="sec">
+  <div class="sec-head"><span class="badge-l">J</span>
+    <h2 class="sec-title">Rot behind the siding, and the only amber in the memo</h2>
+    <span class="sec-when">Thu 17 September</span></div>
+  <p class="sec-beat">Pulling the old north wall boards exposes forty square feet of rot nobody could
+    have quoted. The change order is the single moment in this telling where anybody has to act.</p>
+  <p class="sec-meta"><span><span class="k">S15B</span> <b>Beat 24</b></span><span><span class="k">Who</span> <b>Marcus Ellery and Dwight Okafor on site. Sara Thompson approves by phone</b></span></p>
+
+  <div class="frame"><div class="pw-page">
+    <div class="pw-crumbs"><a href="#">Customer</a><span class="s">/</span><a href="#">Sara Thompson</a><span class="s">/</span><a href="#">Siding and windows</a><span class="s">/</span><span>Siding</span></div>
+    <div class="pw-titlerow">
+      <div><h1 class="t-h1">Siding<span class="pw-pencil">&#9998;</span></h1>
+        <p class="pw-meta">Exterior crew, Dwight Okafor<span class="s">·</span>Tear-off since 16 Sep<span class="s">·</span><span class="now">In progress</span></p></div>
+      <div class="pw-actions"><button class="pw-btn pri">Raise a change order</button><span class="pw-kebab">&#8943;</span></div>
+    </div>
+
+    <div class="pw-stack" style="margin-top:22px">
+      <div class="pw-attn"><span class="ic">&#9888;</span><div><strong>Work is on hold pending a change order.</strong> Rot found behind the north wall boards. Nothing can be covered until the repair is agreed.</div></div>
+
+      <div class="pw-group">
+        <div class="pw-pair wide-l">
+          <div class="pw-card"><div class="pw-cardstack">
+            <h5>What was found</h5>
+            <div class="pw-syn one">
+              <div class="pw-synr"><span class="k">Site note, Marcus Ellery, today</span><span class="v q">&ldquo;Rot behind the siding on the north elevation, about forty square feet, worse than the walk suggested. Photographed before anything was covered. Sara approved by phone.&rdquo;</span></div>
+            </div>
+            <div class="pw-syn">
+              <div class="pw-synr"><span class="k">Area</span><span class="v">40 sq ft</span></div>
+              <div class="pw-synr"><span class="k">Photos</span><span class="v">6, taken before covering</span></div>
+              <div class="pw-synr"><span class="k">Added work</span><span class="v">Sheathing repair</span></div>
+              <div class="pw-synr"><span class="k">Verbal approval</span><span class="v">Sara, by phone, today</span></div>
+            </div>
+          </div></div>
+          <div class="pw-card"><div class="pw-cardstack">
+            <h5>Stage</h5>
+            <div class="pw-crowlist">
+              <div class="pw-lrow dim"><div><span class="pw-lname">Work package built</span></div><div class="pw-r"><span class="pw-lst">25 Aug</span></div></div>
+              <div class="pw-lrow dim"><div><span class="pw-lname">Materials delivered</span></div><div class="pw-r"><span class="pw-lst">15 Sep</span></div></div>
+              <div class="pw-lrow"><div><span class="pw-lname med">Tear-off</span></div><div class="pw-r"><span class="pw-lst attn">Held</span></div></div>
+              <div class="pw-lrow"><div><span class="pw-lname">Sheathing repair</span><span class="pw-lsub">Added by the change order</span></div><div class="pw-r"><span class="pw-lst">Not started</span></div></div>
+              <div class="pw-lrow"><div><span class="pw-lname">Install and paint</span></div><div class="pw-r"><span class="pw-lst">Not started</span></div></div>
+            </div>
+          </div></div>
+        </div>
+      </div>
+
+      <div class="pw-group">
+        <div class="pw-grouphead"><h2>Money, and what is not drawn</h2></div>
+        <div class="pw-pair">
+          <div class="pw-card"><div class="pw-cardstack">
+            <div class="pw-cardhead"><h5>What this job costs</h5><span class="pw-bdg">Held at the project</span></div>
+            <div class="pw-cardrows">
+              <div class="pw-crow"><span class="cl">Siding, as sold</span><span class="cv">$34,200</span></div>
+              <div class="pw-crow"><span class="cl">Sheathing repair, proposed</span><span class="cv">$2,800</span></div>
+              <div class="pw-crule"></div>
+              <div class="pw-crow tot"><span class="cl">This job</span><span class="cv">$37,000</span></div>
+              <div class="pw-crow"><span class="cl">Contract, once signed</span><span class="cv">$55,600</span></div>
+            </div>
+          </div></div>
+          <div class="ph"><span class="t">The change order itself</span><p class="d">Sara signs tomorrow. It runs at the middle grade, a price change within headroom, and its own screen is not drawn here.</p></div>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <div class="arg">
+    <div class="b"><p class="k">The claim</p><p>One coloured region on one screen out of twelve. <strong>The attention budget was saved for this</strong>, and the rule that says at most one coloured region per screen turns out to be generous rather than tight in a telling with one interruption.</p></div>
+    <div class="b"><p class="k">The held stage carries the only warning text</p><p>"Held" in the status line in the warning colour, on one row. <strong>The banner and that row are the same fact surfacing twice</strong>, which the density rule says to check for. It is defensible here because the banner says why and the row says where.</p></div>
+    <div class="b"><p class="k">A stage that does not exist yet is already listed</p><p>Sheathing repair appears with "Added by the change order" before the change order is signed. <strong>The work is happening tomorrow whatever the paperwork says</strong>, and a crew lead needs to see it on the list.</p></div>
+    <div class="b"><p class="k">The job shows money it does not own</p><p>Read-only, and the badge says where it is held. <strong>A job never owns an invoice</strong>, and the crew lead standing in front of forty square feet of rot still has to know what the number is. The component record required both halves of that and this is the first time it has been drawn.</p></div>
+    <div class="b"><p class="k">Verbal approval is a fact, not a state</p><p>Sara approved by phone and will sign tomorrow. <strong>The model has no state between agreed and signed</strong>, so it is recorded as a value in the findings card rather than pretending to be a status.</p></div>
+  </div>
+
+  <div class="qs"><h4>Open</h4><ol>
+    <li><strong>Is the banner the same fact as the held row?</strong> Two amber elements on one screen. The rule says check, and this memo says it is defensible. Andrew may disagree.</li>
+    <li>Should the project page show this, given it is a job level block? Blocked is derived from a live blocker record, so it should roll up, and this memo has not drawn the project during the hold.</li>
+    <li><strong>Does verbal approval need a state after all?</strong> It is the second time today something real has had nowhere to sit.</li>
+  </ol></div>
+</section>
+
+<!-- ============================== K ============================== -->
+<section class="sec">
+  <div class="sec-head"><span class="badge-l">K</span>
+    <h2 class="sec-title">The close</h2>
+    <span class="sec-when">Mon 5 October</span></div>
+  <p class="sec-beat">Both trades complete, final bill paid, warranties filed. The project reaches a
+    terminal state for the first time in this model's life.</p>
+  <p class="sec-meta"><span><span class="k">S15B</span> <b>Beats 27 and 28</b></span><span><span class="k">Who</span> <b>Alicia Moss, office manager, invoicing. Marcus Ellery closes out</b></span></p>
+
+  <div class="frame"><div class="pw-page">
+    <div class="pw-crumbs"><a href="#">Customer</a><span class="s">/</span><a href="#">Sara Thompson</a><span class="s">/</span><span>Siding and windows</span></div>
+    <div class="pw-titlerow">
+      <div><h1 class="t-h1">Siding and windows, Thompson<span class="pw-pencil">&#9998;</span></h1>
+        <p class="pw-meta">1428 Maple Ave<span class="s">·</span>Closed today<span class="s">·</span><span class="now">Paid</span></p></div>
+      <div class="pw-actions"><button class="pw-btn">Reopen</button><span class="pw-kebab">&#8943;</span></div>
+    </div>
+
+    <div class="pw-stack" style="margin-top:22px">
+      <div class="pw-group">
+        <div class="pw-pair">
+          <div class="pw-card"><div class="pw-cardstack">
+            <h5>What was done</h5>
+            <div class="pw-crowlist">
+              <div class="pw-lrow dim"><div><span class="pw-lname">Windows</span><span class="pw-lsub">Fourteen units. Valley Glass and Trim</span></div><div class="pw-r"><span class="pw-lval">Complete 11 Sep</span></div></div>
+              <div class="pw-lrow dim"><div><span class="pw-lname">Siding</span><span class="pw-lsub">South and west, plus sheathing repair</span></div><div class="pw-r"><span class="pw-lval">Complete 25 Sep</span></div></div>
+            </div>
+          </div></div>
+          <div class="pw-card"><div class="pw-cardstack">
+            <h5>Left behind at this property</h5>
+            <div class="pw-crowlist">
+              <div class="pw-lrow"><div><span class="pw-lname">Fibre cement siding</span><span class="pw-lsub">South and west elevations, Cobble Stone</span></div><div class="pw-r"><span class="pw-lval">Sep 2026</span></div></div>
+              <div class="pw-lrow"><div><span class="pw-lname">Double-glazed units</span><span class="pw-lsub">Fourteen, low-E argon</span></div><div class="pw-r"><span class="pw-lval">Sep 2026</span></div></div>
+            </div>
+          </div></div>
+        </div>
+      </div>
+
+      <div class="pw-group">
+        <div class="pw-grouphead"><h2>Money</h2></div>
+        <div class="pw-pair">
+          <div class="pw-card"><div class="pw-cardstack">
+            <div class="pw-cardhead"><h5>The bill</h5><span class="pw-bdg">Settled</span></div>
+            <div class="pw-cardrows">
+              <div class="pw-crow"><span class="cl">Contract, as amended</span><span class="cv">$55,600</span></div>
+              <div class="pw-crow"><span class="cl">Collected</span><span class="cv">$55,600</span></div>
+              <div class="pw-crule"></div>
+              <div class="pw-crow tot"><span class="cl">Outstanding</span><span class="cv">$0</span></div>
+              <div class="pw-crow"><span class="cl">Margin at the project</span><span class="cv">31%</span></div>
+            </div>
+          </div></div>
+          <div class="pw-card"><div class="pw-cardstack">
+            <h5>What it cost</h5>
+            <div class="pw-crowlist">
+              <div class="pw-lrow"><div><span class="pw-lname">Siding</span><span class="pw-lsub">Internal crew</span></div><div class="pw-r"><span class="pw-lval">$25,530</span></div></div>
+              <div class="pw-lrow"><div><span class="pw-lname">Windows</span><span class="pw-lsub">Valley Glass and Trim</span></div><div class="pw-r"><span class="pw-lval">$12,834</span></div></div>
+            </div>
+            <div class="pw-more"><span>Margin reads at the project, not per job</span></div>
+          </div></div>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <div class="arg">
+    <div class="b"><p class="k">The claim</p><p>A finished project is mostly a record of what happened and what is now at the address. <strong>Both cards are history</strong>, and neither invites an action, which is what a terminal state should feel like.</p></div>
+    <div class="b"><p class="k">Paid is reachable, and it was not this morning</p><p>Before the lead closed at the hand-off, demand could keep joining the project and it could never finish. <strong>This screen only exists because a lead closes</strong>, which is the thing that was settled four hours ago.</p></div>
+    <div class="b"><p class="k">The equipment card points forwards</p><p>What is now at the property is what the next recommendation will be evidenced against. <strong>The siding opportunity a year ago came from photographs taken on the heat pump job</strong>, and this card is where the same thing happens for the next one.</p></div>
+    <div class="b"><p class="k">Per-job margin is absent and nothing marks its absence</p><p>Costs sit per job and revenue sat at the project, so the two never meet. <strong>The card shows what each job cost and stops.</strong> There is no dash, no unavailable label and no tooltip, because a gap the model cannot answer is left out rather than drawn, and naming it here would invite somebody to fill it badly.</p></div>
+    <div class="b"><p class="k">Reopen is the only action, and it is uncomfortable</p><p>The status set has no path back from Paid. <strong>The button is drawn because a real product needs one</strong> and the model does not have it, which the density rule would normally say to leave out.</p></div>
+  </div>
+
+  <div class="qs"><h4>Open</h4><ol>
+    <li><strong>Should Reopen be there at all?</strong> It names a transition the status set forbids. Drawing it invites somebody to build it; leaving it out invites somebody to discover the gap later.</li>
+    <li>Is "Left behind at this property" the equipment registry, or a project level summary of it? It is drawn as the second and it is probably the first.</li>
+  </ol></div>
+</section>
+
+<!-- ============================== L ============================== -->
+<section class="sec">
+  <div class="sec-head"><span class="badge-l">L</span>
+    <h2 class="sec-title">The customer record, and the roof that is still waiting</h2>
+    <span class="sec-when">Mon 5 October</span></div>
+  <p class="sec-beat">Everything exists at once: a closed project, a maintenance plan, a finished
+    sale, and one opportunity that outlived all of it.</p>
+  <p class="sec-meta"><span><span class="k">S15B</span> <b>Beats 28 and 29</b></span><span><span class="k">Who</span> <b>Priya Raman, who is the one who calls back in March</b></span></p>
+
+  <div class="frame"><div class="pw-page">
+    <div class="pw-crumbs"><a href="#">Customer</a><span class="s">/</span><span>Sara Thompson</span></div>
+    <div class="pw-titlerow">
+      <div><h1 class="t-h1">Sara Thompson<span class="pw-pencil">&#9998;</span></h1>
+        <p class="pw-meta">Customer since Aug 2025<span class="s">·</span><a href="#">1428 Maple Ave</a><span class="s">·</span><a href="#">2 contacts</a></p></div>
+      <div class="pw-actions"><button class="pw-btn">Log a call</button><span class="pw-kebab">&#8943;</span></div>
+    </div>
+
+    <div class="pw-stack" style="margin-top:22px">
+      <div class="pw-group">
+        <div class="pw-grouphead"><h2>Selling</h2></div>
+        <div class="pw-pair wide-l">
+          <div class="pw-card"><div class="pw-cardstack">
+            <div class="pw-cardhead"><h5>Opportunities</h5>
+              <div class="pw-seg"><button class="pw-segi" data-on="true">Open 1</button><button class="pw-segi">Won 2</button><button class="pw-segi">All 3</button></div></div>
+            <div class="pw-crowlist">
+              <div class="pw-lrow"><div><span class="pw-lname med">Roofing</span><span class="pw-lsub">Raised by Robert 4 Aug. Priced and declined 18 Aug, budget this season</span></div>
+                <div class="pw-r"><span class="pw-lval">$38,900</span><span class="pw-lst">Come back March 2027<span class="pw-bdg">Due back</span></span></div></div>
+            </div>
+            <div class="pw-more"><span>2 won this year, $52,800</span><a href="#">See all</a></div>
+          </div></div>
+          <div class="pw-card"><div class="pw-cardstack">
+            <h5>Leads</h5>
+            <div class="pw-empty">No open lead. A new enquiry will start one.</div>
+            <div class="pw-more"><span>1 closed lead</span><a href="#">See previous</a></div>
+          </div></div>
+        </div>
+      </div>
+
+      <div class="pw-group">
+        <div class="pw-grouphead"><h2>Operations</h2></div>
+        <div class="pw-pair">
+          <div class="pw-card"><div class="pw-cardstack">
+            <h5>Active projects</h5>
+            <div class="pw-empty">Nothing in delivery.</div>
+            <div class="pw-more"><span>2 closed projects, 3 jobs</span><a href="#">See previous work</a></div>
+          </div></div>
+          <div class="pw-card"><div class="pw-cardstack">
+            <h5>Service plans</h5>
+            <div class="pw-crowlist">
+              <div class="pw-lrow"><div><span class="pw-lname">Maintenance plan</span><span class="pw-lsub">Renewed 24 Sep. Next visit due spring</span></div><div class="pw-r"><span class="pw-lval">$29 / mo</span><span class="pw-lst">Active</span></div></div>
+            </div>
+          </div></div>
+        </div>
+      </div>
+
+      <div class="pw-group">
+        <div class="pw-grouphead"><h2>The roofing opportunity, opened</h2></div>
+        <div class="pw-one">
+          <div class="pw-card"><div class="pw-cardstack">
+            <div class="pw-cardhead"><h5>Roofing, 1428 Maple Ave</h5><span class="pw-bdg">Open</span></div>
+            <ul class="pw-timeline">
+              <li><p class="e">Free-standing again. Come back March 2027, lead with the August storm photos</p><p class="dt">18 Aug 2026</p></li>
+              <li><p class="e">Declined for this season. &ldquo;Not leaking yet&rdquo;</p><p class="dt">18 Aug 2026</p></li>
+              <li><p class="e">Presented at $38,900, offered first alongside siding</p><p class="dt">18 Aug 2026</p></li>
+              <li><p class="e">Priced as an option on the proposal</p><p class="dt">13 Aug 2026</p></li>
+              <li><p class="e">Put on the sale with siding and windows</p><p class="dt">10 Aug 2026</p></li>
+              <li><p class="e">Raised by Robert through the Home App. &ldquo;Found shingles in the yard after the storm last night&rdquo;</p><p class="dt">4 Aug 2026</p></li>
+            </ul>
+          </div></div>
+        </div>
+        <p class="annrow"><span class="ann">[i] This is the screen the object exists for. Drawn full width as a lone card under its own heading, per the rule settled on 14 September.</span></p>
+      </div>
+
+      <div class="pw-group">
+        <div class="pw-grouphead"><h2>Financials, and what is not drawn</h2></div>
+        <div class="pw-pair">
+          <div class="pw-card"><div class="pw-cardstack">
+            <h5>Financials</h5>
+            <div class="pw-cardrows">
+              <div class="pw-crow"><span class="cl">Owed now</span><span class="cv">$0</span></div>
+              <div class="pw-crow"><span class="cl">Maintenance plan</span><span class="cv">$29 / mo</span></div>
+              <div class="pw-crow"><span class="cl">Paid to date, all time</span><span class="cv">$70,748</span></div>
+              <div class="pw-crow"><span class="cl">Open opportunity, not committed</span><span class="cv">$38,900</span></div>
+            </div>
+          </div></div>
+          <div class="ph"><span class="t">Property and equipment, latest activity, notes and history</span><p class="d">Unchanged in structure from section E. The equipment card has gained the siding and the windows.</p></div>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <div class="arg">
+    <div class="b"><p class="k">The claim, and it is the memo's whole argument</p><p>Nine weeks after a storm, one card answers what happened with the roof. <strong>Nothing in either model could do that this morning.</strong> The lead closed, the project closed, and the trade the customer did not buy is still legible with its price, its reason and its date.</p></div>
+    <div class="b"><p class="k">Why the history is a timeline and not a status</p><p>Six events, none of them a state. <strong>The status says Open and the history says why</strong>, which is the split that made the object worth having: three facts that used to share one record.</p></div>
+    <div class="b"><p class="k">Due back is the only time-sensitive thing here</p><p>Neutral, and it passes the test. <strong>A rep scanning this record in March needs to find this without reading the row</strong>, and the revive date is the only thing on the page that is time sensitive.</p></div>
+    <div class="b"><p class="k">Two empty cards on one page, and both are honest</p><p>No open lead, nothing in delivery. Each carries a count of what came before and a link to it, <strong>which is what the review asked for and what the empty state is actually for.</strong></p></div>
+    <div class="b"><p class="k">Open demand as a figure, and the argument against it</p><p>$38,900 of open opportunity sits under money that was actually collected. <strong>That is the idea catalogue's own move and its own objection</strong>: putting an estimate next to a receivable invites somebody to add them together. It is labelled not committed, and that label is the whole defence.</p></div>
+    <div class="b"><p class="k">The queue that was a blocking gap is a filter</p><p>The revive date queue has been in the object register as blocking since the Thompson work. <strong>It is this card, filtered.</strong> No new object, no new screen.</p></div>
+  </div>
+
+  <div class="qs"><h4>Open</h4><ol>
+    <li><strong>Does the opened opportunity belong on the customer record, or is it a sheet?</strong> Drawn inline as a lone card to show the whole thing. A real product almost certainly opens it sideways.</li>
+    <li>Is one row enough for the Opportunities card to earn its heading? This is the lone card rule biting for the second time in one page.</li>
+    <li><strong>What happens in March?</strong> Nothing in the model surfaces this date to anybody. The card can be filtered but nothing does the filtering.</li>
+  </ol></div>
+</section>
+
+<div class="foot">
+  <h3>What is still open across the whole run</h3>
+  <p><strong>Four from the model, none of which blocked this memo.</strong> Where a customer's final no
+    lives, whether Start selling is what attaches an opportunity or qualification is, whether the
+    container's name may shrink when a trade is declined, and confirmation that intent means a trade
+    and a property being named.</p>
+  <p><strong>Three the memo found.</strong> What unchecking a trade on the Start selling sheet means.
+    Whether verbal approval needs a state. And whether a Waiting on card with nothing blocking earns
+    its place, which is the opposite of the failure its own record predicted.</p>
+  <p><strong>And the one that is now answerable.</strong> The money is drawn, in four states. S14
+    runs the same story with it switched off. <strong>That is the comparison that decides whether
+    MoneyCard and OffSystemMoneyCard should be one component with a state or two components</strong>,
+    and it is the clearest near-identical sibling in the library. It has been deferred twice and it
+    is not deferred now.</p>
+</div>
+
+</div>
+</body>
+</html>

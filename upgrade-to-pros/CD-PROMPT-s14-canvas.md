@@ -1,5 +1,12 @@
 # Prompt for Claude Design: the S14 canvas
 
+> # HISTORY. Round one build brief, superseded 14 September 2026.
+>
+> Replaced by `CD-PROMPT-s14-round-two.md`. **And its model claims are now wrong**: it asks whether
+> four status levels can be hidden and names them as inquiry, interest, lead, project. **The Interest
+> was retired on 15 September** and the four are now opportunity, inquiry or prospect, lead, project.
+> Qualification is also automatic now rather than an act. **Do not take any model claim from this file.**
+
 **Paste this into Claude Design after it has read the context document. 14 September 2026.**
 
 > **This is a build brief, unlike the context document.** It says what to draw and in what order.

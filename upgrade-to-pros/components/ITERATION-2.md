@@ -341,8 +341,14 @@ money card; sold, where money appears with no tender chosen; in progress; closed
 balance, and the absence of a balance is how that page says it is not a project.
 
 **When its subject is absent** the pursuing state is the answer, and it is thin on purpose. It has
-four things: a name, three leads, a property carried from the customer, and a diagram of how it
-came together.
+four things: a name, **one lead carrying one opportunity**, a property carried from the customer, and
+a diagram of how it came together.
+
+**Corrected 15 Sep 2026.** This record said three leads, written when the model had one lead per
+trade. **Worth noting what it does to the diagram:** the lineage record will not render below two
+leads or two jobs, so under one lead the pursuing state has nothing to draw and the fourth thing in
+this list disappears. **That is a real change to this template's thinnest state and it has not been
+redrawn.**
 
 **Tiers** payments only: absent, there is no project. Selling: present without the Work group.
 Operations: full.

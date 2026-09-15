@@ -1,5 +1,13 @@
 # Andrew's review of the S14 canvas and the S15 nine-step file
 
+> # HISTORY. The 14 September review round.
+>
+> **Andrew's comment text is still verbatim and still the record.** But C's responses around it
+> predate 15 September and several are now wrong: they treat the Interest as an object, count four
+> status grains including it, and reason about qualification as a deliberate act. **The Interest was
+> retired and qualification became automatic on 15 September.** Read the comments; distrust the
+> analysis. The current round is in the three `CD-REVIEW-02` files.
+
 **Every comment, what it means, and where it goes. 14 September 2026.**
 
 > **Who may write to this file:** any surface that can write. **Andrew's comment text is quoted

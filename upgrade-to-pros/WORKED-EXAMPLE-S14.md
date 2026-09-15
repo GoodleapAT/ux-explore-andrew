@@ -107,7 +107,7 @@ here it is unknown at the moment the record is created rather than later.
 
 ---
 
-## Demand: one inquiry, one interest
+## Demand: one inquiry, one opportunity
 
 **7:50am, Tuesday 14 July 2026, mid-heat-wave.** Carla Brenner calls: *"Our AC died overnight. How
 soon can someone look at it?"*
@@ -117,29 +117,52 @@ soon can someone look at it?"*
 | **Inquiry** | Raised Tue 14 Jul, 7:50am. Route: inbound telephone call, taken by Dana Whitlock |
 | **What Carla gave** | Name, cell number, address. **And the answer to one question: the system is about seventeen years old** |
 | **The triage** | Seventeen years and R-22 means replacement rather than repair. **Dana makes that call on the phone**, and it is what sends this to an advisor instead of a service technician |
-| **Qualified** | Tue 14 Jul, 7:52am, by Dana Whitlock. Two minutes after the call connected |
-| **Interest** | One. HVAC replacement. **Estimate unknown at qualification** and stays unknown until the kitchen table |
+| **Qualified** | Tue 14 Jul, **7:50am, automatically.** The call names a trade and a property, so intent is expressed and the lead exists from the moment Dana writes both down. **Nobody marks anything** |
+| **Opportunity** | One. HVAC replacement. **Estimate unknown at qualification** and stays unknown until the kitchen table |
 
-**One interest, and that is the other reason this scenario is useful.** The Thompsons have three. The
-Brenners have one, so every place the interface distinguishes a lead from its interests has to survive
+**Corrected 15 September 2026.** This table said Qualified at 7:52am **by Dana Whitlock**, two
+minutes after the call connected, as a deliberate act. **Qualification is now automatic on expressed
+intent**, and Carla gives a trade and an address in the first sentence. **So the qualification is the
+capture, not a step after it**, and the two minute gap and the attribution both go.
+
+**What Dana still does at 7:52 is the triage**, deciding that seventeen years and R-22 means an
+advisor rather than a technician. **That was always a separate judgement from qualification** and
+this correction makes the separation visible rather than creating it. Where the triage lives is still
+open.
+
+**One opportunity, and that is the other reason this scenario is useful.** The Thompsons have three. The
+Brenners have one, so every place the interface distinguishes a lead from what is on it has to survive
 the case where the distinction shows nothing.
 
-**Status through the scenario.** The inquiry reads New at 7:50 and Qualified at 7:52. The interest
-reads New, then Pursuing from 7:52, Quoted from Tuesday 4:40pm, and Won on Thursday 8:04am. The lead
-reads Active from 7:52 until the close.
+**Status through the scenario.** The inquiry reads Qualified at 7:50, with no time spent as New. The
+opportunity reads On a lead from 7:50, Quoted from Tuesday
+4:40pm, and Won on Thursday 8:04am. The lead reads Active from 7:50 and **closes at the hand-off on Thursday 16 July**, having nothing
+left on it. The project runs on to the close without it.
+
+**And this is the sharpest contrast with S15 in the whole pair.** Here qualification and pursuit are
+**two minutes** apart. In S15 they are **six days** apart, with a hand-off from the front desk to the
+sales consultant in between. **Same two acts, same two objects, two orders of magnitude between
+them**, and one component set has to carry both. **It was three orders of magnitude until 15
+September**, when the front of S15 was compressed.
 
 ---
 
 ## The project
 
-**Created Tuesday 14 July 2026 at 7:52am**, because creating the lead creates it. Per T-2.
+**Created Tuesday 14 July 2026 at 7:50am**, because creating the lead creates it. Per T-2.
+**Corrected from 7:52am on 15 September**, with the qualification.
 
 **Working name: "Air conditioning, Brenner."** Named by its contents. It never gains a second
-interest, so the name never grows.
+opportunity, so **the name never grows and never shrinks**, which is worth noting because S15 now does
+both.
 
-**It is two minutes old and it contains nothing.** No proposal, no contract, no job, no money. Its
-state is derived and reads *pursuing*. **Whether anything on screen says it exists is the question the
-memo is for.**
+**It is seconds old and it contains nothing.** No proposal, no contract, no job, no money. Its state
+is derived and reads *pursuing*. **Whether anything on screen says it exists is the question the memo
+is for.**
+
+**The contrast the pair now draws.** This container is empty for two minutes. S15's is empty for
+six days. **Both are the project template's thinnest state**, and the longer one was shortened
+deliberately on 15 September rather than designed for.
 
 ---
 
@@ -342,7 +365,7 @@ For notes, history and activity, so every screen quotes the same words.
 |---|---|---|---|---|
 | Tue 14 Jul, 7:52am | Intake | Inquiry | AC out overnight, no cooling at all. System is about seventeen years old, R-22. Sending to an advisor rather than a tech. Carla is home this afternoon. | Dana Whitlock |
 | Tue 14 Jul, 5:10pm | Assessment | Site assessment | Seventeen-year-old 2.5-ton R-22 unit, coil badly rusted, not worth repairing. Ducts are sound and the panel has a free slot, so a straight replacement with no remedial work. Nameplate photographed. | Terrell Boyd |
-| Tue 14 Jul, 6:25pm | Decision | Interest | Presented all three at the table. Carla is ready to go on Better, Wes wants to sleep on it. Emailed everything. Cash, half and half, no financing wanted. | Terrell Boyd |
+| Tue 14 Jul, 6:25pm | Decision | Opportunity | Presented all three at the table. Carla is ready to go on Better, Wes wants to sleep on it. Emailed everything. Cash, half and half, no financing wanted. | Terrell Boyd |
 | Mon 20 Jul, 11:20am | Delay | Job | Condenser backordered to the 28th. Moved the install to the 30th and called Carla. She was fine about it but asked whether anything could be done in the meantime, and there is not. | Rosa Iglesias |
 | Thu 30 Jul, 4:50pm | Site note | Job | Commissioned and running. Subcooling and delta-T both in range. Took the balance cheque from Carla and left it with the office. | Vic Santoro |
 | Fri 7 Aug, 2:25pm | Inspection | Job | County passed both permits. Nothing outstanding. | Rosa Iglesias |
@@ -379,7 +402,7 @@ Do not invent these, and say so if a screen needs one.
 - **The QuickBooks side of anything.** It is off-system by design, and drawing it would be inventing a
   second product
 - **The service or membership permutation** the script mentions as a possibility at intake. Not walked
-- **A second property, a second interest, or a co-signer beyond Wes**
+- **A second property, a second opportunity, or a co-signer beyond Wes**
 
 ## Learned from
 

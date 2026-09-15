@@ -133,6 +133,7 @@ job and service plan. **Memo 7 adds fourteen more against S14**, ten drawn and f
 | `WORKED-EXAMPLE.md` | The complete Thompson mock data, S15. Use it, invent nothing |
 | `WORKED-EXAMPLE-S14.md` | **The Brenner mock data, S14.** A different org, a single trade and a first-time customer, so none of the Thompson data survives. Four flagged inconsistencies in the source script |
 | `MODEL-SNAPSHOT.md` | What our model contains, on a date, and the diff against DRAFT v3 |
+| `OPEN-ITEMS.md` | **One index of everything unresolved.** Read it first in a cold session. An index, not a store: each row points at where the thing lives |
 | `TEAM-POSITIONS.md` | **What the team currently holds, once, with dates.** The only place a team position is stated. Everything else points here |
 | `MODEL-COMPARISON.md` | Every difference between our model and DRAFT v3, thirty seven of them, all ruled on 14 Sep. Stale in places, and it says where |
 | `DRIFT-CHECK.md` | Everything we depend on that somebody else can change, and when we last looked |

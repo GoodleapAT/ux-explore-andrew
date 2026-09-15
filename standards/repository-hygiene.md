@@ -23,6 +23,11 @@
   line rather than guessing at identity or permissions.
 - **Every repository carries a `.gitignore` from the first commit.** macOS and editor noise, at
   minimum `.DS_Store`. Committing `.DS_Store` once means fighting it in every diff afterwards.
+- **Read git state with `git --no-optional-locks`, always, from any sandboxed shell.** `git status`
+  and `git diff` refresh the index as a convenience, which writes `.git/index.lock`. **The sandbox can
+  create that file and cannot unlink it**, so an ordinary status check leaves a lock behind that blocks
+  the next real commit. `git --no-optional-locks status --porcelain` returns exactly the same answer
+  and leaves nothing. `GIT_OPTIONAL_LOCKS=0` does the same for a whole session.
 - **Never amend, rebase, force push, or touch a branch other than the one asked for.** A local commit
   that cannot be pushed is a question for Andrew, not a problem to solve by rewriting history.
 - **Where a repository lives is a decision for the root decision log**, because it would still be true
@@ -46,5 +51,11 @@ In order, because each step rules out the cheaper cause first:
 - **11 Sep 2026.** GitHub Desktop's commit button was disabled with no reason given, which sent the
   diagnosis towards git identity and permissions when the cause was an organisation ruleset. Recorded
   so the next session starts at the right end.
+- **15 Sep 2026.** A plain `git status` from the sandbox left a zero-byte `index.lock` that neither
+  git nor `rm` could remove, because **the mount permits creating a file in `.git` and not unlinking
+  one.** Andrew found it. **The cause is the index refresh, not the repository**, and
+  `--no-optional-locks` avoids it entirely. **Two sessions had already lost time to this**: the quirks
+  table already carried a row on how to diagnose the lock, which is the wrong half of the problem.
+  **Knowing how to clean up after a tool is worth less than knowing how not to trigger it.**
 - **11 Sep 2026.** `.DS_Store` was sitting untracked in two folders with no `.gitignore` in the
   repository at all.

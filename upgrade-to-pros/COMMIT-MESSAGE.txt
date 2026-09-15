@@ -1,0 +1,93 @@
+S15 rewritten and walked: memo 10, fourteen frames, and the money worked out
+
+The scenario changed and most of this commit is the consequence.
+
+S15 was rewritten on the team's own Confluence page, at Andrew's explicit
+instruction, to version 15. Inbound phone call rather than Home App. Two trades
+rather than three, both sold. A $500 deposit with $72,600 on completion rather
+than three milestones. No change order and no HOA step. Permits on both jobs,
+and both jobs running in the same week. Twenty one beats. The Notes and Entities
+columns were cleared, so Joel's authored annotations are off the page and
+recoverable only from history, and the five sections below the script each now
+contradict it and carry a banner saying which parts are dead.
+
+Memo 10 walks that script. Fourteen screens against twenty one beats, drawn only
+where the page's UX Specific column asks for a screen. Six beats are deliberately
+not drawn and are listed with reasons: the proposal, the tender and contract, the
+hand-off, the lead closing, and the materials delivery.
+
+Two format departures, both declared in the file. The beat text and its UX
+instruction sit in a rail beside the mock rather than the argument sitting
+underneath, because the point of the round is fidelity to the script rather than
+an argument for a layout. And there is no [i] annotation anywhere, because the
+request was mocks next to beats, so the argument lives under each mock in three
+blocks: what was taken out, what needs a home, and the question.
+
+The money was not specified and had to be read across the whole script. Only
+beat 7 gives a figure, beat 8 names a deposit and a plan, and beat 11 says to use
+judgement. It lands as five readings of one card: nothing owed at the customer,
+not yet due, due but uninvoiced, invoiced, settled. The reading five screens now
+rest on is that the payment plan lives at the project and carries both milestones,
+and that an invoice is raised per milestone when its trigger fires. If that is
+wrong, five sections are wrong.
+
+Nine revisions on review, and five of them change component behaviour. Money
+becomes a section in its own right on every screen that has it, headed simply
+Money, and the card's own title comes off because the group heading says it
+already. The proposal card is gone and its figures are a nested breakdown inside
+the money card. The balance-due condition is nested rather than sitting in a
+column of figures pretending to be one. Job statuses are badges. Create invoice
+moves off the page header into the money card. The all/active/complete filter
+came off. The transcript is back under Trades on the intake screen. Every Work
+group is now Jobs. And what was left at the property came off the close screen,
+because it outlives the project.
+
+Findings worth more than the screens:
+
+- "Due, no invoice" is a state the model does not have. The balance falls due on
+  completion and the invoice is raised three days later, so for three days
+  $72,600 is owed and nothing has asked for it. It is the only amber in the run.
+- The project has no task list of its own, which the permit screen makes visible
+  by putting two job checklists side by side with nothing belonging to the
+  container. There are two permits in this script.
+- The collapsible-section record contradicts itself across two screens in the
+  same memo. One section open on a live call, both open on a roof.
+- Money is absent from the job screen entirely, where memo 9 drew it read-only
+  with a badge. Both cannot be right.
+- No Waiting on card appears anywhere in fourteen screens, because nothing in
+  this script is ever blocked.
+- Two tender instruments on one plan. The deposit is a cheque and the balance a
+  credit card, and the plan is badged Cash throughout.
+- The job screen links to "what changed" on a scope refined after the hand-off,
+  which nothing records. The link is a promise the model cannot keep.
+
+Also in here:
+
+- A new CD brief for memo 10, and the morning's brief marked superseded. Two
+  briefs for the same scenario were live inside one day, built from two memos
+  whose letters mean different screens. The memo-name prefix in the frame label,
+  invented this morning, is what stops that being a silent collision, and it was
+  needed within hours of being written.
+- The worked example and the memo now disagree, and the file had no rule that
+  could have prevented it. Its rule covers inventing a value; the story under it
+  moved instead. Recorded, not yet fixed, and the brief tells CD to ignore the
+  file, which is its whole purpose inverted. This is the largest outstanding item
+  in the project.
+- Permit dates in memo 10 corrected to a single day, seven places. The script
+  merges applying and issuing into one beat; the mock had invented a week-long
+  wait in a story whose premise is that nothing is blocked.
+- A git lock rule. git status and git diff refresh the index as a convenience,
+  which writes .git/index.lock, and the sandbox can create that file but cannot
+  unlink it. Read git state with --no-optional-locks, always. The quirks table
+  already had a row on diagnosing the lock, which was the wrong half of the
+  problem.
+- Two safeguards lost by writing our narrative onto their page. The drift
+  register can no longer date-check S15, because our own edit moves the
+  last-modified date, so for S15 only compare against version 15. And the
+  deviations register's S15 rows are meaningless, because S15 is now our script
+  and the gap the safeguard measured is gone.
+- S15B marked superseded three hours after it was created, for the opposite
+  reason it was created.
+- Token file verified: 113 tokens, colour and elevation only, no radius, spacing
+  or type scale. Two rounds overdue for re-extraction, so the workaround is now
+  written into the brief.

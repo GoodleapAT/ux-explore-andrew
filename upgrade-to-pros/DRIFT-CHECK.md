@@ -59,7 +59,7 @@ modified, and it is what a mock records itself as built against.**
 
 | Scenario | Last modified when read | Checked | Used by |
 |---|---|---|---|
-| **S15**, multi-trade cash | **14 Sep 2026, rewritten into v4** | **15 Sep 2026** | The worked example. The S15 grid. **The one that matters most right now** |
+| **S15**, multi-trade cash | **15 Sep 2026, and the last edit is OURS.** See the warning below | **15 Sep 2026** | The worked example. The S15 grid. **The one that matters most right now** |
 | **S16**, multi-trade financed | 9 Sep 2026 | 11 Sep 2026 | The worked example's financed telling. The five views memo |
 | **S8**, membership flywheel | 9 Sep 2026 | 10 Sep 2026 | The service plan view |
 | **S17**, membership-first sale | 9 Sep 2026 | 10 Sep 2026 | The service plan view |
@@ -166,4 +166,28 @@ that cites it.
 
 **Also noted:** most of the scenario set was modified on 14 and 15 September. S14 and S14B both
 moved. **Anything built against S14 should be rechecked before the next round on it.**
+
+---
+
+## We are now a writer on a source we track for drift. 15 September 2026
+
+**S15 was rewritten by us, on their page, at Andrew's instruction.** Version 14. The script, the
+entry point and the count test are ours; the Notes and Entities columns were cleared; the five
+sections below the script are Joel's and are untouched, each carrying a banner saying it contradicts
+the new script.
+
+**The trap, and it is a new one.** This register works by comparing a page's last-modified date with
+the date we last read it. **Our own edit moves that date**, so the next drift check will see S15
+modified on 15 September and cannot tell our writing from theirs. **A page we write to cannot be
+checked for drift the way a page we only read can.**
+
+**What to do instead, for S15 only:** compare against **version 14** rather than against a date.
+Anything after 14 is somebody else, and worth reading properly.
+
+**And the larger consequence, which is a loss rather than a nuisance.** `DEVIATIONS.md` exists to
+record where a mock departs from the team's scenario, and the S15 rows in it are now meaningless:
+**S15 is our script, so there is nothing left to deviate from.** The safeguard was that a departure
+had to be written down and could then be sent to Joel or withdrawn. **Writing our narrative into
+their page removes the gap the safeguard measured.** Worth knowing before the same thing is done to
+another scenario.
 

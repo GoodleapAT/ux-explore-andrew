@@ -1,5 +1,26 @@
 # Build brief for Claude Design: S15B end to end
 
+> # SUPERSEDED. Do not run this. 15 September 2026.
+>
+> **Replaced by `CD-PROMPT-s15-script-walk.md`**, which builds fourteen frames from memo 10.
+>
+> **This brief builds a story that no longer exists.** It was written against memo 9 and the S15B
+> page, both of which describe three trades arriving through the Home App, a change order for rot
+> behind the siding, and a final payment taken off system. **S15 was rewritten the same evening**:
+> two trades, an inbound phone call, permits on both jobs, no change order, and a final payment by
+> credit card.
+>
+> **Three specific traps if it is run anyway:**
+>
+> - **The letters collide.** Frames A to L here mean different screens from sections A to N in memo
+>   10. Both use letters and neither is wrong on its own.
+> - **It names S15B as the scenario**, which was marked superseded three hours after it was created.
+> - **It asks for four money states.** There are five, and the fifth is the one the model cannot
+>   represent: due and uninvoiced.
+>
+> **Kept because its five repo-prep items are still the right list** and because the reversal of the
+> letter convention is recorded in it.
+
 **Written 15 September 2026. Paste the section headed "The prompt" into CD. Everything above it is
 for Andrew.**
 

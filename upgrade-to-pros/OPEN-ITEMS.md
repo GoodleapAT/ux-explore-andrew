@@ -132,7 +132,15 @@ both.
 
 ## Added 17 to 21 September 2026
 
-**O-15. The S15 script is not saved anywhere in this repository.** It exists only on Confluence, in
+> **Renumbered 21 September 2026, from O-15 to O-23 into O-39 to O-47.** The nine rows were written
+> with numbers that were all nine already in use, so O-17 named both the three S14 faults owed to
+> Joel and the roofing price, and O-21 named both the vocabulary renames and where the itemization
+> lives. **The handover's own next-step list cited O-15 and O-17 and neither citation resolved.**
+> O-38 was the highest number in use, so the block starts at O-39. The changelog row written when
+> they were created still says O-15 to O-23, because that file is append only, and the row recording
+> this renumber sits below it.
+
+**O-39. The S15 script is not saved anywhere in this repository.** It exists only on Confluence, in
 the ProsOperations space. What is local are three derivations: the data pack's beat table, memo 10's
 walk, and Joel's flow map in the team repository. **The data pack marks many values SCRIPT, meaning
 not negotiable without changing the script, and the script cannot be reached from here to check
@@ -141,41 +149,41 @@ windows, the roof declined rather than sold, $52,800 by cheque outside our rails
 **Anyone who finds that file and assumes it is current will be working from the old story.** Fix is
 to pull the page down and save it verbatim with a date stamp.
 
-**O-16. The Confluence script still says six weeks.** The calendar turned that into twenty days on
+**O-40. The Confluence script still says six weeks.** The calendar turned that into twenty days on
 16 September and the sentence has not been changed. It calls the trust window deliberate and
 commercially unusual, which is still true and quieter.
 
-**O-17. The roofing price does not survive contact with a real roofer.** $38,900 over 2,410 square
+**O-41. The roofing price does not survive contact with a real roofer.** $38,900 over 2,410 square
 feet is about $1,620 per roofing square against a market rate of roughly $550 to $900. **The price is
 SCRIPT and the area is ours, and no believable area reconciles them** on a 2,140 square foot two
 storey house. Lives in `S15-ROOFING-SCOPE-AND-ITEMIZATION.md`, which prices it as a premium package
 and says so.
 
-**O-18. The permit sub-status has no value for required but not yet applied.** The set runs Not
+**O-42. The permit sub-status has no value for required but not yet applied.** The set runs Not
 required, Applied, Approved, Final inspection passed. On 6 August the roofing permit is none of them,
 so both job page mocks show no permit pill at all. **That is a duck, not a decision.**
 
-**O-19. The job's outer state has no word for the middle of its life.** The set is Review, Ready, In
+**O-43. The job's outer state has no word for the middle of its life.** The set is Review, Ready, In
 progress, Complete, Blocked, Cancelled. A job leaves Review when its scope is verified and is not
 Ready until the crew, the dates and the permit are in. The vocabulary file says jobs run uniform
 outer states with trade-specific sub-states inside the middle one, which may resolve it and has not
 been tested.
 
-**O-20. Does the nav shrink by product tier?** Andrew's own shell recreation ships one fixed list of
+**O-44. Does the nav shrink by product tier?** Andrew's own shell recreation ships one fixed list of
 seven sections and varies only the customer list's columns by tier. **A payments-only contractor sees
 seven sections and has something in two of them.** Memo 14 reproduces that rather than inventing a
 smaller nav.
 
-**O-21. Where does the itemization live, and does the job own one?** If the job owns it, a project
+**O-45. Where does the itemization live, and does the job own one?** If the job owns it, a project
 with two trades holds two and they must reconcile to one contract. If the proposal owns it, a signed
 document has a mutable child. Neither has been chosen, and the refine overlay works either way.
 
-**O-22. A phone number that is rail metadata is being drawn as a contact.** On the S5 record the only
+**O-46. A phone number that is rail metadata is being drawn as a contact.** On the S5 record the only
 number held came off a card receipt ten months earlier. Surfacing it promotes rail metadata to a
 contact, which the model says it is not; not surfacing it means opening a transaction to find your own
 customer's number. **Same shape as the communications gap, arriving from a third direction.**
 
-**O-23. Two memos are stale on dates and one on a beat.** `memo-11-project-two-moments.html` dates the
+**O-47. Two memos are stale on dates and one on a beat.** `memo-11-project-two-moments.html` dates the
 post-sale inspection 10 August, three days after the refinement it is supposed to produce, and carries
 the old install week. `memo-12-job-two-moments.html` carries the old install week. **Both are
 mechanical to fix and neither has been.**

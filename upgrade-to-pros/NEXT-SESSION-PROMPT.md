@@ -19,7 +19,7 @@ UX-Explore folder beside it is a different repo and it is stale, so stay out of 
 
 Then read, in this order, all inside ux-hosted:
   upgrade-to-pros/NEXT-SESSION-PROMPT.md   (this is the handover; it names what is live)
-  upgrade-to-pros/OPEN-ITEMS.md            (everything unresolved, O-15 to O-23 are new)
+  upgrade-to-pros/OPEN-ITEMS.md            (everything unresolved, O-39 to O-47 are new)
   standards/INDEX.md                        then ui-copy.md, mockup-density.md, ui-composition.md
   upgrade-to-pros/S15-DATA.md               sections 1, 1A and 8
   upgrade-to-pros/components/ITERATION-6.md
@@ -123,10 +123,10 @@ values always show cents. Dates are US format and never day first.
 
 1. **Fix the two stale memos.** Memo 11's inspection date and both memos' install week. Mechanical,
    and they are the files most likely to be read by somebody else.
-2. **Pull the S15 script down from Confluence and save it verbatim with a date stamp.** O-15. The data
+2. **Pull the S15 script down from Confluence and save it verbatim with a date stamp.** O-39. The data
    pack cites it as authority and cannot reach it. Its six weeks sentence also needs changing to
    twenty days.
-3. **Decide O-17**, whether the roofing price being roughly double market matters for a demo about
+3. **Decide O-41**, whether the roofing price being roughly double market matters for a demo about
    workflow.
 4. **The S5 screens Andrew has not yet asked for.** He named script rows 5 and 6, about three screens
    of taking a payment on a phone, much of which exists in the product today. Row 14 to 17's customer

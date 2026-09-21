@@ -96,6 +96,14 @@ them minified. They have been inferred from the accent token families. This does
 - **10 Sep 2026.** Andrew shared two standalone Pros Web screens, a customer record and a job view,
   built weeks before the modelling started, and said the memo mockups were laying out UI badly by
   comparison: everything in rows, nothing bundled. Every rule above is read out of those two files.
+- **21 Sep 2026.** **The sideways-into-a-sheet rule gained its second declared exception: a full
+  screen takeover, for one named task that ends in a commit.** The refine surface is the case. It has
+  no breadcrumb and a close control, which is the whole of the difference from a page, and it returns
+  you to the record you opened it from. **A drawer cannot hold a name, two figures and four columns at
+  a readable width.** Two conditions, as with the accordion exception: the task has a beginning and an
+  end, and it commits. **The cost is recorded rather than hidden: the page underneath vanishes**, so
+  anything the person needs while working has to be inside the takeover or they will close it to go
+  and look.
 - **10 Sep 2026.** The full-width-mockup memo layout was chosen specifically so that card pairs have
   the width this composition needs. See `design-memo-format.md`.
 - **15 Sep 2026.** **The accordion rule lost its first argument**, on a capture screen where somebody

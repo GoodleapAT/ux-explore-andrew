@@ -43,6 +43,26 @@ section Andrew did not author.
 - **The test for what belongs in that file: could they change it without asking Andrew?** If yes it is
   theirs, and nothing of ours states it. If no it is ours, and it goes in a decision log.
 
+
+## Before you recommend anything about it
+
+**Added 15 Sep 2026, and all Always, because the failure repeated three times.**
+
+- **Check the decision log before citing external work in a recommendation.** If it has already been
+  ruled on, cite the row and stop. Do not re-argue a settled question because you found the artefact
+  yourself and it looked impressive. **The review-queue standard already requires checking an incoming
+  comment against the log; this is the same check applied to advice you are about to volunteer.**
+- **A name collision is not evidence.** If Andrew describes wanting to build something and you find an
+  existing thing with the same name, those are two things. **The name is not a reason to treat his
+  idea as already solved**, and it is not a reason to make the external one the baseline. Say the
+  collision exists, in one line, and carry on answering the question he asked.
+- **Never recommend that Andrew position his work as an input to somebody else's system.** Describing
+  how their thing consumes ours is a finding. Recommending that arrangement is adoption by another
+  route, and it is the most expensive form of the assimilation this standard exists to prevent.
+- **A declined framework is not a default.** When something has been declined, the absence of a
+  finished alternative is not a reason to fall back on it. It is the reason the alternative is being
+  built.
+
 ## Why
 
 The failure is not that external work is bad. It is that describing it accurately and describing it
@@ -61,3 +81,11 @@ arrive as facts, and by the time anyone notices, they are being designed to.
   a contract Andrew has never adopted, and the summary described an external effort's pace as a reason
   to act. Andrew's correction: this is not an effort he is involved in, he may want to borrow elements,
   and it should not inform his work unless he says so.
+- **15 Sep 2026.** **The third instance of the same correction, and the second about the same
+  artefact.** Asked how to build a factory of his own out of the last several weeks of thinking, C
+  found an external folder with that name, made it the baseline, told Andrew the idea already existed
+  and belonged to someone else, and recommended he become its supplier. **The decision declining it
+  was already in the log, dated the day before.** Andrew: he did not want to adopt it, and he did want
+  to eventually build a factory of his own based on this thinking. The rules above are what was
+  missing: not a rule against assimilation, which existed, but a rule requiring the log to be read
+  before advice is given, and a rule saying a shared name proves nothing.

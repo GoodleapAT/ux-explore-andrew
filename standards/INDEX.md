@@ -33,7 +33,7 @@ rule, not a silent choice. A collision you resolve quietly is a collision nobody
 | **Default** | Two cards abreast is unconditional. Cards shrink rather than stacking |
 | **Default** | Pair cards that answer the same kind of question |
 | **Default** | Segmented control in the card header to collapse several lists into one card |
-| **Default** | Detail that does not fit goes sideways into a sheet, not down into an accordion. **One declared exception**: capture during a live call, where collapsible sections win, with counts on the headers and one section open |
+| **Default** | Detail that does not fit goes sideways into a sheet, not down into an accordion. **Two declared exceptions**: capture during a live call, where collapsible sections win with counts on the headers and one section open; and a **full screen takeover** for one named task that begins, ends and commits, where the cost of losing the page underneath is recorded |
 | **Default** | Small peer lists become links in the page header, not sections |
 | **Default** | Facts about the thing go in a card, not in a subtitle |
 | **Default** | Parked content goes in one full-width list at the bottom, each item labelled not drawn |
@@ -43,6 +43,28 @@ rule, not a silent choice. A collision you resolve quietly is a collision nobody
 **When a state cannot use colour and cannot use a badge**, reach in this order and stop when one
 works: the status word, weight, a leading glyph, position, a badge, colour. **Do not invent a
 seventh.** If none works, the screen carries too many states.
+
+## Words and numbers on a screen
+
+*From `ui-copy.md`, which is GoodLeap's own UX writing guide reduced to what we keep getting wrong.*
+
+| | Rule |
+|---|---|
+| **Always** | Dollar values show cents, even for whole amounts. `$2,400.00`, not `$2,400` |
+| **Always** | Dates are US format and never day first. `Jun 12, 2026`, not `12 Jun` |
+| **Always** | American English inside a mockup. The memo around it may be British |
+| **Always** | Verb first on buttons and CTAs, and a menu item counts as a CTA |
+| **Always** | Sentence case. No all caps, no emoji, no em dashes |
+| **Always** | An error says what happened, then what to do |
+| **Always** | An empty state says why it is empty, then offers a next step |
+| **Always** | A destructive CTA names the real action, and its pair shares no key term with it |
+| **Default** | One through nine spelled out, 10 and up as numerals, except in table cells |
+| **Default** | Second person, active voice |
+| **Default** | No period on a single-sentence message. Punctuate both if there are two |
+| **Prefer** | Cut really, very, just, simply, please note that |
+
+**Times carry a zone**, `4:35 pm PDT`. **Never *user* in product UI.** Sign in, not log in. Autopay,
+one word.
 
 ## Components
 

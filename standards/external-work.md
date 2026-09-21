@@ -63,6 +63,23 @@ section Andrew did not author.
   finished alternative is not a reason to fall back on it. It is the reason the alternative is being
   built.
 
+## Somebody else's work can now execute, not just be read
+
+**Added 21 Sep 2026, and it is the most dangerous form this has taken yet.**
+
+- **Never invoke one of Joel's skills. Andrew's instruction, 21 September 2026, and it stands until
+  he says otherwise, in this session or any other.** Five of them are **live and invokable in any
+  Claude Code session opened in the enclosing folder**, because the team repository sits beside this
+  one and Claude Code loads the skills it finds there. They are `ux-factory`, `script-to-model`,
+  `scenario-builder`, `scenario-digest` and `board-snapshot`, all authored by Joel Feyereisen.
+- **A listed skill is not permission to run it.** Everything in this standard was written for
+  documents that could only be read. A skill reads the team's board and Confluence, writes their
+  files and commits. **Running one would make our work an input to their system in a single call**,
+  which the rule above forbids as a recommendation and which this makes possible by accident.
+- **Say it is there once, name whose it is, then leave it.** Its existence is worth a line the first
+  time it becomes relevant, because the name collides with the factory Andrew is building. It is not
+  worth a second line and it is not a fallback.
+
 ## Why
 
 The failure is not that external work is bad. It is that describing it accurately and describing it
@@ -89,3 +106,8 @@ arrive as facts, and by the time anyone notices, they are being designed to.
   to eventually build a factory of his own based on this thinking. The rules above are what was
   missing: not a rule against assimilation, which existed, but a rule requiring the log to be read
   before advice is given, and a rule saying a shared name proves nothing.
+- **21 Sep 2026.** **Andrew, on finding that Joel's UX factory is invokable rather than merely
+  readable in a Claude Code session:** do not use it unless he says so explicitly. Recorded as a
+  standing instruction rather than a session preference, because the skills reappear in every session
+  opened in that folder and the previous three instances of this correction were all about the same
+  artefact.

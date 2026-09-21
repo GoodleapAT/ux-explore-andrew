@@ -178,6 +178,7 @@ queue being visual is normal and means the structure is close enough to argue ab
 | **Always** | A brief that mentions external work says it is not binding |
 | **Always** | An external position is recorded in one file with a date and pointed at, never restated. Cite the row |
 | **Always** | When their position changes, change the row and not the documents. Having to edit a document means it was restated |
+| **Always** | **Never invoke one of Joel's skills.** Five are live in any Claude Code session opened in the enclosing folder. **A listed skill is not permission to run it**, and running one would make our work an input to their system in a single call |
 
 ## Talking and writing
 

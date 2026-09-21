@@ -29,6 +29,52 @@
 
 ---
 
+## In one page
+
+**Written 21 September 2026 to be handed to somebody who has not seen any of this.** It is a
+restatement, so it is a copy: **if it disagrees with the sections below, they win**, and a change to
+the route is a change to this section in the same sitting.
+
+The UX Kit is a component library plus the rules for putting it together, so that the screens for a
+scenario can be composed from known parts instead of each one being drawn by hand. The parts are the
+Sol design system. The rules are what turns a pile of components into something a person on another
+team can build with.
+
+**It is grounded in atomic design, on two axes rather than one.**
+
+**Size**, which is atomic design as normally understood: atoms, then molecules, then organisms, then
+templates and pages. Every component record names its level.
+
+**Ownership**, which is the axis atomic design on its own does not give you, from Brad Frost's own
+later revision of it. **Core** components are content-agnostic and know nothing about the business,
+contributed to by designers and engineers as a group. **Recipes** are named compositions where object
+names are allowed, and this is where a domain team owns its domain. **Snowflakes** are labelled
+one-offs. A snowflake becomes a recipe when a second scenario needs it, and a recipe becomes core
+when three do. The evidence decides, not a person.
+
+Both axes are recorded, because how big a thing is and who owns it are different questions. **A
+molecule can be a recipe, and an organism can be core.**
+
+**Five steps, in order:**
+
+1. **Connect the two axes.** Record what each recipe is built from. This also produces the list of
+   what Sol is missing, ordered by how much is blocked on each piece.
+2. **Build the example set.** Every component rendered in every state it claims, so claims and
+   evidence can be compared.
+3. **Build the coverage matrix.** Components against scenarios. This is the gap list, the promotion
+   evidence and the progress measure in one table.
+4. **Settle the stage rules.** What a page shows during selling as against during install.
+5. **Compose one scenario without drawing it.** That is the test of whether any of this works.
+
+**A browsable component site comes last, on purpose.** It is the most visible part and the least load
+bearing.
+
+**One caveat worth saying out loud: the words are not settled.** The nouns in this work are
+provisional until they have been tested with contractors, and that research runs alongside the five
+steps.
+
+---
+
 ## It already has a definition, and a success test
 
 **G-1, in the root decision log:** an atomic design system, with enough components carrying enough
@@ -395,6 +441,10 @@ spent the most thinking on, we are ahead rather than behind.
 
 ## Learned from
 
+- **21 Sep 2026.** **An overview was added at the top because Andrew needed something to hand somebody, and
+  nothing short existed.** Eight memos, a route and five obstacles, and **the shortest thing in the project was
+  still a twenty minute read.** It is marked as a restatement and subordinate to the sections below, because a
+  summary that can drift from what it summarises is worse than no summary.
 - **21 Sep 2026.** **Renamed from the factory to the UX Kit, provisionally, at Andrew's
   instruction.** The collision with Joel's artefact was the practical reason; the two better reasons
   are that factory promises the volume G-1's belief clause refuses, and that it tells a designer from

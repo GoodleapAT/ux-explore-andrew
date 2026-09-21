@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How the system works</title>
+<style>
+/* ============================================================================
+   Render: how the design thinking system works.  15 September 2026.
+
+   THIS IS A RENDER, NOT A SOURCE.  Generated from START-HERE.md and
+   standards/INDEX.md as at 15 September 2026.  A render is a copy, so it goes
+   stale, and a wrong render is worse than a missing one because it looks
+   authoritative.  Fix the source and regenerate.  Where this page and a
+   standard disagree, the standard wins.
+
+   Diagram conventions observed: every connector is orthogonal, right-angle
+   corners only.  Every connector carries a verb.  A diagram is annotation
+   throughout, so there is no [i] marker and no convention note.
+   ========================================================================= */
+:root{
+  color-scheme:light;
+  --sol-actions-button:#161051; --sol-actions-link:#382ca5;
+  --sol-backgrounds-accent-purple:#e2e1fe; --sol-backgrounds-system-warning:#fffaf0;
+  --sol-backgrounds-ui-high:#ffffff; --sol-backgrounds-ui-low:#e3e3ed; --sol-backgrounds-ui-medium:#f5f5f9;
+  --sol-borders-accent-purple:#6d62d5; --sol-borders-accent-yellow:#f5b638;
+  --sol-borders-ui-default:#c8c8d5; --sol-borders-ui-strong:#a7a7b9; --sol-borders-ui-subtle:#e3e3ed;
+  --sol-icons-accent-purple:#382ca5; --sol-icons-ui-secondary:#4b4b58;
+  --sol-text-primary:#14141a; --sol-text-secondary:#4b4b58; --sol-text-warning:#8f5f00;
+  --inter:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+  --m-bg:#ffffff; --m-paper:#fbfbfc; --m-bd:#e6e6ea; --m-bds:#d3d3da;
+  --m-tx:#1b1b20; --m-tx2:#55555e; --m-tx3:#86868f;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--m-bg);color:var(--m-tx);font-family:var(--inter);font-size:15px;line-height:1.62;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1220px;margin:0 auto;padding:52px 40px 96px}
+.banner{border:1px solid var(--sol-borders-accent-yellow);background:var(--sol-backgrounds-system-warning);border-radius:10px;padding:16px 20px;margin:0 0 40px}
+.banner h3{margin:0 0 7px;font:500 13px/19px var(--inter);color:var(--sol-text-warning)}
+.banner p{margin:0 0 7px;font-size:13px;line-height:1.55;color:var(--sol-text-warning)}
+.banner p:last-child{margin-bottom:0}
+.banner strong{font-weight:600}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.04em;color:var(--m-tx3);margin:0 0 16px;text-transform:uppercase}
+.eyebrow span{margin-right:26px}
+h1{font-size:40px;line-height:1.12;font-weight:500;letter-spacing:-.02em;margin:0 0 18px;max-width:780px}
+.lede{max-width:760px;color:var(--m-tx2);font-size:15.5px;margin:0 0 16px}
+.lede:last-of-type{margin-bottom:0}
+.lede strong{color:var(--m-tx);font-weight:500}
+
+.sec{margin:56px 0 0}
+.sec-head{display:flex;align-items:baseline;gap:11px;padding-bottom:12px;border-bottom:1px solid var(--m-bd);margin-bottom:24px}
+.badge-l{flex:0 0 auto;width:20px;height:20px;border:1px solid var(--sol-borders-accent-purple);border-radius:4px;color:var(--sol-icons-accent-purple);font-family:var(--mono);font-size:10.5px;display:flex;align-items:center;justify-content:center;background:var(--sol-backgrounds-accent-purple);position:relative;top:2px}
+.sec-title{font-size:21px;font-weight:500;margin:0;letter-spacing:-.01em}
+.sec-sub{font-size:13px;color:var(--m-tx3);margin-left:auto;text-align:right}
+.intro{max-width:740px;font-size:14.5px;color:var(--m-tx2);margin:0 0 22px}
+.intro strong{color:var(--m-tx);font-weight:500}
+
+.dframe{border:1px solid var(--m-bds);border-radius:12px;background:var(--m-paper);padding:22px 20px;overflow-x:auto}
+.dframe svg{display:block;width:100%;height:auto;min-width:860px}
+.cap{margin:12px 0 0;font-size:12.5px;line-height:1.5;color:var(--m-tx3);max-width:900px}
+.cap strong{color:var(--m-tx2);font-weight:500}
+
+.blocks{margin:24px 0 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px 30px}
+.blocks .b{min-width:0}
+.blocks .k{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:var(--m-tx3);margin:0 0 6px}
+.blocks p{margin:0;font-size:13.5px;line-height:1.55;color:var(--m-tx2)}
+.blocks p strong{color:var(--m-tx);font-weight:500}
+.blocks p+p{margin-top:9px}
+
+table{width:100%;border-collapse:collapse;font-size:13.5px;margin:0}
+th{text-align:left;font:500 11px/16px var(--mono);text-transform:uppercase;letter-spacing:.05em;color:var(--m-tx3);padding:0 14px 8px 0;border-bottom:1px solid var(--m-bds)}
+td{padding:9px 14px 9px 0;vertical-align:top;color:var(--m-tx2);border-bottom:1px solid var(--m-bd);line-height:1.5}
+tr:last-child td{border-bottom:0}
+td strong{color:var(--m-tx);font-weight:500}
+td.n{font-family:var(--mono);color:var(--m-tx3);width:34px;white-space:nowrap}
+.pair{display:grid;grid-template-columns:repeat(auto-fit,minmax(380px,1fr));gap:26px 40px;margin:26px 0 0}
+.panel{border:1px solid var(--m-bds);border-radius:12px;background:var(--m-paper);padding:20px 22px}
+.panel h4{margin:0 0 3px;font:500 14px/20px var(--inter)}
+.panel .ps{margin:0 0 14px;font-size:12.5px;color:var(--m-tx3)}
+
+.stack{display:flex;flex-direction:column;gap:0;border:1px solid var(--m-bds);border-radius:12px;overflow:hidden}
+.srow{display:grid;grid-template-columns:38px minmax(0,1fr);gap:14px;align-items:baseline;padding:13px 18px;border-bottom:1px solid var(--m-bd);background:var(--sol-backgrounds-ui-high)}
+.srow:last-child{border-bottom:0}
+.srow .rn{font-family:var(--mono);font-size:11px;color:var(--m-tx3)}
+.srow .rt{font-size:14px;line-height:1.5}
+.srow .rt b{font-weight:500}
+.srow .rt span{display:block;font-size:12.5px;color:var(--m-tx3);margin-top:1px}
+.srow.top{background:var(--sol-backgrounds-accent-purple)}
+.srow.top .rn,.srow.top .rt b{color:var(--sol-icons-accent-purple)}
+.srow.top .rt span{color:var(--sol-icons-accent-purple);opacity:.82}
+.srow.out{background:var(--sol-backgrounds-ui-medium)}
+.srow.out .rt b{color:var(--m-tx2)}
+
+.foot{margin:64px 0 0;padding-top:28px;border-top:1px solid var(--m-bd)}
+.foot h3{font-size:13px;font-family:var(--mono);text-transform:uppercase;letter-spacing:.05em;color:var(--m-tx3);font-weight:400;margin:0 0 16px}
+.foot .fg{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px 30px;max-width:1100px}
+.foot p{margin:0;font-size:13.5px;line-height:1.55;color:var(--m-tx2)}
+.foot p strong{color:var(--m-tx);font-weight:500}
+
+/* svg type */
+.svg-bx{fill:var(--sol-backgrounds-ui-high);stroke:var(--sol-borders-ui-strong);stroke-width:1}
+.svg-bx-a{fill:var(--sol-backgrounds-accent-purple);stroke:var(--sol-borders-accent-purple);stroke-width:1}
+.svg-bx-m{fill:var(--sol-backgrounds-ui-medium);stroke:var(--sol-borders-ui-default);stroke-width:1}
+.svg-band{fill:var(--sol-backgrounds-ui-medium);stroke:var(--sol-borders-ui-subtle);stroke-width:1}
+.svg-ln{fill:none;stroke:var(--sol-icons-ui-secondary);stroke-width:1.4}
+.svg-ln-a{fill:none;stroke:var(--sol-icons-accent-purple);stroke-width:1.4}
+.t-n{font:500 11px var(--mono);fill:var(--sol-icons-accent-purple)}
+.t-h{font:600 12.5px var(--inter);fill:var(--sol-text-primary)}
+.t-b{font:400 11px var(--inter);fill:var(--sol-text-secondary)}
+.t-v{font:400 10px var(--inter);fill:var(--sol-icons-ui-secondary)}
+.t-v-a{font:500 10px var(--inter);fill:var(--sol-icons-accent-purple)}
+.t-lane{font:500 10px var(--mono);fill:var(--m-tx3);letter-spacing:.04em}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="banner">
+  <h3>This is a render, not a source</h3>
+  <p>Generated from the protocol file and the standards index <strong>as at 15 September 2026</strong>.
+    Every rule on this page exists in a shorter, harder form in one of those two places.</p>
+  <p><strong>A render is a copy, so it goes stale</strong>, and a wrong render is worse than a missing
+    one because it looks authoritative. Do not edit this page to fix a rule. Fix the standard and
+    regenerate. <strong>Where this page and a standard disagree, the standard wins.</strong></p>
+</div>
+
+<p class="eyebrow"><span>UX Explore</span><span>The system</span><span>Reference</span><span>15 September 2026</span></p>
+
+<h1>How the system works, and why it is built the way it is</h1>
+
+<p class="lede">This is not about design. It is about <strong>how the thinking is kept</strong> so that
+a conversation on any AI surface starts warm rather than cold, and so that corrections compound
+instead of evaporating when a session ends.</p>
+
+<p class="lede">Three mechanisms do that work. <strong>A loop</strong>, which turns a correction into a
+rule while the correction is still cheap to write. <strong>A map</strong>, which says which surfaces
+can read the memory, which carry a copy of it, and which of those copies go stale.
+<strong>A stack</strong>, which says what wins when two things disagree. The rest of the system is
+consequence.</p>
+
+<!-- ============================== A: the loop ============================== -->
+<section class="sec">
+  <div class="sec-head"><span class="badge-l">A</span>
+    <h2 class="sec-title">The loop</h2>
+    <span class="sec-sub">Why the next session starts warm</span></div>
+
+  <p class="intro">A session is a lap of this. <strong>The first box and the last two are the load
+    bearing ones.</strong> Everything between them is ordinary work.</p>
+
+  <div class="dframe">
+  <svg viewBox="0 0 1160 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The session loop">
+    <defs>
+      <marker id="ah" markerWidth="8" markerHeight="8" refX="6.6" refY="3" orient="auto">
+        <path d="M0,0 L7,3 L0,6 z" fill="var(--sol-icons-ui-secondary)"/>
+      </marker>
+      <marker id="aha" markerWidth="8" markerHeight="8" refX="6.6" refY="3" orient="auto">
+        <path d="M0,0 L7,3 L0,6 z" fill="var(--sol-icons-accent-purple)"/>
+      </marker>
+    </defs>
+
+    <!-- top row -->
+    <rect class="svg-bx-a" x="28" y="34" width="220" height="70" rx="9"/>
+    <text class="t-n" x="42" y="54">1</text>
+    <text class="t-h" x="42" y="72">Read the protocol,</text>
+    <text class="t-h" x="42" y="87">then the changelog</text>
+    <text class="t-b" x="42" y="100">Say its newest date out loud</text>
+
+    <rect class="svg-bx" x="304" y="34" width="220" height="70" rx="9"/>
+    <text class="t-n" x="318" y="54">2</text>
+    <text class="t-h" x="318" y="72">Read what the task</text>
+    <text class="t-h" x="318" y="87">actually touches</text>
+    <text class="t-b" x="318" y="100">Sources, standards, worked example</text>
+
+    <rect class="svg-bx" x="580" y="34" width="150" height="70" rx="9"/>
+    <text class="t-n" x="594" y="54">3</text>
+    <text class="t-h" x="594" y="72">Do the work</text>
+    <text class="t-b" x="594" y="88">Model, memo, mock,</text>
+    <text class="t-b" x="594" y="100">brief, review</text>
+
+    <rect class="svg-bx" x="786" y="34" width="306" height="70" rx="9"/>
+    <text class="t-n" x="800" y="54">4</text>
+    <text class="t-h" x="800" y="72">A trigger fires</text>
+    <text class="t-b" x="800" y="88">He corrects you. Something settles. A source is</text>
+    <text class="t-b" x="800" y="100">wrong. You diverge from a rule. A tool misbehaves.</text>
+
+    <!-- top connectors -->
+    <path class="svg-ln" d="M248,69 H298" marker-end="url(#ah)"/>
+    <text class="t-v" x="259" y="62">then</text>
+    <path class="svg-ln" d="M524,69 H574" marker-end="url(#ah)"/>
+    <text class="t-v" x="528" y="62">before drawing</text>
+    <path class="svg-ln" d="M730,69 H780" marker-end="url(#ah)"/>
+    <text class="t-v" x="738" y="62">and while</text>
+    <text class="t-v" x="742" y="88">you do</text>
+
+    <!-- down the right -->
+    <path class="svg-ln" d="M939,104 V184" marker-end="url(#ah)"/>
+    <text class="t-v" x="949" y="148">immediately, not at the end</text>
+
+    <!-- bottom row, right to left -->
+    <rect class="svg-bx" x="786" y="190" width="306" height="62" rx="9"/>
+    <text class="t-n" x="800" y="210">5</text>
+    <text class="t-h" x="800" y="228">Say it in one line, now</text>
+    <text class="t-b" x="800" y="244">What needs writing, which file, and who writes it</text>
+
+    <rect class="svg-bx" x="524" y="190" width="206" height="62" rx="9"/>
+    <text class="t-n" x="538" y="210">6</text>
+    <text class="t-h" x="538" y="228">Write it</text>
+    <text class="t-b" x="538" y="244">Standard, decision log, inbox, sources</text>
+
+    <rect class="svg-bx" x="290" y="190" width="178" height="62" rx="9"/>
+    <text class="t-n" x="304" y="210">7</text>
+    <text class="t-h" x="304" y="228">Changelog row</text>
+    <text class="t-b" x="304" y="244">And say it in the reply too</text>
+
+    <rect class="svg-bx-a" x="28" y="190" width="206" height="62" rx="9"/>
+    <text class="t-n" x="42" y="210">8</text>
+    <text class="t-h" x="42" y="228">Two questions, both</text>
+    <text class="t-b" x="42" y="244">The problem, and how to work on it</text>
+
+    <path class="svg-ln" d="M786,221 H736" marker-end="url(#ah)"/>
+    <text class="t-v" x="737" y="214">if you can write</text>
+    <path class="svg-ln" d="M524,221 H474" marker-end="url(#ah)"/>
+    <text class="t-v" x="483" y="214">always</text>
+    <path class="svg-ln" d="M290,221 H240" marker-end="url(#ah)"/>
+    <text class="t-v" x="253" y="214">then</text>
+
+    <!-- return up the left -->
+    <path class="svg-ln-a" d="M131,190 V110" marker-end="url(#aha)"/>
+    <text class="t-v-a" x="142" y="140">the next session</text>
+    <text class="t-v-a" x="142" y="154">starts warm</text>
+
+    <!-- write-back branch -->
+    <path class="svg-ln" d="M1000,252 V296" marker-end="url(#ah)"/>
+    <text class="t-v" x="1010" y="278">if you cannot write</text>
+    <rect class="svg-bx-m" x="786" y="302" width="306" height="62" rx="9"/>
+    <text class="t-h" x="800" y="324">A write-back block</text>
+    <text class="t-b" x="800" y="340">The file, the section, the exact text to add or</text>
+    <text class="t-b" x="800" y="352">replace, and whether it is an append or an edit</text>
+
+    <rect class="svg-bx-m" x="524" y="302" width="206" height="62" rx="9"/>
+    <text class="t-h" x="538" y="324">Andrew carries it</text>
+    <text class="t-b" x="538" y="340">To a surface that can</text>
+    <text class="t-b" x="538" y="352">write, unchanged</text>
+    <path class="svg-ln" d="M786,333 H736" marker-end="url(#ah)"/>
+    <text class="t-v" x="729" y="380">paste-able as one message</text>
+  </svg>
+  </div>
+  <p class="cap"><strong>Complete on structure, not exhaustive on contents.</strong> The trigger box
+    lists five of seven triggers. The write-back branch exists because some surfaces can read the
+    memory and cannot write to it, which is the map in the next section.</p>
+
+  <div class="blocks">
+    <div class="b"><p class="k">Why box 1 is a whole box</p>
+      <p>The changelog is <strong>the only file that answers whether anything has moved since you last
+        looked</strong>. It is append only, newest at the bottom.</p>
+      <p><strong>Saying its newest date out loud is a one-sentence staleness check</strong>, and it
+        happens before any work, so a surface reading a stale copy reveals itself in its first
+        sentence rather than in its output.</p></div>
+    <div class="b"><p class="k">Why the prompt comes at the trigger</p>
+      <p>A correction is cheapest to write <strong>in the moment it is made</strong>, while the reason
+        for it is still in the conversation. Saved to the end of a session it arrives as a summary,
+        and a summary of a correction is not a rule.</p>
+      <p>Writing the changelog row is <strong>not the same as telling him</strong>. Both happen.</p></div>
+    <div class="b"><p class="k">Why two questions and not one</p>
+      <p>What did we learn about <strong>the problem</strong>, and what did we learn about <strong>how
+        to work on it</strong>. The second is the one that gets skipped.</p>
+      <p><strong>A session where he corrected something and no standard changed is a session that
+        lost work</strong>, because the same correction will now be made a third time.</p></div>
+    <div class="b"><p class="k">What the loop does not have</p>
+      <p><strong>No enforcement.</strong> Every rule in the system is held by a surface choosing to
+        read it and choosing to comply. Nothing checks.</p>
+      <p>That is the honest weakness, and it is why the rules are short, why the index fits on one
+        screen, and why the marker on each rule matters more than its wording.</p></div>
+  </div>
+</section>
+
+<!-- ============================== B: the map ============================== -->
+<section class="sec">
+  <div class="sec-head"><span class="badge-l">B</span>
+    <h2 class="sec-title">The map</h2>
+    <span class="sec-sub">No surface can notify another</span></div>
+
+  <p class="intro">There is one repository and several surfaces. <strong>Two lanes.</strong> Above the
+    band, surfaces that read the memory themselves. Inside the band, everything that only has a copy,
+    which means a person has to carry the change. <strong>Claude Design sits in both lanes, and that
+    is the interesting one.</strong></p>
+
+  <div class="dframe">
+  <svg viewBox="0 0 1160 490" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The surface map">
+    <defs>
+      <marker id="ah2" markerWidth="8" markerHeight="8" refX="6.6" refY="3" orient="auto">
+        <path d="M0,0 L7,3 L0,6 z" fill="var(--sol-icons-ui-secondary)"/>
+      </marker>
+      <marker id="aha2" markerWidth="8" markerHeight="8" refX="6.6" refY="3" orient="auto">
+        <path d="M0,0 L7,3 L0,6 z" fill="var(--sol-icons-accent-purple)"/>
+      </marker>
+    </defs>
+    <!-- band -->
+    <rect class="svg-band" x="252" y="296" width="878" height="182" rx="10"/>
+    <text class="t-lane" x="268" y="316">CARRIED BY HAND. NO SURFACE CAN NOTIFY ANOTHER.</text>
+    <text class="t-lane" x="268" y="62">READS THE MEMORY ITSELF</text>
+
+    <!-- repository -->
+    <rect class="svg-bx-a" x="26" y="176" width="204" height="122" rx="10"/>
+    <text class="t-h" x="42" y="204">The repository</text>
+    <text class="t-b" x="42" y="222">The only source. Protocol,</text>
+    <text class="t-b" x="42" y="236">changelog, standards, two</text>
+    <text class="t-b" x="42" y="250">decision logs, sources,</text>
+    <text class="t-b" x="42" y="264">glossary, worked example,</text>
+    <text class="t-b" x="42" y="278">idea inbox, renders</text>
+
+    <!-- trunk -->
+    <path class="svg-ln" d="M230,214 H310 V72"/>
+    <path class="svg-ln" d="M310,214 V254"/>
+    <text class="t-v" x="238" y="207">read</text>
+
+    <!-- upper surfaces -->
+    <rect class="svg-bx" x="858" y="42" width="262" height="60" rx="9"/>
+    <text class="t-h" x="874" y="66">CC, Claude Code</text>
+    <text class="t-b" x="874" y="84">Reads and writes. A new session is current</text>
+    <path class="svg-ln" d="M310,72 H852" marker-end="url(#ah2)"/>
+    <text class="t-v" x="470" y="65">reads fresh each session, and writes in place</text>
+
+    <rect class="svg-bx" x="858" y="124" width="262" height="60" rx="9"/>
+    <text class="t-h" x="874" y="148">C, Cowork</text>
+    <text class="t-b" x="874" y="166">Reads and writes. A new session is current</text>
+    <path class="svg-ln" d="M310,154 H852" marker-end="url(#ah2)"/>
+    <text class="t-v" x="470" y="147">reads fresh each session, and writes in place</text>
+
+    <rect class="svg-bx" x="858" y="224" width="262" height="60" rx="9"/>
+    <text class="t-h" x="874" y="248">CD, Claude Design</text>
+    <text class="t-b" x="874" y="266">Builds the canvases. Cannot write</text>
+    <path class="svg-ln" d="M310,254 H852" marker-end="url(#ah2)"/>
+    <text class="t-v" x="470" y="247">reads the memory if access is granted, and cannot write to it</text>
+
+    <!-- andrew -->
+    <rect class="svg-bx-a" x="430" y="352" width="290" height="70" rx="10"/>
+    <text class="t-h" x="446" y="378">Andrew</text>
+    <text class="t-b" x="446" y="396">Every route below the line, and the only</text>
+    <text class="t-b" x="446" y="410">thing that can move a change between surfaces</text>
+
+    <!-- repo to andrew -->
+    <path class="svg-ln" d="M128,298 V387 H424" marker-end="url(#ah2)"/>
+    <text class="t-v" x="140" y="380">he reads what changed</text>
+
+    <!-- CD write-back up, into andrew -->
+    <path class="svg-ln-a" d="M1060,284 V326 H640 V346" marker-end="url(#aha2)"/>
+    <text class="t-v-a" x="686" y="320">a write-back block, paste-able as one message</text>
+
+    <!-- andrew to CD instructions -->
+    <path class="svg-ln-a" d="M510,352 V268 H852" marker-end="url(#aha2)"/>
+    <text class="t-v-a" x="522" y="262">refreshes its stored instructions</text>
+
+    <!-- chat -->
+    <rect class="svg-bx-m" x="858" y="332" width="262" height="60" rx="9"/>
+    <text class="t-h" x="874" y="356">Claude chat with a project</text>
+    <text class="t-b" x="874" y="374">Project knowledge is a synced copy</text>
+    <path class="svg-ln" d="M720,362 H852" marker-end="url(#ah2)"/>
+    <text class="t-v" x="727" y="355">re-syncs it, or pastes the file in</text>
+
+    <!-- no access -->
+    <rect class="svg-bx-m" x="858" y="412" width="262" height="60" rx="9"/>
+    <text class="t-h" x="874" y="436">Anything with no access</text>
+    <text class="t-b" x="874" y="454">It cannot pick anything up at all</text>
+    <path class="svg-ln" d="M720,402 H790 V442 H852" marker-end="url(#ah2)"/>
+    <text class="t-v" x="727" y="396">pastes it, and says what it replaces</text>
+  </svg>
+  </div>
+  <p class="cap"><strong>Complete on structure, not exhaustive on contents.</strong> The two purple
+    lines are the awkward pair: Claude Design reads the memory directly but <strong>its own
+    instructions are a stored copy</strong>, so its facts stay current while its rules go stale, and
+    only a person can close that gap.</p>
+
+  <div class="blocks">
+    <div class="b"><p class="k">Why a person is in the middle</p>
+      <p>Not by design. <strong>No surface can notify another</strong>, so propagation is manual and
+        single threaded through one person.</p>
+      <p>The system's answer is to make the cost visible rather than to pretend it is not there:
+        <strong>every changelog row ends with a column naming which surfaces are now stale and what
+        to do about each.</strong></p></div>
+    <div class="b"><p class="k">The read-only problem, and the fix</p>
+      <p>A surface that can read but not write would otherwise lose everything it learned. The fix is
+        a <strong>write-back block</strong>: the file, the section, the exact text, and whether it is
+        an append or an edit.</p>
+      <p><strong>It is written to be pasted, not read.</strong> A surface that summarises what should
+        change instead of writing what should be written has not done the job.</p></div>
+    <div class="b"><p class="k">Why renders are held at arm's length</p>
+      <p>Anything in the renders folder is a copy generated from the standards, made for a surface
+        that cannot read the repository. <strong>When a standard changes, the render is wrong.</strong></p>
+      <p><strong>This page is one of those copies.</strong> That is why it opens with a banner saying
+        so and naming what it was generated from.</p></div>
+    <div class="b"><p class="k">The failure this map did not predict</p>
+      <p>It covers a <strong>rule</strong> going stale. It does not cover <strong>a fact</strong>
+        going stale because the story underneath it moved.</p>
+      <p>That happened today. The canonical mock data describes a three-trade story that was rewritten
+        into a two-trade one, so the file is now a trap for the next surface that reads it in good
+        faith, and no rule in the system covered it.</p></div>
+  </div>
+</section>
+
+<!-- ============================== C: the stack ============================== -->
+<section class="sec">
+  <div class="sec-head"><span class="badge-l">C</span>
+    <h2 class="sec-title">The stack</h2>
+    <span class="sec-sub">What wins when two things disagree</span></div>
+
+  <p class="intro">Highest first. <strong>Read it as a tie-break, not as a chain of command.</strong>
+    Most of the time nothing collides and the stack never comes up; it exists for the moment something
+    does, so the resolution is not invented on the spot.</p>
+
+  <div class="stack">
+    <div class="srow top"><span class="rn">1</span><span class="rt"><b>Andrew, in the conversation</b><span>Everything below this yields to it. A rule he overrules in a session is overruled</span></span></div>
+    <div class="srow"><span class="rn">2</span><span class="rt"><b>An Always rule</b><span>Breaking one is a defect, and you say so before you do it, not after</span></span></div>
+    <div class="srow"><span class="rn">3</span><span class="rt"><b>A decision in a decision log</b><span>Two logs. The project's for what the nouns mean, the root's for how the work is done</span></span></div>
+    <div class="srow"><span class="rn">4</span><span class="rt"><b>A Default rule</b><span>Do it unless you have a reason, and say the reason</span></span></div>
+    <div class="srow"><span class="rn">5</span><span class="rt"><b>The worked example</b><span>For anything about data. One customer, used by every memo, mock and walkthrough</span></span></div>
+    <div class="srow"><span class="rn">6</span><span class="rt"><b>A Prefer rule</b><span>A leaning. Use judgement and nothing is owed if you go the other way</span></span></div>
+    <div class="srow"><span class="rn">7</span><span class="rt"><b>What a previous mock did</b><span>The weakest reason there is, and the one most likely to be reached for</span></span></div>
+    <div class="srow out"><span class="rn">&mdash;</span><span class="rt"><b>Somebody else's work does not appear on the stack at all</b><span>It is recorded as reference, never as input. Nothing crosses over until he says so</span></span></div>
+  </div>
+
+  <div class="pair">
+    <div class="panel">
+      <h4>The three markers</h4>
+      <p class="ps">Every rule in the standards carries one. The marker is the rule's rigidity, and it
+        is more useful than the rule's wording.</p>
+      <table>
+        <tr><th>Marker</th><th>Meaning</th><th>If you break it</th></tr>
+        <tr><td><strong>Always</strong></td><td>Breaking it is a defect</td><td>Say so <strong>before</strong>, not after</td></tr>
+        <tr><td><strong>Default</strong></td><td>Do it unless you have a reason</td><td>Do the other thing, and say the reason</td></tr>
+        <tr><td><strong>Prefer</strong></td><td>A leaning</td><td>Nothing. Use judgement</td></tr>
+      </table>
+      <p class="ps" style="margin:14px 0 0"><strong>If two rules collide, say so and pick one.</strong>
+        A collision resolved quietly is a collision nobody else can learn from. It has happened, and
+        the fix was a new rule rather than a silent choice.</p>
+    </div>
+    <div class="panel">
+      <h4>Global or project? One test</h4>
+      <p class="ps">If it would still be true on a different project, it is global. When it is
+        genuinely both, it is global, and the project file notes the exception.</p>
+      <table>
+        <tr><th>Global</th><th>Project</th></tr>
+        <tr><td>How a mockup should be laid out</td><td>What the nouns mean</td></tr>
+        <tr><td>The design memo format</td><td>Which board is the source of truth</td></tr>
+        <tr><td>How to talk to Andrew</td><td>Whether the container mints before pricing</td></tr>
+        <tr><td>Where the design system lives</td><td>Where the scenario scripts live</td></tr>
+        <tr><td>Diagram conventions</td><td>The canonical worked example</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="blocks">
+    <div class="b"><p class="k">Rules are never changed silently</p>
+      <p>A standard that turns out to be wrong <strong>gets replaced, and the replacement records what
+        it replaced and why</strong>. A decision that is reversed becomes a new row in the log, never
+        an edit to the old one.</p>
+      <p>Same reason a change order keeps the original contract value on it.</p></div>
+    <div class="b"><p class="k">Some files are append only</p>
+      <p>The changelog, the idea inbox and both decision logs. <strong>Never edited, never
+        reordered, never tidied.</strong></p>
+      <p>The cost is that they get long and contain things that are no longer true. That is the point:
+        <strong>a reversal is only legible if the thing it reversed is still there.</strong></p></div>
+    <div class="b"><p class="k">Why the stack ends where it does</p>
+      <p>Putting <strong>what a previous mock did</strong> last, below a leaning, is deliberate. It is
+        the most available reason in the room and the weakest one, because a mock is a proposal that
+        survived rather than a decision that was made.</p></div>
+    <div class="b"><p class="k">And why nothing external is on it</p>
+      <p>The team's boards and scripts are read constantly and are <strong>recorded as reference,
+        never as input</strong>. The rules covering that are all Always, <strong>because the failure
+        mode is silent</strong>: a position drifts in unattributed and then gets defended as ours.</p></div>
+  </div>
+</section>
+
+<!-- ============================== D: joining ============================== -->
+<section class="sec">
+  <div class="sec-head"><span class="badge-l">D</span>
+    <h2 class="sec-title">If you are joining this</h2>
+    <span class="sec-sub">For a designer picking up work on Upgrade to Pros</span></div>
+
+  <p class="intro">Four things carry almost all of it. <strong>None of them is about having read the
+    whole repository</strong>, which nobody has.</p>
+
+  <table style="max-width:1000px">
+    <tr><th class="n"></th><th>What to do</th><th>Why, in one line</th></tr>
+    <tr><td class="n">1</td><td><strong>Say the newest changelog date before you start.</strong> One sentence, every session</td><td>It is the only check that you are not working from last week's model</td></tr>
+    <tr><td class="n">2</td><td><strong>Walk the scenario's data in date order before you draw anything.</strong> Ask of every record: does this have somewhere to live at the moment it appears</td><td>A story tolerates a record appearing from nowhere. A screen cannot, and the defect is the model's rather than the layout's</td></tr>
+    <tr><td class="n">3</td><td><strong>Say what you left out and why</strong>, under the mock rather than inside it</td><td>A gap the model cannot answer is left out, not drawn as unavailable. The reader needs to know which it was</td></tr>
+    <tr><td class="n">4</td><td><strong>When you are corrected, ask which file it goes in.</strong> Then say it in the reply as well as writing it</td><td>This is the whole mechanism. A correction that is not written will be made again</td></tr>
+  </table>
+
+  <div class="blocks">
+    <div class="b"><p class="k">The one rule most likely to trip you</p>
+      <p><strong>Ask before building or rebuilding anything.</strong> Every time, even when the
+        previous message asked for it, even when it is a small revision.</p></div>
+    <div class="b"><p class="k">What the system is deliberately not</p>
+      <p><strong>Not any team's record</strong>, and not authoritative for anyone but Andrew.
+        Contributions to a team repository go as a branch and a pull request.</p>
+      <p><strong>And not a backlog.</strong> Ideas carry an appetite and a revive condition precisely
+        so the catalogue does not become one. An idea with no appetite is a note.</p></div>
+  </div>
+</section>
+
+<div class="foot">
+  <h3>Where it is weak, stated rather than hidden</h3>
+  <div class="fg">
+    <p><strong>Nothing enforces any of it.</strong> Every Always rule is held by a surface choosing to
+      read the standards and choosing to comply. The mitigation is that the rules are short and the
+      index fits on one screen, which is a mitigation and not a fix.</p>
+    <p><strong>Propagation is one person wide.</strong> No surface can tell another that something
+      changed, so every update to a stored copy waits on him noticing and doing it. Two copies are
+      currently overdue.</p>
+    <p><strong>A render looks authoritative when it is wrong.</strong> The banner on this page is the
+      only thing standing between a stale copy and somebody designing from it.</p>
+    <p><strong>The staleness rules cover rules, not facts.</strong> A standard going out of date is
+      handled. A mock data file going out of date because the story underneath it was rewritten is
+      not, and it happened today.</p>
+  </div>
+</div>
+
+</div>
+</body>
+</html>

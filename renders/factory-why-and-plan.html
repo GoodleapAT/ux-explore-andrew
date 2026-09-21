@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Designing against a moving model</title>
+<style>
+:root{
+  color-scheme:light;
+  --ac:#382ca5; --ac-bg:#e2e1fe; --ac-bd:#6d62d5;
+  --wn:#8f5f00; --wn-bg:#fffaf0; --wn-bd:#f5b638;
+  --ok:#006b24; --ok-bg:#effaf2; --ok-bd:#8cd3a3;
+  --ink:#14141a; --tx2:#4b4b58; --tx3:#86868f;
+  --bd:#e6e6ea; --bds:#d3d3da; --paper:#fbfbfc; --med:#f5f5f9;
+  --inter:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:#fff;color:var(--ink);font-family:var(--inter);font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1220px;margin:0 auto;padding:48px 36px 88px}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.04em;color:var(--tx3);margin:0 0 14px;text-transform:uppercase}
+.eyebrow span{margin-right:24px}
+h1{font-size:38px;line-height:1.13;font-weight:500;letter-spacing:-.02em;margin:0 0 18px;max-width:800px}
+.lede{max-width:780px;color:var(--tx2);font-size:15.5px;margin:0 0 14px}
+.lede strong{color:var(--ink);font-weight:500}
+.lede:last-of-type{margin-bottom:0}
+
+.sec{margin:52px 0 0}
+.sec-head{display:flex;align-items:baseline;gap:11px;padding-bottom:11px;border-bottom:1px solid var(--bd);margin-bottom:10px}
+.badge-l{flex:0 0 auto;width:20px;height:20px;border:1px solid var(--ac-bd);border-radius:4px;color:var(--ac);font-family:var(--mono);font-size:10.5px;display:flex;align-items:center;justify-content:center;background:var(--ac-bg);position:relative;top:2px}
+.sec-title{font-size:20px;font-weight:500;margin:0;letter-spacing:-.01em}
+.sec-sub{font-size:12.5px;color:var(--tx3);margin-left:auto}
+.intro{max-width:820px;font-size:14.5px;color:var(--tx2);margin:0 0 20px}
+.intro strong{color:var(--ink);font-weight:500}
+
+.frame{border:1px solid var(--bds);border-radius:12px;background:var(--paper);padding:20px 18px;overflow-x:auto}
+.frame svg{display:block;width:100%;height:auto;min-width:900px}
+.cap{margin:12px 0 0;font-size:12.5px;line-height:1.5;color:var(--tx3);max-width:920px}
+.cap strong{color:var(--tx2);font-weight:500}
+
+.blocks{margin:22px 0 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:20px 30px}
+.blocks .k{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:var(--tx3);margin:0 0 6px}
+.blocks p{margin:0;font-size:13.5px;line-height:1.55;color:var(--tx2)}
+.blocks p strong{color:var(--ink);font-weight:500}
+.blocks p+p{margin-top:9px}
+
+.foot{margin:56px 0 0;padding-top:26px;border-top:1px solid var(--bd);max-width:860px}
+.foot h3{font-size:12px;font-family:var(--mono);text-transform:uppercase;letter-spacing:.05em;color:var(--tx3);font-weight:400;margin:0 0 14px}
+.foot p{font-size:14px;color:var(--tx2);margin:0 0 12px}
+.foot p strong{color:var(--ink);font-weight:500}
+
+/* svg */
+.bx{fill:#fff;stroke:var(--bds);stroke-width:1}
+.bx-a{fill:var(--ac-bg);stroke:var(--ac-bd);stroke-width:1}
+.bx-w{fill:var(--wn-bg);stroke:var(--wn-bd);stroke-width:1}
+.bx-o{fill:var(--ok-bg);stroke:var(--ok-bd);stroke-width:1}
+.bx-m{fill:var(--med);stroke:var(--bd);stroke-width:1}
+.lane{fill:var(--med);stroke:none}
+.ln{fill:none;stroke:#4b4b58;stroke-width:1.4}
+.ln-a{fill:none;stroke:var(--ac);stroke-width:1.4}
+.ln-w{fill:none;stroke:var(--wn-bd);stroke-width:1.6}
+.quake{fill:none;stroke:#a7a7b9;stroke-width:1.4;stroke-dasharray:5 4}
+.t-lane{font:600 10.5px var(--mono);fill:var(--tx3);letter-spacing:.05em}
+.t-day{font:600 10.5px var(--mono);fill:var(--tx3);letter-spacing:.04em}
+.t-h{font:600 12px var(--inter);fill:var(--ink)}
+.t-b{font:400 10.5px var(--inter);fill:var(--tx2)}
+.t-v{font:500 10px var(--inter);fill:var(--wn)}
+.t-v2{font:500 10px var(--inter);fill:var(--ac)}
+.t-num{font:600 13px var(--mono);fill:var(--ac)}
+.t-big{font:600 14px var(--inter);fill:var(--ink)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<p class="eyebrow"><span>Upgrade to Pros</span><span>Design method</span><span>16 September 2026</span></p>
+
+<h1>Designing against a moving model, and the mechanism that stops it hurting</h1>
+
+<p class="lede">Over three days, four attempts at the Thompson screens were built and three of them
+stopped being valid. <strong>Not because the screens were wrong, but because the ground under them
+moved while they were being drawn.</strong></p>
+
+<p class="lede">This is normal for exploratory design and it is not a reason to stop exploring. It is a
+reason to <strong>put something between the model and the screens</strong>, so that when the model
+moves, the screens do not all have to be redrawn. That something is the thing being built next, and
+this explains what it is.</p>
+
+<!-- ===================== A ===================== -->
+<section class="sec">
+  <div class="sec-head"><span class="badge-l">A</span>
+    <h2 class="sec-title">Three layers were moving at once</h2>
+    <span class="sec-sub">11 to 16 September</span></div>
+
+  <p class="intro">Each layer rests on the one above it. <strong>When the model moves, the script
+    becomes wrong. When the script moves, every screen drawn from it becomes wrong.</strong> Nothing
+    measured that, so the effect showed up as screens that looked bad rather than as ground that had
+    shifted.</p>
+
+  <div class="frame">
+  <svg viewBox="0 0 1160 430" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Three layers moving over five days">
+    <defs>
+      <marker id="ah" markerWidth="8" markerHeight="8" refX="6.6" refY="3" orient="auto">
+        <path d="M0,0 L7,3 L0,6 z" fill="#f5b638"/>
+      </marker>
+    </defs>
+
+    <rect class="lane" x="130" y="46" width="1010" height="76" rx="8"/>
+    <rect class="lane" x="130" y="136" width="1010" height="76" rx="8"/>
+    <rect class="lane" x="130" y="226" width="1010" height="150" rx="8"/>
+
+    <text class="t-lane" x="14" y="80">THE MODEL</text>
+    <text class="t-b" x="14" y="96">what the</text>
+    <text class="t-b" x="14" y="109">nouns mean</text>
+
+    <text class="t-lane" x="14" y="170">THE SCRIPT</text>
+    <text class="t-b" x="14" y="186">what happens</text>
+    <text class="t-b" x="14" y="199">in the story</text>
+
+    <text class="t-lane" x="14" y="264">THE SCREENS</text>
+    <text class="t-b" x="14" y="280">what gets</text>
+    <text class="t-b" x="14" y="293">drawn</text>
+
+    <text class="t-day" x="140" y="34">11 TO 13 SEP</text>
+    <text class="t-day" x="386" y="34">14 SEP</text>
+    <text class="t-day" x="632" y="34">15 SEP</text>
+    <text class="t-day" x="900" y="34">16 SEP</text>
+    <path class="ln" d="M376,26 V386" stroke="#e6e6ea"/>
+    <path class="ln" d="M622,26 V386" stroke="#e6e6ea"/>
+    <path class="ln" d="M890,26 V386" stroke="#e6e6ea"/>
+
+    <rect class="bx" x="140" y="58" width="222" height="52" rx="8"/>
+    <text class="t-h" x="152" y="78">Standards, first records</text>
+    <text class="t-b" x="152" y="96">The library is started</text>
+
+    <rect class="bx" x="386" y="58" width="222" height="52" rx="8"/>
+    <text class="t-h" x="398" y="78">Opportunity added</text>
+    <text class="t-b" x="398" y="96">Interest retired</text>
+
+    <rect class="bx-w" x="632" y="58" width="244" height="52" rx="8"/>
+    <text class="t-h" x="644" y="78">Demand model rebuilt four times</text>
+    <text class="t-b" x="644" y="96">and the board moves to a fourth pass</text>
+
+    <rect class="bx-w" x="900" y="58" width="240" height="52" rx="8"/>
+    <text class="t-h" x="912" y="78">Pipeline reference found stale</text>
+    <text class="t-b" x="912" y="96">Asset, Lead, Job emerges</text>
+
+    <rect class="bx" x="140" y="148" width="222" height="52" rx="8"/>
+    <text class="t-h" x="152" y="168">S15 as the team wrote it</text>
+    <text class="t-b" x="152" y="186">Three trades, app contact</text>
+
+    <rect class="bx" x="386" y="148" width="222" height="52" rx="8"/>
+    <text class="t-h" x="398" y="168">S4 rewritten to the new model</text>
+    <text class="t-b" x="398" y="186">Others left as they were</text>
+
+    <rect class="bx-w" x="632" y="148" width="244" height="52" rx="8"/>
+    <text class="t-h" x="644" y="168">S15 rewritten end to end</text>
+    <text class="t-b" x="644" y="186">Two trades, a phone call, no change order</text>
+
+    <rect class="bx-w" x="900" y="148" width="240" height="52" rx="8"/>
+    <text class="t-h" x="912" y="168">Calendar revised twice</text>
+    <text class="t-b" x="912" y="186">Seven weeks becomes three</text>
+
+    <rect class="bx-o" x="386" y="238" width="222" height="48" rx="8"/>
+    <text class="t-h" x="398" y="257">Two memos for S14</text>
+    <text class="t-b" x="398" y="274">Still valid. A different scenario</text>
+
+    <rect class="bx" x="632" y="238" width="244" height="48" rx="8"/>
+    <text class="t-h" x="644" y="257">Memo for S15, and a build brief</text>
+    <text class="t-b" x="644" y="274">Three trades, change order, cheque</text>
+    <text class="t-v" x="633" y="300">Invalid the same evening</text>
+
+    <rect class="bx" x="632" y="312" width="244" height="48" rx="8"/>
+    <text class="t-h" x="644" y="331">A second memo, on the new script</text>
+    <text class="t-b" x="644" y="348">Fourteen screens, two trades</text>
+
+    <rect class="bx" x="900" y="238" width="240" height="48" rx="8"/>
+    <text class="t-h" x="912" y="257">A memo of one screen, six states</text>
+    <text class="t-b" x="912" y="274">Rejected. Groups moved for no reason</text>
+    <text class="t-v2" x="900" y="300">Failed on method, not on movement</text>
+
+    <rect class="bx-m" x="900" y="312" width="240" height="48" rx="8"/>
+    <text class="t-h" x="912" y="331">Data pack, brief, pipeline documents</text>
+    <text class="t-b" x="912" y="348">The turn. Section B</text>
+
+    <path class="ln-w" d="M754,110 V142" marker-end="url(#ah)"/>
+    <path class="ln-w" d="M754,200 V232" marker-end="url(#ah)"/>
+    <path class="ln-w" d="M1020,110 V142" marker-end="url(#ah)"/>
+    <path class="ln-w" d="M1020,200 V232" marker-end="url(#ah)"/>
+    <path class="quake" d="M876,300 H890 V336 H894"/>
+    <text class="t-v" x="762" y="132">invalidates</text>
+    <text class="t-v" x="762" y="222">invalidates</text>
+    <text class="t-v" x="1028" y="132">invalidates</text>
+    <text class="t-v" x="1028" y="222">invalidates</text>
+
+    <text class="t-v" x="140" y="404">Three of four attempts stopped being valid. Two because the layer above them moved. One because a theory about lifecycle stages was allowed to drive the layout.</text>
+  </svg>
+  </div>
+  <p class="cap"><strong>Complete on structure, not exhaustive on contents.</strong> Work on other
+    scenarios, the standards and the component records ran throughout and is left out.</p>
+
+  <div class="blocks">
+    <div><p class="k">Why this is not a mistake</p>
+      <p><strong>The model was supposed to move.</strong> That is what the last three weeks were for,
+        and it moved in the right direction every time: a demand object appeared, then a better one,
+        then a better one again.</p>
+      <p>The cost was not the thinking. <strong>It was that the screens were the only record of the
+        thinking</strong>, so every improvement destroyed its own evidence.</p></div>
+    <div><p class="k">The compounding factor</p>
+      <p><strong>Nothing fixed the data.</strong> Every screen decided its own dates, names and
+        figures as it was drawn, so two screens of the same page disagreed with each other and
+        neither was wrong.</p>
+      <p>That is why the last attempt failed differently. <strong>With nothing fixed, each screen
+        re-solved its own arrangement</strong>, and the result read as arbitrary because it was.</p></div>
+    <div><p class="k">What it was not</p>
+      <p><strong>Not a tooling problem</strong>, and not a question of drawing more carefully. Two of
+        the three invalidated pieces were good work that stopped being true.</p>
+      <p>A fourth thing also went wrong and is worth naming: <strong>whole-flow prompts.</strong>
+        Asking for fourteen screens at once forces dozens of unstated decisions simultaneously, and
+        one wrong decision contaminates everything after it.</p></div>
+  </div>
+</section>
+
+<!-- ===================== B ===================== -->
+<section class="sec">
+  <div class="sec-head"><span class="badge-l">B</span>
+    <h2 class="sec-title">The fix is not to stop the model moving</h2>
+    <span class="sec-sub">What changed on 16 September</span></div>
+
+  <p class="intro">The model will keep moving, and it should. <strong>What was missing is anything
+    between it and the screens.</strong> Four things now sit in that gap, each absorbing a different
+    kind of movement. The first three hold this scenario still. <strong>The fourth holds the component
+    library still, and it is the one that outlives the scenario.</strong></p>
+
+  <div class="frame">
+  <svg viewBox="0 0 1160 330" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Four things between the model and the screens">
+    <defs>
+      <marker id="ah2" markerWidth="8" markerHeight="8" refX="6.6" refY="3" orient="auto">
+        <path d="M0,0 L7,3 L0,6 z" fill="#382ca5"/>
+      </marker>
+    </defs>
+
+    <rect class="bx-w" x="20" y="108" width="196" height="96" rx="10"/>
+    <text class="t-big" x="38" y="136">The model moves</text>
+    <text class="t-b" x="38" y="158">and it should. That is</text>
+    <text class="t-b" x="38" y="173">what the last three</text>
+    <text class="t-b" x="38" y="188">weeks were for.</text>
+
+    <path class="ln-a" d="M216,156 H236" marker-end="url(#ah2)"/>
+
+    <rect class="bx-m" x="240" y="42" width="660" height="228" rx="10"/>
+    <text class="t-lane" x="258" y="68">FOUR THINGS THAT ABSORB THE MOVEMENT</text>
+
+    <rect class="bx-a" x="258" y="84" width="308" height="80" rx="9"/>
+    <text class="t-h" x="274" y="106">1. The data pack</text>
+    <text class="t-b" x="274" y="124">Every date, name, price and money state for</text>
+    <text class="t-b" x="274" y="139">all twenty one beats, fixed in one file.</text>
+    <text class="t-b" x="274" y="154">No screen decides a value again.</text>
+
+    <rect class="bx-a" x="578" y="84" width="308" height="80" rx="9"/>
+    <text class="t-h" x="594" y="106">2. Containers, not screens</text>
+    <text class="t-b" x="594" y="124">Twenty one beats are six containers in</text>
+    <text class="t-b" x="594" y="139">fourteen states. A state is a variant of</text>
+    <text class="t-b" x="594" y="154">its container, never a new page.</text>
+
+    <rect class="bx-a" x="258" y="178" width="308" height="80" rx="9"/>
+    <text class="t-h" x="274" y="200">3. One layout rule</text>
+    <text class="t-b" x="274" y="218">Groups keep their order across every state.</text>
+    <text class="t-b" x="274" y="233">A group that is not needed collapses in</text>
+    <text class="t-b" x="274" y="248">place. Nothing moves up the page.</text>
+
+    <rect class="bx-a" x="578" y="178" width="308" height="80" rx="9"/>
+    <text class="t-h" x="594" y="200">4. A recipe layer in the library</text>
+    <text class="t-b" x="594" y="218">Core components know nothing about the</text>
+    <text class="t-b" x="594" y="233">business. Object names live one layer up,</text>
+    <text class="t-b" x="594" y="248">where they are expected to change.</text>
+
+    <path class="ln-a" d="M900,156 H920" marker-end="url(#ah2)"/>
+
+    <rect class="bx-o" x="944" y="108" width="196" height="96" rx="10"/>
+    <text class="t-big" x="962" y="136">The screens hold</text>
+    <text class="t-b" x="962" y="158">because what moved</text>
+    <text class="t-b" x="962" y="173">was absorbed here,</text>
+    <text class="t-b" x="962" y="188">not redrawn there.</text>
+
+    <text class="t-v2" x="240" y="300">A fifth thing was settled the same day and is not a buffer: multiple trades stay bundled on one sales card, and separate at the hand-off.</text>
+  </svg>
+  </div>
+</section>
+
+<!-- ===================== C ===================== -->
+<section class="sec">
+  <div class="sec-head"><span class="badge-l">C</span>
+    <h2 class="sec-title">The route to a component library that composes</h2>
+    <span class="sec-sub">Five steps, and where we are</span></div>
+
+  <p class="intro">The destination is stated as a principle: <strong>an atomic design system with
+    enough components, driven by logic that reacts to the model and the scenario, can compose a
+    scenario's screens rather than having each one drawn by hand.</strong> It is a belief and it has
+    not been demonstrated. <strong>Step five is the demonstration</strong>, and nothing before it may
+    be justified by the destination.</p>
+
+  <div class="frame">
+  <svg viewBox="0 0 1160 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Five steps to the factory">
+    <defs>
+      <marker id="ah3" markerWidth="8" markerHeight="8" refX="6.6" refY="3" orient="auto">
+        <path d="M0,0 L7,3 L0,6 z" fill="#4b4b58"/>
+      </marker>
+    </defs>
+
+    <rect class="bx-o" x="16" y="30" width="196" height="96" rx="9"/>
+    <text class="t-lane" x="30" y="52">DONE, 16 SEP</text>
+    <text class="t-h" x="30" y="74">The scenario is pinned</text>
+    <text class="t-b" x="30" y="92">Data pack, handover brief,</text>
+    <text class="t-b" x="30" y="107">two pipeline documents.</text>
+
+    <path class="ln" d="M212,78 H248" marker-end="url(#ah3)"/>
+
+    <rect class="bx-a" x="252" y="30" width="196" height="96" rx="9"/>
+    <text class="t-num" x="266" y="54">1</text>
+    <text class="t-h" x="266" y="76">Name the two layers</text>
+    <text class="t-b" x="266" y="94">Core or recipe on every</text>
+    <text class="t-b" x="266" y="109">record. One pass.</text>
+
+    <path class="ln" d="M448,78 H484" marker-end="url(#ah3)"/>
+
+    <rect class="bx" x="488" y="30" width="196" height="96" rx="9"/>
+    <text class="t-num" x="502" y="54">2</text>
+    <text class="t-h" x="502" y="76">Extract the examples</text>
+    <text class="t-b" x="502" y="94">Every component rendered in</text>
+    <text class="t-b" x="502" y="109">every state it claims.</text>
+
+    <path class="ln" d="M684,78 H720" marker-end="url(#ah3)"/>
+
+    <rect class="bx" x="724" y="30" width="196" height="96" rx="9"/>
+    <text class="t-num" x="738" y="54">3</text>
+    <text class="t-h" x="738" y="76">The coverage matrix</text>
+    <text class="t-b" x="738" y="94">Components against four</text>
+    <text class="t-b" x="738" y="109">scenarios. Used, or missing.</text>
+
+    <path class="ln" d="M920,78 H956" marker-end="url(#ah3)"/>
+
+    <rect class="bx" x="960" y="30" width="184" height="96" rx="9"/>
+    <text class="t-num" x="974" y="54">4</text>
+    <text class="t-h" x="974" y="76">Stage tables</text>
+    <text class="t-b" x="974" y="94">What each group does at</text>
+    <text class="t-b" x="974" y="109">each point of a life.</text>
+
+    <path class="ln" d="M1052,126 V156 H586 V186" marker-end="url(#ah3)"/>
+
+    <rect class="bx-a" x="336" y="190" width="500" height="80" rx="10"/>
+    <text class="t-num" x="354" y="214">5</text>
+    <text class="t-h" x="380" y="214">Compose one scenario from the library alone</text>
+    <text class="t-b" x="354" y="236">The thinnest one, built with no memo first, logging every place the library</text>
+    <text class="t-b" x="354" y="252">had to be left. Those escapes are the gap list. Days, not months.</text>
+
+    <text class="t-v2" x="336" y="288">Four scenarios, not seventeen. Three independent needs is the threshold, so two could never promote anything.</text>
+  </svg>
+  </div>
+</section>
+
+<!-- ===================== D ===================== -->
+<section class="sec">
+  <div class="sec-head"><span class="badge-l">D</span>
+    <h2 class="sec-title">How the library is built, and why it has a middle</h2>
+    <span class="sec-sub">The thing step one names</span></div>
+
+  <p class="intro">Atomic design gives components a <strong>size</strong>: atom, molecule, organism,
+    template. What it does not give them is an <strong>owner</strong>. Adding that second axis is the
+    whole of step one, and it is what lets the model keep moving without the primitives moving with
+    it. <strong>An object name may never appear in a core component</strong>, which is the rule that
+    does all the work.</p>
+
+  <div class="frame">
+  <svg viewBox="0 0 1160 500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The library in three layers, and the two axes">
+    <defs>
+      <marker id="ah4" markerWidth="8" markerHeight="8" refX="6.6" refY="3" orient="auto">
+        <path d="M0,0 L7,3 L0,6 z" fill="#4b4b58"/>
+      </marker>
+      <marker id="ah5" markerWidth="8" markerHeight="8" refX="6.6" refY="3" orient="auto">
+        <path d="M0,0 L7,3 L0,6 z" fill="#382ca5"/>
+      </marker>
+    </defs>
+
+    <text class="t-lane" x="16" y="26">WHAT COMPOSES INTO WHAT</text>
+
+    <!-- stack -->
+    <rect class="bx-m" x="210" y="54" width="380" height="64" rx="9"/>
+    <text class="t-h" x="226" y="78">Screens</text>
+    <text class="t-b" x="226" y="96">One scenario's views, assembled from</text>
+    <text class="t-b" x="226" y="110">recipes. Not stored in the library</text>
+
+    <rect class="bx-a" x="210" y="152" width="380" height="64" rx="9"/>
+    <text class="t-h" x="226" y="176">Recipes</text>
+    <text class="t-b" x="226" y="194">Named compositions of core components.</text>
+    <text class="t-b" x="226" y="208">Object names live here, and only here</text>
+
+    <rect class="bx" x="210" y="250" width="380" height="64" rx="9"/>
+    <text class="t-h" x="226" y="274">Core components</text>
+    <text class="t-b" x="226" y="292">Card, button, badge, field, sheet. Content</text>
+    <text class="t-b" x="226" y="306">and context agnostic. No object names</text>
+
+    <rect class="bx" x="210" y="348" width="380" height="52" rx="9"/>
+    <text class="t-h" x="226" y="370">Design tokens</text>
+    <text class="t-b" x="226" y="388">Colour and elevation, from the real build</text>
+
+    <path class="ln" d="M400,348 V322" marker-end="url(#ah4)"/>
+    <path class="ln" d="M400,250 V224" marker-end="url(#ah4)"/>
+    <path class="ln" d="M400,152 V126" marker-end="url(#ah4)"/>
+    <text class="t-b" x="414" y="338">composed into</text>
+    <text class="t-b" x="414" y="240">composed into</text>
+    <text class="t-b" x="414" y="142">assembled into</text>
+
+    <!-- entity model -->
+    <rect class="bx-w" x="16" y="152" width="176" height="64" rx="9"/>
+    <text class="t-h" x="32" y="176">The entity model</text>
+    <text class="t-b" x="32" y="194">The slow layer.</text>
+    <text class="t-b" x="32" y="208">It names things</text>
+    <path class="ln-a" d="M192,184 H206" marker-end="url(#ah5)"/>
+    <text class="t-v2" x="16" y="240">and it reaches no further</text>
+    <text class="t-v2" x="16" y="256">up or down than this</text>
+
+    <!-- snowflakes -->
+    <rect class="bx-m" x="610" y="152" width="176" height="64" rx="9"/>
+    <text class="t-h" x="626" y="176">Snowflakes</text>
+    <text class="t-b" x="626" y="194">One-offs. Allowed,</text>
+    <text class="t-b" x="626" y="208">if they are labelled</text>
+    <path class="quake" d="M590,184 H606"/>
+
+    <!-- promotion -->
+    <text class="t-lane" x="16" y="420">PROMOTION RUNS ONE WAY, AND THE THRESHOLD IS COUNTED</text>
+    <rect class="bx-m" x="16" y="440" width="150" height="36" rx="7"/>
+    <text class="t-h" x="32" y="463">Snowflake</text>
+    <path class="ln" d="M170,458 H228" marker-end="url(#ah4)"/>
+    <text class="t-b" x="176" y="450">2 need it</text>
+    <rect class="bx-a" x="236" y="440" width="150" height="36" rx="7"/>
+    <text class="t-h" x="252" y="463">Recipe</text>
+    <path class="ln" d="M390,458 H448" marker-end="url(#ah4)"/>
+    <text class="t-b" x="396" y="450">3 need it</text>
+    <rect class="bx" x="456" y="440" width="150" height="36" rx="7"/>
+    <text class="t-h" x="472" y="463">Core</text>
+    <text class="t-b" x="622" y="463">Independent scenarios, counted rather than argued about</text>
+
+    <!-- the two axes -->
+    <text class="t-lane" x="820" y="26">TWO AXES, NOT ONE</text>
+    <text class="t-b" x="820" y="48">Size and ownership correlate, which is</text>
+    <text class="t-b" x="820" y="63">why they get mistaken for each other</text>
+
+    <text class="t-day" x="820" y="96">OWNERSHIP</text>
+
+    <text class="t-day" x="820" y="140">CORE</text>
+    <text class="t-day" x="820" y="194">RECIPE</text>
+    <text class="t-day" x="820" y="248">SNOWFLAKE</text>
+
+    <rect class="bx-a" x="906" y="112" width="58" height="46" rx="5"/>
+    <rect class="bx-a" x="966" y="112" width="58" height="46" rx="5"/>
+    <rect class="bx-m" x="1026" y="112" width="58" height="46" rx="5"/>
+    <rect class="bx" x="1086" y="112" width="58" height="46" rx="5"/>
+
+    <rect class="bx" x="906" y="166" width="58" height="46" rx="5"/>
+    <rect class="bx-m" x="966" y="166" width="58" height="46" rx="5"/>
+    <rect class="bx-a" x="1026" y="166" width="58" height="46" rx="5"/>
+    <rect class="bx-a" x="1086" y="166" width="58" height="46" rx="5"/>
+
+    <rect class="bx" x="906" y="220" width="58" height="46" rx="5"/>
+    <rect class="bx-m" x="966" y="220" width="58" height="46" rx="5"/>
+    <rect class="bx-a" x="1026" y="220" width="58" height="46" rx="5"/>
+    <rect class="bx-m" x="1086" y="220" width="58" height="46" rx="5"/>
+
+    <text class="t-day" x="912" y="286">ATOM</text>
+    <text class="t-day" x="970" y="286">MOLEC.</text>
+    <text class="t-day" x="1030" y="286">ORGAN.</text>
+    <text class="t-day" x="1092" y="286">TMPL.</text>
+    <text class="t-day" x="906" y="306">SIZE</text>
+
+    <text class="t-b" x="820" y="340">Filled cells are typical, pale cells possible,</text>
+    <text class="t-b" x="820" y="355">empty cells rare.</text>
+    <text class="t-v2" x="820" y="378">The off-diagonal is the point: a large thing</text>
+    <text class="t-v2" x="820" y="393">can be core, and a small thing can be</text>
+    <text class="t-v2" x="820" y="408">a snowflake.</text>
+  </svg>
+  </div>
+</section>
+
+<div class="foot">
+  <h3>The one sentence</h3>
+  <p><strong>Three days of work were spent discovering that the screens were the only place the
+    thinking was written down</strong>, so every improvement to the model destroyed its own evidence.</p>
+  <p><strong>What has been built since is the layer that stops that happening</strong>: the scenario's
+    data in one file rather than in fourteen screens, a component library with a place for the parts
+    that are supposed to change, and one layout rule that makes two states of a page comparable.</p>
+  <p>The model will move again. <strong>The next time it does, the cost should be a rewrite of one
+    file rather than a redraw of everything.</strong></p>
+</div>
+
+</div>
+</body>
+</html>

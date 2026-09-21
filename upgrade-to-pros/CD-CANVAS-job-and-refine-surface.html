@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Roofing job and the refine overlay</title>
+<style>
+:root{
+  color-scheme:light;
+  --sol-actions-button:#161051; --sol-actions-link:#382ca5;
+  --sol-backgrounds-accent-purple:#e2e1fe; --sol-backgrounds-system-warning:#fffaf0;
+  --sol-backgrounds-system-success:#effaf2; --sol-borders-system-success:#8cd3a3; --sol-text-success:#006b24;
+  --sol-backgrounds-ui-high:#ffffff; --sol-backgrounds-ui-low:#e3e3ed; --sol-backgrounds-ui-medium:#f5f5f9;
+  --sol-borders-accent-purple:#6d62d5; --sol-borders-accent-yellow:#f5b638;
+  --sol-borders-ui-default:#c8c8d5; --sol-borders-ui-strong:#a7a7b9; --sol-borders-ui-subtle:#e3e3ed;
+  --sol-elevation-md:0px 1px 12px 0px #0000000f;
+  --sol-icons-accent-purple:#382ca5; --sol-icons-ui-secondary:#4b4b58;
+  --sol-text-primary:#14141a; --sol-text-secondary:#4b4b58; --sol-text-warning:#8f5f00;
+  --sol-text-placeholder:#a7a7b9;
+  --pw-ink:#2c1b3c;
+  --inter:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+  --m-bd:#e6e6ea; --m-bds:#d3d3da; --m-tx:#1b1b20; --m-tx2:#55555e; --m-tx3:#86868f; --m-paper:#fbfbfc;
+}
+*{box-sizing:border-box}
+/* Pros Web kit */
+.pw-page{display:flex;flex-direction:column;background:var(--sol-backgrounds-ui-high);padding:24px 28px 28px;color:var(--pw-ink)}
+.pw-stack{display:flex;flex-direction:column;gap:22px}
+.pw-crumbs{display:flex;align-items:center;gap:8px;font:400 12px/18px var(--inter);color:var(--sol-text-secondary);margin-bottom:10px;flex-wrap:wrap}
+.pw-crumbs a{color:var(--sol-actions-link);text-decoration:none}
+.pw-crumbs .s{color:var(--sol-borders-ui-strong)}
+.pw-titlerow{display:flex;align-items:flex-start;gap:20px;flex-wrap:wrap}
+.t-h1{font:700 23px/32px var(--inter);margin:0}
+.pw-pencil{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;color:var(--sol-text-placeholder);font-size:12px;position:relative;top:-3px;margin-left:6px}
+.pw-meta{margin:5px 0 0;font:400 13px/20px var(--inter);color:var(--sol-text-secondary)}
+.pw-meta .now{color:var(--pw-ink);font-weight:500}
+.pw-meta .s{color:var(--sol-borders-ui-strong);margin:0 7px}
+.pw-actions{display:flex;gap:9px;flex-wrap:wrap;margin-left:auto;align-items:center}
+.pw-btn{border:1px solid var(--sol-borders-ui-default);border-radius:8px;background:var(--sol-backgrounds-ui-high);padding:7px 13px;font:500 13px/18px var(--inter);color:var(--pw-ink)}
+.pw-btn.pri{background:var(--sol-actions-button);border-color:var(--sol-actions-button);color:#fff}
+.pw-kebab{width:33px;height:33px;border:1px solid var(--sol-borders-ui-default);border-radius:8px;background:var(--sol-backgrounds-ui-high);color:var(--sol-icons-ui-secondary);display:flex;align-items:center;justify-content:center;font-size:15px}
+.pw-card{background:var(--sol-backgrounds-ui-high);border:1px solid var(--sol-borders-ui-subtle);border-radius:12px;box-shadow:var(--sol-elevation-md);padding:16px}
+.pw-cardstack{display:flex;flex-direction:column;gap:12px}
+.pw-cardstack h5{margin:0;font:700 15px/22px var(--inter);color:var(--sol-text-primary)}
+.pw-cardhead{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.pw-group{display:flex;flex-direction:column;gap:10px}
+.pw-grouphead{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.pw-grouphead h2{margin:0;font:700 16px/23px var(--inter);color:var(--pw-ink)}
+.pw-grouphead .sub{font:400 12px/18px var(--inter);color:var(--sol-text-secondary)}
+.pw-pair{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+.pw-pair>*{min-width:0}
+.pw-tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.pw-tile{border:1px solid var(--sol-borders-ui-subtle);border-radius:10px;background:var(--sol-backgrounds-ui-high);box-shadow:var(--sol-elevation-md);padding:14px 16px}
+.pw-tile .tl{font:400 11.5px/17px var(--inter);color:var(--sol-text-secondary)}
+.pw-tile .tv{font:700 24px/32px var(--inter);color:var(--sol-text-primary);font-variant-numeric:tabular-nums;margin-top:2px}
+.pw-tile .ts{font:400 12px/18px var(--inter);color:var(--sol-text-secondary);margin-top:2px}
+.pw-tile.warn .tv{color:var(--sol-text-warning)}
+.pw-tile.warn .ts{color:var(--sol-text-warning);font-weight:500}
+.pw-crowlist{display:flex;flex-direction:column}
+.pw-lrow{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:16px;align-items:baseline;padding:9px 0;border-bottom:1px solid var(--sol-borders-ui-subtle)}
+.pw-lrow:last-child{border-bottom:0}
+.pw-lrow:first-child{padding-top:0}
+.pw-lname{font:400 14px/20px var(--inter);color:var(--pw-ink)}
+.pw-lname.med{font-weight:500}
+.pw-lsub{display:block;font:400 12px/18px var(--inter);color:var(--sol-text-secondary);margin-top:1px}
+.pw-r{text-align:right;white-space:nowrap}
+.pw-lval{display:block;font:500 14px/20px var(--inter);color:var(--pw-ink);font-variant-numeric:tabular-nums}
+.pw-lst{display:block;font:400 12px/18px var(--inter);color:var(--sol-text-secondary);margin-top:1px}
+.pw-lrow.dim .pw-lname,.pw-lrow.dim .pw-lval{color:var(--sol-text-secondary);font-weight:400}
+.pw-more{display:flex;align-items:baseline;gap:10px;padding-top:10px;border-top:1px solid var(--sol-borders-ui-subtle);font:400 12px/18px var(--inter);color:var(--sol-text-secondary)}
+.pw-more a{color:var(--sol-actions-link);text-decoration:none;margin-left:auto}
+.pw-crule{height:1px;background:var(--sol-borders-ui-subtle)}
+.pw-bdg{display:inline-flex;align-items:center;border:1px solid var(--sol-borders-ui-default);border-radius:5px;background:var(--sol-backgrounds-ui-medium);padding:2px 8px;font:500 11.5px/18px var(--inter);color:var(--sol-text-secondary);white-space:nowrap}
+.pw-empty{border:1px dashed var(--sol-borders-ui-default);border-radius:10px;background:var(--sol-backgrounds-ui-medium);padding:14px 16px;font:400 13px/20px var(--inter);color:var(--sol-text-secondary)}
+.pw-line{display:flex;align-items:baseline;justify-content:space-between;gap:14px;flex-wrap:wrap;font:400 13px/20px var(--inter);color:var(--sol-text-secondary)}
+.pw-line b{font-weight:500;color:var(--pw-ink)}
+.pw-line a{color:var(--sol-actions-link);text-decoration:none;margin-left:auto;white-space:nowrap}
+.pw-kv{display:grid;grid-template-columns:1fr 1fr;gap:12px 18px}
+.pw-kv .k{display:block;font:400 11.5px/17px var(--inter);color:var(--sol-text-secondary)}
+.pw-kv .v{display:block;font:500 13.5px/20px var(--inter);color:var(--pw-ink)}
+.pw-kv .w{grid-column:1 / -1}
+
+/* stage card, merged */
+.pw-stagewrap{display:grid;grid-template-columns:250px minmax(0,1fr);gap:22px;align-items:start}
+.pw-stagewrap>*{min-width:0}
+.pw-rail{display:flex;flex-direction:column;gap:14px;margin-top:10px}
+.pw-railboard{font:400 11.5px/17px var(--inter);color:var(--sol-text-secondary);margin-bottom:4px}
+.pw-railgrp{border-left:1px solid var(--sol-borders-ui-subtle);margin-left:6px;padding-left:15px}
+.pw-railrow{display:grid;grid-template-columns:13px minmax(0,1fr) auto;gap:11px;align-items:baseline;padding:5px 0}
+.pw-raildot{width:11px;height:11px;border-radius:50%;border:1.5px solid var(--sol-borders-ui-strong);background:var(--sol-backgrounds-ui-high);position:relative;top:3px;margin-left:-21px}
+.pw-railrow.done .pw-raildot{background:var(--sol-text-success);border-color:var(--sol-text-success)}
+.pw-railrow.cur .pw-raildot{border-color:var(--sol-icons-accent-purple);border-width:3.5px}
+.pw-railrow .sn{font:400 13.5px/20px var(--inter);color:var(--sol-text-secondary)}
+.pw-railrow.cur .sn{font-weight:600;color:var(--pw-ink)}
+.pw-railrow .sv{font:400 12px/18px var(--inter);color:var(--sol-text-secondary);white-space:nowrap}
+.pw-stagepanel{background:var(--sol-backgrounds-ui-medium);border-radius:10px;padding:14px 16px}
+.pw-stagepanel .ph{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:6px}
+.pw-stagepanel .ph h5{margin:0;font:700 14.5px/21px var(--inter);color:var(--sol-text-primary)}
+.pw-tk{display:grid;grid-template-columns:17px minmax(0,1fr) auto auto;gap:12px;align-items:center;padding:8px 0;font:400 13.5px/20px var(--inter);color:var(--pw-ink);border-bottom:1px solid var(--sol-borders-ui-subtle)}
+.pw-tk:last-of-type{border-bottom:0}
+.pw-tkbx{width:17px;height:17px;border-radius:4px;border:1.5px solid var(--sol-borders-ui-strong);background:var(--sol-backgrounds-ui-high);display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px}
+.pw-tk[data-state=done] .pw-tkbx{background:var(--sol-text-success);border-color:var(--sol-text-success)}
+.pw-tk[data-state=done]{color:var(--sol-text-secondary)}
+.pw-tk[data-state=na] .pw-tkbx{border-style:dashed;border-color:var(--sol-borders-ui-default)}
+.pw-tk[data-state=na]{color:var(--sol-text-placeholder)}
+.pw-tk .when{font:400 11.5px/17px var(--inter);color:var(--sol-text-secondary);white-space:nowrap}
+.pw-chev{color:var(--sol-borders-ui-strong);font-size:12px;line-height:1}
+.pw-waiting{margin-top:12px;padding-top:12px;border-top:1px solid var(--sol-borders-ui-default)}
+
+/* week track */
+.pw-week{display:flex;flex-direction:column;gap:7px}
+.pw-wr{display:grid;grid-template-columns:70px minmax(0,1fr);gap:12px;align-items:center}
+.pw-wr .gn{font:500 12.5px/19px var(--inter);color:var(--pw-ink)}
+.pw-wr .gn.dim{color:var(--sol-text-secondary);font-weight:400}
+.pw-track{position:relative;height:24px;border-radius:6px;background:var(--sol-backgrounds-ui-medium);border:1px solid var(--sol-borders-ui-subtle)}
+.pw-bar{position:absolute;top:3px;bottom:3px;border-radius:4px;background:var(--sol-backgrounds-accent-purple);border:1px solid var(--sol-borders-accent-purple);display:flex;align-items:center;padding:0 8px;font:500 11px/18px var(--inter);color:var(--sol-icons-accent-purple);white-space:nowrap;overflow:hidden}
+.pw-bar.quiet{background:var(--sol-backgrounds-ui-low);border-color:var(--sol-borders-ui-default);color:var(--sol-text-secondary)}
+.pw-dayrow{display:grid;grid-template-columns:repeat(5,1fr);font:500 10.5px/16px var(--mono);color:var(--m-tx3);text-transform:uppercase;letter-spacing:.04em}
+.pw-daywrap{display:grid;grid-template-columns:70px minmax(0,1fr);gap:12px}
+
+/* refine surface */
+.rf-lines{display:flex;flex-direction:column;gap:10px}
+.rf-line{border:1px solid var(--sol-borders-ui-subtle);border-radius:10px;background:var(--sol-backgrounds-ui-high);box-shadow:var(--sol-elevation-md);overflow:hidden}
+.rf-head{display:grid;grid-template-columns:14px minmax(0,1fr) auto;gap:14px;align-items:baseline;padding:13px 16px}
+.rf-line.open .rf-head{background:var(--sol-backgrounds-ui-medium);border-bottom:1px solid var(--sol-borders-ui-subtle)}
+.rf-head .rf-tw{display:flex;align-items:baseline;gap:14px;white-space:nowrap}
+.rf-name{font:500 14px/21px var(--inter);color:var(--pw-ink)}
+.rf-name .rf-sub{display:block;font:400 12px/18px var(--inter);color:var(--sol-text-secondary);font-weight:400;margin-top:1px}
+.rf-signed{font:400 12.5px/20px var(--inter);color:var(--sol-text-secondary);font-variant-numeric:tabular-nums}
+.rf-work{font:700 15px/21px var(--inter);color:var(--sol-text-primary);font-variant-numeric:tabular-nums}
+.rf-delta{font:400 12px/18px var(--inter);color:var(--sol-text-secondary);font-variant-numeric:tabular-nums}
+.rf-rows{padding:2px 16px 8px}
+.rf-row{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:16px;align-items:baseline;padding:9px 0;border-bottom:1px solid var(--sol-borders-ui-subtle)}
+.rf-row:last-of-type{border-bottom:0}
+.rf-rname{font:400 13.5px/20px var(--inter);color:var(--pw-ink)}
+.rf-rsub{display:block;font:400 12px/18px var(--inter);color:var(--sol-text-secondary);margin-top:1px}
+.rf-ramt{display:block;font:500 13.5px/20px var(--inter);color:var(--pw-ink);font-variant-numeric:tabular-nums;text-align:right}
+.rf-rcat{display:block;font:400 11.5px/17px var(--inter);color:var(--sol-text-secondary);text-align:right;margin-top:1px}
+.rf-add{padding:10px 16px 12px;border-top:1px solid var(--sol-borders-ui-subtle);font:500 12.5px/19px var(--inter)}
+.rf-add a{color:var(--sol-actions-link);text-decoration:none}
+.rf-roll{display:grid;grid-template-columns:repeat(4,1fr);gap:12px 18px}
+.rf-roll .k{display:block;font:400 11.5px/17px var(--inter);color:var(--sol-text-secondary)}
+.rf-roll .v{display:block;font:700 17px/24px var(--inter);color:var(--sol-text-primary);font-variant-numeric:tabular-nums}
+
+/* takeover overlay */
+.pw-takeover{display:flex;flex-direction:column;background:var(--sol-backgrounds-ui-high);color:var(--pw-ink)}
+.tk-bar{display:flex;align-items:center;gap:16px;padding:13px 22px;border-bottom:1px solid var(--sol-borders-ui-subtle)}
+.tk-close{width:33px;height:33px;border:1px solid var(--sol-borders-ui-default);border-radius:8px;background:var(--sol-backgrounds-ui-high);color:var(--sol-icons-ui-secondary);display:flex;align-items:center;justify-content:center;font-size:13px;flex:0 0 auto}
+.tk-title h1{margin:0;font:700 18px/26px var(--inter);color:var(--sol-text-primary)}
+.tk-title p{margin:1px 0 0;font:400 12.5px/19px var(--inter);color:var(--sol-text-secondary)}
+.tk-title p .s{color:var(--sol-borders-ui-strong);margin:0 7px}
+.tk-acts{display:flex;align-items:center;gap:9px;margin-left:auto}
+.tk-totals{display:flex;align-items:baseline;gap:36px;flex-wrap:wrap;padding:12px 22px;background:var(--sol-backgrounds-ui-medium);border-bottom:1px solid var(--sol-borders-ui-subtle)}
+.tk-totals .t{display:flex;align-items:baseline;gap:9px}
+.tk-totals .k{font:400 11.5px/17px var(--inter);color:var(--sol-text-secondary)}
+.tk-totals .v{font:700 17px/24px var(--inter);color:var(--sol-text-primary);font-variant-numeric:tabular-nums}
+.tk-totals .d{font:400 12px/18px var(--inter);color:var(--sol-text-secondary)}
+.tk-totals .t.over .v{color:var(--sol-text-warning)}
+.tk-totals .t.over .d{color:var(--sol-text-warning);font-weight:500}
+.tk-body{padding:22px;display:flex;flex-direction:column;gap:22px}
+.tk-find{border:1px solid var(--sol-borders-ui-subtle);border-radius:10px;background:var(--sol-backgrounds-ui-high);box-shadow:var(--sol-elevation-md)}
+.tk-findhead{display:grid;grid-template-columns:14px minmax(0,1fr) auto;gap:12px;align-items:baseline;padding:12px 16px}
+.tk-findhead b{font:500 13.5px/20px var(--inter);color:var(--pw-ink)}
+.tk-findhead .sum{font:400 12.5px/20px var(--inter);color:var(--sol-text-secondary)}
+.tk-findhead .ct{font:400 12px/20px var(--inter);color:var(--sol-text-secondary);white-space:nowrap}
+.tk-find.open .tk-findhead{border-bottom:1px solid var(--sol-borders-ui-subtle);background:var(--sol-backgrounds-ui-medium)}
+.tk-findbody{padding:2px 16px 10px}
+
+@media (max-width:900px){.pw-pair,.pw-tiles,.pw-kv,.pw-stagewrap,.rf-roll{grid-template-columns:1fr}}
+
+body{margin:0;background:#f5f5f9;font-family:var(--inter);color:var(--pw-ink);-webkit-font-smoothing:antialiased}
+.canvas{max-width:1180px;margin:0 auto;padding:40px 28px 80px;display:flex;flex-direction:column;gap:44px}
+.framelabel{font:500 11px/16px var(--mono);text-transform:uppercase;letter-spacing:.06em;color:#86868f;margin:0 0 10px}
+.framelabel .n{color:var(--pw-ink)}
+.artboard{border:1px solid #d3d3da;border-radius:12px;overflow:hidden;background:var(--sol-backgrounds-ui-high)}
+</style>
+</head>
+<body>
+<div class="canvas">
+
+  <section>
+    <p class="framelabel">Job &middot; Roofing &middot; <span class="n">State A, created at the hand-off</span> &middot; Thu 6 Aug</p>
+    <div class="artboard"><div class="pw-page"><div class="pw-crumbs"><a href="#">Customers</a><span class="s">/</span><a href="#">Sara Thompson</a><span class="s">/</span><a href="#">Roofing and siding</a><span class="s">/</span><span>Roofing</span></div>
+    <div class="pw-titlerow">
+      <div><h1 class="t-h1">Roofing<span class="pw-pencil">&#9998;</span></h1>
+        <p class="pw-meta">1428 Maple Ave<span class="s">&middot;</span>Created 6 Aug at the hand-off<span class="s">&middot;</span><span class="now">In review</span></p></div>
+      <div class="pw-actions"><button class="pw-btn pri">Book the inspection</button><span class="pw-kebab">&#8943;</span></div>
+    </div>
+
+    <div class="pw-stack" style="margin-top:20px">
+
+      <div class="pw-tiles">
+        <div class="pw-tile"><div class="tl">Price</div><div class="tv">$38,900</div><div class="ts">Of a $73,100 contract</div></div>
+        <div class="pw-tile"><div class="tl">This stage</div><div class="tv">0 of 3</div><div class="ts">Ops intake</div></div>
+        <div class="pw-tile"><div class="tl">Starts</div><div class="tv">Not set</div><div class="ts">No crew, no dates</div></div>
+      </div>
+
+      <div class="pw-group">
+        <div class="pw-grouphead"><h2>Where this job is</h2></div>
+        <div class="pw-card"><div class="pw-stagewrap">
+          <div>
+            <h5 style="margin:0;font:700 15px/22px var(--inter);color:var(--sol-text-primary)">Stage</h5>
+            <div class="pw-rail">
+              <div><div class="pw-railboard">Production</div>
+                <div class="pw-railgrp">
+                  <div class="pw-railrow cur"><span class="pw-raildot"></span><span class="sn">Ops intake</span><span class="sv">0 of 3</span></div>
+                  <div class="pw-railrow"><span class="pw-raildot"></span><span class="sn">Orders and scheduling</span><span class="sv">0 of 6</span></div>
+                  <div class="pw-railrow"><span class="pw-raildot"></span><span class="sn">Final checks</span><span class="sv">0 of 4</span></div>
+                  <div class="pw-railrow"><span class="pw-raildot"></span><span class="sn">Installing</span><span class="sv">0 of 8</span></div>
+                </div></div>
+              <div><div class="pw-railboard">Closeout and payment</div>
+                <div class="pw-railgrp">
+                  <div class="pw-railrow"><span class="pw-raildot"></span><span class="sn">Closeout</span><span class="sv">0 of 6</span></div>
+                </div></div>
+            </div>
+          </div>
+          <div class="pw-stagepanel">
+            <div class="ph"><h5>Ops intake</h5><span class="pw-bdg">0 of 3</span></div>
+            <div class="pw-tk" data-state="open"><span class="pw-tkbx"></span><span>Scope validated and refined</span><span class="when"></span><span class="pw-chev">&#9656;</span></div>
+            <div class="pw-tk" data-state="open"><span class="pw-tkbx"></span><span>Materials list finalised</span><span class="when"></span><span class="pw-chev">&#9656;</span></div>
+            <div class="pw-tk" data-state="open"><span class="pw-tkbx"></span><span>Permit application submitted</span><span class="when"></span><span class="pw-chev">&#9656;</span></div>
+            <div class="pw-tk" data-state="na"><span class="pw-tkbx"></span><span>HOA submitted</span><span class="when">Not applicable</span><span></span></div>
+            <div class="pw-waiting"><div class="pw-line"><b>Waiting on</b><span>Post-sale inspection, not booked</span><a href="#">See all</a></div></div>
+          </div>
+        </div></div>
+      </div>
+
+      <div class="pw-group">
+        <div class="pw-grouphead"><h2>The work</h2></div>
+        <div class="pw-pair">
+          <div class="pw-card"><div class="pw-cardstack">
+            <div class="pw-cardhead"><h5>Scope</h5><span class="pw-bdg">From the proposal</span></div>
+            <div class="pw-kv">
+              <div><span class="k">Trade</span><span class="v">Roofing</span></div>
+              <div><span class="k">Area</span><span class="v">2,410 sq ft</span></div>
+              <div><span class="k">Layers to remove</span><span class="v">1</span></div>
+              <div><span class="k">Roof age</span><span class="v">About 19 years</span></div>
+              <div class="w"><span class="k">Material</span><span class="v">Architectural shingle, underlayment, ridge vent, flashing</span></div>
+            </div>
+            <div class="pw-crule"></div>
+            <div class="pw-line"><span><b>Six lines</b>, accepted 5 Aug, signed 6 Aug</span><a href="#">See the itemization</a></div>
+          </div></div>
+          <div class="pw-card"><div class="pw-cardstack">
+            <h5>Property and access</h5>
+            <div class="pw-kv">
+              <div class="w"><span class="k">Address</span><span class="v">1428 Maple Ave, Sacramento CA 95818</span></div>
+              <div><span class="k">Built</span><span class="v">1978, two storey</span></div>
+              <div><span class="k">Floor area</span><span class="v">2,140 sq ft</span></div>
+              <div><span class="k">Gate code</span><span class="v">4417</span></div>
+              <div><span class="k">On site</span><span class="v">Dog in the back yard, friendly but loud</span></div>
+              <div class="w"><span class="k">Ladder and dumpster</span><span class="v">Ladder south elevation, dumpster north driveway</span></div>
+            </div>
+          </div></div>
+        </div>
+      </div>
+
+      <div class="pw-group">
+        <div class="pw-grouphead"><h2>Crew and schedule</h2></div>
+        <div class="pw-pair">
+          <div class="pw-card"><div class="pw-cardstack"><h5>Crew</h5>
+            <div class="pw-empty">No crew assigned</div></div></div>
+          <div class="pw-card"><div class="pw-cardstack"><h5>Dates</h5>
+            <div class="pw-empty">Not scheduled. The customer has not been asked</div></div></div>
+        </div>
+      </div>
+
+      <div class="pw-group">
+        <div class="pw-grouphead"><h2>Materials and documents</h2></div>
+        <div class="pw-pair">
+          <div class="pw-card"><div class="pw-cardstack">
+            <div class="pw-cardhead"><h5>Material order</h5><span class="pw-bdg">Not ordered</span></div>
+            <div class="pw-empty">Nothing ordered. The materials list is not finalised</div>
+          </div></div>
+          <div class="pw-card"><div class="pw-cardstack">
+            <div class="pw-cardhead"><h5>Documents and photos</h5><span class="pw-bdg">1 document, 12 photos</span></div>
+            <div class="pw-crowlist">
+              <div class="pw-lrow"><span class="pw-lname">Site assessment photos<span class="pw-lsub">Priya Raman, 5 Aug</span></span><span class="pw-r"><span class="pw-lval">12</span></span></div>
+              <div class="pw-lrow dim"><span class="pw-lname">Signed contract<span class="pw-lsub">Both trades, 6 Aug</span></span><span class="pw-r"><span class="pw-lst">At the project</span></span></div>
+            </div>
+            <div class="pw-more"><span>Nothing yet from this job</span><a href="#">Add</a></div>
+          </div></div>
+        </div>
+      </div>
+
+      <div class="pw-group">
+        <div class="pw-grouphead"><h2>Money</h2><span class="sub">Held by the project</span></div>
+        <div class="pw-card"><div class="pw-cardstack">
+          <div class="pw-line"><span>This job is priced at <b>$38,900</b>. The balance sits on <b>Roofing and siding, Thompson</b>.</span><a href="#">Open the project</a></div>
+          <div class="pw-crule"></div>
+          <div class="pw-kv">
+            <div><span class="k">Contract, both trades</span><span class="v">$73,100</span></div>
+            <div><span class="k">Collected</span><span class="v">$500, deposit by cheque 6 Aug</span></div>
+            <div><span class="k">Outstanding</span><span class="v">$72,600, due when both jobs complete</span></div>
+            <div><span class="k">Billing</span><span class="v">One invoice, at the project</span></div>
+          </div>
+        </div></div>
+      </div>
+
+      <div class="pw-group">
+        <div class="pw-grouphead"><h2>How this job came about</h2></div>
+        <div class="pw-pair">
+          <div class="pw-card"><div class="pw-cardstack">
+            <h5>Where the scope came from</h5>
+            <div class="pw-crowlist">
+              <div class="pw-lrow"><span class="pw-lname">Storm call<span class="pw-lsub">Renata Silva took it, 4 Aug. Shingles in the yard</span></span><span class="pw-r"><span class="pw-lst">Lead</span></span></div>
+              <div class="pw-lrow"><span class="pw-lname">Site visit and assessment<span class="pw-lsub">Priya Raman, 5 Aug. Near end of life, south slope lifted</span></span><span class="pw-r"><span class="pw-lst">Lead</span></span></div>
+              <div class="pw-lrow"><span class="pw-lname">Proposal accepted in the room<span class="pw-lsub">Roofing and siding together, 5 Aug</span></span><span class="pw-r"><span class="pw-lval">$38,900</span></span></div>
+              <div class="pw-lrow"><span class="pw-lname">Contract signed, job created<span class="pw-lsub">6 Aug. One job per committed trade</span></span><span class="pw-r"><span class="pw-lst">Today</span></span></div>
+            </div>
+          </div></div>
+          <div class="pw-card"><div class="pw-cardstack">
+            <div class="pw-cardhead"><h5>Notes and assets</h5><span class="pw-bdg">3 notes</span></div>
+            <div class="pw-crowlist">
+              <div class="pw-lrow"><span class="pw-lname">Wants it looked at before winter<span class="pw-lsub">Renata Silva, 4 Aug</span></span><span class="pw-r"><span class="pw-lst">Intake</span></span></div>
+              <div class="pw-lrow"><span class="pw-lname">Decking sound where visible<span class="pw-lsub">Priya Raman, 5 Aug</span></span><span class="pw-r"><span class="pw-lst">Assessment</span></span></div>
+              <div class="pw-lrow"><span class="pw-lname">Sara prefers text<span class="pw-lsub">On the contact, shown here because it is who to ask</span></span><span class="pw-r"><span class="pw-lst">Contact</span></span></div>
+            </div>
+            <div class="pw-more"><span>Everything on this job and its project</span><a href="#">Add</a></div>
+          </div></div>
+        </div>
+      </div>
+
+      <div class="pw-group">
+        <div class="pw-grouphead"><h2>The other job</h2></div>
+        <div class="pw-card"><div class="pw-cardstack"><div class="pw-crowlist">
+          <div class="pw-lrow"><span class="pw-lname med">Siding<span class="pw-lsub">Ops intake, 0 of 3. No crew, no dates</span></span><span class="pw-r"><span class="pw-lval">$34,200</span><span class="pw-lst">In review</span></span></div>
+        </div></div></div>
+      </div>
+
+    </div></div></div>
+  </section>
+  <section>
+    <p class="framelabel">Overlay &middot; Refine the scope &middot; <span class="n">Opened</span> &middot; Fri 7 Aug, 11:20</p>
+    <div class="artboard"><div class="pw-takeover"><div class="tk-bar">
+      <span class="tk-close">&#10005;</span>
+      <div class="tk-title"><h1>Refine the scope</h1>
+        <p>Roofing<span class="s">&middot;</span>1428 Maple Ave<span class="s">&middot;</span>Signed 6 Aug</p></div>
+      <div class="tk-acts"><button class="pw-btn pri">Finish refining</button></div>
+    </div>
+    <div class="tk-totals">
+      <div class="t"><span class="k">Signed</span><span class="v">$38,900</span><span class="d">Six lines, locked</span></div>
+      <div class="t"><span class="k">Working</span><span class="v">$38,900</span><span class="d">In balance</span></div>
+      <div class="t"><span class="k">Refined</span><span class="v">0 of 6</span></div>
+    </div>
+
+    <div class="tk-body">
+
+      <div class="tk-find open">
+        <div class="tk-findhead"><span class="pw-chev">&#9662;</span><b>From the inspection</b><span class="ct">Marcus Ellery, 8:05 to 9:40. 6 photographs</span></div>
+        <div class="tk-findbody"><div class="pw-crowlist">
+          <div class="pw-lrow"><span class="pw-lname">Staining in the attic over the south slope<span class="pw-lsub">Where the storm lifted the shingles. Decking likely soft across four to six sheets</span></span><span class="pw-r"><span class="pw-lst">Photographed</span></span></div>
+          <div class="pw-lrow"><span class="pw-lname">Main ridge measured<span class="pw-lsub">48 feet. Two static vents come off</span></span><span class="pw-r"><span class="pw-lval">48 ft</span></span></div>
+          <div class="pw-lrow"><span class="pw-lname">One layer confirmed<span class="pw-lsub">Checked at the eave on both slopes</span></span><span class="pw-r"><span class="pw-lst">As sold</span></span></div>
+          <div class="pw-lrow"><span class="pw-lname">Dumpster fits the north driveway<span class="pw-lsub">Ladder set on the south elevation. Gate code worked</span></span><span class="pw-r"><span class="pw-lst">Confirmed</span></span></div>
+        </div></div>
+      </div>
+
+      <div class="pw-group">
+        <div class="pw-grouphead"><h2>What was sold</h2><span class="sub">Signed by Sara Thompson, 6 Aug</span></div>
+        <div class="rf-lines">
+          <div class="rf-line"><div class="rf-head"><span class="pw-chev">&#9656;</span>
+            <span class="rf-name">Tear off and dispose of one existing layer</span>
+            <span class="rf-tw"><span class="rf-signed">Signed $2,980</span><span class="rf-work">$2,980</span></span></div></div>
+          <div class="rf-line"><div class="rf-head"><span class="pw-chev">&#9656;</span>
+            <span class="rf-name">New architectural shingle roof system<span class="rf-sub">Approximately 24 squares</span></span>
+            <span class="rf-tw"><span class="rf-signed">Signed $21,550</span><span class="rf-work">$21,550</span></span></div></div>
+          <div class="rf-line"><div class="rf-head"><span class="pw-chev">&#9656;</span>
+            <span class="rf-name">Decking inspection and repair allowance<span class="rf-sub">Up to 12 sheets</span></span>
+            <span class="rf-tw"><span class="rf-signed">Signed $1,500</span><span class="rf-work">$1,500</span></span></div></div>
+          <div class="rf-line"><div class="rf-head"><span class="pw-chev">&#9656;</span>
+            <span class="rf-name">Ventilation, flashing and edge detail</span>
+            <span class="rf-tw"><span class="rf-signed">Signed $4,810</span><span class="rf-work">$4,810</span></span></div></div>
+          <div class="rf-line"><div class="rf-head"><span class="pw-chev">&#9656;</span>
+            <span class="rf-name">Two storey access, staging and site protection</span>
+            <span class="rf-tw"><span class="rf-signed">Signed $6,300</span><span class="rf-work">$6,300</span></span></div></div>
+          <div class="rf-line"><div class="rf-head"><span class="pw-chev">&#9656;</span>
+            <span class="rf-name">Permit, final walkthrough and warranty registration</span>
+            <span class="rf-tw"><span class="rf-signed">Signed $1,760</span><span class="rf-work">$1,760</span></span></div></div>
+        </div>
+      </div>
+
+    </div></div></div>
+  </section>
+  <section>
+    <p class="framelabel">Overlay &middot; Refine the scope &middot; <span class="n">Part way through, $260 over</span> &middot; Fri 7 Aug, 12:05</p>
+    <div class="artboard"><div class="pw-takeover"><div class="tk-bar">
+      <span class="tk-close">&#10005;</span>
+      <div class="tk-title"><h1>Refine the scope</h1>
+        <p>Roofing<span class="s">&middot;</span>1428 Maple Ave<span class="s">&middot;</span>Signed 6 Aug</p></div>
+      <div class="tk-acts"><button class="pw-btn pri">Finish refining</button></div>
+    </div>
+    <div class="tk-totals">
+      <div class="t"><span class="k">Signed</span><span class="v">$38,900</span><span class="d">Six lines, locked</span></div>
+      <div class="t over"><span class="k">Working</span><span class="v">$39,160</span><span class="d">$260 over</span></div>
+      <div class="t"><span class="k">Refined</span><span class="v">3 of 6</span></div>
+    </div>
+
+    <div class="tk-body">
+
+      <div class="tk-find">
+        <div class="tk-findhead"><span class="pw-chev">&#9656;</span><span class="sum"><b>From the inspection</b> &nbsp;Attic staining over the south slope, ridge measured at 48 ft, one layer confirmed, dumpster fits</span><span class="ct">6 photographs</span></div>
+      </div>
+
+      <div class="pw-group">
+        <div class="pw-grouphead"><h2>What was sold</h2><span class="sub">Signed by Sara Thompson, 6 Aug</span></div>
+        <div class="rf-lines">
+
+          <div class="rf-line open"><div class="rf-head"><span class="pw-chev">&#9662;</span>
+            <span class="rf-name">Tear off and dispose of one existing layer</span>
+            <span class="rf-tw"><span class="rf-signed">Signed $2,980</span><span class="rf-work">$2,980</span></span></div>
+            <div class="rf-rows">
+              <div class="rf-row"><span class="rf-rname">Tear off and disposal, one layer<span class="rf-rsub">24 squares at $95</span></span><span><span class="rf-ramt">$2,280</span><span class="rf-rcat">Services</span></span></div>
+              <div class="rf-row"><span class="rf-rname">Dumpster, 20 yard<span class="rf-rsub">1 at $700. North driveway, with the materials</span></span><span><span class="rf-ramt">$700</span><span class="rf-rcat">Equipment</span></span></div>
+            </div>
+            <div class="rf-add"><a href="#">Add a line</a></div>
+          </div>
+
+          <div class="rf-line open"><div class="rf-head"><span class="pw-chev">&#9662;</span>
+            <span class="rf-name">New architectural shingle roof system<span class="rf-sub">24 squares priced, 26 ordered at 8 percent waste</span></span>
+            <span class="rf-tw"><span class="rf-signed">Signed $21,550</span><span class="rf-work">$21,550</span></span></div>
+            <div class="rf-rows">
+              <div class="rf-row"><span class="rf-rname">Architectural shingle<span class="rf-rsub">26 squares at $190</span></span><span><span class="rf-ramt">$4,940</span><span class="rf-rcat">Materials</span></span></div>
+              <div class="rf-row"><span class="rf-rname">Hip and ridge cap shingle<span class="rf-rsub">120 linear ft at $7.00</span></span><span><span class="rf-ramt">$840</span><span class="rf-rcat">Materials</span></span></div>
+              <div class="rf-row"><span class="rf-rname">Synthetic underlayment<span class="rf-rsub">26 squares at $40</span></span><span><span class="rf-ramt">$1,040</span><span class="rf-rcat">Materials</span></span></div>
+              <div class="rf-row"><span class="rf-rname">Ice and water shield, valleys and eaves<span class="rf-rsub">8 rolls at $105</span></span><span><span class="rf-ramt">$840</span><span class="rf-rcat">Materials</span></span></div>
+              <div class="rf-row"><span class="rf-rname">Fasteners, caps and sealant<span class="rf-rsub">1 lot</span></span><span><span class="rf-ramt">$450</span><span class="rf-rcat">Materials</span></span></div>
+              <div class="rf-row"><span class="rf-rname">Shingle and underlayment installation<span class="rf-rsub">24 squares at $560</span></span><span><span class="rf-ramt">$13,440</span><span class="rf-rcat">Services</span></span></div>
+            </div>
+            <div class="rf-add"><a href="#">Add a line</a></div>
+          </div>
+
+          <div class="rf-line open"><div class="rf-head"><span class="pw-chev">&#9662;</span>
+            <span class="rf-name">Decking inspection and repair allowance<span class="rf-sub">Raised to 16 sheets after the attic inspection</span></span>
+            <span class="rf-tw"><span class="rf-signed">Signed $1,500</span><span class="rf-work">$1,760</span><span class="rf-delta">+$260</span></span></div>
+            <div class="rf-rows">
+              <div class="rf-row"><span class="rf-rname">Replacement decking, half inch CDX<span class="rf-rsub">16 sheets at $65. Was 12</span></span><span><span class="rf-ramt">$1,040</span><span class="rf-rcat">Materials</span></span></div>
+              <div class="rf-row"><span class="rf-rname">Deck inspection, re-nail and rot repair labour<span class="rf-rsub">24 squares at $30</span></span><span><span class="rf-ramt">$720</span><span class="rf-rcat">Services</span></span></div>
+            </div>
+            <div class="rf-add"><a href="#">Add a line</a></div>
+          </div>
+
+          <div class="rf-line"><div class="rf-head"><span class="pw-chev">&#9656;</span>
+            <span class="rf-name">Ventilation, flashing and edge detail</span>
+            <span class="rf-tw"><span class="rf-signed">Signed $4,810</span><span class="rf-work">$4,810</span></span></div></div>
+          <div class="rf-line"><div class="rf-head"><span class="pw-chev">&#9656;</span>
+            <span class="rf-name">Two storey access, staging and site protection</span>
+            <span class="rf-tw"><span class="rf-signed">Signed $6,300</span><span class="rf-work">$6,300</span></span></div></div>
+          <div class="rf-line"><div class="rf-head"><span class="pw-chev">&#9656;</span>
+            <span class="rf-name">Permit, final walkthrough and warranty registration</span>
+            <span class="rf-tw"><span class="rf-signed">Signed $1,760</span><span class="rf-work">$1,760</span></span></div></div>
+
+        </div>
+      </div>
+
+    </div></div></div>
+  </section>
+  <section>
+    <p class="framelabel">Overlay &middot; Scope &middot; <span class="n">Reopened, read only</span> &middot; Fri 7 Aug, 14:40</p>
+    <div class="artboard"><div class="pw-takeover"><div class="tk-bar">
+      <span class="tk-close">&#10005;</span>
+      <div class="tk-title"><h1>Scope</h1>
+        <p>Roofing<span class="s">&middot;</span>1428 Maple Ave<span class="s">&middot;</span>Refined 7 Aug by Marcus Ellery</p></div>
+      <div class="tk-acts"><button class="pw-btn">Amend</button><span class="pw-kebab">&#8943;</span></div>
+    </div>
+    <div class="tk-totals">
+      <div class="t"><span class="k">Signed</span><span class="v">$38,900</span><span class="d">Six lines, locked</span></div>
+      <div class="t"><span class="k">Working</span><span class="v">$38,900</span><span class="d">In balance</span></div>
+      <div class="t"><span class="k">Refined</span><span class="v">6 of 6</span><span class="d">22 lines</span></div>
+    </div>
+
+    <div class="tk-body">
+
+      <div class="tk-find">
+        <div class="tk-findhead"><span class="pw-chev">&#9656;</span><span class="sum"><b>From the inspection</b> &nbsp;Attic staining over the south slope, ridge measured at 48 ft, one layer confirmed, dumpster fits</span><span class="ct">6 photographs</span></div>
+      </div>
+
+      <div class="pw-group">
+        <div class="pw-grouphead"><h2>What was sold</h2><span class="sub">Signed by Sara Thompson, 6 Aug</span></div>
+        <div class="rf-lines">
+
+          <div class="rf-line open"><div class="rf-head"><span class="pw-chev">&#9662;</span>
+            <span class="rf-name">Tear off and dispose of one existing layer</span>
+            <span class="rf-tw"><span class="rf-signed">Signed $2,980</span><span class="rf-work">$2,980</span></span></div>
+            <div class="rf-rows">
+              <div class="rf-row"><span class="rf-rname">Tear off and disposal, one layer<span class="rf-rsub">24 squares at $95</span></span><span><span class="rf-ramt">$2,280</span><span class="rf-rcat">Services</span></span></div>
+              <div class="rf-row"><span class="rf-rname">Dumpster, 20 yard<span class="rf-rsub">1 at $700. North driveway, with the materials</span></span><span><span class="rf-ramt">$700</span><span class="rf-rcat">Equipment</span></span></div>
+            </div>
+          </div>
+
+          <div class="rf-line open"><div class="rf-head"><span class="pw-chev">&#9662;</span>
+            <span class="rf-name">New architectural shingle roof system<span class="rf-sub">24 squares priced, 26 ordered at 8 percent waste</span></span>
+            <span class="rf-tw"><span class="rf-signed">Signed $21,550</span><span class="rf-work">$21,550</span></span></div>
+            <div class="rf-rows">
+              <div class="rf-row"><span class="rf-rname">Architectural shingle<span class="rf-rsub">26 squares at $190</span></span><span><span class="rf-ramt">$4,940</span><span class="rf-rcat">Materials</span></span></div>
+              <div class="rf-row"><span class="rf-rname">Hip and ridge cap shingle<span class="rf-rsub">120 linear ft at $7.00</span></span><span><span class="rf-ramt">$840</span><span class="rf-rcat">Materials</span></span></div>
+              <div class="rf-row"><span class="rf-rname">Synthetic underlayment<span class="rf-rsub">26 squares at $40</span></span><span><span class="rf-ramt">$1,040</span><span class="rf-rcat">Materials</span></span></div>
+              <div class="rf-row"><span class="rf-rname">Ice and water shield, valleys and eaves<span class="rf-rsub">8 rolls at $105</span></span><span><span class="rf-ramt">$840</span><span class="rf-rcat">Materials</span></span></div>
+              <div class="rf-row"><span class="rf-rname">Fasteners, caps and sealant<span class="rf-rsub">1 lot</span></span><span><span class="rf-ramt">$450</span><span class="rf-rcat">Materials</span></span></div>
+              <div class="rf-row"><span class="rf-rname">Shingle and underlayment installation<span class="rf-rsub">24 squares at $560</span></span><span><span class="rf-ramt">$13,440</span><span class="rf-rcat">Services</span></span></div>
+            </div>
+          </div>
+
+          <div class="rf-line open"><div class="rf-head"><span class="pw-chev">&#9662;</span>
+            <span class="rf-name">Decking inspection and repair allowance<span class="rf-sub">Raised to 16 sheets after the attic inspection</span></span>
+            <span class="rf-tw"><span class="rf-signed">Signed $1,500</span><span class="rf-work">$1,760</span><span class="rf-delta">+$260</span></span></div>
+            <div class="rf-rows">
+              <div class="rf-row"><span class="rf-rname">Replacement decking, half inch CDX<span class="rf-rsub">16 sheets at $65</span></span><span><span class="rf-ramt">$1,040</span><span class="rf-rcat">Materials</span></span></div>
+              <div class="rf-row"><span class="rf-rname">Deck inspection, re-nail and rot repair labour<span class="rf-rsub">24 squares at $30</span></span><span><span class="rf-ramt">$720</span><span class="rf-rcat">Services</span></span></div>
+            </div>
+          </div>
+
+          <div class="rf-line open"><div class="rf-head"><span class="pw-chev">&#9662;</span>
+            <span class="rf-name">Ventilation, flashing and edge detail</span>
+            <span class="rf-tw"><span class="rf-signed">Signed $4,810</span><span class="rf-work">$4,810</span></span></div>
+            <div class="rf-rows">
+              <div class="rf-row"><span class="rf-rname">Ridge vent<span class="rf-rsub">48 linear ft at $10.00. Measured on site</span></span><span><span class="rf-ramt">$480</span><span class="rf-rcat">Materials</span></span></div>
+              <div class="rf-row"><span class="rf-rname">Drip edge<span class="rf-rsub">210 linear ft at $3.50</span></span><span><span class="rf-ramt">$735</span><span class="rf-rcat">Materials</span></span></div>
+              <div class="rf-row"><span class="rf-rname">Step and counter flashing<span class="rf-rsub">90 linear ft at $8.00</span></span><span><span class="rf-ramt">$720</span><span class="rf-rcat">Materials</span></span></div>
+              <div class="rf-row"><span class="rf-rname">Pipe boots<span class="rf-rsub">5 at $35</span></span><span><span class="rf-ramt">$175</span><span class="rf-rcat">Materials</span></span></div>
+              <div class="rf-row"><span class="rf-rname">Flashing, valley and penetration detail<span class="rf-rsub">1 lot</span></span><span><span class="rf-ramt">$1,500</span><span class="rf-rcat">Services</span></span></div>
+              <div class="rf-row"><span class="rf-rname">Ridge vent cut and install<span class="rf-rsub">48 linear ft at $25</span></span><span><span class="rf-ramt">$1,200</span><span class="rf-rcat">Services</span></span></div>
+            </div>
+          </div>
+
+          <div class="rf-line open"><div class="rf-head"><span class="pw-chev">&#9662;</span>
+            <span class="rf-name">Two storey access, staging and site protection<span class="rf-sub">Site protection cut to two days, the length of the install</span></span>
+            <span class="rf-tw"><span class="rf-signed">Signed $6,300</span><span class="rf-work">$6,040</span><span class="rf-delta">&minus;$260</span></span></div>
+            <div class="rf-rows">
+              <div class="rf-row"><span class="rf-rname">Material hoist and roof loading<span class="rf-rsub">1 day at $550</span></span><span><span class="rf-ramt">$550</span><span class="rf-rcat">Equipment</span></span></div>
+              <div class="rf-row"><span class="rf-rname">Fall protection and staging, two storey<span class="rf-rsub">2 days at $325</span></span><span><span class="rf-ramt">$650</span><span class="rf-rcat">Equipment</span></span></div>
+              <div class="rf-row"><span class="rf-rname">Two storey and steep slope access<span class="rf-rsub">24 squares at $175</span></span><span><span class="rf-ramt">$4,200</span><span class="rf-rcat">Services</span></span></div>
+              <div class="rf-row"><span class="rf-rname">Site protection, daily cleanup and magnet sweep<span class="rf-rsub">2 days at $320. Was 3</span></span><span><span class="rf-ramt">$640</span><span class="rf-rcat">Services</span></span></div>
+            </div>
+          </div>
+
+          <div class="rf-line open"><div class="rf-head"><span class="pw-chev">&#9662;</span>
+            <span class="rf-name">Permit, final walkthrough and warranty registration</span>
+            <span class="rf-tw"><span class="rf-signed">Signed $1,760</span><span class="rf-work">$1,760</span></span></div>
+            <div class="rf-rows">
+              <div class="rf-row"><span class="rf-rname">Permit filing, fees and coordination<span class="rf-rsub">1 at $1,060</span></span><span><span class="rf-ramt">$1,060</span><span class="rf-rcat">Services</span></span></div>
+              <div class="rf-row"><span class="rf-rname">Final walkthrough, photo package and warranty registration<span class="rf-rsub">1 at $700</span></span><span><span class="rf-ramt">$700</span><span class="rf-rcat">Services</span></span></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="pw-group">
+        <div class="pw-grouphead"><h2>What this produces</h2></div>
+        <div class="pw-card"><div class="pw-cardstack">
+          <div class="rf-roll">
+            <div><span class="k">Materials</span><span class="v">$11,260</span></div>
+            <div><span class="k">Equipment</span><span class="v">$1,900</span></div>
+            <div><span class="k">Services</span><span class="v">$25,740</span></div>
+            <div><span class="k">Job total</span><span class="v">$38,900</span></div>
+          </div>
+          <div class="pw-crule"></div>
+          <div class="pw-crowlist">
+            <div class="pw-lrow"><span class="pw-lname med">Materials list<span class="pw-lsub">10 lines with quantities. Ready to order</span></span><span class="pw-r"><span class="pw-lst">Next</span></span></div>
+            <div class="pw-lrow"><span class="pw-lname med">Work order<span class="pw-lsub">Services, scope and access. No prices</span></span><span class="pw-r"><span class="pw-lst">At crew assignment</span></span></div>
+            <div class="pw-lrow"><span class="pw-lname med">Permit application<span class="pw-lsub">Scope is now specific enough to file</span></span><span class="pw-r"><span class="pw-lst">Next</span></span></div>
+          </div>
+        </div></div>
+      </div>
+
+    </div></div></div>
+  </section>
+  <section>
+    <p class="framelabel">Job &middot; Roofing &middot; <span class="n">State B, everything booked</span> &middot; Wed 12 Aug</p>
+    <div class="artboard"><div class="pw-page"><div class="pw-crumbs"><a href="#">Customers</a><span class="s">/</span><a href="#">Sara Thompson</a><span class="s">/</span><a href="#">Roofing and siding</a><span class="s">/</span><span>Roofing</span></div>
+    <div class="pw-titlerow">
+      <div><h1 class="t-h1">Roofing<span class="pw-pencil">&#9998;</span></h1>
+        <p class="pw-meta">1428 Maple Ave<span class="s">&middot;</span>Dwight Okafor, four<span class="s">&middot;</span><span class="now">Ready, starts Tuesday</span></p></div>
+      <div class="pw-actions"><span class="pw-kebab">&#8943;</span></div>
+    </div>
+
+    <div class="pw-stack" style="margin-top:20px">
+
+      <div class="pw-tiles">
+        <div class="pw-tile"><div class="tl">Price</div><div class="tv">$38,900</div><div class="ts">Of a $73,100 contract</div></div>
+        <div class="pw-tile"><div class="tl">This stage</div><div class="tv">6 of 6</div><div class="ts">Orders and scheduling</div></div>
+        <div class="pw-tile"><div class="tl">Starts</div><div class="tv">Tue 18 Aug</div><div class="ts">In six days. Two days of work</div></div>
+      </div>
+
+      <div class="pw-group">
+        <div class="pw-grouphead"><h2>Where this job is</h2></div>
+        <div class="pw-card"><div class="pw-stagewrap">
+          <div>
+            <h5 style="margin:0;font:700 15px/22px var(--inter);color:var(--sol-text-primary)">Stage</h5>
+            <div class="pw-rail">
+              <div><div class="pw-railboard">Production</div>
+                <div class="pw-railgrp">
+                  <div class="pw-railrow done"><span class="pw-raildot"></span><span class="sn">Ops intake</span><span class="sv">Done 7 Aug</span></div>
+                  <div class="pw-railrow cur"><span class="pw-raildot"></span><span class="sn">Orders and scheduling</span><span class="sv">6 of 6</span></div>
+                  <div class="pw-railrow"><span class="pw-raildot"></span><span class="sn">Final checks</span><span class="sv">Mon 17 Aug</span></div>
+                  <div class="pw-railrow"><span class="pw-raildot"></span><span class="sn">Installing</span><span class="sv">Tue 18 Aug</span></div>
+                </div></div>
+              <div><div class="pw-railboard">Closeout and payment</div>
+                <div class="pw-railgrp">
+                  <div class="pw-railrow"><span class="pw-raildot"></span><span class="sn">Closeout</span><span class="sv">0 of 6</span></div>
+                </div></div>
+            </div>
+          </div>
+          <div class="pw-stagepanel">
+            <div class="ph"><h5>Orders and scheduling</h5><span class="pw-bdg">6 of 6</span></div>
+            <div class="pw-tk" data-state="done"><span class="pw-tkbx">&#10003;</span><span>Materials ordered</span><span class="when">7 Aug</span><span class="pw-chev">&#9656;</span></div>
+            <div class="pw-tk" data-state="done"><span class="pw-tkbx">&#10003;</span><span>Delivery date confirmed</span><span class="when">12 Aug</span><span class="pw-chev">&#9656;</span></div>
+            <div class="pw-tk" data-state="done"><span class="pw-tkbx">&#10003;</span><span>Dumpster ordered</span><span class="when">12 Aug</span><span class="pw-chev">&#9656;</span></div>
+            <div class="pw-tk" data-state="done"><span class="pw-tkbx">&#10003;</span><span>Crew assigned</span><span class="when">12 Aug</span><span class="pw-chev">&#9656;</span></div>
+            <div class="pw-tk" data-state="done"><span class="pw-tkbx">&#10003;</span><span>Date committed</span><span class="when">12 Aug</span><span class="pw-chev">&#9656;</span></div>
+            <div class="pw-tk" data-state="done"><span class="pw-tkbx">&#10003;</span><span>Customer notified</span><span class="when">12 Aug</span><span class="pw-chev">&#9656;</span></div>
+            <div class="pw-waiting"><div class="pw-line"><b>Waiting on</b><span>Materials, confirmed for Friday 14 Aug</span><a href="#">See all</a></div></div>
+          </div>
+        </div></div>
+      </div>
+
+      <div class="pw-group">
+        <div class="pw-grouphead"><h2>The work</h2></div>
+        <div class="pw-pair">
+          <div class="pw-card"><div class="pw-cardstack">
+            <div class="pw-cardhead"><h5>Scope</h5><span class="pw-bdg">Refined 7 Aug</span></div>
+            <div class="pw-kv">
+              <div><span class="k">Trade</span><span class="v">Roofing</span></div>
+              <div><span class="k">Area</span><span class="v">2,410 sq ft, 24 squares</span></div>
+              <div><span class="k">Layers to remove</span><span class="v">1, confirmed on site</span></div>
+              <div><span class="k">Decking allowance</span><span class="v">16 sheets</span></div>
+              <div class="w"><span class="k">Material</span><span class="v">Architectural shingle, underlayment, ridge vent, flashing</span></div>
+              <div class="w"><span class="k">Condition at inspection</span><span class="v">South slope lifted by the storm. Attic staining over the south slope</span></div>
+            </div>
+            <div class="pw-crule"></div>
+            <div class="pw-line"><span><b>22 lines</b>, $38,900. Refined by Marcus Ellery, 7 Aug</span><a href="#">See the itemization</a></div>
+          </div></div>
+          <div class="pw-card"><div class="pw-cardstack">
+            <h5>Property and access</h5>
+            <div class="pw-kv">
+              <div class="w"><span class="k">Address</span><span class="v">1428 Maple Ave, Sacramento CA 95818</span></div>
+              <div><span class="k">Built</span><span class="v">1978, two storey</span></div>
+              <div><span class="k">Floor area</span><span class="v">2,140 sq ft</span></div>
+              <div><span class="k">Gate code</span><span class="v">4417</span></div>
+              <div><span class="k">On site</span><span class="v">Dog in the back yard, friendly but loud</span></div>
+              <div class="w"><span class="k">Ladder and dumpster</span><span class="v">Ladder south elevation, dumpster north driveway</span></div>
+            </div>
+          </div></div>
+        </div>
+      </div>
+
+      <div class="pw-group">
+        <div class="pw-grouphead"><h2>Crew and schedule</h2></div>
+        <div class="pw-pair">
+          <div class="pw-card"><div class="pw-cardstack">
+            <div class="pw-cardhead"><h5>Crew</h5><span class="pw-bdg">Assigned 12 Aug</span></div>
+            <div class="pw-crowlist">
+              <div class="pw-lrow"><span class="pw-lname med">Dwight Okafor<span class="pw-lsub">Crew lead, roofing. Crew of four</span></span><span class="pw-r"><span class="pw-lst">Northgate</span></span></div>
+              <div class="pw-lrow"><span class="pw-lname">Work order<span class="pw-lsub">Services, scope and access. Issued 12 Aug</span></span><span class="pw-r"><span class="pw-lst">Sent</span></span></div>
+            </div>
+          </div></div>
+          <div class="pw-card"><div class="pw-cardstack">
+            <div class="pw-cardhead"><h5>Dates</h5><span class="pw-bdg">Tue 18 to Wed 19 Aug</span></div>
+            <div class="pw-week">
+              <div class="pw-wr"><span class="gn">Roofing</span><span class="pw-track"><span class="pw-bar" style="left:20%;width:40%">Dwight Okafor, four</span></span></div>
+              <div class="pw-wr"><span class="gn dim">Siding</span><span class="pw-track"><span class="pw-bar quiet" style="left:60%;width:40%">Luis Ferrara, three</span></span></div>
+              <div class="pw-daywrap"><span></span><span class="pw-dayrow"><span>Mon 17</span><span>Tue 18</span><span>Wed 19</span><span>Thu 20</span><span>Fri 21</span></span></div>
+            </div>
+            <div class="pw-crule"></div>
+            <div class="pw-line"><span>Agreed with <b>Sara Thompson</b> by phone, 12 Aug, both trades in one call.</span></div>
+          </div></div>
+        </div>
+      </div>
+
+      <div class="pw-group">
+        <div class="pw-grouphead"><h2>Materials and documents</h2></div>
+        <div class="pw-pair">
+          <div class="pw-card"><div class="pw-cardstack">
+            <div class="pw-cardhead"><h5>Material order</h5><span class="pw-bdg">Arriving Fri 14 Aug</span></div>
+            <div class="pw-crowlist">
+              <div class="pw-lrow"><span class="pw-lname">Roofing materials<span class="pw-lsub">Ordered 7 Aug from the materials list. 10 lines</span></span><span class="pw-r"><span class="pw-lst">Delivery confirmed</span></span></div>
+              <div class="pw-lrow"><span class="pw-lname">Dumpster<span class="pw-lsub">Ordered 12 Aug. North driveway</span></span><span class="pw-r"><span class="pw-lst">Fri 14 Aug</span></span></div>
+            </div>
+            <div class="pw-more"><span>Delivered four days before the crew</span><a href="#">See the order</a></div>
+          </div></div>
+          <div class="pw-card"><div class="pw-cardstack">
+            <div class="pw-cardhead"><h5>Documents and photos</h5><span class="pw-bdg">4 documents, 18 photos</span></div>
+            <div class="pw-crowlist">
+              <div class="pw-lrow"><span class="pw-lname">Work order<span class="pw-lsub">Marcus Ellery, 12 Aug</span></span><span class="pw-r"><span class="pw-lst">This job</span></span></div>
+              <div class="pw-lrow"><span class="pw-lname">Permit<span class="pw-lsub">Filed 7 Aug, approved 11 Aug</span></span><span class="pw-r"><span class="pw-lst">This job</span></span></div>
+              <div class="pw-lrow"><span class="pw-lname">Inspection photos<span class="pw-lsub">Marcus Ellery, 7 Aug. Attic and ridge</span></span><span class="pw-r"><span class="pw-lval">6</span></span></div>
+              <div class="pw-lrow"><span class="pw-lname">Site assessment photos<span class="pw-lsub">Priya Raman, 5 Aug</span></span><span class="pw-r"><span class="pw-lval">12</span></span></div>
+            </div>
+            <div class="pw-more"><span>No photographs from the work yet</span><a href="#">Add</a></div>
+          </div></div>
+        </div>
+      </div>
+
+      <div class="pw-group">
+        <div class="pw-grouphead"><h2>Money</h2><span class="sub">Held by the project, unchanged since 6 August</span></div>
+        <div class="pw-card"><div class="pw-cardstack">
+          <div class="pw-line"><span>This job is priced at <b>$38,900</b>. The balance sits on <b>Roofing and siding, Thompson</b>.</span><a href="#">Open the project</a></div>
+          <div class="pw-crule"></div>
+          <div class="pw-kv">
+            <div><span class="k">Contract, both trades</span><span class="v">$73,100</span></div>
+            <div><span class="k">Collected</span><span class="v">$500, deposit by cheque 6 Aug</span></div>
+            <div><span class="k">Outstanding</span><span class="v">$72,600, due when both jobs complete</span></div>
+            <div><span class="k">Billing</span><span class="v">One invoice, at the project</span></div>
+          </div>
+        </div></div>
+      </div>
+
+      <div class="pw-group">
+        <div class="pw-grouphead"><h2>How this job came about</h2></div>
+        <div class="pw-pair">
+          <div class="pw-card"><div class="pw-cardstack">
+            <h5>Where the scope came from</h5>
+            <div class="pw-line"><span>Storm call 4 Aug, assessment 5 Aug, accepted 5 Aug, signed and created 6 Aug, inspected and refined 7 Aug.</span><a href="#">See the trail</a></div>
+          </div></div>
+          <div class="pw-card"><div class="pw-cardstack">
+            <div class="pw-cardhead"><h5>Notes and assets</h5><span class="pw-bdg">6 notes</span></div>
+            <div class="pw-crowlist">
+              <div class="pw-lrow"><span class="pw-lname">Sara asked for the dumpster off the lawn<span class="pw-lsub">Marcus Ellery, 12 Aug</span></span><span class="pw-r"><span class="pw-lst">Scheduling</span></span></div>
+              <div class="pw-lrow"><span class="pw-lname">Both trades agreed in one call<span class="pw-lsub">Marcus Ellery, 12 Aug</span></span><span class="pw-r"><span class="pw-lst">Scheduling</span></span></div>
+              <div class="pw-lrow"><span class="pw-lname">Attic staining over the south slope<span class="pw-lsub">Marcus Ellery, 7 Aug. Decking allowance raised to 16 sheets</span></span><span class="pw-r"><span class="pw-lst">Inspection</span></span></div>
+            </div>
+            <div class="pw-more"><span>3 more, and everything on the project</span><a href="#">Add</a></div>
+          </div></div>
+        </div>
+      </div>
+
+      <div class="pw-group">
+        <div class="pw-grouphead"><h2>The other job</h2></div>
+        <div class="pw-card"><div class="pw-cardstack"><div class="pw-crowlist">
+          <div class="pw-lrow"><span class="pw-lname med">Siding<span class="pw-lsub">Orders and scheduling, 6 of 6. Luis Ferrara, three. Thu 20 to Fri 21 Aug</span></span><span class="pw-r"><span class="pw-lval">$34,200</span><span class="pw-lst">Ready</span></span></div>
+        </div></div></div>
+      </div>
+
+    </div></div></div>
+  </section>
+
+</div>
+</body>
+</html>

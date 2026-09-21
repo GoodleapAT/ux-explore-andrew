@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The roofing job at two moments</title>
+<style>
+:root{
+  color-scheme:light;
+  --sol-actions-button:#161051; --sol-actions-link:#382ca5;
+  --sol-backgrounds-accent-purple:#e2e1fe; --sol-backgrounds-system-warning:#fffaf0;
+  --sol-backgrounds-system-success:#effaf2; --sol-borders-system-success:#8cd3a3; --sol-text-success:#006b24;
+  --sol-backgrounds-ui-high:#ffffff; --sol-backgrounds-ui-low:#e3e3ed; --sol-backgrounds-ui-medium:#f5f5f9;
+  --sol-borders-accent-purple:#6d62d5; --sol-borders-accent-yellow:#f5b638;
+  --sol-borders-ui-default:#c8c8d5; --sol-borders-ui-strong:#a7a7b9; --sol-borders-ui-subtle:#e3e3ed;
+  --sol-elevation-md:0px 1px 12px 0px #0000000f;
+  --sol-icons-accent-purple:#382ca5; --sol-icons-ui-secondary:#4b4b58;
+  --sol-text-primary:#14141a; --sol-text-secondary:#4b4b58; --sol-text-warning:#8f5f00;
+  --sol-text-placeholder:#a7a7b9;
+  --pw-ink:#2c1b3c;
+  --inter:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+  --m-bd:#e6e6ea; --m-bds:#d3d3da; --m-tx:#1b1b20; --m-tx2:#55555e; --m-tx3:#86868f; --m-paper:#fbfbfc;
+}
+*{box-sizing:border-box}
+body{margin:0;background:#fff;color:var(--m-tx);font-family:var(--inter);font-size:15px;line-height:1.62;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding:52px 40px 96px}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.04em;color:var(--m-tx3);margin:0 0 15px;text-transform:uppercase}
+.eyebrow span{margin-right:24px}
+h1{font-size:38px;line-height:1.13;font-weight:500;letter-spacing:-.02em;margin:0 0 17px;max-width:800px}
+.lede{max-width:760px;color:var(--m-tx2);font-size:15.5px;margin:0 0 14px}
+.lede strong{color:var(--m-tx);font-weight:500}
+
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(420px,1fr));gap:20px;margin:28px 0 0}
+.ecard{border:1px solid var(--m-bds);border-radius:12px;padding:20px 22px;background:var(--m-paper)}
+.ecard h3{margin:0 0 4px;font-size:12px;font-family:var(--mono);text-transform:uppercase;letter-spacing:.05em;color:var(--m-tx3);font-weight:400}
+.ecard .sub{margin:0 0 13px;font-size:12.5px;color:var(--m-tx3)}
+.ecard ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px}
+.ecard li{font-size:13.5px;line-height:1.55;color:var(--m-tx2)}
+.ecard li strong{color:var(--m-tx);font-weight:500}
+
+.sec{margin:56px 0 0}
+.sec-head{display:flex;align-items:baseline;gap:11px;padding-bottom:12px;border-bottom:1px solid var(--m-bd);margin-bottom:8px}
+.badge-l{flex:0 0 auto;width:20px;height:20px;border:1px solid var(--sol-borders-accent-purple);border-radius:4px;color:var(--sol-icons-accent-purple);font-family:var(--mono);font-size:10.5px;display:flex;align-items:center;justify-content:center;background:var(--sol-backgrounds-accent-purple);position:relative;top:2px}
+.sec-title{font-size:19px;font-weight:500;margin:0;letter-spacing:-.01em}
+.sec-when{font-size:12.5px;color:var(--m-tx3);margin-left:auto}
+.strip{display:flex;gap:22px;flex-wrap:wrap;font-size:12.5px;color:var(--m-tx3);margin:0 0 18px}
+.strip b{font-weight:500;color:var(--m-tx2)}
+.strip .beat{font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.05em}
+.frame{border:1px solid var(--m-bds);border-radius:12px;overflow:hidden;background:var(--sol-backgrounds-ui-high)}
+
+.argu{margin:22px 0 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px 30px}
+.argu .k{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:var(--m-tx3);margin:0 0 6px}
+.argu p{margin:0;font-size:13.5px;line-height:1.56;color:var(--m-tx2)}
+.argu p strong{color:var(--m-tx);font-weight:500}
+.argu .jtbd{grid-column:1 / -1;border-top:1px solid var(--m-bd);padding-top:18px}
+.argu .jtbd ul{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px 30px}
+.argu .jtbd li{font-size:13.5px;line-height:1.55;color:var(--m-tx2)}
+.argu .jtbd li b{color:var(--m-tx);font-weight:500}
+.argu .jtbd li .code{font-family:var(--mono);font-size:11px;color:var(--sol-icons-accent-purple);letter-spacing:.03em}
+
+.oq{margin:24px 0 0;padding-top:18px;border-top:1px solid var(--m-bd)}
+.oq h4{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:var(--m-tx3);font-weight:400;margin:0 0 10px}
+.oq ol{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:8px}
+.oq li{font-size:13.5px;line-height:1.55;color:var(--m-tx2)}
+.oq li strong{color:var(--m-tx);font-weight:500}
+
+.foot{margin:60px 0 0;padding-top:28px;border-top:1px solid var(--m-bd)}
+.foot h3{font-size:12px;font-family:var(--mono);text-transform:uppercase;letter-spacing:.05em;color:var(--m-tx3);font-weight:400;margin:0 0 18px}
+.four{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
+.four .c{border:1px solid var(--m-bds);border-radius:12px;padding:18px 20px;background:var(--m-paper)}
+.four .c h4{margin:0 0 10px;font-size:11px;font-family:var(--mono);text-transform:uppercase;letter-spacing:.05em;color:var(--m-tx3);font-weight:400}
+.four .c ul{margin:0;padding-left:16px;display:flex;flex-direction:column;gap:7px}
+.four .c li{font-size:13px;line-height:1.5;color:var(--m-tx2)}
+.four .c li strong{color:var(--m-tx);font-weight:500}
+
+/* Pros Web kit */
+.pw-page{display:flex;flex-direction:column;background:var(--sol-backgrounds-ui-high);padding:24px 28px 28px;color:var(--pw-ink)}
+.pw-stack{display:flex;flex-direction:column;gap:22px}
+.pw-crumbs{display:flex;align-items:center;gap:8px;font:400 12px/18px var(--inter);color:var(--sol-text-secondary);margin-bottom:10px;flex-wrap:wrap}
+.pw-crumbs a{color:var(--sol-actions-link);text-decoration:none}
+.pw-crumbs .s{color:var(--sol-borders-ui-strong)}
+.pw-titlerow{display:flex;align-items:flex-start;gap:20px;flex-wrap:wrap}
+.t-h1{font:700 23px/32px var(--inter);margin:0}
+.pw-pencil{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;color:var(--sol-text-placeholder);font-size:12px;position:relative;top:-3px;margin-left:6px}
+.pw-meta{margin:5px 0 0;font:400 13px/20px var(--inter);color:var(--sol-text-secondary)}
+.pw-meta .now{color:var(--pw-ink);font-weight:500}
+.pw-meta a{color:var(--sol-actions-link);text-decoration:none;border-bottom:1px solid var(--sol-borders-ui-default)}
+.pw-meta .s{color:var(--sol-borders-ui-strong);margin:0 7px}
+.pw-actions{display:flex;gap:9px;flex-wrap:wrap;margin-left:auto;align-items:flex-start}
+.pw-btn{border:1px solid var(--sol-borders-ui-default);border-radius:8px;background:var(--sol-backgrounds-ui-high);padding:7px 13px;font:500 13px/18px var(--inter);color:var(--pw-ink)}
+.pw-btn.pri{background:var(--sol-actions-button);border-color:var(--sol-actions-button);color:#fff}
+.pw-kebab{width:33px;height:33px;border:1px solid var(--sol-borders-ui-default);border-radius:8px;background:var(--sol-backgrounds-ui-high);color:var(--sol-icons-ui-secondary);display:flex;align-items:center;justify-content:center;font-size:15px}
+.pw-card{background:var(--sol-backgrounds-ui-high);border:1px solid var(--sol-borders-ui-subtle);border-radius:12px;box-shadow:var(--sol-elevation-md);padding:16px}
+.pw-cardstack{display:flex;flex-direction:column;gap:12px}
+.pw-cardstack h5{margin:0;font:700 15px/22px var(--inter);color:var(--sol-text-primary)}
+.pw-cardhead{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.pw-group{display:flex;flex-direction:column;gap:10px}
+.pw-grouphead{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.pw-grouphead h2{margin:0;font:700 16px/23px var(--inter);color:var(--pw-ink)}
+.pw-grouphead .sub{font:400 12px/18px var(--inter);color:var(--sol-text-secondary)}
+.pw-pair{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+.pw-pair>*{min-width:0}
+.pw-tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.pw-tile{border:1px solid var(--sol-borders-ui-subtle);border-radius:10px;background:var(--sol-backgrounds-ui-high);box-shadow:var(--sol-elevation-md);padding:14px 16px}
+.pw-tile .tl{font:400 11.5px/17px var(--inter);color:var(--sol-text-secondary)}
+.pw-tile .tv{font:700 24px/32px var(--inter);color:var(--sol-text-primary);font-variant-numeric:tabular-nums;margin-top:2px}
+.pw-tile .ts{font:400 12px/18px var(--inter);color:var(--sol-text-secondary);margin-top:2px}
+.pw-crowlist{display:flex;flex-direction:column}
+.pw-lrow{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:16px;align-items:baseline;padding:9px 0;border-bottom:1px solid var(--sol-borders-ui-subtle)}
+.pw-lrow:last-child{border-bottom:0}
+.pw-lrow:first-child{padding-top:0}
+.pw-lname{font:400 14px/20px var(--inter);color:var(--pw-ink)}
+.pw-lname.med{font-weight:500}
+.pw-lsub{display:block;font:400 12px/18px var(--inter);color:var(--sol-text-secondary);margin-top:1px}
+.pw-r{text-align:right;white-space:nowrap}
+.pw-lval{display:block;font:500 14px/20px var(--inter);color:var(--pw-ink);font-variant-numeric:tabular-nums}
+.pw-lst{display:block;font:400 12px/18px var(--inter);color:var(--sol-text-secondary);margin-top:1px}
+.pw-lrow.dim .pw-lname,.pw-lrow.dim .pw-lval{color:var(--sol-text-secondary);font-weight:400}
+.pw-more{display:flex;align-items:baseline;gap:10px;padding-top:10px;border-top:1px solid var(--sol-borders-ui-subtle);font:400 12px/18px var(--inter);color:var(--sol-text-secondary)}
+.pw-more a{color:var(--sol-actions-link);text-decoration:none;margin-left:auto}
+.pw-crule{height:1px;background:var(--sol-borders-ui-subtle)}
+.pw-bdg{display:inline-flex;align-items:center;border:1px solid var(--sol-borders-ui-default);border-radius:5px;background:var(--sol-backgrounds-ui-medium);padding:2px 8px;font:500 11.5px/18px var(--inter);color:var(--sol-text-secondary);white-space:nowrap}
+.pw-bdg.done{border-color:var(--sol-borders-system-success);background:var(--sol-backgrounds-system-success);color:var(--sol-text-success)}
+.pw-pills{display:flex;gap:8px;flex-wrap:wrap}
+.pw-tk{display:grid;grid-template-columns:17px minmax(0,1fr) auto;gap:10px;align-items:center;padding:5px 0;font:400 13.5px/20px var(--inter);color:var(--pw-ink)}
+.pw-tkbx{width:17px;height:17px;border-radius:4px;border:1.5px solid var(--sol-borders-ui-strong);background:var(--sol-backgrounds-ui-high);display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px}
+.pw-tk[data-state=done] .pw-tkbx{background:var(--sol-text-success);border-color:var(--sol-text-success)}
+.pw-tk[data-state=done]{color:var(--sol-text-secondary)}
+.pw-tk[data-state=na] .pw-tkbx{border-style:dashed;border-color:var(--sol-borders-ui-default)}
+.pw-tk[data-state=na]{color:var(--sol-text-placeholder)}
+.pw-tk .when{font:400 11.5px/17px var(--inter);color:var(--sol-text-secondary);white-space:nowrap}
+.pw-empty{border:1px dashed var(--sol-borders-ui-default);border-radius:10px;background:var(--sol-backgrounds-ui-medium);padding:14px 16px;font:400 13px/20px var(--inter);color:var(--sol-text-secondary)}
+.pw-line{display:flex;align-items:baseline;justify-content:space-between;gap:14px;flex-wrap:wrap;font:400 13px/20px var(--inter);color:var(--sol-text-secondary)}
+.pw-line b{font-weight:500;color:var(--pw-ink)}
+.pw-line a{color:var(--sol-actions-link);text-decoration:none;margin-left:auto;white-space:nowrap}
+.pw-kv{display:grid;grid-template-columns:1fr 1fr;gap:12px 18px}
+.pw-kv .k{display:block;font:400 11.5px/17px var(--inter);color:var(--sol-text-secondary)}
+.pw-kv .v{display:block;font:500 13.5px/20px var(--inter);color:var(--pw-ink)}
+.pw-kv .w{grid-column:1 / -1}
+
+/* stage rail */
+.pw-rail{display:flex;flex-direction:column;gap:14px}
+.pw-railboard{font:500 10.5px/16px var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--sol-text-secondary);margin-bottom:6px}
+.pw-railrow{display:grid;grid-template-columns:14px minmax(0,1fr) auto;gap:11px;align-items:baseline;padding:6px 0}
+.pw-raildot{width:11px;height:11px;border-radius:50%;border:1.5px solid var(--sol-borders-ui-strong);background:var(--sol-backgrounds-ui-high);position:relative;top:3px}
+.pw-railrow.done .pw-raildot{background:var(--sol-text-success);border-color:var(--sol-text-success)}
+.pw-railrow.cur .pw-raildot{border-color:var(--sol-icons-accent-purple);border-width:4px;background:var(--sol-backgrounds-ui-high)}
+.pw-railrow .sn{font:400 14px/20px var(--inter);color:var(--sol-text-secondary)}
+.pw-railrow.cur .sn{font-weight:600;color:var(--pw-ink)}
+.pw-railrow.done .sn{color:var(--sol-text-secondary)}
+.pw-railrow .sv{font:400 12px/18px var(--inter);color:var(--sol-text-secondary);white-space:nowrap}
+.pw-railgrp{border-left:1px solid var(--sol-borders-ui-subtle);margin-left:5px;padding-left:16px}
+.pw-railgate{margin-top:4px;padding-top:12px;border-top:1px solid var(--sol-borders-ui-subtle);font:400 12.5px/19px var(--inter);color:var(--sol-text-secondary)}
+.pw-railgate b{font-weight:500;color:var(--pw-ink)}
+
+/* week track */
+.pw-week{display:flex;flex-direction:column;gap:7px}
+.pw-wr{display:grid;grid-template-columns:70px minmax(0,1fr);gap:12px;align-items:center}
+.pw-wr .gn{font:500 12.5px/19px var(--inter);color:var(--pw-ink)}
+.pw-wr .gn.dim{color:var(--sol-text-secondary);font-weight:400}
+.pw-track{position:relative;height:24px;border-radius:6px;background:var(--sol-backgrounds-ui-medium);border:1px solid var(--sol-borders-ui-subtle)}
+.pw-bar{position:absolute;top:3px;bottom:3px;border-radius:4px;background:var(--sol-backgrounds-accent-purple);border:1px solid var(--sol-borders-accent-purple);display:flex;align-items:center;padding:0 8px;font:500 11px/18px var(--inter);color:var(--sol-icons-accent-purple);white-space:nowrap;overflow:hidden}
+.pw-bar.quiet{background:var(--sol-backgrounds-ui-low);border-color:var(--sol-borders-ui-default);color:var(--sol-text-secondary)}
+.pw-dayrow{display:grid;grid-template-columns:repeat(5,1fr);font:500 10.5px/16px var(--mono);color:var(--m-tx3);text-transform:uppercase;letter-spacing:.04em}
+.pw-daywrap{display:grid;grid-template-columns:70px minmax(0,1fr);gap:12px}
+
+@media (max-width:900px){.pw-pair,.pw-tiles,.pw-kv{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<p class="eyebrow"><span>Upgrade to Pros</span><span>S15</span><span>The roofing job, two moments</span><span>Mockup</span><span>17 September 2026</span></p>
+
+<h1>What a job page has to say before anyone has done anything, and once everything is booked</h1>
+
+<p class="lede">One job, the roofing half of the Thompson sale, at the two moments where its own page
+changes most. <strong>At the first it has just been created and nothing on it is true yet.</strong> At
+the second every arrangement is made and the only thing left is for Monday to arrive.</p>
+
+<p class="lede"><strong>Seven groups, in the same order at both.</strong> Nothing moves up the page. What
+this memo is really testing is whether a job page earns its existence beside the project page, or
+whether it is the project page with fewer rows.</p>
+
+<div class="cards">
+  <div class="ecard">
+    <h3>Settled, for the purposes of this memo</h3>
+    <p class="sub">Carried in from the data pack, the pipeline documents and memo 11.</p>
+    <ul>
+      <li><strong>The job is drawn on the contractor's configured stages.</strong> Both pipeline
+        documents say do not act on them, so this is a declared departure. The stage and task names are
+        Dana's Roofing configuration and nobody has agreed them. Two are reworded for the screen: BOM
+        finalised reads Materials list finalised, and scope is moved to the top of the list.</li>
+      <li><strong>The job does not hold money.</strong> Revenue occurs at the project and cost at the
+        job, so the page names its price and points upward for the balance.</li>
+      <li><strong>Per-job margin and per-job cost are absent.</strong> Not greyed, not labelled, not
+        explained on screen.</li>
+      <li><strong>Permit and materials are sub-statuses, not tasks.</strong> A thing the contractor can
+        move is a task; a thing they can only wait for is a sub-status.</li>
+      <li><strong>There is no job number.</strong> The job is called Roofing.</li>
+    </ul>
+  </div>
+  <div class="ecard">
+    <h3>To decide, and it decides whether this page exists</h3>
+    <p class="sub">Layout is arrangeable. This is not.</p>
+    <ul>
+      <li><strong>Whose stages are these?</strong> The rail is the only thing on this page that a
+        project page could not also carry. It comes from a configuration document that says it is a
+        sketch, while the model's own job vocabulary has six words and no stages at all.</li>
+      <li>If the model is right, <strong>the rail comes off and the job page has almost nothing left to
+        say about progress.</strong> That is a failure of the model rather than of the layout, and it
+        would collapse the job into a section of the project page.</li>
+      <li>A second, smaller one that shows up in both mocks: <strong>the permit value set has no word
+        for required but not yet applied.</strong> The values run Not required, Applied, Approved, Final
+        inspection passed. On 6 August the roofing permit is none of those.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ============================== A ============================== -->
+<section class="sec">
+  <div class="sec-head"><span class="badge-l">A</span>
+    <h2 class="sec-title">Created, and nothing on it is true yet</h2>
+    <span class="sec-when">Beats 9 and 10 &middot; Thu 6 Aug</span></div>
+  <p class="strip"><span class="beat">The hand-off</span><span>Thu 6 Aug, late afternoon</span><span><b>Marcus Ellery</b>, production coordinator, opening the roofing job for the first time</span></p>
+
+  <div class="frame"><div class="pw-page">
+    <div class="pw-crumbs"><a href="#">Customers</a><span class="s">/</span><a href="#">Sara Thompson</a><span class="s">/</span><a href="#">Roofing and siding</a><span class="s">/</span><span>Roofing</span></div>
+    <div class="pw-titlerow">
+      <div><h1 class="t-h1">Roofing<span class="pw-pencil">&#9998;</span></h1>
+        <p class="pw-meta">1428 Maple Ave<span class="s">&middot;</span>Created 6 Aug at the hand-off<span class="s">&middot;</span><span class="now">In review</span></p></div>
+      <div class="pw-actions"><button class="pw-btn pri">Refine the scope</button><span class="pw-kebab">&#8943;</span></div>
+    </div>
+
+    <div class="pw-stack" style="margin-top:20px">
+
+      <div class="pw-tiles">
+        <div class="pw-tile"><div class="tl">Price</div><div class="tv">$38,900</div><div class="ts">Of a $73,100 contract</div></div>
+        <div class="pw-tile"><div class="tl">This stage</div><div class="tv">0 of 3</div><div class="ts">Ops intake</div></div>
+        <div class="pw-tile"><div class="tl">Starts</div><div class="tv">Not set</div><div class="ts">No crew, no dates</div></div>
+      </div>
+
+      <!-- 1 -->
+      <div class="pw-group">
+        <div class="pw-grouphead"><h2>Where this job is</h2><span class="sub">Northgate's exteriors configuration</span></div>
+        <div class="pw-pair">
+          <div class="pw-card"><div class="pw-cardstack">
+            <h5>Stages</h5>
+            <div class="pw-rail">
+              <div>
+                <div class="pw-railboard">Production</div>
+                <div class="pw-railgrp">
+                  <div class="pw-railrow cur"><span class="pw-raildot"></span><span class="sn">Ops intake</span><span class="sv">0 of 3</span></div>
+                  <div class="pw-railrow"><span class="pw-raildot"></span><span class="sn">Orders and scheduling</span><span class="sv">0 of 6</span></div>
+                  <div class="pw-railrow"><span class="pw-raildot"></span><span class="sn">Final checks</span><span class="sv">0 of 4</span></div>
+                  <div class="pw-railrow"><span class="pw-raildot"></span><span class="sn">Installing</span><span class="sv">0 of 8</span></div>
+                </div>
+              </div>
+              <div>
+                <div class="pw-railboard">Closeout and payment</div>
+                <div class="pw-railgrp">
+                  <div class="pw-railrow"><span class="pw-raildot"></span><span class="sn">Closeout</span><span class="sv">0 of 6</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="pw-railgate">Final checks opens when the permit is approved. <b>Not filed.</b></div>
+          </div></div>
+
+          <div class="pw-card"><div class="pw-cardstack">
+            <div class="pw-cardhead"><h5>Ops intake</h5><span class="pw-bdg">0 of 3</span></div>
+            <div>
+              <div class="pw-tk" data-state="open"><span class="pw-tkbx"></span><span>Scope verified against contract</span><span class="when"></span></div>
+              <div class="pw-tk" data-state="open"><span class="pw-tkbx"></span><span>Materials list finalised</span><span class="when"></span></div>
+              <div class="pw-tk" data-state="open"><span class="pw-tkbx"></span><span>Permit application submitted</span><span class="when"></span></div>
+              <div class="pw-tk" data-state="na"><span class="pw-tkbx"></span><span>HOA submitted</span><span class="when">Not applicable</span></div>
+            </div>
+          </div></div>
+        </div>
+        <div class="pw-card" style="box-shadow:none;background:var(--sol-backgrounds-ui-medium)">
+          <div class="pw-line"><b>Waiting on</b><span>Nothing yet</span><a href="#">See all</a></div>
+        </div>
+      </div>
+
+      <!-- 2 -->
+      <div class="pw-group">
+        <div class="pw-grouphead"><h2>The work</h2></div>
+        <div class="pw-pair">
+          <div class="pw-card"><div class="pw-cardstack">
+            <div class="pw-cardhead"><h5>Scope</h5><span class="pw-bdg">From the proposal</span></div>
+            <div class="pw-kv">
+              <div><span class="k">Trade</span><span class="v">Roofing</span></div>
+              <div><span class="k">Area</span><span class="v">2,410 sq ft</span></div>
+              <div><span class="k">Layers to remove</span><span class="v">1</span></div>
+              <div><span class="k">Roof age</span><span class="v">About 19 years</span></div>
+              <div class="w"><span class="k">Material</span><span class="v">Architectural shingle, underlayment, ridge vent, flashing</span></div>
+            </div>
+            <div class="pw-crule"></div>
+            <div class="pw-line"><span>Accepted 5 Aug, signed 6 Aug. Not yet refined for the crew.</span></div>
+          </div></div>
+
+          <div class="pw-card"><div class="pw-cardstack">
+            <h5>Property and access</h5>
+            <div class="pw-kv">
+              <div class="w"><span class="k">Address</span><span class="v">1428 Maple Ave, Sacramento CA 95818</span></div>
+              <div><span class="k">Built</span><span class="v">1978, two storey</span></div>
+              <div><span class="k">Floor area</span><span class="v">2,140 sq ft</span></div>
+              <div><span class="k">Gate code</span><span class="v">4417</span></div>
+              <div><span class="k">On site</span><span class="v">Dog in the back yard, friendly but loud</span></div>
+              <div class="w"><span class="k">Ladder and dumpster</span><span class="v">Ladder south elevation, dumpster north driveway</span></div>
+            </div>
+          </div></div>
+        </div>
+      </div>
+
+      <!-- 3 -->
+      <div class="pw-group">
+        <div class="pw-grouphead"><h2>Crew and schedule</h2></div>
+        <div class="pw-pair">
+          <div class="pw-card"><div class="pw-cardstack">
+            <h5>Crew</h5>
+            <div class="pw-empty">No crew assigned</div>
+          </div></div>
+          <div class="pw-card"><div class="pw-cardstack">
+            <h5>Dates</h5>
+            <div class="pw-empty">Not scheduled. The customer has not been asked</div>
+          </div></div>
+        </div>
+      </div>
+
+      <!-- 4 -->
+      <div class="pw-group">
+        <div class="pw-grouphead"><h2>Materials and documents</h2></div>
+        <div class="pw-pair">
+          <div class="pw-card"><div class="pw-cardstack">
+            <div class="pw-cardhead"><h5>Material order</h5><span class="pw-bdg">Not ordered</span></div>
+            <div class="pw-empty">Nothing ordered. The materials list is not finalised</div>
+          </div></div>
+          <div class="pw-card"><div class="pw-cardstack">
+            <div class="pw-cardhead"><h5>Documents and photos</h5><span class="pw-bdg">1 document, 12 photos</span></div>
+            <div class="pw-crowlist">
+              <div class="pw-lrow"><span class="pw-lname">Site assessment photos<span class="pw-lsub">Priya Raman, 5 Aug</span></span><span class="pw-r"><span class="pw-lval">12</span></span></div>
+              <div class="pw-lrow"><span class="pw-lname">Signed contract<span class="pw-lsub">Both trades, 6 Aug</span></span><span class="pw-r"><span class="pw-lst">At the project</span></span></div>
+            </div>
+            <div class="pw-more"><span>Nothing yet from this job</span><a href="#">See all</a></div>
+          </div></div>
+        </div>
+      </div>
+
+      <!-- 5 -->
+      <div class="pw-group">
+        <div class="pw-grouphead"><h2>Money</h2><span class="sub">Held by the project</span></div>
+        <div class="pw-card"><div class="pw-cardstack">
+          <div class="pw-line"><span>This job is priced at <b>$38,900</b>. The balance sits on <b>Roofing and siding, Thompson</b>.</span><a href="#">Open the project</a></div>
+          <div class="pw-crule"></div>
+          <div class="pw-kv">
+            <div><span class="k">Contract, both trades</span><span class="v">$73,100</span></div>
+            <div><span class="k">Collected</span><span class="v">$500, deposit by cheque 6 Aug</span></div>
+            <div><span class="k">Outstanding</span><span class="v">$72,600, due when both jobs complete</span></div>
+            <div><span class="k">Billing</span><span class="v">One invoice, at the project</span></div>
+          </div>
+        </div></div>
+      </div>
+
+      <!-- 6 -->
+      <div class="pw-group">
+        <div class="pw-grouphead"><h2>How this job came about</h2></div>
+        <div class="pw-pair">
+          <div class="pw-card"><div class="pw-cardstack">
+            <h5>Where the scope came from</h5>
+            <div class="pw-crowlist">
+              <div class="pw-lrow"><span class="pw-lname">Storm call<span class="pw-lsub">Renata Silva took it, 4 Aug. Shingles in the yard</span></span><span class="pw-r"><span class="pw-lst">Lead</span></span></div>
+              <div class="pw-lrow"><span class="pw-lname">Site visit and assessment<span class="pw-lsub">Priya Raman, 5 Aug. Near end of life, south slope lifted</span></span><span class="pw-r"><span class="pw-lst">Lead</span></span></div>
+              <div class="pw-lrow"><span class="pw-lname">Proposal accepted in the room<span class="pw-lsub">Roofing and siding together, 5 Aug</span></span><span class="pw-r"><span class="pw-lval">$38,900</span></span></div>
+              <div class="pw-lrow"><span class="pw-lname">Contract signed, job created<span class="pw-lsub">6 Aug. One job per committed trade</span></span><span class="pw-r"><span class="pw-lst">Today</span></span></div>
+            </div>
+          </div></div>
+          <div class="pw-card"><div class="pw-cardstack">
+            <div class="pw-cardhead"><h5>Notes and assets</h5><span class="pw-bdg">3 notes</span></div>
+            <div class="pw-crowlist">
+              <div class="pw-lrow"><span class="pw-lname">Wants it looked at before winter<span class="pw-lsub">Renata Silva, 4 Aug</span></span><span class="pw-r"><span class="pw-lst">Intake</span></span></div>
+              <div class="pw-lrow"><span class="pw-lname">Decking sound where visible<span class="pw-lsub">Priya Raman, 5 Aug</span></span><span class="pw-r"><span class="pw-lst">Assessment</span></span></div>
+              <div class="pw-lrow"><span class="pw-lname">Sara prefers text<span class="pw-lsub">On the contact, shown here because it is who to ask</span></span><span class="pw-r"><span class="pw-lst">Contact</span></span></div>
+            </div>
+            <div class="pw-more"><span>Everything on this job and its project</span><a href="#">See all</a></div>
+          </div></div>
+        </div>
+      </div>
+
+      <!-- 7 -->
+      <div class="pw-group">
+        <div class="pw-grouphead"><h2>The other job</h2></div>
+        <div class="pw-card"><div class="pw-cardstack">
+          <div class="pw-crowlist">
+            <div class="pw-lrow"><span class="pw-lname med">Siding<span class="pw-lsub">Ops intake, 0 of 3. No crew, no dates</span></span><span class="pw-r"><span class="pw-lval">$34,200</span><span class="pw-lst">In review</span></span></div>
+          </div>
+        </div></div>
+      </div>
+
+    </div>
+  </div></div>
+
+  <div class="argu">
+    <div>
+      <p class="k">The rail is the reason the page exists</p>
+      <p>Strip it out and what is left is the project page with one trade in it. <strong>The rail is
+        the only element here that belongs to a job and could not sit on the project</strong>, because
+        the project deliberately carries no stages. That makes it both the most valuable thing on the
+        page and the least defensible, since its ten stage names come from a document that says it is
+        a sketch.</p>
+    </div>
+    <div>
+      <p class="k">Waiting on is empty at birth, and that is the finding</p>
+      <p>On 6 August nothing external is holding this job. The permit is not filed and the materials
+        are not ordered, and <strong>both of those are Marcus's own work, which makes them tasks rather
+        than waits.</strong> So the card is drawn as a single line rather than a card with rows,
+        because a full card listing things nobody is waiting for says nothing.</p>
+    </div>
+    <div>
+      <p class="k">A price, not a balance</p>
+      <p>The money group keeps its heading and holds one card, which is a sentence and four facts
+        rather than the money card used on a customer or a project. <strong>The rule that revenue
+        occurs at the project is what makes a balance meaningless here</strong>, and the honest move is
+        to name the price, name where the balance lives, and link to it.</p>
+    </div>
+    <div>
+      <p class="k">In review, not Not started</p>
+      <p>The ratified job vocabulary runs Review, Ready, In progress, Complete, Blocked, Cancelled.
+        <strong>A job at the hand-off is in review because its scope has not been checked against what
+        was sold</strong>, which is the first task in the stage. Memo 11 used "Not started" on the
+        project page, and that word is not in the set.</p>
+    </div>
+    <div>
+      <p class="k">One button, and it is the next task</p>
+      <p>Refine the scope is the first thing that happens on this job, on 7 August. Everything else on
+        the page is either a fact or a placeholder. <strong>Giving the page one action makes the next
+        move obvious without a checklist telling anybody what to do</strong>, and it is the only
+        emphasis on an otherwise colourless screen.</p>
+    </div>
+    <div>
+      <p class="k">What is deliberately thin</p>
+      <p>Crew, dates and the material order are empty states rather than absent groups, because they
+        will fill within six days and <strong>a group that disappears and comes back is harder to hold
+        than a group that fills.</strong> The cost is three cards that say nothing on a page that is
+        already short of content.</p>
+    </div>
+    <div class="jtbd">
+      <p class="k">Jobs to be done, and what on the page serves them</p>
+      <ul>
+        <li><span class="code">J-06</span> <b>Hand a signed sale to the people who will deliver it.</b>
+          This screen is the whole of J-06. The scope card, the property and access card and the
+          provenance list are the translation from what was sold into what somebody can start, and the
+          sibling card is what stops the second trade being forgotten.</li>
+        <li><span class="code">J-05</span> <b>Find out what is actually stopping a job.</b> Served by
+          answering nothing. The waiting-on line says so in one line rather than making somebody read
+          four settled rows to find out.</li>
+        <li><span class="code">J-04</span> <b>Know what is owed and what has been collected.</b>
+          Deliberately not served here. The money group answers it by pointing at the project, which
+          is the correct answer and a worse experience than answering it.</li>
+        <li><span class="code">J-07</span> <b>Walk into a conversation knowing what was said last
+          time.</b> Partly served by notes and assets. Communications have no entity, so the call on
+          4 August is a note and not a record of a call.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="oq">
+    <h4>Open questions</h4>
+    <ol>
+      <li>The rail runs Ops intake through Closeout, but <strong>Closeout sits on a board that shows
+        projects, not jobs.</strong> Does a job's rail cross a board boundary, or does it stop at
+        Installing and hand over?</li>
+      <li><strong>What does the permit sub-status read on 6 August?</strong> Not required is false and
+        Applied is not yet true. The value set is missing a word, and the mock ducks it by not showing
+        a permit pill at all.</li>
+      <li>Ops intake reads 0 of 3 with a fourth row marked not applicable. <strong>Should the count
+        include it?</strong> Three of four is honest about the configuration; three is honest about the
+        work.</li>
+      <li>The scope card says "not yet refined". <strong>Is that a state of the scope or a task that
+        has not happened?</strong> Drawing it as both, which is what this does, is how the same fact
+        ends up in two places.</li>
+      <li>Should the sibling card sit at the bottom or beside the stage rail? <strong>It is the thing
+        most likely to change what Marcus does next</strong>, and it is currently last.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============================== B ============================== -->
+<section class="sec">
+  <div class="sec-head"><span class="badge-l">B</span>
+    <h2 class="sec-title">Everything booked, five days before the crew arrives</h2>
+    <span class="sec-when">After beat 16 &middot; Wed 12 Aug</span></div>
+  <p class="strip"><span class="beat">Orders and scheduling done</span><span>Wed 12 Aug, after the call with Sara</span><span><b>Marcus Ellery</b>, checking that nothing is outstanding</span></p>
+
+  <div class="frame"><div class="pw-page">
+    <div class="pw-crumbs"><a href="#">Customers</a><span class="s">/</span><a href="#">Sara Thompson</a><span class="s">/</span><a href="#">Roofing and siding</a><span class="s">/</span><span>Roofing</span></div>
+    <div class="pw-titlerow">
+      <div><h1 class="t-h1">Roofing<span class="pw-pencil">&#9998;</span></h1>
+        <p class="pw-meta">1428 Maple Ave<span class="s">&middot;</span>Dwight Okafor, four<span class="s">&middot;</span><span class="now">Ready, starts Monday</span></p></div>
+      <div class="pw-actions"><span class="pw-kebab">&#8943;</span></div>
+    </div>
+
+    <div class="pw-stack" style="margin-top:20px">
+
+      <div class="pw-tiles">
+        <div class="pw-tile"><div class="tl">Price</div><div class="tv">$38,900</div><div class="ts">Of a $73,100 contract</div></div>
+        <div class="pw-tile"><div class="tl">This stage</div><div class="tv">6 of 6</div><div class="ts">Orders and scheduling</div></div>
+        <div class="pw-tile"><div class="tl">Starts</div><div class="tv">Mon 17 Aug</div><div class="ts">In five days. Two days of work</div></div>
+      </div>
+
+      <!-- 1 -->
+      <div class="pw-group">
+        <div class="pw-grouphead"><h2>Where this job is</h2><span class="sub">Northgate's exteriors configuration</span></div>
+        <div class="pw-pair">
+          <div class="pw-card"><div class="pw-cardstack">
+            <h5>Stages</h5>
+            <div class="pw-rail">
+              <div>
+                <div class="pw-railboard">Production</div>
+                <div class="pw-railgrp">
+                  <div class="pw-railrow done"><span class="pw-raildot"></span><span class="sn">Ops intake</span><span class="sv">Done 7 Aug</span></div>
+                  <div class="pw-railrow cur"><span class="pw-raildot"></span><span class="sn">Orders and scheduling</span><span class="sv">6 of 6</span></div>
+                  <div class="pw-railrow"><span class="pw-raildot"></span><span class="sn">Final checks</span><span class="sv">Sun 16 Aug</span></div>
+                  <div class="pw-railrow"><span class="pw-raildot"></span><span class="sn">Installing</span><span class="sv">Mon 17 Aug</span></div>
+                </div>
+              </div>
+              <div>
+                <div class="pw-railboard">Closeout and payment</div>
+                <div class="pw-railgrp">
+                  <div class="pw-railrow"><span class="pw-raildot"></span><span class="sn">Closeout</span><span class="sv">0 of 6</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="pw-railgate">Final checks opens when the permit is approved. <b>Approved 11 Aug.</b></div>
+          </div></div>
+
+          <div class="pw-card"><div class="pw-cardstack">
+            <div class="pw-cardhead"><h5>Orders and scheduling</h5><span class="pw-bdg">6 of 6</span></div>
+            <div>
+              <div class="pw-tk" data-state="done"><span class="pw-tkbx">&#10003;</span><span>Materials ordered</span><span class="when">7 Aug</span></div>
+              <div class="pw-tk" data-state="done"><span class="pw-tkbx">&#10003;</span><span>Delivery date confirmed</span><span class="when">12 Aug</span></div>
+              <div class="pw-tk" data-state="done"><span class="pw-tkbx">&#10003;</span><span>Dumpster ordered</span><span class="when">12 Aug</span></div>
+              <div class="pw-tk" data-state="done"><span class="pw-tkbx">&#10003;</span><span>Crew assigned</span><span class="when">12 Aug</span></div>
+              <div class="pw-tk" data-state="done"><span class="pw-tkbx">&#10003;</span><span>Date committed</span><span class="when">12 Aug</span></div>
+              <div class="pw-tk" data-state="done"><span class="pw-tkbx">&#10003;</span><span>Customer notified</span><span class="when">12 Aug</span></div>
+            </div>
+          </div></div>
+        </div>
+        <div class="pw-card" style="box-shadow:none;background:var(--sol-backgrounds-ui-medium)">
+          <div class="pw-line"><b>Waiting on</b><span>Materials, confirmed for Friday 14 Aug</span><a href="#">See all</a></div>
+        </div>
+      </div>
+
+      <!-- 2 -->
+      <div class="pw-group">
+        <div class="pw-grouphead"><h2>The work</h2></div>
+        <div class="pw-pair">
+          <div class="pw-card"><div class="pw-cardstack">
+            <div class="pw-cardhead"><h5>Scope</h5><span class="pw-bdg">Refined 7 Aug</span></div>
+            <div class="pw-kv">
+              <div><span class="k">Trade</span><span class="v">Roofing</span></div>
+              <div><span class="k">Area</span><span class="v">2,410 sq ft</span></div>
+              <div><span class="k">Layers to remove</span><span class="v">1</span></div>
+              <div><span class="k">Roof age</span><span class="v">About 19 years</span></div>
+              <div class="w"><span class="k">Material</span><span class="v">Architectural shingle, underlayment, ridge vent, flashing</span></div>
+              <div class="w"><span class="k">Condition at assessment</span><span class="v">South slope lifted by the storm. Decking sound where visible</span></div>
+            </div>
+            <div class="pw-crule"></div>
+            <div class="pw-line"><span>Refined by <b>Marcus Ellery</b>, 7 Aug, with the work order.</span></div>
+          </div></div>
+
+          <div class="pw-card"><div class="pw-cardstack">
+            <h5>Property and access</h5>
+            <div class="pw-kv">
+              <div class="w"><span class="k">Address</span><span class="v">1428 Maple Ave, Sacramento CA 95818</span></div>
+              <div><span class="k">Built</span><span class="v">1978, two storey</span></div>
+              <div><span class="k">Floor area</span><span class="v">2,140 sq ft</span></div>
+              <div><span class="k">Gate code</span><span class="v">4417</span></div>
+              <div><span class="k">On site</span><span class="v">Dog in the back yard, friendly but loud</span></div>
+              <div class="w"><span class="k">Ladder and dumpster</span><span class="v">Ladder south elevation, dumpster north driveway</span></div>
+            </div>
+          </div></div>
+        </div>
+      </div>
+
+      <!-- 3 -->
+      <div class="pw-group">
+        <div class="pw-grouphead"><h2>Crew and schedule</h2></div>
+        <div class="pw-pair">
+          <div class="pw-card"><div class="pw-cardstack">
+            <div class="pw-cardhead"><h5>Crew</h5><span class="pw-bdg">Assigned 12 Aug</span></div>
+            <div class="pw-crowlist">
+              <div class="pw-lrow"><span class="pw-lname med">Dwight Okafor<span class="pw-lsub">Crew lead, roofing. Crew of four</span></span><span class="pw-r"><span class="pw-lst">Northgate</span></span></div>
+            </div>
+            <div class="pw-more"><span>Same crew on both days</span><a href="#">Change</a></div>
+          </div></div>
+          <div class="pw-card"><div class="pw-cardstack">
+            <div class="pw-cardhead"><h5>Dates</h5><span class="pw-bdg">Mon 17 to Tue 18 Aug</span></div>
+            <div class="pw-week">
+              <div class="pw-wr"><span class="gn">Roofing</span>
+                <span class="pw-track"><span class="pw-bar" style="left:0%;width:40%">Dwight Okafor, four</span></span></div>
+              <div class="pw-wr"><span class="gn dim">Siding</span>
+                <span class="pw-track"><span class="pw-bar quiet" style="left:40%;width:60%">Luis Ferrara, three</span></span></div>
+              <div class="pw-daywrap"><span></span>
+                <span class="pw-dayrow"><span>Mon 17</span><span>Tue 18</span><span>Wed 19</span><span>Thu 20</span><span>Fri 21</span></span></div>
+            </div>
+            <div class="pw-crule"></div>
+            <div class="pw-line"><span>Agreed with <b>Sara Thompson</b> by phone, 12 Aug, both trades in one call.</span></div>
+          </div></div>
+        </div>
+      </div>
+
+      <!-- 4 -->
+      <div class="pw-group">
+        <div class="pw-grouphead"><h2>Materials and documents</h2></div>
+        <div class="pw-pair">
+          <div class="pw-card"><div class="pw-cardstack">
+            <div class="pw-cardhead"><h5>Material order</h5><span class="pw-bdg">Arriving Fri 14 Aug</span></div>
+            <div class="pw-crowlist">
+              <div class="pw-lrow"><span class="pw-lname">Roofing materials<span class="pw-lsub">Ordered 7 Aug. Shingle, underlayment, ridge vent, flashing</span></span><span class="pw-r"><span class="pw-lst">Delivery confirmed</span></span></div>
+              <div class="pw-lrow"><span class="pw-lname">Dumpster<span class="pw-lsub">Ordered 12 Aug. North driveway</span></span><span class="pw-r"><span class="pw-lst">Fri 14 Aug</span></span></div>
+            </div>
+            <div class="pw-more"><span>Delivered to the property, three days before the crew</span><a href="#">See the order</a></div>
+          </div></div>
+          <div class="pw-card"><div class="pw-cardstack">
+            <div class="pw-cardhead"><h5>Documents and photos</h5><span class="pw-bdg">4 documents, 12 photos</span></div>
+            <div class="pw-crowlist">
+              <div class="pw-lrow"><span class="pw-lname">Work order<span class="pw-lsub">Marcus Ellery, 7 Aug</span></span><span class="pw-r"><span class="pw-lst">This job</span></span></div>
+              <div class="pw-lrow"><span class="pw-lname">Permit<span class="pw-lsub">Filed 7 Aug, approved 11 Aug</span></span><span class="pw-r"><span class="pw-lst">This job</span></span></div>
+              <div class="pw-lrow"><span class="pw-lname">Site assessment photos<span class="pw-lsub">Priya Raman, 5 Aug</span></span><span class="pw-r"><span class="pw-lval">12</span></span></div>
+              <div class="pw-lrow dim"><span class="pw-lname">Signed contract<span class="pw-lsub">Both trades, 6 Aug</span></span><span class="pw-r"><span class="pw-lst">At the project</span></span></div>
+            </div>
+            <div class="pw-more"><span>No photographs from the work yet</span><a href="#">See all</a></div>
+          </div></div>
+        </div>
+      </div>
+
+      <!-- 5 -->
+      <div class="pw-group">
+        <div class="pw-grouphead"><h2>Money</h2><span class="sub">Held by the project, unchanged since 6 August</span></div>
+        <div class="pw-card"><div class="pw-cardstack">
+          <div class="pw-line"><span>This job is priced at <b>$38,900</b>. The balance sits on <b>Roofing and siding, Thompson</b>.</span><a href="#">Open the project</a></div>
+          <div class="pw-crule"></div>
+          <div class="pw-kv">
+            <div><span class="k">Contract, both trades</span><span class="v">$73,100</span></div>
+            <div><span class="k">Collected</span><span class="v">$500, deposit by cheque 6 Aug</span></div>
+            <div><span class="k">Outstanding</span><span class="v">$72,600, due when both jobs complete</span></div>
+            <div><span class="k">Billing</span><span class="v">One invoice, at the project</span></div>
+          </div>
+        </div></div>
+      </div>
+
+      <!-- 6 -->
+      <div class="pw-group">
+        <div class="pw-grouphead"><h2>How this job came about</h2></div>
+        <div class="pw-pair">
+          <div class="pw-card"><div class="pw-cardstack">
+            <h5>Where the scope came from</h5>
+            <div class="pw-line"><span>Storm call 4 Aug, assessment 5 Aug, accepted 5 Aug, signed and created 6 Aug.</span><a href="#">See the trail</a></div>
+          </div></div>
+          <div class="pw-card"><div class="pw-cardstack">
+            <div class="pw-cardhead"><h5>Notes and assets</h5><span class="pw-bdg">5 notes</span></div>
+            <div class="pw-crowlist">
+              <div class="pw-lrow"><span class="pw-lname">Sara asked for the dumpster off the lawn<span class="pw-lsub">Marcus Ellery, 12 Aug</span></span><span class="pw-r"><span class="pw-lst">Scheduling</span></span></div>
+              <div class="pw-lrow"><span class="pw-lname">Both trades agreed in one call<span class="pw-lsub">Marcus Ellery, 12 Aug</span></span><span class="pw-r"><span class="pw-lst">Scheduling</span></span></div>
+              <div class="pw-lrow"><span class="pw-lname">Decking sound where visible<span class="pw-lsub">Priya Raman, 5 Aug</span></span><span class="pw-r"><span class="pw-lst">Assessment</span></span></div>
+            </div>
+            <div class="pw-more"><span>2 more, and everything on the project</span><a href="#">See all</a></div>
+          </div></div>
+        </div>
+      </div>
+
+      <!-- 7 -->
+      <div class="pw-group">
+        <div class="pw-grouphead"><h2>The other job</h2></div>
+        <div class="pw-card"><div class="pw-cardstack">
+          <div class="pw-crowlist">
+            <div class="pw-lrow"><span class="pw-lname med">Siding<span class="pw-lsub">Orders and scheduling, 6 of 6. Luis Ferrara, three. Wed 19 to Fri 21 Aug</span></span><span class="pw-r"><span class="pw-lval">$34,200</span><span class="pw-lst">Ready</span></span></div>
+          </div>
+        </div></div>
+      </div>
+
+    </div>
+  </div></div>
+
+  <div class="argu">
+    <div>
+      <p class="k">Same seven groups, and one of them collapses</p>
+      <p>Every group is where it was on screen A. <strong>Only the provenance card collapses, from four
+        rows to one line</strong>, because after the work is booked it is history rather than the thing
+        you came for. Nothing moved up the page to take the space, which is the layout rule doing what
+        it is there for.</p>
+    </div>
+    <div>
+      <p class="k">No buttons at all</p>
+      <p>Six of six is done, the permit is approved, the gate is satisfied and the materials have a
+        date. <strong>There is nothing for anybody to do on this page until Sunday</strong>, so there is
+        no action and no warning colour. A page that offers a button here would be inventing work.</p>
+    </div>
+    <div>
+      <p class="k">The gate is satisfied the day before it matters</p>
+      <p>Permits were filed on 7 August and approved on 11 August, and the crew was booked on the 12th.
+        <strong>The one live gate in this whole scenario cleared with a day to spare</strong>, which
+        means the rail's footer never actually stopped anybody. It is worth showing precisely because
+        that is the happy case and it is what the footer will look like most of the time.</p>
+    </div>
+    <div>
+      <p class="k">Materials is the only thing anybody is waiting on</p>
+      <p>The waiting-on line now has exactly one thing in it, and the delivery is three days before the
+        crew. <strong>One line carries that better than a card with one row and three settled ones</strong>,
+        and it means the line's content, rather than its presence, is what tells you whether to worry.</p>
+    </div>
+    <div>
+      <p class="k">The week track shows the sibling, not just this job</p>
+      <p>The dates card draws both trades across one week, with siding quiet. <strong>The constraint
+        that matters on 12 August is that two crews are at one address in one week</strong>, and a bar
+        showing only roofing would hide it. This is the first thing in the memo series drawn on a time
+        axis, and nothing in the model says a job has a duration.</p>
+    </div>
+    <div>
+      <p class="k">What the page still cannot say</p>
+      <p>There is no cost on this job and therefore no margin, and the page does not mention either.
+        <strong>The absence is deliberate and is not marked</strong>, because naming a gap invites
+        somebody to fill it badly. The honest discomfort is that a production coordinator looking at a
+        $38,900 job cannot see what it will cost to deliver.</p>
+    </div>
+    <div class="jtbd">
+      <p class="k">Jobs to be done, and what on the page serves them</p>
+      <ul>
+        <li><span class="code">J-05</span> <b>Find out what is actually stopping a job.</b> This screen
+          is the clean answer: one line naming the materials, and a gate footer naming the permit and
+          the date it cleared. Nothing else on the page claims to be a blocker.</li>
+        <li><span class="code">J-06</span> <b>Hand a signed sale to the people who will deliver it.</b>
+          Completed rather than served. The scope, access, crew and dates together are the handover
+          finished, and the page proves it with dates rather than assertions.</li>
+        <li><span class="code">J-08</span> <b>Get paid the moment the work earns it.</b> Not served,
+          and cannot be from here. The trigger is both jobs complete, which is a project fact, so the
+          money group points upward at both moments.</li>
+        <li><span class="code">J-07</span> <b>Walk into a conversation knowing what was said last
+          time.</b> The two notes from the 12 August call are the only record of it. The call itself
+          has no entity, so what a reader sees is somebody's summary rather than the conversation.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="oq">
+    <h4>Open questions</h4>
+    <ol>
+      <li>Final checks shows a date it was never given. <strong>The scenario has no day-before beat</strong>,
+        so Sun 16 Aug is derived from the install date. Should a rail predict, or only report?</li>
+      <li>The materials delivery is on 14 August and the crew arrives on the 17th. <strong>Is a
+        confirmed delivery a wait at all</strong>, or does waiting-on only earn its place when a date
+        is missing or at risk?</li>
+      <li>Money is identical to screen A and is not collapsed. <strong>Collapsing because it has not
+        moved in six days is a different rule from collapsing because of the stage</strong>, and the
+        page cannot hold both.</li>
+      <li>The week track is the second place the schedule appears, after the tile that reads Mon 17
+        Aug. <strong>Is the tile redundant once the track exists</strong>, or is it the answer for
+        somebody who reads nothing else?</li>
+      <li>Both jobs read 6 of 6 and Ready at the same moment. <strong>If the sibling card is always
+        the same as this job, it is decoration</strong>, and it only earns its place on 18 August when
+        roofing is in closeout and siding has not started.</li>
+    </ol>
+  </div>
+</section>
+
+<div class="foot">
+  <h3>Where this leaves the four things</h3>
+  <div class="four">
+    <div class="c"><h4>Carried over as is</h4>
+      <ul>
+        <li><strong>Seven groups, fixed order</strong>, a group that is not needed collapsing in place.</li>
+        <li><strong>Two cards abreast</strong>, and a lone card keeping its group heading.</li>
+        <li><strong>No reference codes.</strong> No job, permit or invoice numbers anywhere.</li>
+        <li><strong>Status in the second line</strong> of the right-hand column, under the value.</li>
+      </ul>
+    </div>
+    <div class="c"><h4>New here</h4>
+      <ul>
+        <li><strong>The stage rail on a job</strong>, with board names as headers and the gate in the footer.</li>
+        <li><strong>Waiting on as a line rather than a card</strong>, which is the component record's own recommendation, tested.</li>
+        <li><strong>A money group that holds a price and a pointer</strong> instead of a balance.</li>
+        <li><strong>A week track carrying both trades</strong>, so the sibling constraint is visible.</li>
+      </ul>
+    </div>
+    <div class="c"><h4>Deliberately refused</h4>
+      <ul>
+        <li><strong>Per-job cost and margin.</strong> Absent, not greyed, not explained.</li>
+        <li><strong>Roofing line items.</strong> None exist in the data pack, and inventing them would be invention twice over.</li>
+        <li><strong>An inspection.</strong> S15 has none, and the post-sale inspection on memo 11 is a memo invention.</li>
+        <li><strong>A what changed link</strong> on the refined scope. The model does not keep the earlier version.</li>
+      </ul>
+    </div>
+    <div class="c"><h4>Placeholder for now</h4>
+      <ul>
+        <li><strong>Documents and photos counts.</strong> Twelve assessment photos is ours, not the script's.</li>
+        <li><strong>The dumpster.</strong> Drawn as a material order row, which is a guess at where it belongs.</li>
+        <li><strong>Final checks on 16 August.</strong> Derived from the install date, not given.</li>
+        <li><strong>Activity.</strong> Not drawn at all, because two rows do not earn a group this early.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+</div>
+</body>
+</html>

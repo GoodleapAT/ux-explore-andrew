@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The project at two moments</title>
+<style>
+:root{
+  color-scheme:light;
+  --sol-actions-button:#161051; --sol-actions-link:#382ca5;
+  --sol-backgrounds-accent-purple:#e2e1fe; --sol-backgrounds-system-warning:#fffaf0;
+  --sol-backgrounds-system-success:#effaf2; --sol-borders-system-success:#8cd3a3; --sol-text-success:#006b24;
+  --sol-backgrounds-ui-high:#ffffff; --sol-backgrounds-ui-low:#e3e3ed; --sol-backgrounds-ui-medium:#f5f5f9;
+  --sol-borders-accent-purple:#6d62d5; --sol-borders-accent-yellow:#f5b638;
+  --sol-borders-ui-default:#c8c8d5; --sol-borders-ui-strong:#a7a7b9; --sol-borders-ui-subtle:#e3e3ed;
+  --sol-elevation-md:0px 1px 12px 0px #0000000f;
+  --sol-icons-accent-purple:#382ca5; --sol-icons-ui-secondary:#4b4b58;
+  --sol-text-primary:#14141a; --sol-text-secondary:#4b4b58; --sol-text-warning:#8f5f00;
+  --sol-text-placeholder:#a7a7b9;
+  --pw-ink:#2c1b3c;
+  --inter:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+  --m-bd:#e6e6ea; --m-bds:#d3d3da; --m-tx:#1b1b20; --m-tx2:#55555e; --m-tx3:#86868f; --m-paper:#fbfbfc;
+}
+*{box-sizing:border-box}
+body{margin:0;background:#fff;color:var(--m-tx);font-family:var(--inter);font-size:15px;line-height:1.62;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding:52px 40px 96px}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.04em;color:var(--m-tx3);margin:0 0 15px;text-transform:uppercase}
+.eyebrow span{margin-right:24px}
+h1{font-size:38px;line-height:1.13;font-weight:500;letter-spacing:-.02em;margin:0 0 17px;max-width:780px}
+.lede{max-width:760px;color:var(--m-tx2);font-size:15.5px;margin:0 0 14px}
+.lede strong{color:var(--m-tx);font-weight:500}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(420px,1fr));gap:20px;margin:28px 0 0}
+.ecard{border:1px solid var(--m-bds);border-radius:12px;padding:20px 22px;background:var(--m-paper)}
+.ecard h3{margin:0 0 4px;font-size:12px;font-family:var(--mono);text-transform:uppercase;letter-spacing:.05em;color:var(--m-tx3);font-weight:400}
+.ecard .sub{margin:0 0 13px;font-size:12.5px;color:var(--m-tx3)}
+.ecard ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px}
+.ecard li{font-size:13.5px;line-height:1.55;color:var(--m-tx2)}
+.ecard li strong{color:var(--m-tx);font-weight:500}
+
+.sec{margin:52px 0 0}
+.sec-head{display:flex;align-items:baseline;gap:11px;padding-bottom:12px;border-bottom:1px solid var(--m-bd);margin-bottom:8px}
+.badge-l{flex:0 0 auto;width:20px;height:20px;border:1px solid var(--sol-borders-accent-purple);border-radius:4px;color:var(--sol-icons-accent-purple);font-family:var(--mono);font-size:10.5px;display:flex;align-items:center;justify-content:center;background:var(--sol-backgrounds-accent-purple);position:relative;top:2px}
+.sec-title{font-size:19px;font-weight:500;margin:0;letter-spacing:-.01em}
+.sec-when{font-size:12.5px;color:var(--m-tx3);margin-left:auto}
+.strip{display:flex;gap:22px;flex-wrap:wrap;font-size:12.5px;color:var(--m-tx3);margin:0 0 18px}
+.strip b{font-weight:500;color:var(--m-tx2)}
+.strip .beat{font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.05em}
+.frame{border:1px solid var(--m-bds);border-radius:12px;overflow:hidden;background:var(--sol-backgrounds-ui-high)}
+.notes{margin:18px 0 0;padding-top:16px;border-top:1px solid var(--m-bd);display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:16px 28px}
+.notes .k{font-family:var(--mono);font-size:9.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--m-tx3);margin:0 0 5px}
+.notes ul{margin:0;padding-left:17px;display:flex;flex-direction:column;gap:6px}
+.notes li{font-size:13px;line-height:1.5;color:var(--m-tx2)}
+.notes li strong{color:var(--m-tx);font-weight:500}
+.foot{margin:52px 0 0;padding-top:26px;border-top:1px solid var(--m-bd);max-width:840px}
+.foot h3{font-size:12px;font-family:var(--mono);text-transform:uppercase;letter-spacing:.05em;color:var(--m-tx3);font-weight:400;margin:0 0 13px}
+.foot p{font-size:13.5px;color:var(--m-tx2);margin:0 0 12px}
+.foot p strong{color:var(--m-tx);font-weight:500}
+
+/* Pros Web kit */
+.pw-page{display:flex;flex-direction:column;background:var(--sol-backgrounds-ui-high);padding:24px 28px 28px;color:var(--pw-ink)}
+.pw-stack{display:flex;flex-direction:column;gap:22px}
+.pw-crumbs{display:flex;align-items:center;gap:8px;font:400 12px/18px var(--inter);color:var(--sol-text-secondary);margin-bottom:10px}
+.pw-crumbs a{color:var(--sol-actions-link);text-decoration:none}
+.pw-crumbs .s{color:var(--sol-borders-ui-strong)}
+.pw-titlerow{display:flex;align-items:flex-start;gap:20px;flex-wrap:wrap}
+.t-h1{font:700 23px/32px var(--inter);margin:0}
+.pw-pencil{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;color:var(--sol-text-placeholder);font-size:12px;position:relative;top:-3px;margin-left:6px}
+.pw-meta{margin:5px 0 0;font:400 13px/20px var(--inter);color:var(--sol-text-secondary)}
+.pw-meta .now{color:var(--pw-ink);font-weight:500}
+.pw-meta a{color:var(--sol-actions-link);text-decoration:none;border-bottom:1px solid var(--sol-borders-ui-default)}
+.pw-meta .s{color:var(--sol-borders-ui-strong);margin:0 7px}
+.pw-actions{display:flex;gap:9px;flex-wrap:wrap;margin-left:auto;align-items:flex-start}
+.pw-btn{border:1px solid var(--sol-borders-ui-default);border-radius:8px;background:var(--sol-backgrounds-ui-high);padding:7px 13px;font:500 13px/18px var(--inter);color:var(--pw-ink)}
+.pw-btn.pri{background:var(--sol-actions-button);border-color:var(--sol-actions-button);color:#fff}
+.pw-btn.sm{padding:5px 11px;font-size:12.5px}
+.pw-kebab{width:33px;height:33px;border:1px solid var(--sol-borders-ui-default);border-radius:8px;background:var(--sol-backgrounds-ui-high);color:var(--sol-icons-ui-secondary);display:flex;align-items:center;justify-content:center;font-size:15px}
+.pw-card{background:var(--sol-backgrounds-ui-high);border:1px solid var(--sol-borders-ui-subtle);border-radius:12px;box-shadow:var(--sol-elevation-md);padding:16px}
+.pw-card.quiet{box-shadow:none;background:var(--sol-backgrounds-ui-medium)}
+.pw-cardstack{display:flex;flex-direction:column;gap:12px}
+.pw-cardstack h5{margin:0;font:700 15px/22px var(--inter);color:var(--sol-text-primary)}
+.pw-cardhead{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.pw-group{display:flex;flex-direction:column;gap:10px}
+.pw-grouphead{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.pw-grouphead h2{margin:0;font:700 16px/23px var(--inter);color:var(--pw-ink)}
+.pw-grouphead .sub{font:400 12px/18px var(--inter);color:var(--sol-text-secondary)}
+.pw-pair{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+.pw-pair>*{min-width:0}
+.pw-one{display:grid;grid-template-columns:1fr}
+.pw-tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.pw-tile{border:1px solid var(--sol-borders-ui-subtle);border-radius:10px;background:var(--sol-backgrounds-ui-high);box-shadow:var(--sol-elevation-md);padding:14px 16px}
+.pw-tile .tl{font:400 11.5px/17px var(--inter);color:var(--sol-text-secondary)}
+.pw-tile .tv{font:700 24px/32px var(--inter);color:var(--sol-text-primary);font-variant-numeric:tabular-nums;margin-top:2px}
+.pw-tile .ts{font:400 12px/18px var(--inter);color:var(--sol-text-secondary);margin-top:2px}
+.pw-crowlist{display:flex;flex-direction:column}
+.pw-lrow{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:16px;align-items:baseline;padding:9px 0;border-bottom:1px solid var(--sol-borders-ui-subtle)}
+.pw-lrow:last-child{border-bottom:0}
+.pw-lrow:first-child{padding-top:0}
+.pw-lname{font:400 14px/20px var(--inter);color:var(--pw-ink)}
+.pw-lname.med{font-weight:500}
+.pw-lsub{display:block;font:400 12px/18px var(--inter);color:var(--sol-text-secondary);margin-top:1px}
+.pw-r{text-align:right;white-space:nowrap}
+.pw-lval{display:block;font:500 14px/20px var(--inter);color:var(--pw-ink);font-variant-numeric:tabular-nums}
+.pw-lst{display:block;font:400 12px/18px var(--inter);color:var(--sol-text-secondary);margin-top:1px}
+.pw-lrow.dim .pw-lname,.pw-lrow.dim .pw-lval{color:var(--sol-text-secondary);font-weight:400}
+.pw-more{display:flex;align-items:baseline;gap:10px;padding-top:10px;border-top:1px solid var(--sol-borders-ui-subtle);font:400 12px/18px var(--inter);color:var(--sol-text-secondary)}
+.pw-more a{color:var(--sol-actions-link);text-decoration:none;margin-left:auto}
+.pw-hero{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.pw-hero .hl{font:400 12px/18px var(--inter);color:var(--sol-text-secondary)}
+.pw-hero .hv{font:700 32px/38px var(--inter);color:var(--sol-text-primary);font-variant-numeric:tabular-nums;margin-top:2px}
+.pw-hero .hs{font:400 13px/20px var(--inter);color:var(--sol-text-secondary);margin-top:2px}
+.pw-hero.due .hv{color:var(--sol-text-warning)}
+.pw-hero.due .hs{color:var(--sol-text-warning);font-weight:500}
+.pw-crule{height:1px;background:var(--sol-borders-ui-subtle)}
+.pw-roll{display:grid;grid-template-columns:1fr 1fr;gap:10px 16px}
+.pw-roll .k{display:block;font:400 11px/16px var(--inter);color:var(--sol-text-secondary)}
+.pw-roll .v{display:block;font:700 18px/24px var(--inter);color:var(--sol-text-primary);font-variant-numeric:tabular-nums}
+.pw-roll .s{display:block;font:400 11px/16px var(--inter);color:var(--sol-text-secondary)}
+.pw-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:4px 12px;margin-top:6px;padding-top:8px;border-top:1px solid var(--sol-borders-ui-subtle)}
+.pw-stats .k{display:block;font:400 10.5px/15px var(--inter);color:var(--sol-text-secondary)}
+.pw-stats .v{display:block;font:500 13px/19px var(--inter);color:var(--pw-ink);font-variant-numeric:tabular-nums}
+.pw-bdg{display:inline-flex;align-items:center;border:1px solid var(--sol-borders-ui-default);border-radius:5px;background:var(--sol-backgrounds-ui-medium);padding:2px 8px;font:500 11.5px/18px var(--inter);color:var(--sol-text-secondary);white-space:nowrap}
+.pw-bdg.warn{border-color:var(--sol-borders-accent-yellow);background:var(--sol-backgrounds-system-warning);color:var(--sol-text-warning)}
+.pw-bdg.done{border-color:var(--sol-borders-system-success);background:var(--sol-backgrounds-system-success);color:var(--sol-text-success)}
+.pw-pills{display:flex;gap:8px;flex-wrap:wrap}
+.pw-tk{display:grid;grid-template-columns:17px minmax(0,1fr) auto;gap:10px;align-items:center;padding:5px 0;font:400 13.5px/20px var(--inter);color:var(--pw-ink)}
+.pw-tkbx{width:17px;height:17px;border-radius:4px;border:1.5px solid var(--sol-borders-ui-strong);background:var(--sol-backgrounds-ui-high);display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px}
+.pw-tk[data-state=done] .pw-tkbx{background:var(--sol-text-success);border-color:var(--sol-text-success)}
+.pw-tk[data-state=done]{color:var(--sol-text-secondary)}
+.pw-tk .when{font:400 11.5px/17px var(--inter);color:var(--sol-text-secondary);white-space:nowrap}
+.pw-jobhead{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+.pw-jobhead h5{margin:0}
+.pw-empty{border:1px dashed var(--sol-borders-ui-default);border-radius:10px;background:var(--sol-backgrounds-ui-medium);padding:14px 16px;font:400 13px/20px var(--inter);color:var(--sol-text-secondary)}
+.pw-line{display:flex;align-items:baseline;justify-content:space-between;gap:14px;flex-wrap:wrap;font:400 13px/20px var(--inter);color:var(--sol-text-secondary)}
+.pw-line b{font-weight:500;color:var(--pw-ink)}
+.pw-line a{color:var(--sol-actions-link);text-decoration:none;margin-left:auto;white-space:nowrap}
+.pw-gantt{display:flex;flex-direction:column;gap:8px}
+.pw-gr{display:grid;grid-template-columns:96px minmax(0,1fr);gap:12px;align-items:center}
+.pw-gr .gn{font:500 13px/20px var(--inter);color:var(--pw-ink)}
+.pw-track{position:relative;height:26px;border-radius:6px;background:var(--sol-backgrounds-ui-medium);border:1px solid var(--sol-borders-ui-subtle)}
+.pw-bar{position:absolute;top:3px;bottom:3px;border-radius:4px;background:var(--sol-backgrounds-accent-purple);border:1px solid var(--sol-borders-accent-purple);display:flex;align-items:center;padding:0 8px;font:500 11px/18px var(--inter);color:var(--sol-icons-accent-purple);white-space:nowrap;overflow:hidden}
+.pw-bar.done{background:var(--sol-backgrounds-system-success);border-color:var(--sol-borders-system-success);color:var(--sol-text-success)}
+.pw-days{display:grid;grid-template-columns:96px minmax(0,1fr);gap:12px}
+.pw-dayrow{display:grid;grid-template-columns:repeat(5,1fr);font:500 10.5px/16px var(--mono);color:var(--m-tx3);text-transform:uppercase;letter-spacing:.04em}
+@media (max-width:860px){.pw-pair,.pw-tiles,.pw-roll{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<p class="eyebrow"><span>Upgrade to Pros</span><span>S15</span><span>The project, two moments</span><span>Mockup</span><span>16 September 2026</span></p>
+
+<h1>The same page when everything is ahead of you, and when nothing is left to do</h1>
+
+<p class="lede">Two states of one container, chosen because they invert the page's job.
+<strong>At the first, ten things must happen on two jobs and none has started.</strong> At the
+second, all ten are done and the only question is whether Monday will go wrong.</p>
+
+<p class="lede"><strong>Seven groups, in the same order at both.</strong> Nothing moves up the page.
+What changes is how much of each group is showing, and one group collapses.</p>
+
+<div class="cards">
+  <div class="ecard">
+    <h3>Settled, for the purposes of this memo</h3>
+    <p class="sub">From the data pack and yesterday's conversation.</p>
+    <ul>
+      <li><strong>Five ops steps are tasks. Two things are sub-statuses.</strong> Permit and materials
+        are external waits, shown as pills, never as checklist rows.</li>
+      <li><strong>Money is a pair</strong>, Balance and Revenue and profit, lifted from the customer
+        record work and reused here at a different level.</li>
+      <li><strong>The post-sale inspection is one per project, not one per job.</strong> One property,
+        one visit, two trades, as the sales assessment was.</li>
+      <li><strong>Provenance collapses after the hand-off</strong>, and the asset index does not.</li>
+    </ul>
+  </div>
+  <div class="ecard">
+    <h3>To decide, and it is the one that would change both screens</h3>
+    <p class="sub">Everything else here is arrangeable.</p>
+    <ul>
+      <li><strong>Where does a project-level task attach?</strong> The post-sale inspection covers both
+        jobs, and the project carries no task list by design. It is drawn on the project as a single
+        row above the two job cards, <strong>which is a claim the model does not currently support.</strong></li>
+      <li>If the answer is that it cannot, the inspection becomes two tasks, one per job, booked on the
+        same visit, and <strong>the count on each card goes from five to five with a duplicate.</strong></li>
+    </ul>
+  </div>
+</div>
+
+<!-- ============================== A ============================== -->
+<section class="sec">
+  <div class="sec-head"><span class="badge-l">A</span>
+    <h2 class="sec-title">Two jobs, nothing started</h2>
+    <span class="sec-when">Beats 9 and 10 &middot; Thu 6 Aug</span></div>
+  <p class="strip"><span class="beat">The hand-off</span><span>Thu 6 Aug, late afternoon</span><span><b>Marcus Ellery</b>, production coordinator, opening it for the first time</span></p>
+
+  <div class="frame"><div class="pw-page">
+    <div class="pw-crumbs"><a href="#">Customers</a><span class="s">/</span><a href="#">Sara Thompson</a><span class="s">/</span><span>Roofing and siding</span></div>
+    <div class="pw-titlerow">
+      <div><h1 class="t-h1">Roofing and siding, Thompson<span class="pw-pencil">&#9998;</span></h1>
+        <p class="pw-meta">1428 Maple Ave<span class="s">&middot;</span>Signed 6 Aug<span class="s">&middot;</span><span class="now">Two jobs, nothing started</span></p></div>
+      <div class="pw-actions"><button class="pw-btn pri">Book the post-sale inspection</button><span class="pw-kebab">&#8943;</span></div>
+    </div>
+    <div class="pw-stack" style="margin-top:20px">
+
+      <div class="pw-tiles">
+        <div class="pw-tile"><div class="tl">Contract</div><div class="tv">$73,100</div><div class="ts">Two trades, signed today</div></div>
+        <div class="pw-tile"><div class="tl">Collected</div><div class="tv">$500</div><div class="ts">Deposit by cheque</div></div>
+        <div class="pw-tile"><div class="tl">Jobs</div><div class="tv">0 of 10</div><div class="ts">Set-up steps done</div></div>
+      </div>
+
+      <div class="pw-group">
+        <div class="pw-grouphead"><h2>Jobs</h2><span class="sub">One per trade. Five set-up steps each</span></div>
+        <div class="pw-one"><div class="pw-card"><div class="pw-cardstack">
+          <div class="pw-tk"><span class="pw-tkbx"></span><span><b>Post-sale inspection</b> &middot; covers both trades, one visit</span><span class="when">Not booked</span></div>
+        </div></div></div>
+        <div class="pw-pair">
+          <div class="pw-card"><div class="pw-cardstack">
+            <div class="pw-jobhead"><h5>Roofing</h5><span class="pw-bdg">Not started</span></div>
+            <div class="pw-pills"><span class="pw-bdg">Permit: not applied</span><span class="pw-bdg">Materials: not ordered</span></div>
+            <div>
+              <div class="pw-tk"><span class="pw-tkbx"></span><span>Scope refined</span><span class="when"></span></div>
+              <div class="pw-tk"><span class="pw-tkbx"></span><span>Work order and materials list</span><span class="when"></span></div>
+              <div class="pw-tk"><span class="pw-tkbx"></span><span>Permit filed</span><span class="when"></span></div>
+              <div class="pw-tk"><span class="pw-tkbx"></span><span>Crew and dates confirmed</span><span class="when"></span></div>
+            </div>
+            <div class="pw-more"><span>$38,900. Scope as sold, not yet refined</span><a href="#">Open the job</a></div>
+          </div></div>
+          <div class="pw-card"><div class="pw-cardstack">
+            <div class="pw-jobhead"><h5>Siding</h5><span class="pw-bdg">Not started</span></div>
+            <div class="pw-pills"><span class="pw-bdg">Permit: not applied</span><span class="pw-bdg">Materials: not ordered</span></div>
+            <div>
+              <div class="pw-tk"><span class="pw-tkbx"></span><span>Scope refined</span><span class="when"></span></div>
+              <div class="pw-tk"><span class="pw-tkbx"></span><span>Work order and materials list</span><span class="when"></span></div>
+              <div class="pw-tk"><span class="pw-tkbx"></span><span>Permit filed</span><span class="when"></span></div>
+              <div class="pw-tk"><span class="pw-tkbx"></span><span>Crew and dates confirmed</span><span class="when"></span></div>
+            </div>
+            <div class="pw-more"><span>$34,200. Scope as sold, not yet refined</span><a href="#">Open the job</a></div>
+          </div></div>
+        </div>
+      </div>
+
+      <div class="pw-group">
+        <div class="pw-grouphead"><h2>Schedule</h2></div>
+        <div class="pw-one"><div class="pw-empty">Install dates appear once crews are confirmed. The
+          post-sale inspection will be the first thing on here.</div></div>
+      </div>
+
+      <div class="pw-group">
+        <div class="pw-grouphead"><h2>Money</h2></div>
+        <div class="pw-pair">
+          <div class="pw-card"><div class="pw-cardstack">
+            <h5>Balance</h5>
+            <div class="pw-hero"><div><div class="hl">Outstanding</div><div class="hv">$72,600</div><div class="hs">Due when both jobs are complete</div></div></div>
+            <div class="pw-crule"></div>
+            <div class="pw-crowlist">
+              <div class="pw-lrow"><div><span class="pw-lname">Contract</span><span class="pw-lsub">Roofing and siding, signed 6 Aug</span></div><div class="pw-r"><span class="pw-lval">$73,100</span></div></div>
+              <div class="pw-lrow"><div><span class="pw-lname">Collected</span><span class="pw-lsub">Deposit by cheque, 6 Aug</span></div><div class="pw-r"><span class="pw-lval">$500</span><span class="pw-lst">Paid</span></div></div>
+            </div>
+          </div></div>
+          <div class="pw-card"><div class="pw-cardstack">
+            <h5>Revenue and profit</h5>
+            <div class="pw-roll">
+              <div><span class="k">Gross profit, forecast</span><span class="v">$22,661</span><span class="s">Once both trades are complete</span></div>
+              <div><span class="k">Margin, forecast</span><span class="v">31%</span><span class="s">&nbsp;</span></div>
+            </div>
+            <div class="pw-crowlist">
+              <div class="pw-lrow"><div><span class="pw-lname med">Roofing and siding</span><span class="pw-lsub">Signed 6 Aug. $500 collected of $73,100</span>
+                <div class="pw-stats"><div><span class="k">Cost</span><span class="v">$50,439</span></div><div><span class="k">Gross profit</span><span class="v">$22,661</span></div><div><span class="k">Margin</span><span class="v">31%</span></div></div>
+              </div><div class="pw-r"><span class="pw-lval">$73,100</span><span class="pw-lst">Forecast</span></div></div>
+            </div>
+            <div class="pw-more"><span>One row, because per-job margin is not available</span></div>
+          </div></div>
+        </div>
+      </div>
+
+      <div class="pw-group">
+        <div class="pw-grouphead"><h2>How this came together</h2><span class="sub">Open, because it is what the next step is built from</span></div>
+        <div class="pw-one"><div class="pw-card"><div class="pw-cardstack">
+          <div class="pw-crowlist">
+            <div class="pw-lrow"><div><span class="pw-lname med">Roofing and siding, Thompson</span><span class="pw-lsub">The lead. Opened on the call 4 Aug, 8:07am. Closed today at hand-off</span></div><div class="pw-r"><span class="pw-lst">Closed</span></div></div>
+            <div class="pw-lrow"><div><span class="pw-lname med">Proposal</span><span class="pw-lsub">Both trades priced and presented 5 Aug. Accepted in the room</span></div><div class="pw-r"><span class="pw-lval">$73,100</span><span class="pw-lst">Accepted</span></div></div>
+            <div class="pw-lrow"><div><span class="pw-lname med">Contract</span><span class="pw-lsub">E-signed 6 Aug by Sara Thompson. Cash, $500 deposit and the balance on completion</span></div><div class="pw-r"><span class="pw-lst">Signed</span></div></div>
+            <div class="pw-lrow"><div><span class="pw-lname med">Site assessment</span><span class="pw-lsub">Priya Raman, 5 Aug. Roof 2,410 sq ft, one layer. Siding south and west, 2,140 sq ft</span></div><div class="pw-r"><span class="pw-lst">Complete</span></div></div>
+          </div>
+          <div class="pw-more"><span>Every measurement the work orders are built from is in the assessment</span><a href="#">Open the assessment</a></div>
+        </div></div></div>
+      </div>
+
+      <div class="pw-group">
+        <div class="pw-grouphead"><h2>Notes and assets</h2></div>
+        <div class="pw-one"><div class="pw-card"><div class="pw-cardstack">
+          <div class="pw-crowlist">
+            <div class="pw-lrow"><div><span class="pw-lname">Notes</span><span class="pw-lsub">Intake call, sales visit, assessment</span></div><div class="pw-r"><span class="pw-lval">6</span></div></div>
+            <div class="pw-lrow"><div><span class="pw-lname">Photographs</span><span class="pw-lsub">All from the assessment on 5 Aug</span></div><div class="pw-r"><span class="pw-lval">14</span></div></div>
+            <div class="pw-lrow"><div><span class="pw-lname">Documents</span><span class="pw-lsub">Proposal, contract</span></div><div class="pw-r"><span class="pw-lval">2</span></div></div>
+          </div>
+          <div class="pw-more"><span>Nothing from the work yet</span><a href="#">Open all</a></div>
+        </div></div></div>
+      </div>
+
+      <div class="pw-group">
+        <div class="pw-grouphead"><h2>Activity</h2></div>
+        <div class="pw-one"><div class="pw-card quiet"><div class="pw-cardstack">
+          <div class="pw-crowlist">
+            <div class="pw-lrow dim"><div><span class="pw-lname">Two jobs created at hand-off</span><span class="pw-lsub">Marcus Ellery</span></div><div class="pw-r"><span class="pw-lst">Today, 4:40pm</span></div></div>
+            <div class="pw-lrow dim"><div><span class="pw-lname">Contract signed and deposit recorded</span><span class="pw-lsub">Priya Raman</span></div><div class="pw-r"><span class="pw-lst">Today, 2:15pm</span></div></div>
+          </div>
+        </div></div></div>
+      </div>
+
+      <div class="pw-group">
+        <div class="pw-grouphead"><h2>Customer and property</h2></div>
+        <div class="pw-one"><div class="pw-card quiet"><div class="pw-line"><span><b>Sara Thompson</b> &middot; (916) 555-0188 &middot; 1428 Maple Ave &middot; Two storey, built 1978 &middot; Gate code on file, dog in the yard</span><a href="#">All detail</a></div></div></div>
+      </div>
+
+    </div>
+  </div></div>
+
+  <div class="notes">
+    <div><p class="k">The argument</p><ul>
+      <li><strong>The page has one live action and ten dormant ones.</strong> Book the inspection is
+        the only button, because every other step is behind it. The remaining eight rows are visible
+        and quiet, which is what a checklist is for.</li>
+      <li><strong>The third tile counts set-up, not money.</strong> Two money tiles and one work tile,
+        because at this moment the work is the question and the money is settled.</li>
+    </ul></div>
+    <div><p class="k">Needs a home</p><ul>
+      <li><strong>The inspection row sits on the project and the model has nowhere to put it.</strong>
+        The project carries no task list by design. This is the to-decide card.</li>
+      <li><strong>"0 of 10" totals two jobs' checklists.</strong> A derived figure across siblings,
+        which nothing in the model computes.</li>
+    </ul></div>
+    <div><p class="k">Question</p><ul>
+      <li><strong>Should Revenue and profit appear before any work has happened?</strong> It is entirely
+        forecast, and a forecast margin on the day of signing may be more confidence than the number
+        deserves.</li>
+      <li>Does Activity earn a group this early, with two rows in it?</li>
+    </ul></div>
+  </div>
+</section>
+
+<!-- ============================== B ============================== -->
+<section class="sec">
+  <div class="sec-head"><span class="badge-l">B</span>
+    <h2 class="sec-title">Everything ready, the roof starts Monday</h2>
+    <span class="sec-when">After beat 17 &middot; Fri 14 Aug</span></div>
+  <p class="strip"><span class="beat">The last working day before</span><span>Fri 14 Aug, afternoon</span><span><b>Marcus Ellery</b>, checking nothing has slipped</span></p>
+
+  <div class="frame"><div class="pw-page">
+    <div class="pw-crumbs"><a href="#">Customers</a><span class="s">/</span><a href="#">Sara Thompson</a><span class="s">/</span><span>Roofing and siding</span></div>
+    <div class="pw-titlerow">
+      <div><h1 class="t-h1">Roofing and siding, Thompson<span class="pw-pencil">&#9998;</span></h1>
+        <p class="pw-meta">1428 Maple Ave<span class="s">&middot;</span>Signed 6 Aug<span class="s">&middot;</span><span class="now">Ready. Roofing starts Monday</span></p></div>
+      <div class="pw-actions"><span class="pw-kebab">&#8943;</span></div>
+    </div>
+    <div class="pw-stack" style="margin-top:20px">
+
+      <div class="pw-tiles">
+        <div class="pw-tile"><div class="tl">Contract</div><div class="tv">$73,100</div><div class="ts">Two trades, signed 6 Aug</div></div>
+        <div class="pw-tile"><div class="tl">Collected</div><div class="tv">$500</div><div class="ts">Deposit by cheque</div></div>
+        <div class="pw-tile"><div class="tl">Jobs</div><div class="tv">10 of 10</div><div class="ts">Both ready to start</div></div>
+      </div>
+
+      <div class="pw-group">
+        <div class="pw-grouphead"><h2>Jobs</h2><span class="sub">Ordered by what starts first</span></div>
+        <div class="pw-one"><div class="pw-card quiet"><div class="pw-tk" data-state="done"><span class="pw-tkbx">&#10003;</span><span><b>Post-sale inspection</b> &middot; both trades, one visit</span><span class="when">Done 10 Aug</span></div></div></div>
+        <div class="pw-pair">
+          <div class="pw-card"><div class="pw-cardstack">
+            <div class="pw-jobhead"><h5>Roofing</h5><span class="pw-bdg">Starts Monday</span></div>
+            <div class="pw-pills"><span class="pw-bdg done">Permit: approved</span><span class="pw-bdg done">Materials: delivered</span></div>
+            <div>
+              <div class="pw-tk" data-state="done"><span class="pw-tkbx">&#10003;</span><span>Scope refined</span><span class="when">7 Aug</span></div>
+              <div class="pw-tk" data-state="done"><span class="pw-tkbx">&#10003;</span><span>Work order and materials list</span><span class="when">7 Aug</span></div>
+              <div class="pw-tk" data-state="done"><span class="pw-tkbx">&#10003;</span><span>Permit filed</span><span class="when">7 Aug</span></div>
+              <div class="pw-tk" data-state="done"><span class="pw-tkbx">&#10003;</span><span>Crew and dates confirmed</span><span class="when">12 Aug</span></div>
+            </div>
+            <div class="pw-more"><span>Dwight Okafor, four. Mon 17 to Tue 18 Aug</span><a href="#">Open the job</a></div>
+          </div></div>
+          <div class="pw-card"><div class="pw-cardstack">
+            <div class="pw-jobhead"><h5>Siding</h5><span class="pw-bdg">Starts Wednesday</span></div>
+            <div class="pw-pills"><span class="pw-bdg done">Permit: approved</span><span class="pw-bdg done">Materials: delivered</span></div>
+            <div>
+              <div class="pw-tk" data-state="done"><span class="pw-tkbx">&#10003;</span><span>Scope refined</span><span class="when">7 Aug</span></div>
+              <div class="pw-tk" data-state="done"><span class="pw-tkbx">&#10003;</span><span>Work order and materials list</span><span class="when">7 Aug</span></div>
+              <div class="pw-tk" data-state="done"><span class="pw-tkbx">&#10003;</span><span>Permit filed</span><span class="when">7 Aug</span></div>
+              <div class="pw-tk" data-state="done"><span class="pw-tkbx">&#10003;</span><span>Crew and dates confirmed</span><span class="when">12 Aug</span></div>
+            </div>
+            <div class="pw-more"><span>Luis Ferrara, three. Wed 19 to Fri 21 Aug</span><a href="#">Open the job</a></div>
+          </div></div>
+        </div>
+      </div>
+
+      <div class="pw-group">
+        <div class="pw-grouphead"><h2>Schedule</h2><span class="sub">Week of 17 August. Two crews, never on the same day</span></div>
+        <div class="pw-one"><div class="pw-card"><div class="pw-cardstack">
+          <div class="pw-days"><span></span><div class="pw-dayrow"><span>Mon 17</span><span>Tue 18</span><span>Wed 19</span><span>Thu 20</span><span>Fri 21</span></div></div>
+          <div class="pw-gantt">
+            <div class="pw-gr"><span class="gn">Roofing</span><div class="pw-track"><div class="pw-bar" style="left:0;width:40%">Dwight Okafor, four</div></div></div>
+            <div class="pw-gr"><span class="gn">Siding</span><div class="pw-track"><div class="pw-bar" style="left:40%;width:60%">Luis Ferrara, three</div></div></div>
+          </div>
+          <div class="pw-more"><span>Materials for both delivered today. Sara confirmed both windows on 12 Aug</span></div>
+        </div></div></div>
+      </div>
+
+      <div class="pw-group">
+        <div class="pw-grouphead"><h2>Money</h2><span class="sub">Unchanged since 6 August</span></div>
+        <div class="pw-pair">
+          <div class="pw-card"><div class="pw-cardstack">
+            <h5>Balance</h5>
+            <div class="pw-hero"><div><div class="hl">Outstanding</div><div class="hv">$72,600</div><div class="hs">Due when both jobs are complete</div></div></div>
+            <div class="pw-crule"></div>
+            <div class="pw-crowlist">
+              <div class="pw-lrow"><div><span class="pw-lname">Contract</span><span class="pw-lsub">Roofing and siding, signed 6 Aug</span></div><div class="pw-r"><span class="pw-lval">$73,100</span></div></div>
+              <div class="pw-lrow"><div><span class="pw-lname">Collected</span><span class="pw-lsub">Deposit by cheque, 6 Aug</span></div><div class="pw-r"><span class="pw-lval">$500</span><span class="pw-lst">Paid</span></div></div>
+            </div>
+          </div></div>
+          <div class="pw-card"><div class="pw-cardstack">
+            <h5>Revenue and profit</h5>
+            <div class="pw-roll">
+              <div><span class="k">Gross profit, forecast</span><span class="v">$22,661</span><span class="s">Once both trades are complete</span></div>
+              <div><span class="k">Margin, forecast</span><span class="v">31%</span><span class="s">&nbsp;</span></div>
+            </div>
+            <div class="pw-crowlist">
+              <div class="pw-lrow"><div><span class="pw-lname med">Roofing and siding</span><span class="pw-lsub">Materials delivered. Nothing installed yet</span>
+                <div class="pw-stats"><div><span class="k">Cost</span><span class="v">$50,439</span></div><div><span class="k">Gross profit</span><span class="v">$22,661</span></div><div><span class="k">Margin</span><span class="v">31%</span></div></div>
+              </div><div class="pw-r"><span class="pw-lval">$73,100</span><span class="pw-lst">Forecast</span></div></div>
+            </div>
+            <div class="pw-more"><span>One row, because per-job margin is not available</span></div>
+          </div></div>
+        </div>
+      </div>
+
+      <div class="pw-group">
+        <div class="pw-grouphead"><h2>How this came together</h2><span class="sub">Collapsed. Provenance now, rather than the thing you came for</span></div>
+        <div class="pw-one"><div class="pw-card quiet"><div class="pw-line"><span><b>Lead closed 6 Aug</b> &middot; proposal accepted 5 Aug, $73,100 &middot; contract signed 6 Aug &middot; site assessment by Priya Raman, 5 Aug</span><a href="#">Open</a></div></div></div>
+      </div>
+
+      <div class="pw-group">
+        <div class="pw-grouphead"><h2>Notes and assets</h2></div>
+        <div class="pw-one"><div class="pw-card"><div class="pw-cardstack">
+          <div class="pw-crowlist">
+            <div class="pw-lrow"><div><span class="pw-lname">Notes</span><span class="pw-lsub">Intake, sales visit, assessment, post-sale inspection</span></div><div class="pw-r"><span class="pw-lval">9</span></div></div>
+            <div class="pw-lrow"><div><span class="pw-lname">Photographs</span><span class="pw-lsub">Assessment and inspection. None from the work yet</span></div><div class="pw-r"><span class="pw-lval">22</span></div></div>
+            <div class="pw-lrow"><div><span class="pw-lname">Documents</span><span class="pw-lsub">Proposal, contract, two permits, two work orders, two materials lists</span></div><div class="pw-r"><span class="pw-lval">9</span></div></div>
+          </div>
+          <div class="pw-more"><span>Both permits and both work orders arrived this week</span><a href="#">Open all</a></div>
+        </div></div></div>
+      </div>
+
+      <div class="pw-group">
+        <div class="pw-grouphead"><h2>Activity</h2></div>
+        <div class="pw-one"><div class="pw-card quiet"><div class="pw-cardstack">
+          <div class="pw-crowlist">
+            <div class="pw-lrow dim"><div><span class="pw-lname">Materials delivered for both trades</span><span class="pw-lsub">Recorded against both jobs</span></div><div class="pw-r"><span class="pw-lst">Today</span></div></div>
+            <div class="pw-lrow dim"><div><span class="pw-lname">Crews and dates confirmed with Sara</span><span class="pw-lsub">Marcus Ellery, one call</span></div><div class="pw-r"><span class="pw-lst">12 Aug</span></div></div>
+            <div class="pw-lrow dim"><div><span class="pw-lname">Both permits issued</span><span class="pw-lsub">Applied 7 Aug</span></div><div class="pw-r"><span class="pw-lst">11 Aug</span></div></div>
+          </div>
+          <div class="pw-more"><span>14 entries since the hand-off</span><a href="#">All activity</a></div>
+        </div></div></div>
+      </div>
+
+      <div class="pw-group">
+        <div class="pw-grouphead"><h2>Customer and property</h2></div>
+        <div class="pw-one"><div class="pw-card quiet"><div class="pw-line"><span><b>Sara Thompson</b> &middot; (916) 555-0188 &middot; 1428 Maple Ave &middot; Two storey, built 1978 &middot; Gate code on file, dog in the yard</span><a href="#">All detail</a></div></div></div>
+      </div>
+
+    </div>
+  </div></div>
+
+  <div class="notes">
+    <div><p class="k">The argument</p><ul>
+      <li><strong>No buttons anywhere.</strong> Ten of ten done, nothing due, nothing waiting. A page
+        with no action on it is a real state and the scenario produces it twice.</li>
+      <li><strong>The schedule is the only group that gained weight</strong>, and it earns it by being
+        the one thing that answers the question Marcus came with.</li>
+      <li><strong>Provenance collapsed to one line</strong> and nothing moved up the page to fill the
+        space. That is the order rule doing its job.</li>
+    </ul></div>
+    <div><p class="k">Needs a home</p><ul>
+      <li><strong>The day-before checks have no beat and no rows.</strong> Weather, access, dumpster,
+        customer notified. The configuration has a stage for this and the script does not.</li>
+      <li><strong>The schedule bars are the first thing drawn on a time axis</strong>, and nothing in
+        the model says a job has a duration rather than a start and an end.</li>
+    </ul></div>
+    <div><p class="k">Question</p><ul>
+      <li><strong>Money is identical to screen A and I did not collapse it.</strong> It has not moved
+        in eight days, which argues for a line. But collapsing on recency is a different rule from
+        collapsing on stage, and mixing them is what made the last memo wander.</li>
+      <li>Is "Ready. Roofing starts Monday" a state, or a sentence pretending to be one?</li>
+    </ul></div>
+  </div>
+</section>
+
+<div class="foot">
+  <h3>Three things to settle, in the order they cost</h3>
+  <p><strong>Where a project-level task attaches.</strong> The post-sale inspection covers both trades
+    in one visit and is drawn on the project above the job cards. <strong>The project carries no task
+    list by design</strong>, so either that changes or the inspection becomes two tasks booked on one
+    visit.</p>
+  <p><strong>Whether Revenue and profit belongs on a project before any work has happened.</strong>
+    Both screens show a forecast margin of 31% derived from the script's own figure, and on screen A
+    that is the day the contract was signed.</p>
+  <p><strong>Whether money collapses when it has not moved.</strong> I left it full at both states and
+    said so rather than deciding quietly. <strong>Collapsing on recency and collapsing on stage are
+    two different rules</strong>, and the stage table cannot hold both.</p>
+</div>
+
+</div>
+</body>
+</html>

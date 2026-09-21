@@ -150,7 +150,19 @@ ruleset forbids it and the repository's own settings page does not show the rule
 **Other people's work is reference, never input.** Say whose it is, every time. There is something
 called a UX factory in the team repository, created by Joel. **Andrew declined to adopt it**, on
 14 September, and wants to build his own from his own exploration. That correction has been made three
-times; `standards/external-work.md` carries four Always rules about it.
+times; `standards/external-work.md` carries the Always rules about it.
+
+**And five of Joel's skills are invokable in any Claude Code session opened in the enclosing folder**,
+because the team repository sits beside this one: `ux-factory`, `script-to-model`, `scenario-builder`,
+`scenario-digest` and `board-snapshot`. **Andrew's standing instruction, 21 September: do not use
+them unless he says so explicitly.** A listed skill looks like an offer and is not one. Running one
+would read their board, write their files and commit, which would make our work an input to their
+system in a single call.
+
+**Andrew's own equivalent is called the UX Kit**, renamed from the factory on 21 September and
+provisional. Its reasoning is in `in-depth/the-ux-kit.md`, rewritten the same day, and it carries the
+route, the ownership model, the exercises for other teams and the language workstream. **Its render
+is deliberately stale and says so on its face.**
 
 **The pipeline documents both open with "do not act on this".** Dana's Roofing's stages, tasks and
 gates are a sketch. Every mock that draws a stage rail is using unagreed names and says so.

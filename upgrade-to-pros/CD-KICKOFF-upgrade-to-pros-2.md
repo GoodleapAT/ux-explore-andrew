@@ -261,7 +261,7 @@ Read in this order:
 3. **`upgrade-to-pros/components/ITERATION-2.md`, `ITERATION-3.md`, `ITERATION-4.md`** are the
    component records. Seven fields each. **None of them carries a layer field or a per-stage table
    yet**, which is work this round will inform.
-4. **`upgrade-to-pros/in-depth/three-layers.md`** and **`in-depth/the-factory.md`** are the reasoning
+4. **`upgrade-to-pros/in-depth/three-layers.md`** and **`in-depth/the-ux-kit.md`** are the reasoning
    behind the layer scheme and the plan. Read if a layer call is unclear.
 5. **`standards/INDEX.md`** is every rule on one screen, then `mockup-density.md` and
    `ui-composition.md` in full.

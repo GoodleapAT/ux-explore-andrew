@@ -187,3 +187,22 @@ customer's number. **Same shape as the communications gap, arriving from a third
 post-sale inspection 10 August, three days after the refinement it is supposed to produce, and carries
 the old install week. `memo-12-job-two-moments.html` carries the old install week. **Both are
 mechanical to fix and neither has been.**
+
+## Added 21 September 2026, from the UX Kit rewrite
+
+**O-48. The glossary has no status per term, so nothing separates a tested word from an invented
+one.** Settled in principle in the root decision log on 21 September and not built. One column:
+where the word came from, and whether it is provisional, tested or settled. **Until it exists, every
+noun in every memo reads as canon**, including the three renames pending since 14 September.
+
+**O-49. No term inventory and no comprehension test exist.** The language work has a research lead
+time that none of the five route steps have, and **a term that changes after the coverage matrix is
+built changes every row label in it.** The order that pays back is a term inventory from what
+contractors already say, then a say-it-back exercise counted **across trades**, then comprehension
+testing on screens rather than on word lists. Lives in `in-depth/the-ux-kit.md`, the language
+section.
+
+**O-50. Sol stops at molecule and the library's records have no atom level at all.** Related to O-12,
+which logs the atomic gap on the records. **The size of the Sol gap is not known and does not need a
+survey**: it falls out of filling in the composes field in step one, ordered by how many recipes are
+blocked on each missing part. Nothing is blocked on it until that pass runs.

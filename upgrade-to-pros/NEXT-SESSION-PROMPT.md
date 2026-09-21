@@ -1,105 +1,159 @@
 # Prompt for the next session
 
-> **This prompt has been used. 15 September 2026.** It is kept as the record of what the session was
-> asked to do. **Two things in it are now out of date:** demand has **five** status grains, not four,
-> and **the multi-trade inquiry is no longer taken twice on day one**, because siding and windows
-> became opportunities rather than customer contacts. The multi-trade conversation happens on the
-> intake call instead. **Do not use this prompt to start another session**; write a fresh one.
+> **Written 21 September 2026, for Claude Code.** The previous version of this file, written
+> 15 September for a chat session, has been replaced. It described a state four passes of the model
+> ago and had already been marked used.
 
-**Paste this into a new chat. 15 September 2026.**
+**Paste the short version below into Claude Code. Everything after it is here so you do not have to.**
 
 ---
 
+## The short version, to paste
+
+```
 Continuing the Upgrade to Pros UX work. I am Andrew Thompson, UX and Product Design at GoodLeap.
 
-## Start by reading
+Read CLAUDE.md, then ux-hosted/START-HERE.md, then ux-hosted/CHANGELOG.md, and tell me the date of
+the newest changelog entry before anything else. My working memory is the ux-hosted folder. The
+UX-Explore folder beside it is a different repo and it is stale, so stay out of it.
 
-1. The read-me-first file at the top of the enclosing folder, then `ux-explore-andrew/START-HERE.md`,
-   then `CHANGELOG.md`. **Tell me the date of the newest changelog entry.**
-2. `upgrade-to-pros/OPEN-ITEMS.md`. **New, 15 September.** One index of everything unresolved. Read it
-   before you ask me anything, because most of what you would ask is already in it.
-3. `upgrade-to-pros/TEAM-POSITIONS.md`. **The team's positions are cited by row, never restated.**
-   They moved five times in one day and that file exists so a change costs one row rather than seven
-   documents.
-4. `upgrade-to-pros/OVERVIEW.md`, then `DECISIONS.md` including both reset sections and the note on
-   why the no-indenting rule fell.
-5. `standards/INDEX.md`, then `mockup-density.md` and `ui-composition.md` in full before building
-   anything.
-6. Both worked examples: `WORKED-EXAMPLE.md` for S15, the Thompsons, and `WORKED-EXAMPLE-S14.md` for
-   S14, the Brenners.
+Then read, in this order, all inside ux-hosted:
+  upgrade-to-pros/NEXT-SESSION-PROMPT.md   (this is the handover; it names what is live)
+  upgrade-to-pros/OPEN-ITEMS.md            (everything unresolved, O-15 to O-23 are new)
+  standards/INDEX.md                        then ui-copy.md, mockup-density.md, ui-composition.md
+  upgrade-to-pros/S15-DATA.md               sections 1, 1A and 8
+  upgrade-to-pros/components/ITERATION-6.md
 
-**One warning that will cost you time if you skip it.** There is a stale copy of this working memory
-in the enclosing folder, older, with no changelog and no glossary. If the folder you open has no
-`CHANGELOG.md` at its root, you are in the wrong one.
+Do not read every memo. The handover says which two are current and which are stale.
 
-## What I am uploading
+I am moving from Cowork to Claude Code for two reasons. I want to work in the repository directly,
+including occasional pull and push against the team's repo, not just my own. And Claude Code supports
+commenting inside artifacts, which I have not been able to get working in Cowork.
 
-- **The latest S14 canvas from Claude Design, with my new comments on it.** Note that **CD numbers its
-  frames and the memos letter their sections**, deliberately, so the two never share a symbol. My
-  comments cite frame numbers. The mapping is in the frame labels and in
-  `upgrade-to-pros/CD-PROMPT-s14-round-two.md`.
-- **The latest S15 mocks.** These were built against the team's DRAFT v3 model, with my own changes
-  layered on top. **They predate DRAFT v4 and they predate everything settled on 14 September.**
+You can write. Follow the write-back protocol without asking. Read the repositories and write paths
+section of the handover before you touch git.
+```
 
-## What I want to do
+---
 
-**Another iteration of S15, against DRAFT v4 rather than v3.**
+## Repositories and write paths, read before touching git
 
-**And the actual point is not the screens.** It is whether the components, including the page
-templates, can carry both scenarios and the ones after them while still looking like one product.
-S14 is a single-trade HVAC replacement with the money switched off. S15 is three trades on one
-house, two sold and one deferred, with the money on. **If the same library cannot do both without
-proliferating near-identical siblings, that is the finding.**
+Three folders at this level matter and two of them are traps.
 
-## Read these before you propose anything
+| Folder | Repository | Org | What you may do |
+|---|---|---|---|
+| **`ux-hosted/`** | `ux-explore-andrew` | GoodleapAT | **Andrew's own. Commit and push freely.** The folder and the repository have different names, which is why older documents call the folder `ux-explore-andrew` |
+| **`u2p-project-planning/`** | `u2p-project-planning` | loanpal-engineering | **Read and edit locally. Never push to main.** Contributions go as a branch and a pull request for Joel. Andrew does want to pull from it and occasionally contribute, so it is in scope, but only that way |
+| **`UX-Explore/`** | `UX-Explore` | loanpal-engineering | **Stale. An older copy of `standards/` with no changelog.** Do not read from it and do not write to it. **If the folder you have open has no `CHANGELOG.md` at its root, you are in the wrong one** |
 
-**This is the first real test of global principle G-1**, in the root decision log: a library complete
-enough that logic reacting to the entity model and the scenario can compose a scenario's screens
-rather than each being drawn by hand. **It is a belief and nothing may be justified by it until a
-scenario has actually been composed.** Two scenarios from one library is the nearest thing to
-evidence we will get.
+**Do not commit to any repository in the `loanpal-engineering` organisation.** An organisation-level
+ruleset forbids direct commits to main and requires a pull request with a code owner review. The
+repository's own settings page does not show the rule.
 
-**Twenty three component records exist**, in `upgrade-to-pros/components/ITERATION-2.md` and
-`ITERATION-3.md`, each with seven fields. **The seventh is what variation the component absorbs and
-what would mean a new component instead**, and it has already stopped two components from being born
-that should not have been. Use it: before you draw a variant, check whether an existing record
-already absorbs it.
+**The state as of 21 September 2026: `ux-hosted` has about thirty uncommitted files on `main` and
+nothing from the last week has been pushed.** Everything in the live list below exists only on
+Andrew's machine. **Offer to commit before doing anything else**, in coherent commits rather than one
+lump, because the changelog rows already describe what changed and the commit messages should match
+them.
 
-**Four things S14 could not test**, listed as O-13 to O-16 in the open items. All four are things S15
-exercises: four status grains colliding, the container nesting with two jobs under it, the Start
-selling act being separate from qualification, and a genuinely multi-trade inquiry. **S15 is where
-these get answered, which is most of why it is next.**
+---
 
-## How to work with me
+## Where the work actually is
 
-- **Ask before building or rebuilding any artefact. Every time, no exceptions.**
-- No em dashes anywhere.
-- Short replies. Answer the question, then stop. Lead with the decision I have to make and the
-  trade-off, not the background.
-- Plain language in conversation. No file paths, code or identifiers in a reply unless I ask. Put
-  that detail in the documents you write instead.
-- Verify carefully, then tell me what you found rather than showing me the evidence.
-- Connectors in any diagram are orthogonal. Right angles, never curves.
-- **When UI work comes up, the design memo format is the default.** Offer it, then wait, and settle
-  scope with questions first: which screens, what fidelity, what is real rather than placeholder.
-- **Prompt me the moment something needs writing**, not at the end. Say what needs writing, which
-  file, and whether you can write it yourself.
-- Writing a changelog row is not the same as telling me. Say it in the reply too.
-- **Tell me when I am wrong.** Yesterday you caught a silent reversal of one of my own instructions
-  and two errors in a brief, and that was worth more than the drawing.
+**Live and current:**
 
-## Two things I learned yesterday that you should not relearn
+| File | What it is |
+|---|---|
+| `memo-13-refine-the-scope.html` | Five screens. The job at the hand-off, the refine overlay at three states, the job with everything booked. **The current job-page design** |
+| `CD-CANVAS-job-and-refine-surface.html` | The same five screens with no annotation, for the Claude Design canvas |
+| `memo-14-s5-customer-view.html` | One screen. The S5 customer record at the payments-only tier, built on Andrew's own Pros Web shell |
+| `CD-PROMPT-s15-revised.md` | The S15 handover for CD, carrying the revised calendar and the refinement flow |
+| `CD-PROMPT-s5-customer-view.md` | The S5 handover, which leads with an instruction to rebuild from existing CD components |
+| `S15-ROOFING-SCOPE-AND-ITEMIZATION.md` | Scope of work text and the itemization, as sold and as refined, both at $38,900. **Every figure is ours** |
+| `S15-DATA.md` | The only source of mock data. **Section 1A carries the 17 September calendar** |
+| `components/ITERATION-6.md` | MoneyCard amended, plus RefineOverlay, WaitingOnLine and DiscoverRow |
 
-**A memo tight enough to be only rendered produces nothing.** The most useful findings from the last
-two rounds came from the design surface disagreeing: a page a brief told it to delete was the only one
-answering the memo's own open question, and a strip ran backwards in time. **Specify what and why, not
-what it looks like.**
+**Stale, and do not copy dates or beats out of them:**
 
-**An external position is recorded once and pointed at, never restated.** If you find yourself editing
-a document because somebody else changed their mind, that document had restated something it should
-have cited.
+- `memo-11-project-two-moments.html`. Dates the post-sale inspection 10 August, three days after the
+  refinement it is supposed to produce, and carries the old install week.
+- `memo-12-job-two-moments.html`. Carries the old install week.
+- `CD-PROMPT-job-roofing-two-states.html` and its prompt. Superseded by memo 13's pair.
+- Joel's `ux/s15-multi-trade-project/flow.md` in the team repository. **Describes the S15 that the
+  rewrite replaced**: three trades with windows, the roof declined rather than sold, $52,800 by cheque
+  outside our rails, no permits.
 
-## The structure has a name
+---
 
-**The Product Thinking System.** Working memory, standards, registers, decision logs and the protocol
-that ties them together.
+## What was settled in the last two sessions
+
+**The refinement rule, which is the strongest thing here.** The signed itemization is frozen at
+signature and the job gets a working copy. **The total is owned by the contract, not by the table**: a
+coordinator may split lines, re-categorise them and move money between them, and may not change the
+sum. Only a change order amending the proposal and the contract moves it. **Per-line variance is
+normal and is not an error.**
+
+**The materials list and the work order are views of the refined itemization**, not documents anybody
+authors. Materials list is the Materials category with quantities; work order is the Services category
+plus the scope text and access notes, **with prices stripped**. That is why beat 11 does three things
+in one sitting. The category tag on each refined row is the sort key that makes it work.
+
+**The work order is a view for an internal crew and a record for an external one**, because a
+subcontract carries its own labour price and its own visibility boundary. One name over two things.
+
+**S15 gained three lettered beats and one moved.** 10a, the post-sale inspection, Friday 7 August
+8:05 to 9:40am. 17a and 18a, day-before checks, **one per job rather than one per project**. Beat 18
+moved so Final checks takes the Monday: roofing Tuesday 18 to Wednesday 19, siding Thursday 20 to
+Friday 21. **Nothing downstream moved**, so both jobs complete Friday 21, invoice Monday 24, paid
+Wednesday 26, and the three day amber window survives.
+
+**S5 is named.** Homeowner Dana Whitfield, 1806 Cedar Row. Contractor Caldwell Brothers Fence and
+Deck, two brothers, four in season. **Wes Caldwell** is the one in the app. This Dana has nothing to
+do with Dana's Roofing in the pipeline document.
+
+**A takeover is now a declared exception** to the rule that detail goes sideways into a sheet, for one
+named task that begins, ends and commits. Second exception after capture-during-a-call.
+
+**Two copy rules were being broken by every mock**, and are now in `standards/ui-copy.md`. Dollar
+values always show cents. Dates are US format and never day first.
+
+---
+
+## What to do next, in the order I would do it
+
+1. **Fix the two stale memos.** Memo 11's inspection date and both memos' install week. Mechanical,
+   and they are the files most likely to be read by somebody else.
+2. **Pull the S15 script down from Confluence and save it verbatim with a date stamp.** O-15. The data
+   pack cites it as authority and cannot reach it. Its six weeks sentence also needs changing to
+   twenty days.
+3. **Decide O-17**, whether the roofing price being roughly double market matters for a demo about
+   workflow.
+4. **The S5 screens Andrew has not yet asked for.** He named script rows 5 and 6, about three screens
+   of taking a payment on a phone, much of which exists in the product today. Row 14 to 17's customer
+   record is done.
+5. **S6**, the loan-only wedge, which he named alongside S5 and has not started.
+
+---
+
+## Things to know before you build anything
+
+**Ask before building or rebuilding a memo or an artifact. Every time.** This is an Always rule and it
+has been broken before.
+
+**No em dashes anywhere.** Short replies. Lead with the decision and the trade-off. No file paths,
+code or identifiers in a reply unless asked, and write that detail into the documents instead.
+
+**Never commit to any repository in the `loanpal-engineering` organisation.** An organisation-level
+ruleset forbids it and the repository's own settings page does not show the rule. Contributions to
+`u2p-project-planning` go as a branch and a pull request for Joel.
+
+**Other people's work is reference, never input.** Say whose it is, every time. There is something
+called a UX factory in the team repository, created by Joel. **Andrew declined to adopt it**, on
+14 September, and wants to build his own from his own exploration. That correction has been made three
+times; `standards/external-work.md` carries four Always rules about it.
+
+**The pipeline documents both open with "do not act on this".** Dana's Roofing's stages, tasks and
+gates are a sketch. Every mock that draws a stage rail is using unagreed names and says so.
+
+**Per-job cost and per-job margin are absent by rule.** Not greyed, not labelled unavailable, not
+explained on screen. Revenue occurs at the project and cost at the job, and no allocation rule exists.

@@ -43,6 +43,29 @@ and that Sol should be read directly rather than through the mirror. Their own k
 one file. **Our extracted stylesheet is that mirror.** It is correct as far as it goes and it is
 missing three scales. Worth re-extracting from Sol before the next round of mockups.
 
+**Settled 16 Sep 2026, from the design system project's own orientation, and this closes it.**
+There is no geometry token layer **because Merlin's compiled output has none, deliberately.** The
+design system project states it in terms: 113 Sol semantic tokens, light and dark, 226 declarations,
+machine-extracted and never hand-edited, and **no radius, base-scale or font tokens, on purpose.**
+
+**An earlier version did have them and they were fake.** Its known-issues record found roughly 124
+invented base-scale tokens and 64 singular-form tokens resolving to nothing, and classes both as
+hand-maintenance presented as extraction. They were removed rather than patched.
+
+**So the geometry lives in the components.** Two places carry real values: the nineteen hand-authored
+ports, inline styles only, values lifted from the byte-for-byte mirror; and the Kitchen Sink port,
+which has production CSS inline and is the renderable artefact. **A design surface reads those and
+says which file each value came from. It does not invent a scale, and it does not wait on a
+re-extraction, which would return the same 113 tokens.**
+
+**Three readings of one fact in one hour, recorded because the sequence is the lesson.** First, our
+file has no geometry, which was true. Second, therefore the design system has none, which was an
+unverified widening and reached a CD brief as an instruction to invent. Third, therefore we extracted
+the wrong source, drawn from the note above and also wrong. **The correct answer was in Andrew's own
+design system project and nobody had asked it.** The 11 Sep paragraph above, reporting that Sol's own
+stylesheet covers radii, elevation, spacing and type roles, is Joel's team's documentation and is now
+**the only unverified claim left on this subject. Treat it as theirs and unconfirmed.**
+
 ---
 
 ## Product repositories
@@ -84,6 +107,7 @@ editable locally but **not pushable from a session**.
 | **Git, reading state from the sandbox** | **Always `git --no-optional-locks status`, never plain `git status`.** The plain form refreshes the index, which writes `.git/index.lock`, and **the sandbox can create that file but cannot unlink it**, so a harmless status check leaves a lock that blocks the next commit. Same answer, no residue. `GIT_OPTIONAL_LOCKS=0` covers a session. **This is the fix; the row below is only the clean-up** |
 | **Git locks, cleaning up after one** | A zero-byte `index.lock` a few minutes old, with a readable index and a clean object database, is an interrupted or sandboxed git command rather than damage. **Check nothing is holding it before removing it**, and remember the sandbox cannot see processes on the Mac. **Removing it needs delete permission on the folder**, which is a separate prompt |
 | **Canvases carried from the design surface** | They link the bound design system project by a path that does not exist in this repository. **Repoint that one line to `reference/merlin-sol-tokens.css`** at the moment of carrying, and verify the tokens the canvas uses are all defined in the mirror |
+| **Cowork artefacts, commenting** | **Not settled, and the first test was run with a confound.** Selecting text in an HTML artefact produced no commenting control on 16 Sep 2026, on a deliberately plain one. **But the Artifacts capability was switched off in Settings, Capabilities, Visuals**, and its own description covers publishing to a shareable hosted page and sharing artefacts with the organisation. **Commenting is a collaboration feature and collaboration needs a shareable artefact.** Corroborating detail: artefacts created with the setting off are served from a URL whose scheme says `local`, so they are never leaving the machine. **Retest with the capability on before concluding anything.** If the toggle will not move it is locked by a GoodLeap administrator, which is a different answer and a different route |
 
 ---
 

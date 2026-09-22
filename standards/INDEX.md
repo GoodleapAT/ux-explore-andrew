@@ -162,6 +162,8 @@ queue being visual is normal and means the structure is close enough to argue ab
 | **Default** | Say which boxes are entity claims and which are not |
 | **Default** | Leave out what attaches to several objects at once, and say so in the caption |
 | **Default** | Do not draw the pipeline as belonging to one level |
+| **Always** | **Say what a drawing was made to do before reusing it.** Diagnosis and explanation are different jobs and look identical. **Count the ink when a drawing changes audience**: a third of it spent outside the subject is the tell |
+| **Default** | A mark earns its place only if it would still be drawn had the problem never happened. **A boundary stated positively in text beats a drawing arguing it in the negative** |
 
 ## Other people's work
 

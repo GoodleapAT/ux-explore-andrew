@@ -31,31 +31,35 @@
 
 ## In one page
 
-**Written 21 September 2026 to be handed to somebody who has not seen any of this.** It is a
-restatement, so it is a copy: **if it disagrees with the sections below, they win**, and a change to
-the route is a change to this section in the same sitting.
+**Context, written 21 September 2026.** It is a restatement, so it is a copy: **if it disagrees with
+the sections below, they win**, and a change to the route is a change to this section in the same
+sitting.
 
-The UX Kit is a component library plus the rules for putting it together, so that the screens for a
-scenario can be composed from known parts instead of each one being drawn by hand. The parts are the
-Sol design system. The rules are what turns a pile of components into something a person on another
-team can build with.
+**The UX Kit is a component library augmented by layers of logic. The question stops being what
+should a surface look like and becomes which parts does this surface need right now.** The components
+come from the Sol design system. **The logic is what turns a pile of components into something a
+person on another team can build with.**
 
-**It is grounded in atomic design, on two axes rather than one.**
+**Grounded in atomic design, on two axes rather than one.**
 
 **Size**, which is atomic design as normally understood: atoms, then molecules, then organisms, then
 templates and pages. Every component record names its level.
 
-**Ownership**, which is the axis atomic design on its own does not give you, from Brad Frost's own
-later revision of it. **Core** components are content-agnostic and know nothing about the business,
-contributed to by designers and engineers as a group. **Recipes** are named compositions where object
-names are allowed, and this is where a domain team owns its domain. **Snowflakes** are labelled
-one-offs. A snowflake becomes a recipe when a second scenario needs it, and a recipe becomes core
-when three do. The evidence decides, not a person.
+**Ownership.**
+
+- **Core** components are content-agnostic and know nothing about the business, contributed to by
+  designers and engineers as a group.
+- **Recipes** are named compositions where object names are allowed, and this is where a domain team
+  owns its domain.
+- **Snowflakes** are labelled one-offs.
+
+A snowflake becomes a recipe when a second scenario needs it, and a recipe becomes core when three
+do. **The evidence decides, not a person.**
 
 Both axes are recorded, because how big a thing is and who owns it are different questions. **A
 molecule can be a recipe, and an organism can be core.**
 
-**Five steps, in order:**
+**Five steps:**
 
 1. **Connect the two axes.** Record what each recipe is built from. This also produces the list of
    what Sol is missing, ordered by how much is blocked on each piece.
@@ -101,7 +105,7 @@ browsable interface comes last rather than first.
 | Element | State | Where |
 |---|---|---|
 | **Design system** | Nineteen components ported from Merlin as browser-safe source, with known issues and a drift report. 113 tokens extracted, **colour and elevation only**, because Merlin's compiled output carries no geometry layer deliberately. **The ported set stops at molecule** | Claude Design, the Pros Web Design System project |
-| **Component library** | Twenty-two components and page templates, seven fields each, prose only. **Four records carry the ownership axis; everything written before 16 September carries neither layer nor composes** | The repository |
+| **Component library** | Twenty-two components and page templates, seven fields each, prose only. **Five records carry the ownership axis and all five are recipes, so nothing sits in core; everything written before 16 September carries neither layer nor composes** | The repository |
 | **Principles** | G-1 on the library, P-1 on where money is stored, P-2 on the project as one workspace that transforms | Both decision logs |
 | **Standards** | Twelve files with rigidity markers, one index on a screen, a seven-level authority stack | The repository |
 | **Model** | The object model with the Opportunity, a register for what the model lacks, a vocabulary file, one worked example. **The nouns in it are provisional**, see the language section below | The repository |
@@ -112,8 +116,8 @@ browsable interface comes last rather than first.
 the browsable interface.
 
 **The status line on the old version of this file said nothing started, and that was wrong by the
-time it was written.** Iterations 5 and 6 record layer and composes on four components. The
-twenty-two written before them record neither. **A library in two formats is worse than a library in
+time it was written.** Iterations 5 and 6 record layer and composes on five components, **all five of them recipes, so no record
+sits in core at all.** The twenty-two written before them record neither field. **A library in two formats is worse than a library in
 either**, and that is now the first thing in the way rather than a completion.
 
 ---
@@ -123,7 +127,7 @@ either**, and that is now the first thing in the way rather than a completion.
 ### 1. Two layers exist and nothing connects them, and the fix is half applied
 
 Nineteen ported components are **core**. Twenty-two written components are mostly **recipes**. Those
-are not the same kind of thing and, for eighteen of them, nothing says which core components a recipe
+are not the same kind of thing and, for seventeen of them, nothing says which core components a recipe
 composes, so **a recipe is prose and nobody can build from it.**
 
 This is the cheapest fix and the highest leverage one, and it is the thing that makes "compose a
@@ -137,6 +141,10 @@ composed from a core that has no organisms in it, and the composes field on most
 has nothing above molecule level to point at. That is not a reason to skip the field. **It is the
 reason to fill it**, because every name with nothing behind it is a Sol gap with a cause attached.
 See the Sol section below.
+
+**The five filled-in records already demonstrate it.** Between them they name **Card, Button, Badge**
+and **Separator** as the core parts they are built from, plus a row and a link in prose. **None of
+those four has a record**, so the gap list has already started writing itself from a sample of five.
 
 ### 2. The library is all guidance and no examples, which is the wrong way round
 
@@ -441,6 +449,14 @@ spent the most thinking on, we are ahead rather than behind.
 
 ## Learned from
 
+- **21 Sep 2026.** **The overview's opening was rewritten four times and the last version is Andrew's own.**
+  The first said *a component library plus the rules for putting it together*, which **defines the thing by its
+  ingredients and tells a reader what is in the box rather than what changes if they use it.** The fault was his
+  catch. **Two words changed on his instruction and both are load bearing**: *logic* rather than *rules*, which is
+  the word G-1 itself uses, and ***layers* of logic in the plural, which is accurate rather than loose, because
+  there are two: tier flex and stage flex.** *Surface* is his choice over *page* and over not naming it, made
+  knowing it is designer vocabulary. **The Brad Frost attribution came out of the overview** and stays in
+  `in-depth/three-layers.md`, which is the rule about external reading living in one place working as written.
 - **21 Sep 2026.** **An overview was added at the top because Andrew needed something to hand somebody, and
   nothing short existed.** Eight memos, a route and five obstacles, and **the shortest thing in the project was
   still a twenty minute read.** It is marked as a restatement and subordinate to the sections below, because a

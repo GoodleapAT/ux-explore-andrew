@@ -1,0 +1,600 @@
+<title>UX Kit Overview</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
+<style>
+  /* Palette lifted from the design method render, 16 Sep 2026. Its values exactly.
+     Light only, as that page is: no dark override, and every colour painted explicitly. */
+  :root{
+    color-scheme:light;
+    --bg:#FBFBFC; --surface:#FFFFFF; --surface-2:#F5F5F9;
+    --ink:#14141A; --muted:#4B4B58; --faint:#86868F;
+    --rule:#D3D3DA; --rule-soft:#E6E6EA;
+    --accent:#382CA5; --accent-soft:#E2E1FE; --accent-bd:#6D62D5;
+    --flag:#8F5F00; --flag-soft:#FFFAF0; --flag-bd:#F5B638;
+    --display:"Archivo","Helvetica Neue",Arial,sans-serif;
+    --body:"Source Serif 4",Georgia,"Times New Roman",serif;
+  }
+  *{box-sizing:border-box}
+  body{background:var(--bg); color:var(--ink); font-family:var(--body); font-size:17px; line-height:1.62}
+  .page{max-width:900px; margin:0 auto; padding-inline:20px; padding-block:0 72px}
+
+  .eyebrow{
+    font-family:var(--display); font-size:13px; font-weight:500; letter-spacing:.01em;
+    color:var(--muted); display:flex; flex-wrap:wrap; gap:8px 16px; margin:0 0 18px
+  }
+  h1{
+    font-family:var(--display); font-weight:700; font-size:clamp(2.1rem,6vw,3.1rem);
+    line-height:1.04; letter-spacing:-.02em; margin:0 0 14px; text-wrap:balance
+  }
+  h2{
+    font-family:var(--display); font-weight:600; font-size:clamp(1.3rem,3vw,1.62rem);
+    line-height:1.18; letter-spacing:-.012em; margin:0 0 16px; text-wrap:balance
+  }
+  h3{
+    font-family:var(--display); font-weight:600; font-size:1.06rem; line-height:1.3;
+    margin:30px 0 10px
+  }
+  p{margin:0 0 16px; max-width:66ch}
+  strong{font-weight:600}
+  .overview{
+    background:var(--surface); border:1px solid var(--rule); border-top:3px solid var(--accent);
+    border-radius:3px; padding:30px 26px 26px
+  }
+  .note{
+    font-family:var(--display); font-size:13px; line-height:1.6; color:var(--muted);
+    border-bottom:1px solid var(--rule-soft); padding-bottom:14px; margin:0 0 22px; max-width:none
+  }
+  .axis-lede{font-family:var(--display); font-weight:600; font-size:1.06rem; margin-bottom:14px}
+  ul.layers{margin:0 0 16px; padding-left:20px}
+  ul.layers>li{margin-bottom:9px; max-width:64ch}
+  .kicker{font-family:var(--display); font-weight:600; font-size:1.02rem}
+  ol.steps{list-style:none; padding-left:0; counter-reset:st; margin:0 0 16px}
+  ol.steps>li{counter-increment:st; position:relative; padding-left:48px; margin-bottom:18px}
+  ol.steps>li::before{
+    content:counter(st); position:absolute; left:0; top:-1px;
+    font-family:var(--display); font-weight:700; font-size:1.4rem; color:var(--accent);
+    line-height:1.2; width:34px; text-align:right
+  }
+  .caveat{
+    background:var(--flag-soft); border:1px solid var(--flag-bd); border-radius:3px;
+    padding:16px 18px; margin:22px 0 0
+  }
+  .caveat p:last-child{margin-bottom:0}
+  .caveat .t{
+    font-family:var(--display); font-size:13px; font-weight:600;
+    color:var(--flag); display:block; margin-bottom:8px
+  }
+  .sec{
+    margin-top:38px; border-top:1px solid var(--rule); padding-top:30px
+  }
+
+  figure{margin:26px 0; max-width:none}
+  figure svg{display:block; width:100%; max-width:100%; height:auto; color:var(--ink)}
+  figcaption{font-size:.93rem; line-height:1.55; color:var(--muted); margin-top:10px; max-width:62ch}
+  figcaption b{color:var(--ink); font-weight:600}
+  .fig-wrap{background:var(--surface); border:1px solid var(--rule); border-radius:3px; padding:18px 16px}
+
+  /* svg paint, from the same tokens as the page */
+  .s-rule{stroke:var(--rule); fill:none}
+  .s-soft{stroke:var(--rule-soft); fill:none}
+  .s-ink{stroke:var(--ink); fill:none}
+  .s-acc{stroke:var(--accent-bd); fill:none}
+  .f-ink{fill:var(--ink)}
+  .f-muted{fill:var(--muted)}
+  .f-faint{fill:var(--faint)}
+  .f-acc{fill:var(--accent)}
+  .f-surface{fill:var(--surface)}
+  .f-panel{fill:var(--surface-2)}
+  .f-accsoft{fill:var(--accent-soft)}
+  .t-row{font-family:var(--display); font-size:13px; font-weight:500}
+  .t-band{font-family:var(--display); font-size:14px; font-weight:600}
+  .t-col{font-family:var(--display); font-size:12px; font-weight:500}
+  .t-axis{font-family:var(--display); font-size:12px; font-weight:600}
+  .t-note{font-family:var(--display); font-size:12.5px; font-weight:500}
+  .t-small{font-family:var(--display); font-size:11.5px}
+  .t-blk{font-family:var(--display); font-size:11px}
+  .t-lede{font-family:var(--display); font-size:12.5px; font-weight:500; fill:var(--muted)}
+  /* matrix cells as distinct shapes, after the render: filled typical, pale possible, plain rare */
+  .cell-f{fill:var(--accent-soft); stroke:var(--accent-bd); stroke-width:1}
+  .cell-p{fill:var(--surface-2); stroke:var(--rule-soft); stroke-width:1}
+  .cell-e{fill:var(--surface); stroke:var(--rule); stroke-width:1}
+  .variant{
+    font-family:var(--display); font-size:13.5px; font-weight:600;
+    color:var(--accent); margin:0 0 8px
+  }
+  .variant span{color:var(--muted); font-weight:500}
+  .alts{
+    font-family:var(--display); font-size:13px; line-height:1.6; color:var(--muted);
+    border-left:2px solid var(--accent-bd); padding-left:14px; margin:26px 0 6px
+  }
+</style>
+
+<div class="page">
+
+  <p class="eyebrow"><span>Upgrade to Pros</span><span>Preview</span><span>21 September 2026</span></p>
+  <h1>UX Kit Overview</h1>
+
+  <div class="overview">
+    <p class="note">Context: It is a restatement, so it is a copy: if it disagrees with the sections below, they
+    win, and a change to the route is a change to this section in the same sitting.</p>
+
+    <h2>The Kit, and the five steps</h2>
+
+    <p>The UX Kit is a component library augmented by layers of logic. <strong>The question stops being what should
+    a surface look like and becomes which parts does this surface need right now.</strong> The components come from
+    the Sol design system. <strong>The logic is what turns a pile of components into something a person on another
+    team can build with.</strong></p>
+
+    <p class="alts">Three variants of the same illustration, answering the comment that grouping and order will not
+    always be the same. <b>A</b> shows variation caused by lifecycle stage, <b>B</b> by the customer's product tier,
+    and <b>C</b> states what holds and what varies instead of showing an example. One to be chosen, not all three.</p>
+
+    <figure>
+      <p class="variant">Variant A <span>variation by lifecycle stage</span></p>
+      <div class="fig-wrap">
+        <svg viewBox="0 0 760 430" role="img" aria-label="The same surface at two points in a project's life: the groups keep their order, one collapses in place, and a different group is prominent">
+          <defs>
+            <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor"></path>
+            </marker>
+          </defs>
+
+          <text x="24" y="26" class="t-col f-muted">One customer, while it is being sold</text>
+          <rect x="24" y="38" width="310" height="330" rx="3" class="f-panel s-rule"></rect>
+          <rect x="24" y="38" width="310" height="26" rx="3" class="f-surface s-rule"></rect>
+          <text x="36" y="55" class="t-blk f-faint">The same surface</text>
+
+          <text x="36" y="86" class="t-small f-muted">Overview</text>
+          <rect x="36" y="94" width="138" height="42" rx="2" class="f-surface s-rule"></rect>
+          <rect x="184" y="94" width="138" height="42" rx="2" class="f-surface s-rule"></rect>
+          <text x="45" y="110" class="t-blk f-faint">Organism</text>
+          <text x="193" y="110" class="t-blk f-faint">Organism</text>
+
+          <text x="36" y="164" class="t-small f-muted">Active projects</text>
+          <rect x="36" y="172" width="286" height="20" rx="2" class="f-surface s-soft"></rect>
+          <text x="45" y="186" class="t-blk f-faint">Molecule, collapsed</text>
+
+          <text x="36" y="220" class="t-small f-acc">Selling</text>
+          <rect x="36" y="228" width="138" height="52" rx="2" class="f-accsoft s-acc"></rect>
+          <rect x="184" y="228" width="138" height="52" rx="2" class="f-accsoft s-acc"></rect>
+          <text x="45" y="244" class="t-blk f-acc">Organism</text>
+          <text x="193" y="244" class="t-blk f-acc">Organism</text>
+
+          <text x="36" y="308" class="t-small f-muted">Money</text>
+          <rect x="36" y="316" width="138" height="40" rx="2" class="f-surface s-rule"></rect>
+          <rect x="184" y="316" width="138" height="40" rx="2" class="f-surface s-rule"></rect>
+
+          <line x1="346" y1="203" x2="414" y2="203" class="s-ink" marker-end="url(#ah)"></line>
+          <text x="380" y="188" text-anchor="middle" class="t-blk f-faint">Later</text>
+
+          <text x="426" y="26" class="t-col f-muted">The same customer, while it is installed</text>
+          <rect x="426" y="38" width="310" height="330" rx="3" class="f-panel s-rule"></rect>
+          <rect x="426" y="38" width="310" height="26" rx="3" class="f-surface s-rule"></rect>
+          <text x="438" y="55" class="t-blk f-faint">The same surface</text>
+
+          <text x="438" y="86" class="t-small f-muted">Overview</text>
+          <rect x="438" y="94" width="138" height="42" rx="2" class="f-surface s-rule"></rect>
+          <rect x="586" y="94" width="138" height="42" rx="2" class="f-surface s-rule"></rect>
+
+          <text x="438" y="164" class="t-small f-acc">Active projects</text>
+          <rect x="438" y="172" width="138" height="52" rx="2" class="f-accsoft s-acc"></rect>
+          <rect x="586" y="172" width="138" height="52" rx="2" class="f-accsoft s-acc"></rect>
+          <text x="447" y="188" class="t-blk f-acc">Organism</text>
+          <text x="595" y="188" class="t-blk f-acc">Organism</text>
+
+          <text x="438" y="252" class="t-small f-muted">Selling</text>
+          <rect x="438" y="260" width="286" height="20" rx="2" class="f-surface s-soft"></rect>
+          <text x="447" y="274" class="t-blk f-faint">Molecule, collapsed</text>
+
+          <text x="438" y="308" class="t-small f-muted">Money</text>
+          <rect x="438" y="316" width="138" height="40" rx="2" class="f-surface s-rule"></rect>
+          <rect x="586" y="316" width="138" height="40" rx="2" class="f-surface s-rule"></rect>
+
+          <text x="24" y="410" class="t-note f-ink">Order held. Prominence and collapse changed</text>
+          <text x="736" y="410" text-anchor="end" class="t-note f-ink">What is not needed collapses where it sits</text>
+        </svg>
+      </div>
+      <figcaption><b>Variation caused by lifecycle stage, with one customer.</b> The order held and nothing
+      moved up the page; what changed is which group is prominent and which collapsed in place. <b>Blocks are
+      labelled by level, never by name.</b></figcaption>
+    </figure>
+    <figure>
+      <p class="variant">Variant B <span>variation by the customer&#39;s product tier</span></p>
+      <div class="fig-wrap">
+        <svg viewBox="0 0 760 460" role="img" aria-label="Two customers on different product tiers: the order of groups survives, two groups are absent rather than empty at the thinner tier, and its money group holds one card at full width">
+          <defs>
+            <marker id="ahb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor"></path>
+            </marker>
+          </defs>
+
+          <text x="24" y="26" class="t-col f-muted">A payments-only customer</text>
+          <rect x="24" y="38" width="310" height="360" rx="3" class="f-panel s-rule"></rect>
+          <rect x="24" y="38" width="310" height="26" rx="3" class="f-surface s-rule"></rect>
+          <text x="36" y="55" class="t-blk f-faint">The same surface</text>
+          <text x="36" y="86" class="t-small f-muted">Overview</text>
+          <rect x="36" y="94" width="138" height="44" rx="2" class="f-surface s-rule"></rect>
+          <rect x="184" y="94" width="138" height="44" rx="2" class="f-surface s-rule"></rect>
+          <text x="36" y="166" class="t-small f-faint">Active projects</text>
+          <rect x="36" y="174" width="286" height="20" rx="2" class="f-panel s-soft" stroke-dasharray="3 3"></rect>
+          <text x="45" y="188" class="t-blk f-faint">Absent at this tier</text>
+          <text x="36" y="222" class="t-small f-faint">Selling</text>
+          <rect x="36" y="230" width="286" height="20" rx="2" class="f-panel s-soft" stroke-dasharray="3 3"></rect>
+          <text x="45" y="244" class="t-blk f-faint">Absent at this tier</text>
+          <text x="36" y="278" class="t-small f-acc">Money</text>
+          <rect x="36" y="286" width="286" height="44" rx="2" class="f-accsoft s-acc"></rect>
+          <text x="45" y="304" class="t-blk f-acc">One card, full width</text>
+
+          <line x1="346" y1="218" x2="414" y2="218" class="s-ink" marker-end="url(#ahb)"></line>
+          <text x="380" y="203" text-anchor="middle" class="t-blk f-faint">Same page</text>
+
+          <text x="426" y="26" class="t-col f-muted">A customer selling and delivering</text>
+          <rect x="426" y="38" width="310" height="360" rx="3" class="f-panel s-rule"></rect>
+          <rect x="426" y="38" width="310" height="26" rx="3" class="f-surface s-rule"></rect>
+          <text x="438" y="55" class="t-blk f-faint">The same surface</text>
+          <text x="438" y="86" class="t-small f-muted">Overview</text>
+          <rect x="438" y="94" width="138" height="44" rx="2" class="f-surface s-rule"></rect>
+          <rect x="586" y="94" width="138" height="44" rx="2" class="f-surface s-rule"></rect>
+          <text x="438" y="166" class="t-small f-acc">Active projects</text>
+          <rect x="438" y="174" width="138" height="44" rx="2" class="f-accsoft s-acc"></rect>
+          <rect x="586" y="174" width="138" height="44" rx="2" class="f-accsoft s-acc"></rect>
+          <text x="438" y="246" class="t-small f-muted">Selling</text>
+          <rect x="438" y="254" width="138" height="44" rx="2" class="f-surface s-rule"></rect>
+          <rect x="586" y="254" width="138" height="44" rx="2" class="f-surface s-rule"></rect>
+          <text x="438" y="326" class="t-small f-muted">Money</text>
+          <rect x="438" y="334" width="138" height="44" rx="2" class="f-surface s-rule"></rect>
+          <rect x="586" y="334" width="138" height="44" rx="2" class="f-surface s-rule"></rect>
+
+          <text x="24" y="440" class="t-note f-ink">Order held. Two groups cannot exist at all</text>
+          <text x="736" y="440" text-anchor="end" class="t-note f-ink">Absent, not empty</text>
+        </svg>
+      </div>
+      <figcaption><b>Variation caused by the product tier, with two customers.</b> The order survived, but <b>two
+      groups are absent rather than rendered empty</b>, which is a stronger change than collapsing. The thinner tier
+      also has <b>one money card rather than two, so it takes the full width</b>, which is the lone-card rule doing
+      its job. The dashed rows are drawn only to mark where the absent groups would have been.</figcaption>
+    </figure>
+
+    <figure>
+      <p class="variant">Variant C <span>the rule instead of an example</span></p>
+      <div class="fig-wrap">
+        <svg viewBox="0 0 680 390" role="img" aria-label="What holds and what varies: order is the only thing that holds both across lifecycle stages and across product tiers">
+          <text x="0" y="14" class="t-axis f-faint">What holds and what varies</text>
+          <text x="300" y="46" text-anchor="middle" class="t-col f-muted">By lifecycle stage</text>
+          <text x="520" y="46" text-anchor="middle" class="t-col f-muted">By product tier</text>
+
+          <text x="200" y="94" text-anchor="end" class="t-row f-ink">Which groups exist</text>
+          <rect x="220" y="64" width="160" height="48" rx="5" class="cell-e"></rect>
+          <text x="300" y="94" text-anchor="middle" class="t-col f-muted">holds</text>
+          <rect x="440" y="64" width="160" height="48" rx="5" class="cell-f"></rect>
+          <text x="520" y="94" text-anchor="middle" class="t-col f-acc">varies</text>
+          <text x="200" y="152" text-anchor="end" class="t-row f-ink">Their order</text>
+          <rect x="220" y="122" width="160" height="48" rx="5" class="cell-e"></rect>
+          <text x="300" y="152" text-anchor="middle" class="t-col f-muted">holds</text>
+          <rect x="440" y="122" width="160" height="48" rx="5" class="cell-e"></rect>
+          <text x="520" y="152" text-anchor="middle" class="t-col f-muted">holds</text>
+          <text x="200" y="210" text-anchor="end" class="t-row f-ink">Which is prominent</text>
+          <rect x="220" y="180" width="160" height="48" rx="5" class="cell-f"></rect>
+          <text x="300" y="210" text-anchor="middle" class="t-col f-acc">varies</text>
+          <rect x="440" y="180" width="160" height="48" rx="5" class="cell-f"></rect>
+          <text x="520" y="210" text-anchor="middle" class="t-col f-acc">varies</text>
+          <text x="200" y="268" text-anchor="end" class="t-row f-ink">How much detail</text>
+          <rect x="220" y="238" width="160" height="48" rx="5" class="cell-f"></rect>
+          <text x="300" y="268" text-anchor="middle" class="t-col f-acc">varies</text>
+          <rect x="440" y="238" width="160" height="48" rx="5" class="cell-f"></rect>
+          <text x="520" y="268" text-anchor="middle" class="t-col f-acc">varies</text>
+
+          <text x="0" y="330" class="t-note f-ink">Order is the only thing that holds in both directions.</text>
+          <text x="0" y="350" class="t-lede">A group not needed collapses in place. A group that cannot exist at this tier is absent.</text>
+          <text x="0" y="374" class="t-note f-acc">One standard says order is a function of the tier, one decision says it is not. Unresolved.</text>
+        </svg>
+      </div>
+      <figcaption><b>The rule rather than a worked example.</b> It claims less than A and B and covers both causes at
+      once. <b>It also exposes a collision</b>: the composition standard says section order is a function of the
+      product tier, and the decision of 21 September says the order is kept across all three tiers even where another
+      order would suit one better. Those cannot both be true.</figcaption>
+    </figure>
+
+
+    <p class="axis-lede">Grounded in atomic design, on two axes rather than one.</p>
+
+    <p><strong>Size</strong>, which is atomic design as normally understood: atoms, then molecules, then organisms,
+    then templates and pages. Every component record names its level.</p>
+
+    <p><strong>Ownership.</strong></p>
+
+    <ul class="layers">
+      <li><strong>Core</strong> components are content-agnostic and know nothing about the business, contributed to
+      by designers and engineers as a group. <strong>An object name may never appear in a core component</strong>,
+      which is the rule that does all the work.</li>
+      <li><strong>Recipes</strong> are named compositions where object names are allowed, and this is where a domain
+      team owns its domain.</li>
+      <li><strong>Snowflakes</strong> are labelled one-offs.</li>
+    </ul>
+
+    <p>A snowflake becomes a recipe when a second scenario needs it, and a recipe becomes core when three do.
+    <strong>The evidence decides, not a person.</strong></p>
+
+
+    <p>Both axes are recorded, because how big a thing is and who owns it are different questions. <strong>A
+    molecule can be a recipe, and an organism can be core.</strong></p>
+
+    <p class="kicker" style="margin-top:26px">Five steps.</p>
+    <ol class="steps">
+      <li><strong>Connect the two axes.</strong> Record what each recipe is built from. This also produces the list
+      of what Sol is missing, ordered by how much is blocked on each piece.</li>
+      <li><strong>Build the example set.</strong> Every component rendered in every state it claims, so claims and
+      evidence can be compared.</li>
+      <li><strong>Build the coverage matrix.</strong> Components against scenarios. This is the gap list, the
+      promotion evidence and the progress measure in one table.</li>
+      <li><strong>Settle the stage rules.</strong> What a surface shows during selling as against during install.</li>
+      <li><strong>Compose one scenario without drawing it.</strong> That is the test of whether any of this
+      works.</li>
+    </ol>
+
+    <p><strong>A browsable component site comes last, on purpose.</strong> It is the most visible part and the least
+    load bearing.</p>
+
+    <div class="caveat">
+      <span class="t">One caveat worth saying out loud</span>
+      <p>The words are not settled. <strong>The nouns in this work are provisional until they have been tested with
+      contractors</strong>, and that research runs alongside the five steps.</p>
+    </div>
+
+    <div class="sec">
+      <h2>How the library is built, and why it has a middle</h2>
+
+      <h3>The thing step one names</h3>
+
+      <p>Atomic design gives components a <strong>size</strong>: atom, molecule, organism, template. What it does
+      not give them is an <strong>owner</strong>. Adding that second axis is the whole of step one, and it is what
+      lets the model keep moving without the primitives moving with it.</p>
+
+      <p><strong>The entity model names things at the recipe layer and no further down</strong>, which is the same
+      rule as the one above read from the other side, and it is what lets the model keep moving without the
+      primitives moving with it.</p>
+
+      <p><strong>Without a middle layer there are two outcomes and no third.</strong> Either the core fills up with
+      product-specific components until nobody can use it, because the proposal card, the job card and the customer
+      card are the same card assembled differently and now there are three of them. Or the person holding the core
+      spends their time refusing requests with nowhere to send them. <strong>The middle exists so that a composition
+      which is genuinely specific has somewhere legitimate to live.</strong></p>
+
+      <figure>
+        <div class="fig-wrap">
+          <svg viewBox="0 0 680 1100" role="img" aria-label="Three parts: what composes into what, with the entity model reaching the recipe layer and no further down; promotion running one way from snowflake to recipe to core on counted thresholds; and size against ownership as two axes whose off-diagonal is the point">
+            <defs>
+              <marker id="up" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor"></path>
+              </marker>
+            </defs>
+
+            <!-- ============ 1. what composes into what ============ -->
+            <text x="0" y="14" class="t-axis f-faint">What composes into what</text>
+            <text x="480" y="14" class="t-axis f-faint">Who contributes</text>
+
+            <rect x="148" y="40" width="312" height="56" rx="3" class="f-panel s-rule" stroke-dasharray="4 3"></rect>
+            <text x="164" y="64" class="t-band f-ink">Surfaces</text>
+            <text x="164" y="83" class="t-small f-muted">assembled from recipes, not in the library</text>
+            <text x="480" y="72" class="t-blk f-muted">Assembled, not owned</text>
+
+            <line x1="304" y1="132" x2="304" y2="100" class="s-ink" marker-end="url(#up)"></line>
+            <text x="316" y="121" class="t-small f-muted">assembled into</text>
+
+            <rect x="148" y="136" width="312" height="60" rx="3" class="f-accsoft s-acc"></rect>
+            <text x="164" y="161" class="t-band f-acc">Recipes</text>
+            <text x="164" y="180" class="t-small f-acc">object names arrive here, and only here</text>
+            <text x="480" y="163" class="t-blk f-muted">A domain&#39;s designer</text>
+            <text x="480" y="177" class="t-blk f-muted">and PM</text>
+
+            <line x1="304" y1="232" x2="304" y2="200" class="s-ink" marker-end="url(#up)"></line>
+            <text x="316" y="221" class="t-small f-muted">composed into</text>
+
+            <rect x="148" y="236" width="312" height="60" rx="3" class="f-surface s-rule"></rect>
+            <text x="164" y="261" class="t-band f-ink">Core components</text>
+            <text x="164" y="280" class="t-small f-muted">content and context agnostic</text>
+            <text x="480" y="263" class="t-blk f-muted">Designers and engineers,</text>
+            <text x="480" y="277" class="t-blk f-muted">as a group</text>
+
+            <line x1="304" y1="332" x2="304" y2="300" class="s-ink" marker-end="url(#up)"></line>
+            <text x="316" y="321" class="t-small f-muted">composed into</text>
+
+            <rect x="148" y="336" width="312" height="52" rx="3" class="f-surface s-rule"></rect>
+            <text x="164" y="358" class="t-band f-ink">Design tokens</text>
+            <text x="164" y="377" class="t-small f-muted">colour and elevation, from the real build</text>
+            <text x="480" y="366" class="t-blk f-muted">Machine extracted</text>
+
+            <rect x="0" y="136" width="124" height="60" rx="3" class="f-surface s-rule" stroke-dasharray="4 3"></rect>
+            <text x="12" y="161" class="t-row f-ink">Snowflakes</text>
+            <text x="12" y="180" class="t-blk f-muted">Anybody exploring</text>
+            <line x1="124" y1="166" x2="148" y2="166" class="s-rule"></line>
+
+            <line x1="0" y1="424" x2="680" y2="424" class="s-soft"></line>
+
+            <!-- ============ 2. promotion ============ -->
+            <text x="0" y="460" class="t-axis f-faint">Promotion runs one way, and the threshold is counted</text>
+
+            <rect x="20" y="490" width="160" height="46" rx="3" class="f-surface s-rule"></rect>
+            <text x="100" y="519" text-anchor="middle" class="t-row f-ink">Snowflake</text>
+
+            <line x1="192" y1="513" x2="248" y2="513" class="s-ink" marker-end="url(#up)"></line>
+            <text x="220" y="500" text-anchor="middle" class="t-blk f-muted">2 need it</text>
+
+            <rect x="260" y="490" width="160" height="46" rx="3" class="f-accsoft s-acc"></rect>
+            <text x="340" y="519" text-anchor="middle" class="t-row f-acc">Recipe</text>
+
+            <line x1="432" y1="513" x2="488" y2="513" class="s-ink" marker-end="url(#up)"></line>
+            <text x="460" y="500" text-anchor="middle" class="t-blk f-muted">3 need it</text>
+
+            <rect x="500" y="490" width="160" height="46" rx="3" class="f-surface s-rule"></rect>
+            <text x="580" y="519" text-anchor="middle" class="t-row f-ink">Core</text>
+
+            <text x="20" y="570" class="t-note f-ink">Independent scenarios, counted rather than argued about</text>
+            <text x="20" y="590" class="t-small f-muted">Nothing is demoted, and nobody approves a promotion</text>
+
+            <line x1="0" y1="620" x2="680" y2="620" class="s-soft"></line>
+
+            <!-- ============ 3. two axes ============ -->
+            <text x="0" y="656" class="t-axis f-faint">Two axes, not one</text>
+            <text x="0" y="680" class="t-lede">Size and ownership correlate, which is why they</text>
+            <text x="0" y="698" class="t-lede">get mistaken for each other</text>
+
+            <text x="128" y="752" class="t-axis f-faint">Ownership</text>
+            <text x="188" y="798" text-anchor="end" class="t-col f-muted">Snowflake</text>
+            <rect x="200" y="768" width="88" height="50" rx="5" class="cell-e"></rect>
+            <rect x="296" y="768" width="88" height="50" rx="5" class="cell-p"></rect>
+            <rect x="392" y="768" width="88" height="50" rx="5" class="cell-f"></rect>
+            <rect x="488" y="768" width="88" height="50" rx="5" class="cell-p"></rect>
+            <text x="188" y="856" text-anchor="end" class="t-col f-muted">Recipe</text>
+            <rect x="200" y="826" width="88" height="50" rx="5" class="cell-e"></rect>
+            <rect x="296" y="826" width="88" height="50" rx="5" class="cell-p"></rect>
+            <rect x="392" y="826" width="88" height="50" rx="5" class="cell-f"></rect>
+            <rect x="488" y="826" width="88" height="50" rx="5" class="cell-f"></rect>
+            <text x="188" y="914" text-anchor="end" class="t-col f-muted">Core</text>
+            <rect x="200" y="884" width="88" height="50" rx="5" class="cell-f"></rect>
+            <rect x="296" y="884" width="88" height="50" rx="5" class="cell-f"></rect>
+            <rect x="392" y="884" width="88" height="50" rx="5" class="cell-p"></rect>
+            <rect x="488" y="884" width="88" height="50" rx="5" class="cell-e"></rect>
+
+            <text x="244" y="958" text-anchor="middle" class="t-col f-muted">Atom</text>
+            <text x="340" y="958" text-anchor="middle" class="t-col f-muted">Molecule</text>
+            <text x="436" y="958" text-anchor="middle" class="t-col f-muted">Organism</text>
+            <text x="532" y="958" text-anchor="middle" class="t-col f-muted">Template</text>
+            <text x="200" y="980" class="t-axis f-faint">Size</text>
+
+            <text x="0" y="1016" class="t-lede">Filled cells are typical, pale cells possible, empty cells rare.</text>
+            <text x="0" y="1046" class="t-note f-acc">The off-diagonal is the point: a large thing can be core,</text>
+            <text x="0" y="1064" class="t-note f-acc">and a small thing can be a snowflake.</text>
+
+          </svg>
+        </div>
+        <figcaption><b>The three things step one settles.</b> What composes into what, and who contributes at each
+        layer. Promotion running one way on counted thresholds rather than on anybody's approval. And the two axes,
+        where <b>the off-diagonal is the point</b>: a large thing can be core and a small thing can be a snowflake,
+        which is why both fields are recorded.</figcaption>
+      </figure>
+
+      <h3>Where the context system joins</h3>
+
+      <p>The context system is a second pair of spines: <strong>jobs and the requests under them on
+      the demand side, capabilities and the surfaces they exist on the supply side.</strong> It is not
+      a third axis on the library. <strong>It joins in one place, on one key</strong>, and it shares
+      the library's own promotion threshold.</p>
+
+      <p><strong>A request is a proposed way to serve a job</strong>, and it is the unit the context
+      system actually holds. A job is stable, few in number and contains no solution; a request is
+      one idea for serving it, carrying where it came from, who it is for, what it would touch and
+      what state it is in. <strong>Requests are meant to be cheap and disposable</strong>, and one
+      that cannot name the job it serves is a feature request rather than a request.</p>
+
+      <figure>
+        <div class="fig-wrap">
+          <svg viewBox="0 0 680 600" role="img" aria-label="The context system's demand spine of jobs and requests joins the library at the recipe layer, and every request carries one status running from discussed through validated and being built to shipped, where it becomes a capability; declined is an exit at any stage">
+            <defs>
+              <marker id="up5" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor"></path>
+              </marker>
+            </defs>
+
+            <text x="0" y="16" class="t-axis f-faint">Where the context system joins</text>
+
+            <rect x="40" y="38" width="600" height="66" rx="3" class="f-panel s-rule"></rect>
+            <text x="54" y="68" class="t-band f-ink">Capabilities</text>
+            <text x="54" y="90" class="t-small f-muted">what a user can do today, and on which surface</text>
+
+            <text x="40" y="132" class="t-axis f-faint">Demand</text>
+            <text x="400" y="132" class="t-axis f-faint">Supply</text>
+
+            <rect x="400" y="144" width="240" height="62" rx="3" class="f-panel s-rule" stroke-dasharray="4 3"></rect>
+            <text x="414" y="172" class="t-row f-ink">Surfaces</text>
+            <text x="414" y="192" class="t-blk f-muted">assembled from recipes</text>
+
+            <rect x="400" y="222" width="240" height="62" rx="3" class="f-accsoft s-acc"></rect>
+            <text x="414" y="250" class="t-row f-acc">Recipes</text>
+            <text x="414" y="270" class="t-blk f-acc">may know an object name</text>
+
+            <rect x="400" y="300" width="240" height="62" rx="3" class="f-surface s-rule"></rect>
+            <text x="414" y="328" class="t-row f-ink">Core components</text>
+            <text x="414" y="348" class="t-blk f-muted">no object names, ever</text>
+
+            <rect x="40" y="222" width="260" height="78" rx="3" class="f-surface s-rule"></rect>
+            <text x="54" y="248" class="t-row f-ink">Requests</text>
+            <text x="54" y="268" class="t-blk f-muted">a proposed way to serve a job,</text>
+            <text x="54" y="288" class="t-blk f-muted">disposable, and always sourced</text>
+
+            <rect x="40" y="316" width="260" height="62" rx="3" class="f-surface s-rule"></rect>
+            <text x="54" y="344" class="t-row f-ink">Jobs</text>
+            <text x="54" y="364" class="t-blk f-muted">few, stable, solution-free</text>
+
+            <line x1="520" y1="140" x2="520" y2="108" class="s-ink" marker-end="url(#up5)"></line>
+            <line x1="520" y1="218" x2="520" y2="210" class="s-ink" marker-end="url(#up5)"></line>
+            <line x1="520" y1="296" x2="520" y2="288" class="s-ink" marker-end="url(#up5)"></line>
+            <line x1="170" y1="218" x2="170" y2="108" class="s-acc" stroke-dasharray="4 3" marker-end="url(#up5)"></line>
+            <line x1="170" y1="312" x2="170" y2="304" class="s-ink" marker-end="url(#up5)"></line>
+
+            <circle cx="300" cy="253" r="3" class="f-acc"></circle>
+            <circle cx="400" cy="253" r="3" class="f-acc"></circle>
+            <line x1="303" y1="253" x2="397" y2="253" class="s-acc"></line>
+
+            <text x="0" y="416" class="t-note f-ink">Every request carries one status, which is why this is one record and not three lists</text>
+
+            <rect x="20" y="430" width="138" height="62" rx="3" class="f-surface s-rule"></rect>
+            <text x="89" y="458" text-anchor="middle" class="t-col f-ink">Discussed</text>
+            <text x="89" y="478" text-anchor="middle" class="t-blk f-muted">captured, unproven</text>
+
+            <rect x="174" y="430" width="138" height="62" rx="3" class="f-surface s-rule"></rect>
+            <text x="243" y="458" text-anchor="middle" class="t-col f-ink">Validated</text>
+            <text x="243" y="478" text-anchor="middle" class="t-blk f-muted">the evidence holds</text>
+
+            <rect x="328" y="430" width="138" height="62" rx="3" class="f-surface s-rule"></rect>
+            <text x="397" y="458" text-anchor="middle" class="t-col f-ink">Being built</text>
+            <text x="397" y="478" text-anchor="middle" class="t-blk f-muted">whose, and a link</text>
+
+            <rect x="482" y="430" width="138" height="62" rx="3" class="f-accsoft s-acc"></rect>
+            <text x="551" y="458" text-anchor="middle" class="t-col f-acc">Shipped</text>
+            <text x="551" y="478" text-anchor="middle" class="t-blk f-acc">now a capability</text>
+
+            <line x1="160" y1="461" x2="172" y2="461" class="s-ink" marker-end="url(#up5)"></line>
+            <line x1="314" y1="461" x2="326" y2="461" class="s-ink" marker-end="url(#up5)"></line>
+            <line x1="468" y1="461" x2="480" y2="461" class="s-ink" marker-end="url(#up5)"></line>
+
+            <polyline points="622,461 662,461 662,71 646,71" class="s-acc" fill="none" marker-end="url(#up5)"></polyline>
+
+            <line x1="320" y1="494" x2="320" y2="516" class="s-soft" stroke-dasharray="3 3"></line>
+            <rect x="190" y="518" width="300" height="60" rx="3" class="f-surface s-soft" stroke-dasharray="4 3"></rect>
+            <text x="204" y="544" class="t-row f-muted">Declined, at any stage</text>
+            <text x="204" y="564" class="t-blk f-muted">with a reason, so it stops coming back</text>
+          </svg>
+        </div>
+        <figcaption><b>Two spines, one seam, and one status.</b> A capability is a job served on a
+        surface, so the supply side builds up to it and the demand side asks of it. <b>The only
+        structural join is the object a request names</b>, which lands at the recipe layer because
+        that is the only layer allowed to know an object's name. <b>The status strip is what makes
+        this one record rather than three lists</b>: what we might do, what we are doing, and what we
+        can do today are three values of one field, and a shipped request becomes the capability at
+        the top. <b>And the promotion threshold is shared with the library</b>: three independent
+        needs turn a request into a finding on one side and a recipe into core on the other.</figcaption>
+      </figure>
+
+      <h3>What it does for people</h3>
+
+      <ul>
+        <li><strong>A designer</strong> can name a job and see what exists, on which surfaces, and
+        what has already been tried and declined, before drawing anything.</li>
+        <li><strong>A product manager</strong> can see every request against one job with its source,
+        so priority is argued from evidence rather than from whoever is loudest.</li>
+        <li><strong>BD and sales</strong> can see what the product does today, and on which surface,
+        before promising it.</li>
+        <li><strong>Whoever is building</strong> can see which job a piece of work claims to serve,
+        and say so when nothing answers.</li>
+        <li><strong>Somebody new</strong> can read why the product is shaped this way without
+        interviewing six people.</li>
+        <li><strong>An agent</strong> can compose a concept from a job, because the context is
+        queryable rather than remembered.</li>
+        <li><strong>Everybody</strong> stops re-proposing the same idea every quarter, because
+        declined carries a reason.</li>
+      </ul>
+    </div>
+
+  </div>
+
+</div>

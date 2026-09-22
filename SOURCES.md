@@ -91,7 +91,7 @@ editable locally but **not pushable from a session**.
 
 | Repository | What it is | Access |
 |---|---|---|
-| **ux-explore-andrew** | This one, in `GoodleapAT`. Private. Working memory, project material, and the standalone prototypes in `prototypes/`. Renamed from `ux-hosted` on 11 Sep 2026 | Local, pushable by Andrew |
+| **ux-explore-andrew** | This one, in `GoodleapAT`. Private. Working memory, project material, and the standalone prototypes in `prototypes/`. Renamed from `ux-explore-andrew` on 11 Sep 2026 | Local, pushable by Andrew |
 
 ---
 

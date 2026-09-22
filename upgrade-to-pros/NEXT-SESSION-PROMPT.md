@@ -13,11 +13,11 @@
 ```
 Continuing the Upgrade to Pros UX work. I am Andrew Thompson, UX and Product Design at GoodLeap.
 
-Read CLAUDE.md, then ux-hosted/START-HERE.md, then ux-hosted/CHANGELOG.md, and tell me the date of
-the newest changelog entry before anything else. My working memory is the ux-hosted folder. The
+Read CLAUDE.md, then ux-explore-andrew/START-HERE.md, then ux-explore-andrew/CHANGELOG.md, and tell me the date of
+the newest changelog entry before anything else. My working memory is the ux-explore-andrew folder. The
 UX-Explore folder beside it is a different repo and it is stale, so stay out of it.
 
-Then read, in this order, all inside ux-hosted:
+Then read, in this order, all inside ux-explore-andrew:
   upgrade-to-pros/NEXT-SESSION-PROMPT.md   (this is the handover; it names what is live)
   upgrade-to-pros/OPEN-ITEMS.md            (everything unresolved, O-39 to O-47 are new)
   standards/INDEX.md                        then ui-copy.md, mockup-density.md, ui-composition.md
@@ -42,7 +42,7 @@ Three folders at this level matter and two of them are traps.
 
 | Folder | Repository | Org | What you may do |
 |---|---|---|---|
-| **`ux-hosted/`** | `ux-explore-andrew` | GoodleapAT | **Andrew's own. Commit and push freely.** The folder and the repository have different names, which is why older documents call the folder `ux-explore-andrew` |
+| **`ux-explore-andrew/`** | `ux-explore-andrew` | GoodleapAT | **Andrew's own. Commit and push freely.** The folder was renamed from `ux-hosted` on 21 Sep 2026 so that it matches the repository; documents written before that date call it `ux-hosted` |
 | **`u2p-project-planning/`** | `u2p-project-planning` | loanpal-engineering | **Read and edit locally. Never push to main.** Contributions go as a branch and a pull request for Joel. Andrew does want to pull from it and occasionally contribute, so it is in scope, but only that way |
 | **`UX-Explore/`** | `UX-Explore` | loanpal-engineering | **Stale. An older copy of `standards/` with no changelog.** Do not read from it and do not write to it. **If the folder you have open has no `CHANGELOG.md` at its root, you are in the wrong one** |
 
@@ -50,7 +50,7 @@ Three folders at this level matter and two of them are traps.
 ruleset forbids direct commits to main and requires a pull request with a code owner review. The
 repository's own settings page does not show the rule.
 
-**The state as of 21 September 2026: `ux-hosted` has about thirty uncommitted files on `main` and
+**The state as of 21 September 2026: `ux-explore-andrew` has about thirty uncommitted files on `main` and
 nothing from the last week has been pushed.** Everything in the live list below exists only on
 Andrew's machine. **Offer to commit before doing anything else**, in coherent commits rather than one
 lump, because the changelog rows already describe what changed and the commit messages should match

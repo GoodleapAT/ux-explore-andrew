@@ -206,3 +206,31 @@ section.
 which logs the atomic gap on the records. **The size of the Sol gap is not known and does not need a
 survey**: it falls out of filling in the composes field in step one, ordered by how many recipes are
 blocked on each missing part. Nothing is blocked on it until that pass runs.
+
+## Added 22 September 2026, from starting S6
+
+**O-51. There is no mobile shell, and nine of S6's fourteen frames need one.** Everything built so
+far is Pros Web: the shell recreation, both page templates and every memo. **The frame itself is the
+first decision in S6** and it is being handed to CD as a proposal rather than a specification.
+
+**O-52. Memo 14's navigation is stale.** The shell of record from 22 September has eight groups with
+children; memo 14 ships seven flat items. **Three scenarios in one presentation would show two
+different products.** Cheapest fix is to reshoot the S5 record against the new nav, which does not
+change that memo's argument.
+
+**O-53. DeDe has never been drawn as a working surface.** The library holds it only as provenance in
+a sub line. S6 needs it explaining a condition, capturing a document and verifying it, across three
+frames. **The newest pattern in the set and the one with no precedent to lean on.**
+
+**O-54. The mark-complete trigger does not exist.** Andrew's question: an ellipsis menu always
+present, plus a CTA once completion is likely. **Nothing in the model computes likely**, and in a
+loan-only scenario there is no work lane to derive it from.
+
+**O-55. What a project view is for at the loan-only tier.** It holds a property, one job, the
+financing and the notice to proceed, and nothing else will ever attach. Andrew's note on beat 17 asks
+whether optional stage and checklist tracking belongs there, with the condition that an unused one
+must not roll up under the customer as unfinished work.
+
+**O-56. The S6 script is not saved in this repository.** Same gap as O-39 for S15, and S6's
+screens carry more SCRIPT values than S5's did. Fix is to pull the page down and save it verbatim
+with a date stamp.

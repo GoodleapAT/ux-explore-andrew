@@ -55,6 +55,7 @@ seventh.** If none works, the screen carries too many states.
 | **Always** | American English inside a mockup. The memo around it may be British |
 | **Always** | Verb first on buttons and CTAs, and a menu item counts as a CTA |
 | **Always** | Sentence case. No all caps, no emoji, no em dashes |
+| **Always** | **No monospace type and no all caps anywhere**, not only in product UI. Diagram labels, eyebrows, legends and axis titles included. **Weight and colour make a label quiet, not caps** |
 | **Always** | An error says what happened, then what to do |
 | **Always** | An empty state says why it is empty, then offers a next step |
 | **Always** | A destructive CTA names the real action, and its pair shares no key term with it |

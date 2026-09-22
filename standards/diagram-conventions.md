@@ -35,6 +35,14 @@ the board wins and the local file gets updated.
 read a board as a rendered screenshot instead. Request it at a high enough resolution to read the
 small annotation, because the small annotation is usually where the argument is.
 
+## Type in a drawing
+
+**Always: no monospace and no all caps in a diagram's labels.** The full rule and the reasoning are
+in `ui-copy.md`, which stopped being about product UI only on 22 Sep 2026. **Diagrams were the worst
+offender**, because caps and a monospace face read as precision and so attach themselves to axis
+titles, legends and provenance notes. Sentence case in the display face, with weight and colour doing
+the separating.
+
 ## Carrying a visual forward
 
 **A visual made to diagnose a problem and a visual made to explain what you built are different

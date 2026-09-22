@@ -42,6 +42,21 @@ repeat the year only when it changes. Times carry a zone and lowercase am or pm 
 around it may be British**, which is the only place this file and `working-voice.md` appear to
 disagree and do not: one governs the product, the other governs the writing about it.
 
+**Always: no monospace type and no all caps, anywhere, not only in product UI.** Andrew's
+instruction, 22 September 2026. **This extends the sentence-case rule out of the mockup and into
+everything we make**: memo prose, diagram labels, eyebrows, axis titles, legends, table headers and
+published pages. A small-caps label in a drawing is the same defect as a shouting button.
+
+**Why it kept happening.** All caps and a monospace face read as precision, so they attach themselves
+to exactly the places that want to look authoritative: an axis label, a legend, a note about
+provenance. **The effect is the opposite.** Caps are slower to read at small sizes, where these labels
+always sit, and monospace makes a hand-made drawing look like output from a machine that checked
+something.
+
+**What to use instead.** The display face at a small size, in sentence case, with weight doing the
+work that the case was doing. **If a label needs to be quieter, make it quieter with colour and
+weight, never with caps.**
+
 **Always: no em dashes.** Already in `working-voice.md`, and the guide calls them a tell of
 machine-written copy.
 
@@ -110,3 +125,9 @@ details. Loan, not financing. Due date. Email, one word. GoodLeap, one word, two
 - **21 Sep 2026.** The verb-first rule caught *New payment*, which Andrew had specified for an
   overflow menu. **Drawn as *Take a payment* with the alternatives listed under the mock** rather than
   silently changed, per the rule that suggested copy is judged on its own.
+- **22 Sep 2026.** **Andrew: remove and never use monospace or all caps.** Both were throughout the
+  UX Kit overview preview, in every diagram's labels and in each page note, because I had been using
+  them as a quiet-label device. **The rule against all caps was already here and scoped to product
+  UI**, so this is that rule losing its scope rather than a new one. Fixed in the preview in the same
+  pass: the mono webfont dropped, every uppercase string rewritten in sentence case, and weight and
+  colour doing the separating instead.

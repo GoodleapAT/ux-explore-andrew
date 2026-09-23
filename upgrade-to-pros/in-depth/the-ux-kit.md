@@ -1,10 +1,10 @@
-# The UX Kit
+# The UX Toolkit
 
 **What stands between the library we have and the one G-1 describes, and who builds it. Rewritten
 21 September 2026. Status: route agreed, step one half done, nothing else started.**
 
-> **Renamed 21 September 2026, at Andrew's instruction, and the name is provisional.** This was
-> called the factory. Three reasons it is not any more. **The name collided with Joel's UX factory**,
+> **Renamed again on 23 September 2026, from the UX Kit to the UX Toolkit, at Andrew's instruction.**
+> Before that it was the factory, renamed on 21 September, and the reasons that name went are below. Three reasons it is not any more. **The name collided with Joel's UX factory**,
 > which is a real artefact in the team repository and is also five invokable skills in any Claude
 > Code session opened in the enclosing folder, so two things in one folder answered to one word.
 > **Factory promises volume**, which G-1's own belief clause explicitly refuses until one scenario
@@ -35,7 +35,7 @@
 the sections below, they win**, and a change to the route is a change to this section in the same
 sitting.
 
-**The UX Kit is a component library augmented by layers of logic. The question stops being what
+**The UX Toolkit is a component library augmented by layers of logic. The question stops being what
 should a view look like and becomes which parts does this view need right now.** The components
 come from the Sol design system. **The logic is what turns a pile of components into something a
 person on another team can build with.**
@@ -461,7 +461,7 @@ spent the most thinking on, we are ahead rather than behind.
   nothing short existed.** Eight memos, a route and five obstacles, and **the shortest thing in the project was
   still a twenty minute read.** It is marked as a restatement and subordinate to the sections below, because a
   summary that can drift from what it summarises is worse than no summary.
-- **21 Sep 2026.** **Renamed from the factory to the UX Kit, provisionally, at Andrew's
+- **21 Sep 2026.** **Renamed from the factory to the UX Toolkit, provisionally, at Andrew's
   instruction.** The collision with Joel's artefact was the practical reason; the two better reasons
   are that factory promises the volume G-1's belief clause refuses, and that it tells a designer from
   another team their judgement is being replaced. **One word was standing for parts, rules, standards
@@ -496,3 +496,7 @@ spent the most thinking on, we are ahead rather than behind.
   Pros Mobile, and that is the pre-read the room will have read first. **View collides with the model's own use**,
   where a work order and a materials list are views of the refined itemization, and **he accepted that collision
   explicitly rather than reaching for a third word.** *Screen* was the recommendation and was not taken.
+- **23 Sep 2026.** **The Kit became the Toolkit**, Andrew's second naming call in three days. **Toolkit says
+  what it is to somebody who has never heard of it** and kit had begun to read as shorthand only the people
+  in the room understood. **The file name still says kit**, which is a cost of renaming twice and is left
+  alone deliberately rather than churning every citation a second time.

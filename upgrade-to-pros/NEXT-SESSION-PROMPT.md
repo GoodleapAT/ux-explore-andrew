@@ -159,7 +159,7 @@ them unless he says so explicitly.** A listed skill looks like an offer and is n
 would read their board, write their files and commit, which would make our work an input to their
 system in a single call.
 
-**Andrew's own equivalent is called the UX Kit**, renamed from the factory on 21 September and
+**Andrew's own equivalent is called the UX Toolkit**, renamed from the factory on 21 September and
 provisional. Its reasoning is in `in-depth/the-ux-kit.md`, rewritten the same day, and it carries the
 route, the ownership model, the exercises for other teams and the language workstream. **Its render
 is deliberately stale and says so on its face.**

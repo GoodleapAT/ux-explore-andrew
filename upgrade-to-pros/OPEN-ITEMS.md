@@ -188,7 +188,7 @@ post-sale inspection 10 August, three days after the refinement it is supposed t
 the old install week. `memo-12-job-two-moments.html` carries the old install week. **Both are
 mechanical to fix and neither has been.**
 
-## Added 21 September 2026, from the UX Kit rewrite
+## Added 21 September 2026, from the UX Toolkit rewrite
 
 **O-48. The glossary has no status per term, so nothing separates a tested word from an invented
 one.** Settled in principle in the root decision log on 21 September and not built. One column:

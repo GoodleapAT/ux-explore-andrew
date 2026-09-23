@@ -158,7 +158,7 @@ specification. That is the same argument the seventh field rests on, applied one
 ## Learned from
 
 - **15 Sep 2026.** Andrew, on being shown the three layers: he wants to lean into them while creating
-  the UX Kit, and he asked whether they are compatible with atomic nomenclature and with objects.
+  the UX Toolkit, and he asked whether they are compatible with atomic nomenclature and with objects.
   **Both fields stay**, and the correction to "three tiers, not five" is recorded above because the
   earlier phrasing implied a replacement.
 - **15 Sep 2026.** The sort above was only possible because every record carries its own usage rule

@@ -36,7 +36,7 @@ the sections below, they win**, and a change to the route is a change to this se
 sitting.
 
 **The UX Kit is a component library augmented by layers of logic. The question stops being what
-should a surface look like and becomes which parts does this surface need right now.** The components
+should a view look like and becomes which parts does this view need right now.** The components
 come from the Sol design system. **The logic is what turns a pile of components into something a
 person on another team can build with.**
 
@@ -491,3 +491,8 @@ spent the most thinking on, we are ahead rather than behind.
 - **15 Sep 2026.** Andrew, on the stage axis: he does not want it if it will not help build the Kit.
   **It will, because it is the logic half of G-1 rather than a documentation burden**, and narrowing
   it to templates and recipes is what keeps it affordable.
+- **23 Sep 2026.** **The thing being designed is a *view*, not a *surface*. Andrew's ruling, reversing his own
+  choice of two days earlier.** The kickoff briefing uses *surface* to mean a whole product, Origin and Pros Web and
+  Pros Mobile, and that is the pre-read the room will have read first. **View collides with the model's own use**,
+  where a work order and a materials list are views of the refined itemization, and **he accepted that collision
+  explicitly rather than reaching for a third word.** *Screen* was the recommendation and was not taken.

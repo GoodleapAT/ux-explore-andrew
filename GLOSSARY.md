@@ -300,7 +300,7 @@ collision nobody else can learn from.
 | **Pursue** and **Pursuing** | A hold value and a project status. Related on purpose: both mean actively heading at something. **A third was proposed on 15 Sep, Should pursue on an opportunity, and was rejected for this reason.** The value is To discuss instead |
 | **Presented** | On the proposal lifecycle axis and again on the delivery axis, as Presented in person. The same event recorded on two axes, which is the design rather than an accident |
 | **Complete** | A job outer state and a visit state. The same idea at two levels |
-| **Surface** and **View** | **Surface** now means the thing being designed, in the UX Kit's own summary, and it already meant an AI surface such as Cowork or Claude Code throughout the protocol. **View** means a derived document, a work order or a materials list read off the itemization, and Andrew has said it would also be acceptable for the thing being designed. **Both collisions are accepted rather than resolved, 21 Sep 2026, on Andrew's ruling**: surface is his word for it knowing it is designer vocabulary, and the two senses never appear in the same sentence |
+| **View** | **Ruled 23 Sep 2026: a view is the thing being designed, one page or screen composed from recipes.** It already means a derived document in the model, where a work order and a materials list are views of the refined itemization. **Andrew accepted the collision rather than take a third word.** **Surface** keeps two other senses and neither is this one: a product or channel in the kickoff briefing, Origin and Pros Web and Pros Mobile, and an AI surface throughout the protocol |
 
 ---
 

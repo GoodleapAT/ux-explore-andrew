@@ -47,13 +47,11 @@ instead; `START-HERE.md` says what one looks like.
 - `ux-explore-andrew/` is Andrew's working memory, project material and hosted prototypes. **The folder
   and the repository now have the same name**, renamed on disk 21 Sep 2026; it was `ux-hosted/` until
   then, which is why documents written before that date use that word. Private, in the GoodleapAT
-  organisation, and pushable by him. The root is global, and each project has a folder. The live
-  project is `upgrade-to-pros/`
-- **`UX-Explore/` at this level is a different repository and it is stale.** It is in
-  `loanpal-engineering`, it holds an older copy of `standards/`, and it has no changelog.
-  **The two names now differ by a suffix rather than completely**, which is the cost of the rename, so
-  use the test rather than the name: **if the folder you have open has no `CHANGELOG.md` at its root,
-  you are in the wrong one**
+  organisation, and pushable by him. The root is global, and each project has a folder. **The live
+  projects are listed in `START-HERE.md`**, so check there rather than assuming which one you are in
+- **The stale `UX-Explore/` folder that used to sit at this level was removed on 9 Oct 2026.** It was
+  an older copy in `loanpal-engineering`. The test still holds if anything like it reappears: **if the
+  folder you have open has no `CHANGELOG.md` at its root, you are in the wrong one**
 - `u2p-project-planning/` is the Upgrade to Pros team record, owned by Joel. Readable and editable
   here, **not pushable**. Contributions go as a branch and a pull request
 - Everything else at this level is either a product repository or earlier cross-cutting work that has

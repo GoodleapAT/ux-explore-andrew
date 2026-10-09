@@ -1,0 +1,2873 @@
+{
+  "schema": "goodleap-site-map/1",
+  "generated": "2026-08-12",
+  "source": "Extracted from merlin/frontend, gl-pros-flutter (incl. origin/master), pay-mfe and origin-shell.",
+  "idRule": "Ids are globally unique and stable. Never rewrite an existing id. New rows created by a split get a new id derived from the parent, e.g. pw-analytics-report becomes pw-analytics-report-a, -b, -c.",
+  "ownership": {
+    "structure": "owned by the editor: label, depth, parent, order, kind, and node creation or deletion",
+    "content": "owned by Claude: route, gating, summary, steps, content, actions, states, goesTo",
+    "rule": "An import patch may only write content-owned fields on nodes whose id already exists, and may append new nodes. It must never reorder, re-parent, rename or delete."
+  },
+  "purpose": "This map exists to support the Origin-to-Pros migration. It is not a unified component catalog. Links between nodes carry a migration status, not a parity status, because Origin is being retired rather than maintained alongside Pros.",
+  "kinds": {
+    "section": "a navigation spine entry: sidebar item, tab, or shell route",
+    "page": "a destination you can land on",
+    "flow": "a collapsed multi-step journey; see steps",
+    "embedded": "third-party UI we do not own, currently Stripe Connect components"
+  },
+  "equivalenceTypes": {
+    "same": "same thing, same shape. Should behave identically.",
+    "different-shape": "same job, structurally different. Note how it translates.",
+    "deliberately-different": "the divergence is correct. Give the reason. This is what stops the migration backlog being infinite."
+  },
+  "migrationStatuses": {
+    "not-assessed": "nobody has decided anything yet. The default.",
+    "re-specified": "re-expressed in Pros vocabulary, not built",
+    "built": "exists in Pros",
+    "retired": "removed from Origin"
+  },
+  "nodeMigration": {
+    "field": "migration",
+    "note": "Optional, on any node. Absent means in scope and undecided. Present means the node needs a different reading than the default, and the tool should render it distinctly.",
+    "values": {
+      "third-party": "Not ours to build. Embedded Stripe Connect components. Ports as-is; only the surrounding chrome is design work.",
+      "out-of-scope": "Deliberately never coming across. GoodLeap-internal staff tooling.",
+      "later-wave": "Real, contractor-facing, and in scope eventually, but not part of this migration.",
+      "not-yet-real": "Exists in Origin behind a flag or on mock data. Cannot be assessed or designed against until it is built for real."
+    }
+  },
+  "equivalences": [],
+  "platforms": [
+    {
+      "id": "pros-web",
+      "label": "Pros Web",
+      "spine": "Sidebar, four sections, from app-sidebar.tsx",
+      "note": "Atlas-only orgs see Analytics and nothing else.",
+      "nodes": [
+        {
+          "id": "pw-analytics",
+          "label": "Analytics",
+          "kind": "section",
+          "depth": 0,
+          "parent": null,
+          "route": "/analytics",
+          "gating": "canReadAnalytics",
+          "summary": "Three server-driven report dashboards.",
+          "content": [
+            "Sidebar section with three sub-items: Overview, Financing, Payments"
+          ],
+          "actions": [
+            "Navigate to a report"
+          ],
+          "states": [
+            "Hidden without canReadAnalytics"
+          ],
+          "goesTo": [
+            {
+              "to": "pw-analytics-report",
+              "via": "select a report"
+            }
+          ]
+        },
+        {
+          "id": "pw-analytics-report",
+          "label": "Analytics report",
+          "kind": "page",
+          "depth": 1,
+          "parent": "pw-analytics",
+          "route": "/analytics/overview, /analytics/financing, /analytics/payments",
+          "gating": "canReadAnalytics + atlas flag",
+          "summary": "Server-driven widget grid, read-only, three report types.",
+          "content": [
+            "One shared page per report type",
+            "H1 plus a server-driven grid of AG-UI widgets",
+            "Widget types: bar, compare-bar, line, donut, progress bar, metric rows, business metrics, subscriptions, tables",
+            "Financing persists internally as sales_financing"
+          ],
+          "actions": [
+            "Sidebar sub-nav between the three reports",
+            "Retry on error",
+            "Widgets are read-only"
+          ],
+          "states": [
+            "Loading spinner",
+            "Generating, with skeleton while the report builds",
+            "Empty when the artifact has no components",
+            "AnalyticsNoData",
+            "Network error with retry",
+            "Access denied"
+          ],
+          "goesTo": [
+            {
+              "to": "pw-analytics-report",
+              "via": "switch report tab"
+            }
+          ]
+        },
+        {
+          "id": "pw-leads",
+          "label": "Leads",
+          "kind": "section",
+          "depth": 0,
+          "parent": null,
+          "route": "/leads",
+          "gating": "canReadLeads",
+          "summary": "The lead-centric spine of Pros Web.",
+          "content": [
+            "Sidebar section, no sub-items"
+          ],
+          "actions": [
+            "Navigate to the leads list"
+          ],
+          "states": [
+            "Hidden without canReadLeads"
+          ],
+          "goesTo": [
+            {
+              "to": "pw-leads-list",
+              "via": "select Leads"
+            }
+          ]
+        },
+        {
+          "id": "pw-leads-list",
+          "label": "Leads list",
+          "kind": "page",
+          "depth": 1,
+          "parent": "pw-leads",
+          "route": "/leads",
+          "gating": "canReadLeads",
+          "summary": "Searchable paginated table with drag-and-drop bulk upload.",
+          "content": [
+            "H1 and breadcrumbs",
+            "350px address search",
+            "Cursor-paginated table",
+            "Address column: street plus city, state, zip, with search terms highlighted",
+            "Name column: contact plus phone",
+            "Chevron column"
+          ],
+          "actions": [
+            "New Lead and Bulk Upload buttons, write permission, bulk behind a flag",
+            "Debounced search, 300ms, minimum 3 characters",
+            "Row click",
+            "Cursor pagination and page size",
+            "Drop a .csv, .xlsx or .xls anywhere on the page to enter bulk upload, with a full-page dashed overlay",
+            "Toast on wrong file extension",
+            "Webview refocus triggers a refetch"
+          ],
+          "states": [
+            "Table skeleton",
+            "Overlay spinner on refetch",
+            "Empty pipeline",
+            "No-search-results error card",
+            "Network error with retry"
+          ],
+          "goesTo": [
+            {
+              "to": "pw-lead-detail",
+              "via": "row click"
+            },
+            {
+              "to": "pw-new-lead",
+              "via": "New Lead"
+            },
+            {
+              "to": "pw-bulk-upload",
+              "via": "Bulk Upload or file drop"
+            }
+          ]
+        },
+        {
+          "id": "pw-new-lead",
+          "label": "New lead",
+          "kind": "page",
+          "depth": 2,
+          "parent": "pw-leads-list",
+          "route": "/leads/new-lead",
+          "gating": "LEAD_WRITE",
+          "summary": "Address-first lead creation with optional coordinates.",
+          "content": [
+            "H1 and description",
+            "Google Places street autocomplete with a map window",
+            "Optional latitude and longitude fields"
+          ],
+          "actions": [
+            "Add coordinates reveals lat and long",
+            "Address resolution on submit",
+            "Get Started"
+          ],
+          "states": [
+            "Inline address-required error",
+            "Generic address error"
+          ],
+          "goesTo": [
+            {
+              "to": "pw-lead-detail",
+              "via": "Get Started"
+            }
+          ]
+        },
+        {
+          "id": "pw-bulk-upload",
+          "label": "Bulk lead upload",
+          "kind": "flow",
+          "depth": 2,
+          "parent": "pw-leads-list",
+          "route": "/leads/bulk-upload",
+          "gating": "LEAD_WRITE plus flag",
+          "steps": 3,
+          "summary": "Upload, review, import. Three steps.",
+          "content": [
+            "H1 and dropzone",
+            "Results table grouped by status",
+            "Summary card",
+            "Alerts for truncated and stage-skipped rows"
+          ],
+          "actions": [
+            "Drop or pick a file, or arrive with one dropped from the list",
+            "Continue to review",
+            "Start over",
+            "Download invalid rows as a spreadsheet",
+            "Confirm import",
+            "Cancel"
+          ],
+          "states": [
+            "Uploading and processing copy",
+            "Parse error: no address column",
+            "Parse error: empty spreadsheet",
+            "Parse error: generic failure",
+            "Partial-failure toast after import"
+          ],
+          "goesTo": [
+            {
+              "to": "pw-leads-list",
+              "via": "confirm or cancel"
+            }
+          ]
+        },
+        {
+          "id": "pw-lead-detail",
+          "label": "Lead detail",
+          "kind": "page",
+          "depth": 2,
+          "parent": "pw-leads-list",
+          "route": "/leads/$leadId, /leads/$leadId/overview",
+          "gating": "canReadLeads, per section",
+          "summary": "Overview and Loan tabs over assignment, contacts, measurements, proposals, notes, invoices.",
+          "content": [
+            "Address as H1 and H2",
+            "Overview and Loan tab bar",
+            "Lead assignment section with workspace chips",
+            "Contacts section",
+            "Measurements card with auto-generated badge",
+            "Home report teaser",
+            "Proposals list",
+            "Notes with timestamp and author",
+            "Invoices with Total Invoiced, Total Paid, Total Due plus rows"
+          ],
+          "actions": [
+            "Assign-workspaces popover and remove-self dialog",
+            "Add, edit and delete contact",
+            "Set as primary",
+            "Add-note sheet and delete dialog",
+            "Plus-buttons for a proposal or an invoice",
+            "Invoice creation intercepts a missing contact email with an inline add-contact dialog",
+            "Contact picker at two or more contacts, toast when there are none",
+            "Websocket live invalidation"
+          ],
+          "states": [
+            "Per-section skeletons",
+            "Measurements generating",
+            "Home report renders nothing on loading, 404 or parse failure, a silent degradation",
+            "Empty-go-home on 404",
+            "No-access on 403",
+            "Access-denied for proposals"
+          ],
+          "goesTo": [
+            {
+              "to": "pw-lead-loans",
+              "via": "Loan tab"
+            },
+            {
+              "to": "pw-measurements",
+              "via": "measurements card"
+            },
+            {
+              "to": "pw-home-report",
+              "via": "home report teaser"
+            },
+            {
+              "to": "pw-invoice",
+              "via": "add or open an invoice"
+            },
+            {
+              "to": "pw-new-proposal-picker",
+              "via": "add a proposal"
+            },
+            {
+              "to": "pw-proposal-detail",
+              "via": "open a proposal"
+            },
+            {
+              "to": "pw-leads-list",
+              "via": "back"
+            }
+          ]
+        },
+        {
+          "id": "pw-lead-loans",
+          "label": "Loan tab",
+          "kind": "page",
+          "depth": 3,
+          "parent": "pw-lead-detail",
+          "route": "/leads/$leadId/loans",
+          "gating": "canReadLeads",
+          "summary": "Active and past loan cards. Cash products excluded.",
+          "content": [
+            "Active loans section",
+            "Past loans section",
+            "Loan cards showing proposal title and financing metrics"
+          ],
+          "actions": [
+            "Select a card"
+          ],
+          "states": [
+            "Pulse placeholder",
+            "Error card when no loans exist"
+          ],
+          "goesTo": [
+            {
+              "to": "pw-loan-timeline",
+              "via": "select a loan"
+            },
+            {
+              "to": "pw-lead-detail",
+              "via": "Overview tab"
+            }
+          ]
+        },
+        {
+          "id": "pw-loan-timeline",
+          "label": "Loan timeline detail",
+          "kind": "page",
+          "depth": 4,
+          "parent": "pw-lead-loans",
+          "route": "/leads/$leadId/loans/$loanId",
+          "gating": "canReadLeads",
+          "summary": "Accordion timeline with cancel-loan action.",
+          "content": [
+            "Accordion timeline, in-progress sections auto-expanded",
+            "Loan detail fields",
+            "Cancelled-loan alert banner"
+          ],
+          "actions": [
+            "View all loans",
+            "Refresh",
+            "Per-item handlers",
+            "Additional actions menu with a cancel-loan dialog"
+          ],
+          "states": [
+            "Timeline skeleton",
+            "No-data error card"
+          ],
+          "goesTo": [
+            {
+              "to": "pw-lead-loans",
+              "via": "View all loans"
+            }
+          ]
+        },
+        {
+          "id": "pw-measurements",
+          "label": "Measurements",
+          "kind": "page",
+          "depth": 3,
+          "parent": "pw-lead-detail",
+          "route": "/leads/$leadId/measurements",
+          "gating": "canReadLeads",
+          "summary": "3D site model with scroll-spy sections and exports.",
+          "content": [
+            "Header with generated date and auto-generated badge",
+            "3D site model card",
+            "Scroll-spy tabs: Waste, Areas, Facets, Edge measurements",
+            "Waste section with editable percentage",
+            "Pitch areas with badges",
+            "Facets by building",
+            "Edge measurements",
+            "Summary",
+            "Linked proposals",
+            "Next-steps bar",
+            "Separate mobile and tablet layout with sticky model and tabs; desktop uses a sticky left rail and a drawer"
+          ],
+          "actions": [
+            "Tab click smooth-scrolls, observer suppressed during programmatic scroll",
+            "Adjust waste percentage",
+            "Create proposal",
+            "Download menu with PDF, disabled when unavailable, and CSV"
+          ],
+          "states": [
+            "Loading guard",
+            "Empty-go-home for not-found and forbidden",
+            "Unknown-error card",
+            "PDF failure toast"
+          ],
+          "goesTo": [
+            {
+              "to": "pw-new-proposal-picker",
+              "via": "Create proposal"
+            },
+            {
+              "to": "pw-proposal-detail",
+              "via": "linked proposal"
+            },
+            {
+              "to": "pw-lead-detail",
+              "via": "back"
+            }
+          ]
+        },
+        {
+          "id": "pw-home-report",
+          "label": "Home report",
+          "kind": "page",
+          "depth": 3,
+          "parent": "pw-lead-detail",
+          "route": "/leads/$leadId/home-report",
+          "gating": "canReadLeads",
+          "summary": "Read-only property report with masked content handling.",
+          "content": [
+            "D1 title and generated date",
+            "Highlights grid: AVM estimate with confidence score, tax market value, owner, year built, living area",
+            "Catalog section cards with masked content handling"
+          ],
+          "actions": [
+            "Read-only"
+          ],
+          "states": [
+            "Full skeleton",
+            "Access denied on 403",
+            "Empty-go-home on 404 or unparsable report",
+            "Unknown error"
+          ],
+          "goesTo": [
+            {
+              "to": "pw-lead-detail",
+              "via": "back"
+            }
+          ]
+        },
+        {
+          "id": "pw-invoice",
+          "label": "Invoice",
+          "kind": "page",
+          "depth": 3,
+          "parent": "pw-lead-detail",
+          "route": "/leads/$leadId/invoices/new, /leads/$leadId/invoices/$invoiceId",
+          "gating": "INVOICE_WRITE / INVOICE_READ",
+          "summary": "Editor and details in one component. Sends payment links.",
+          "content": [
+            "One component, two views",
+            "Editor: H1, amount field with min and max validation, Bill-to info block, send-to and email-payment-request copy",
+            "Details: created date, invoice number, amount section, Bill to, send-payment-link block"
+          ],
+          "actions": [
+            "Cancel",
+            "Send later",
+            "Send invoice",
+            "Email payment link",
+            "Cancel-invoice dialog from the parent overview"
+          ],
+          "states": [
+            "Empty-go-home when unloadable",
+            "Inline amount min and max errors"
+          ],
+          "goesTo": [
+            {
+              "to": "pw-lead-detail",
+              "via": "back"
+            }
+          ]
+        },
+        {
+          "id": "pw-new-proposal-picker",
+          "label": "New proposal picker",
+          "kind": "page",
+          "depth": 3,
+          "parent": "pw-lead-detail",
+          "route": "/leads/$leadId/new-proposal",
+          "gating": "canWriteProposals",
+          "summary": "Pricebook in selection mode, seeded from the org template.",
+          "content": [
+            "Pricebook UI in selection mode",
+            "H1 Select items",
+            "Tabbed items, packages, discounts with search and type filter",
+            "Seeded from the org proposal template",
+            "Sticky footer with a running selection summary"
+          ],
+          "actions": [
+            "Select items and packages, bulk actions disabled",
+            "Cancel",
+            "Continue to proposal, disabled at zero selections or on a template load error"
+          ],
+          "states": [
+            "Table skeletons",
+            "Search-empty and empty cards",
+            "Template error in the footer"
+          ],
+          "goesTo": [
+            {
+              "to": "pw-proposal-detail",
+              "via": "Continue"
+            },
+            {
+              "to": "pw-lead-detail",
+              "via": "Cancel"
+            }
+          ]
+        },
+        {
+          "id": "pw-proposal-detail",
+          "label": "Proposal detail",
+          "kind": "page",
+          "depth": 3,
+          "parent": "pw-lead-detail",
+          "route": "/leads/$leadId/proposals/$proposalId",
+          "gating": "PROPOSAL_READ; edits need canWriteProposals; contract tab needs useContractUiAccess",
+          "summary": "Summary, estimate and financing, with a contract variant.",
+          "content": [
+            "Two variants",
+            "Base: Summary with editable title, status badge with date, editable summary, site location, contacts",
+            "Base: Estimate with line items, packages, manual items, good, better and best tiers",
+            "Base: Financing with payment option cards, previous-loan-declined and decision-pending alerts, measurements-changed alert",
+            "With contracts on: a Proposal and Contract tab pair",
+            "Contract tab: contractor card, customer, sales rep, editable terms, estimate preview, amendments"
+          ],
+          "actions": [
+            "Rename",
+            "Edit and add contact",
+            "Contact-inclusion picker",
+            "Add items",
+            "Manual entry",
+            "Inline quantity and price edits with autosave and an unsaved-changes dialog",
+            "Select a tier",
+            "Add and view payment option sheets",
+            "Contracts toggle locked by contract status",
+            "Download contract PDF",
+            "Sticky footer: Send proposal, Customer view, Accept, Start loan application, Prepare contract, Resend, Sign contract, Sign amendment",
+            "Change-order sheet",
+            "More menu",
+            "Cancel-contract and cancel-amendment dialogs",
+            "Signing modal and progress dialog"
+          ],
+          "states": [
+            "Null while loading",
+            "Empty-go-home for forbidden and not-found",
+            "Unknown error",
+            "Not-ready card for NOT_READY",
+            "Estimate and financing skeletons",
+            "Estimate empty state with From pricebook and Manual entry",
+            "Updating banner",
+            "Footer hidden in some homeowner states"
+          ],
+          "goesTo": [
+            {
+              "to": "pw-add-items",
+              "via": "Add items"
+            },
+            {
+              "to": "pw-contract-flow",
+              "via": "Prepare contract"
+            },
+            {
+              "to": "pw-amendment-preview",
+              "via": "Sign amendment"
+            },
+            {
+              "to": "pw-new-loan",
+              "via": "Start loan application"
+            },
+            {
+              "to": "pw-lead-detail",
+              "via": "back"
+            }
+          ]
+        },
+        {
+          "id": "pw-add-items",
+          "label": "Add items",
+          "kind": "page",
+          "depth": 4,
+          "parent": "pw-proposal-detail",
+          "route": "/leads/$leadId/proposals/$proposalId/add-items",
+          "gating": "canWriteProposals",
+          "summary": "Pricebook pre-seeded with the current selection.",
+          "content": [
+            "Edit items H1 with back link",
+            "The same pricebook tabs pre-seeded with the current selection",
+            "Sticky footer"
+          ],
+          "actions": [
+            "Back to proposal",
+            "Cancel",
+            "Add to estimate"
+          ],
+          "states": [
+            "Existing-selection load failure in the footer",
+            "Skeletons and empty cards"
+          ],
+          "goesTo": [
+            {
+              "to": "pw-proposal-detail",
+              "via": "Add to estimate or Cancel"
+            }
+          ]
+        },
+        {
+          "id": "pw-contract-flow",
+          "label": "Contract flow",
+          "kind": "flow",
+          "depth": 4,
+          "parent": "pw-proposal-detail",
+          "route": "/leads/$leadId/proposals/$proposalId/contract-preview, /leads/$leadId/proposals/$proposalId/contract-preview/signing-complete",
+          "gating": "PROPOSAL_READ; signing needs canSignContracts",
+          "steps": 3,
+          "summary": "Preview, signing session, complete. Sidebar hidden.",
+          "content": [
+            "Step 1: full contract preview with company info, customer, sales rep, estimate preview and terms editor, plus an Everything look good? footer",
+            "Step 3: centred success screen naming the customer's email, with fallback copy when absent",
+            "The sidebar is hidden on contract-preview routes"
+          ],
+          "actions": [
+            "Go back",
+            "Send contract, which validates contacts and line items and toasts otherwise",
+            "Signer-select dialog at two or more contacts",
+            "Inline add-contact on the single-contact-without-email path",
+            "Dismissible progress dialog driven by signing status",
+            "Embedded signing modal",
+            "Back to proposal, which invalidates contract, amendment and status queries"
+          ],
+          "states": [
+            "404-is-normal handling for unsent proposals",
+            "Retryable terminal signing statuses re-enable Send",
+            "Create-contract error resets the spinner",
+            "Access denied on 403",
+            "Skeleton on the success email line"
+          ],
+          "goesTo": [
+            {
+              "to": "pw-proposal-detail",
+              "via": "Back to proposal"
+            }
+          ]
+        },
+        {
+          "id": "pw-amendment-preview",
+          "label": "Amendment preview",
+          "kind": "page",
+          "depth": 4,
+          "parent": "pw-proposal-detail",
+          "route": "/leads/$leadId/proposals/$proposalId/amendment-preview/$amendmentId",
+          "gating": "PROPOSAL_READ",
+          "summary": "Describes changes, sends the amendment.",
+          "content": [
+            "Description of changes",
+            "Terms and conditions",
+            "Amendment estimate summary",
+            "Confirmation block"
+          ],
+          "actions": [
+            "Go back",
+            "Send amendment",
+            "Progress dialog in amendment variant"
+          ],
+          "states": [
+            "Loading render when absent",
+            "Access denied on 403"
+          ],
+          "goesTo": [
+            {
+              "to": "pw-proposal-detail",
+              "via": "back"
+            },
+            {
+              "to": "pw-contract-flow",
+              "via": "signing"
+            }
+          ]
+        },
+        {
+          "id": "pw-pricebook",
+          "label": "Pricebook",
+          "kind": "section",
+          "depth": 0,
+          "parent": null,
+          "route": "/pricebook",
+          "gating": "PRICE_BOOK_READ",
+          "summary": "Org catalog of items, packages and discounts.",
+          "content": [
+            "Sidebar section, no sub-items"
+          ],
+          "actions": [
+            "Navigate to the pricebook"
+          ],
+          "states": [
+            "Hidden without PRICE_BOOK_READ"
+          ],
+          "goesTo": [
+            {
+              "to": "pw-pricebook-tabs",
+              "via": "select Pricebook"
+            }
+          ]
+        },
+        {
+          "id": "pw-pricebook-tabs",
+          "label": "Items, packages and discounts",
+          "kind": "page",
+          "depth": 1,
+          "parent": "pw-pricebook",
+          "route": "/pricebook, /pricebook/packages, /pricebook/discounts",
+          "gating": "PRICE_BOOK_READ; writes need canWritePricebook; packages and discounts behind flags that redirect when off",
+          "summary": "Three route-based tabs with sheets and bulk actions.",
+          "content": [
+            "H1 plus route-based tabs Items, Packages, Discounts",
+            "Items columns: Name, Description, Unit price, Item type",
+            "Packages columns: Name, Description, Items, Price, actions",
+            "Discounts columns: Name, Description, Amount, actions",
+            "Search on each tab",
+            "Type filter on items"
+          ],
+          "actions": [
+            "New item, package or discount sheets, icon-only on narrow containers",
+            "Row menus: View, Edit, Move to archive, Move to pricebook",
+            "Row selection drives a bulk action bar with Duplicate, Archive, Unarchive",
+            "Package sheet with drag-and-drop reordering and an add-items panel",
+            "Discount sheet and delete dialog",
+            "Item sheet sections: Basic info, Overview, Price, Quantity calculation, Area metric items, plus a validation-errors section",
+            "Unsaved-changes dialog",
+            "View archive"
+          ],
+          "states": [
+            "Per-tab skeletons",
+            "Empty card for both no-items and search-empty",
+            "Validation sections inside sheets"
+          ],
+          "goesTo": [
+            {
+              "to": "pw-pricebook-archive",
+              "via": "View archive"
+            },
+            {
+              "to": "pw-proposal-detail",
+              "via": "create proposal with items"
+            }
+          ]
+        },
+        {
+          "id": "pw-pricebook-archive",
+          "label": "Pricebook archive",
+          "kind": "page",
+          "depth": 2,
+          "parent": "pw-pricebook-tabs",
+          "route": "/pricebook/items/archived, /pricebook/packages/archived",
+          "gating": "PRICE_BOOK_READ",
+          "summary": "Archived items and packages with conflict resolution.",
+          "content": [
+            "Breadcrumbs, H1 and description",
+            "Archived items or packages table"
+          ],
+          "actions": [
+            "Back",
+            "Unarchive via row menu or bulk bar",
+            "Archive add-items modal",
+            "Archive conflict dialog with a conflict list panel and per-package conflict rows",
+            "Leave-confirm dialog on unsaved edits"
+          ],
+          "states": [
+            "Skeletons and empty cards",
+            "Conflict panel when unarchiving collides with live packages"
+          ],
+          "goesTo": [
+            {
+              "to": "pw-pricebook-tabs",
+              "via": "back"
+            }
+          ]
+        },
+        {
+          "id": "pw-settings",
+          "label": "Settings",
+          "kind": "section",
+          "depth": 0,
+          "parent": null,
+          "route": "/settings",
+          "gating": "canReadOrgSettings",
+          "summary": "Org-level defaults for proposals, contracts and measurements.",
+          "content": [
+            "Sidebar section with three sub-items"
+          ],
+          "actions": [
+            "Navigate to a settings page"
+          ],
+          "states": [
+            "Hidden without canReadOrgSettings"
+          ],
+          "goesTo": [
+            {
+              "to": "pw-settings-proposal",
+              "via": "Proposals"
+            },
+            {
+              "to": "pw-settings-contracts",
+              "via": "Contracts"
+            },
+            {
+              "to": "pw-settings-measurements",
+              "via": "Measurements"
+            }
+          ]
+        },
+        {
+          "id": "pw-settings-proposal",
+          "label": "Proposal settings",
+          "kind": "page",
+          "depth": 1,
+          "parent": "pw-settings",
+          "route": "/settings/proposal",
+          "gating": "canReadOrgSettings; edits need write",
+          "summary": "Payment preferences, estimate options, proposal defaults.",
+          "content": [
+            "H1",
+            "Payment settings group: radio between Pick for me and Use my preferences, a selected-count line, cash and financing preference cards, add-preference placeholders up to a maximum",
+            "Estimates group: tax label and description toggle",
+            "Proposal default group with the good, better and best options editor, shown only when its flag is on and contracts access is off"
+          ],
+          "actions": [
+            "Radio switch",
+            "Add-preference sheet",
+            "Delete a preference only when more than one remains",
+            "Options editor autosaves",
+            "Open item picker"
+          ],
+          "states": [
+            "Read-only notice with a dimmed, pointer-events-none editor without write permission",
+            "Network error with retry on template load failure",
+            "Error toasts",
+            "Sections return null without read permission"
+          ],
+          "goesTo": [
+            {
+              "to": "pw-settings-item-picker",
+              "via": "Open item picker"
+            },
+            {
+              "to": "pw-settings-contracts",
+              "via": "sidebar"
+            },
+            {
+              "to": "pw-settings-measurements",
+              "via": "sidebar"
+            }
+          ]
+        },
+        {
+          "id": "pw-settings-item-picker",
+          "label": "Proposal settings item picker",
+          "kind": "page",
+          "depth": 2,
+          "parent": "pw-settings-proposal",
+          "route": "/settings/proposal/add-items",
+          "gating": "canWriteOrgSettings",
+          "summary": "Pricebook picker for proposal defaults. Marked temporary in code.",
+          "content": [
+            "Back link, H1",
+            "Pricebook picker tables",
+            "Sticky footer",
+            "Marked temporary by an in-code TODO"
+          ],
+          "actions": [
+            "Back",
+            "Cancel",
+            "Add to option, disabled until something is selected, returning picks to the options editor"
+          ],
+          "states": [
+            "Skeletons and empty cards"
+          ],
+          "goesTo": [
+            {
+              "to": "pw-settings-proposal",
+              "via": "Add to option or Cancel"
+            }
+          ]
+        },
+        {
+          "id": "pw-settings-contracts",
+          "label": "Contracts settings",
+          "kind": "page",
+          "depth": 1,
+          "parent": "pw-settings",
+          "route": "/settings/contracts",
+          "gating": "canReadOrgSettings plus useContractUiAccess, redirects when off",
+          "summary": "Contract and amendment terms, with a sales-rep edit toggle.",
+          "content": [
+            "H1",
+            "Contract and Amendment tab pair",
+            "Description-of-changes group with an auto-populated badge",
+            "Estimate section on the contract tab only",
+            "Terms and conditions rich text editor",
+            "Allow sales rep to edit switch with tooltip",
+            "Company info card",
+            "Customer section",
+            "Sales rep section"
+          ],
+          "actions": [
+            "Switch tabs",
+            "Edit terms",
+            "Toggle sales-rep edit",
+            "Cancel",
+            "Save changes"
+          ],
+          "states": [
+            "Settings skeleton",
+            "Network error around the terms editor"
+          ],
+          "goesTo": [
+            {
+              "to": "pw-settings-proposal",
+              "via": "sidebar"
+            },
+            {
+              "to": "pw-settings-measurements",
+              "via": "sidebar"
+            }
+          ]
+        },
+        {
+          "id": "pw-settings-measurements",
+          "label": "Measurements settings",
+          "kind": "page",
+          "depth": 1,
+          "parent": "pw-settings",
+          "route": "/settings/measurements",
+          "gating": "canReadOrgSettings",
+          "summary": "One field: default waste percentage.",
+          "content": [
+            "H1",
+            "Waste group with a numeric waste-percentage field"
+          ],
+          "actions": [
+            "Edit",
+            "Cancel",
+            "Save changes"
+          ],
+          "states": [
+            "Pending save on the button"
+          ],
+          "goesTo": [
+            {
+              "to": "pw-settings-proposal",
+              "via": "sidebar"
+            },
+            {
+              "to": "pw-settings-contracts",
+              "via": "sidebar"
+            }
+          ]
+        },
+        {
+          "id": "pw-login",
+          "label": "Login area",
+          "kind": "section",
+          "depth": 0,
+          "parent": null,
+          "route": "/login, /login/auto-select, /login/get-started, /login/request-access, /login/unauthorized",
+          "gating": "none",
+          "summary": "Five landing spots on a shared login layout.",
+          "content": [
+            "Shared login layout",
+            "/login: email and password form",
+            "/auto-select: a bare spinner while the best workspace is authorized",
+            "/get-started: welcome headline and feature cards",
+            "/request-access: executive-admin copy",
+            "/unauthorized: interpolates the org name from query params"
+          ],
+          "actions": [
+            "Sign in",
+            "Forgot password",
+            "Get started",
+            "Grant access",
+            "Log out"
+          ],
+          "states": [
+            "Validation errors",
+            "Submit loading",
+            "Auto-select spinner",
+            "Unauthorized falls back to a default org name"
+          ],
+          "goesTo": [
+            {
+              "to": "pw-leads-list",
+              "via": "successful sign in"
+            }
+          ]
+        },
+        {
+          "id": "pw-new-loan",
+          "label": "New loan application",
+          "kind": "flow",
+          "depth": 0,
+          "parent": null,
+          "route": "/new-loan",
+          "gating": "reached from Proposal detail",
+          "steps": 17,
+          "summary": "Borrower and co-borrower stepper with five outcomes.",
+          "content": [
+            "A stepper: Start, Application method, Borrower contact, Birth and citizenship, Work site, Employment, Disclosures and consents, Signature, Confirmation",
+            "The same set again for a co-borrower plus co-borrower info and contact",
+            "Terminates on qualifies, does not qualify, pending, lower offer or different offer"
+          ],
+          "actions": [
+            "Next or jump to a step",
+            "Choose an application method, which branches the path",
+            "Capture signature",
+            "Leave-confirmation dialog",
+            "Step index persists in hash storage so a reload resumes"
+          ],
+          "states": [
+            "Outcome branching on approved, declined, conditional and pending"
+          ],
+          "goesTo": [
+            {
+              "to": "pw-proposal-detail",
+              "via": "exit"
+            },
+            {
+              "to": "pw-lead-loans",
+              "via": "completion"
+            }
+          ]
+        },
+        {
+          "id": "pw-finance-redirect",
+          "label": "Finance account redirect",
+          "kind": "page",
+          "depth": 0,
+          "parent": null,
+          "route": "/financeAccount/$financeAccountNumber/$action",
+          "gating": "authenticated, optional limited-use token",
+          "summary": "No UI. Entry point used by Origin.",
+          "content": [
+            "No UI",
+            "Resolves a finance account number to its lead and proposal, then redirects",
+            "Entry point used by other GoodLeap apps including Origin, for change orders and cancellations",
+            "The action segment is captured but unused"
+          ],
+          "actions": [
+            "None, pass-through"
+          ],
+          "states": [
+            "Not-found on 404, which is also returned instead of 403 when access is missing, so the two are indistinguishable",
+            "Error page otherwise",
+            "No session lands in normal sign-in"
+          ],
+          "goesTo": [
+            {
+              "to": "pw-proposal-detail",
+              "via": "resolved"
+            },
+            {
+              "to": "pw-login",
+              "via": "no session"
+            }
+          ]
+        },
+        {
+          "id": "pw-root-redirect",
+          "label": "Root redirect",
+          "kind": "page",
+          "depth": 0,
+          "parent": null,
+          "route": "/",
+          "gating": "authenticated",
+          "summary": "Where a signed-in user lands. No UI of its own.",
+          "content": [
+            "Authenticated index route",
+            "Resolves to the default landing destination rather than rendering a page"
+          ],
+          "actions": [
+            "None, pass-through"
+          ],
+          "states": [
+            "Unauthenticated users are sent to the login area"
+          ],
+          "goesTo": [
+            {
+              "to": "pw-leads-list",
+              "via": "default landing"
+            },
+            {
+              "to": "pw-login",
+              "via": "no session"
+            }
+          ]
+        },
+        {
+          "id": "pw-dev-sink",
+          "label": "Component catalog",
+          "kind": "page",
+          "depth": 0,
+          "parent": null,
+          "route": "/dev/sink",
+          "gating": "none. Note this route is NOT inside the _authenticated layout",
+          "summary": "Live demos of all 54 UI primitives. Not a product surface.",
+          "migration": "out-of-scope",
+          "content": [
+            "Sidebar of component names",
+            "Roughly 65 component demos including the AG-UI analytics widgets",
+            "Driven by component-list.ts"
+          ],
+          "actions": [
+            "Browse and interact with each demo"
+          ],
+          "states": [
+            "None"
+          ],
+          "goesTo": []
+        }
+      ]
+    },
+    {
+      "id": "pros-app",
+      "label": "Pros App",
+      "spine": "Bottom nav, three tabs: Home, Pipeline, More.",
+      "note": "This is the CRM shell only (crmPros on), which is the target state. The legacy five-tab shell has been removed from this map deliberately. Under CRM, Leads is a Pipeline sub-tab, and Calculator and Payments are quick-action cards on Home rather than tabs. Confirmed in app_shell_tabs_provider.dart.",
+      "nodes": [
+        {
+          "id": "pa-origin-webview",
+          "label": "Origin WebView",
+          "kind": "page",
+          "depth": 0,
+          "parent": null,
+          "route": "originWebView",
+          "gating": "prosAccess",
+          "summary": "The app's only link to Origin. No error UI.",
+          "content": [
+            "Full-bleed WebViewWidget on a resolved Origin URL passed via extra",
+            "App bar with back control only",
+            "ORPHANED IN THIS MAP: its entry point was the legacy Leads tab, which has been removed. Whether it survives under CRM, and from where, is an open question worth confirming."
+          ],
+          "actions": [
+            "In-place web navigation, with the delegate keeping all requests inside this one instance and suppressing about:blank",
+            "Back to pop"
+          ],
+          "states": [
+            "Loading tracked via a provider on page start and finish",
+            "HTTP and resource errors are no-ops, so there is no visible error UI"
+          ],
+          "goesTo": []
+        },
+        {
+          "id": "pa-tab-home",
+          "label": "Home tab",
+          "kind": "section",
+          "depth": 0,
+          "parent": null,
+          "route": "branch 1",
+          "gating": "crmPros AND (prosAccess OR calculator OR payments)",
+          "summary": "CRM-era landing tab.",
+          "content": [
+            "Post-login landing"
+          ],
+          "actions": [
+            "Navigate to a quick action"
+          ],
+          "states": [
+            "Hidden without crmPros"
+          ],
+          "goesTo": [
+            {
+              "to": "pa-home",
+              "via": "select Home"
+            }
+          ]
+        },
+        {
+          "id": "pa-home",
+          "label": "CRM Home",
+          "kind": "page",
+          "depth": 1,
+          "parent": "pa-tab-home",
+          "route": "home",
+          "gating": "crmPros and any of prosAccess, calculator, payments",
+          "summary": "Three quick-action cards. Two-pane on tablet.",
+          "content": [
+            "Logo, tagline, what do you want to do heading",
+            "Quick-action cards: New Lead, Financing Calculator, Collect Payment",
+            "Phone scrolls vertically; tablet is two-pane"
+          ],
+          "actions": [
+            "Tap a card"
+          ],
+          "states": [
+            "Cards resolve from async permission providers with a false fallback, so unresolved permissions render a shorter list",
+            "No explicit loading or error UI"
+          ],
+          "goesTo": [
+            {
+              "to": "pa-new-lead-flow",
+              "via": "New Lead"
+            },
+            {
+              "to": "pa-payment-build-flow",
+              "via": "Collect Payment"
+            },
+            {
+              "to": "pa-calculator-config",
+              "via": "Financing Calculator"
+            }
+          ]
+        },
+        {
+          "id": "pa-new-lead-flow",
+          "label": "New lead flow",
+          "kind": "flow",
+          "depth": 2,
+          "parent": "pa-home",
+          "route": "newLeadAddress, newLeadConfirmAddress, newLeadCustomer",
+          "gating": "crmPros + prosAccess + leadWrite",
+          "steps": 3,
+          "summary": "Address, confirm on a map, customer details.",
+          "content": [
+            "Step 1: address search with Places suggestions or a bullet-point empty state, plus a branding panel",
+            "Step 2: selected-address chip, draggable-pin map card, Continue",
+            "Step 3: customer and contact form"
+          ],
+          "actions": [
+            "Type or submit an address, where Enter auto-picks the top suggestion",
+            "Pick a suggestion",
+            "Drag the map pin to reverse-geocode",
+            "Continue",
+            "Skip via Add details later",
+            "Close to a discard confirmation",
+            "Pendo events on started, submitted and skipped"
+          ],
+          "states": [
+            "Loading scrim while resolving place details or submitting",
+            "Inline toast from an error message or API exception",
+            "Back blocked mid-submit"
+          ],
+          "goesTo": [
+            {
+              "to": "pa-lead-details",
+              "via": "phone: switch to Pipeline Leads then push Lead details"
+            },
+            {
+              "to": "pa-pipeline",
+              "via": "tablet: switch to Pipeline Leads with the card preselected, no push"
+            }
+          ]
+        },
+        {
+          "id": "pa-calculator-config",
+          "label": "Calculator configuration",
+          "kind": "page",
+          "depth": 2,
+          "parent": "pa-home",
+          "route": "calculatorConfiguration",
+          "gating": "orgCanCreateApplication",
+          "summary": "Skipped entirely for single-option orgs.",
+          "content": [
+            "Selection surface for state, organization, channel and product category when more than one option exists"
+          ],
+          "actions": [
+            "Open select overlays",
+            "Confirm"
+          ],
+          "states": [
+            "Skipped entirely when there is a single selection for each"
+          ],
+          "goesTo": [
+            {
+              "to": "pa-calculator",
+              "via": "confirm"
+            }
+          ]
+        },
+        {
+          "id": "pa-calculator",
+          "label": "Loan and lease calculator",
+          "kind": "page",
+          "depth": 3,
+          "parent": "pa-calculator-config",
+          "route": "loanCalculator, leaseCalculator",
+          "gating": "orgCanCreateApplication",
+          "summary": "Amount entry with up to three comparison columns.",
+          "content": [
+            "Project amount entry",
+            "Product, term and rate offer cards",
+            "Up to three side-by-side comparison columns",
+            "Monthly payment and dealer fee figures",
+            "Start-of-flow prompt"
+          ],
+          "actions": [
+            "Enter amount",
+            "Add option to compare and Add a third option",
+            "Edit or remove a compare column",
+            "Product, offer, payment type and reference number overlays",
+            "Lease benefits sheet",
+            "Start application"
+          ],
+          "states": [
+            "Empty prompt",
+            "Per-offer loading",
+            "Disqualification bottom sheet"
+          ],
+          "goesTo": [
+            {
+              "to": "pa-loan-app-flow",
+              "via": "start application"
+            },
+            {
+              "to": "pa-heloc-flow",
+              "via": "HELOC product"
+            }
+          ]
+        },
+        {
+          "id": "pa-loan-app-flow",
+          "label": "Unsecured loan application flow",
+          "kind": "flow",
+          "depth": 4,
+          "parent": "pa-calculator",
+          "route": "applicationStart",
+          "gating": "orgCanCreateApplication",
+          "steps": 17,
+          "summary": "Borrower, optional co-borrower, disclosures, decision.",
+          "content": [
+            "Borrower info, address and details",
+            "Optional co-borrower trio",
+            "Disclosures plus a disclosure webview",
+            "Signature",
+            "Review",
+            "Decision: approved, denied, counter offer",
+            "Second-lender form and decision"
+          ],
+          "actions": [
+            "Field entry",
+            "Address validation",
+            "Share application by email",
+            "Per-section edit-information overlays",
+            "Add and remove co-borrower with confirmation",
+            "Sign",
+            "Submit",
+            "A who can be a co-borrower info page",
+            "Exit confirmation"
+          ],
+          "states": [
+            "Per-step submit loading",
+            "Address-not-found and validation overlays",
+            "Disqualification sheet",
+            "Denied and counter-offer variants"
+          ],
+          "goesTo": [
+            {
+              "to": "pa-pipeline",
+              "via": "approval"
+            },
+            {
+              "to": "pa-calculator",
+              "via": "exit"
+            }
+          ]
+        },
+        {
+          "id": "pa-heloc-flow",
+          "label": "HELOC application flow",
+          "kind": "flow",
+          "depth": 4,
+          "parent": "pa-calculator",
+          "route": "helocPrequalification",
+          "gating": "orgCanCreateApplication plus HELOC availability",
+          "steps": 22,
+          "summary": "Dual-applicant wizard with device handover.",
+          "content": [
+            "Prequalification offer",
+            "Education materials",
+            "Co-applicant involvement",
+            "E-consent for both applicants",
+            "Edit offer",
+            "Marital status and spouse information for both",
+            "HMDA questionnaires for both",
+            "Disclosures for both",
+            "Review",
+            "Signatures for both",
+            "Decision pages: under review, approved, declined, pending",
+            "Change offer"
+          ],
+          "actions": [
+            "Accept or edit offer",
+            "Hand the device to the co-applicant via a handover overlay",
+            "Consent",
+            "Sign",
+            "Change offer",
+            "Reduce credit line",
+            "Switch to unsecured",
+            "Language confirmation",
+            "Share-or-exit and review-exit overlays",
+            "Term, variable-rate, cash-back, project-reserve and total-credit-line info overlays"
+          ],
+          "states": [
+            "Four decision variants",
+            "Dropped-borrower overlay"
+          ],
+          "goesTo": [
+            {
+              "to": "pa-pipeline",
+              "via": "submission"
+            },
+            {
+              "to": "pa-loan-app-flow",
+              "via": "switch to unsecured"
+            }
+          ]
+        },
+        {
+          "id": "pa-payment-build-flow",
+          "label": "Collect a payment build flow",
+          "kind": "flow",
+          "depth": 2,
+          "parent": "pa-home",
+          "route": "paymentCustomerDetails",
+          "gating": "canCreatePayments; redirects to unauthorized when canViewPayments is false",
+          "steps": 10,
+          "summary": "Customer, address, order, subscription, total.",
+          "content": [
+            "Customer details form",
+            "Project and billing address",
+            "Order Summary: billing card, line items with unit and line totals, dual-pricing card versus bank-transfer labels, subscription section with add-ons, running total",
+            "Product and service catalog",
+            "Item details",
+            "Subscription plan and frequency pickers",
+            "One-time amount entry"
+          ],
+          "actions": [
+            "Barcode scanner for products",
+            "Add, edit and remove line items via row menus",
+            "Edit selection",
+            "Edit add-ons",
+            "Custom amount",
+            "Choose subscription",
+            "Continue to payment"
+          ],
+          "states": [
+            "Empty cart",
+            "Per-section loading",
+            "Unauthorized redirect"
+          ],
+          "goesTo": [
+            {
+              "to": "pa-payment-capture-flow",
+              "via": "Continue to payment"
+            }
+          ]
+        },
+        {
+          "id": "pa-payment-capture-flow",
+          "label": "Payment capture and receipt flow",
+          "kind": "flow",
+          "depth": 3,
+          "parent": "pa-payment-build-flow",
+          "route": "reviewPaymentDetails",
+          "gating": "canCreatePayments",
+          "steps": 17,
+          "summary": "Tap to Pay, reader, eCheck, link, receipt.",
+          "content": [
+            "Review card with payment-method action cards: Tap to Pay, card reader, eCheck, share or email a payment link, save payment method",
+            "Reader status card",
+            "Signature capture",
+            "eCheck scan, manual entry and review",
+            "Success and failure results",
+            "Partially-paid result with method reselection",
+            "Receipt and share screens"
+          ],
+          "actions": [
+            "Tap to Pay",
+            "Pair or select a card reader",
+            "Scan a physical check with the camera",
+            "Manual check entry",
+            "Capture signature",
+            "Send or email a receipt",
+            "Share or email a payment link",
+            "Save a payment method",
+            "Set up a card reader"
+          ],
+          "states": [
+            "Location, NFC and Bluetooth permission interstitials",
+            "Tap-to-pay and signature-required interstitials",
+            "Spinner page",
+            "System and install update",
+            "Charge-card-reader",
+            "Universal error",
+            "Success, failed and partially-paid variants"
+          ],
+          "goesTo": [
+            {
+              "to": "pa-inperson-settings",
+              "via": "Set up a card reader"
+            },
+            {
+              "to": "pa-payment-transaction-details",
+              "via": "completion"
+            },
+            {
+              "to": "pa-pipeline",
+              "via": "Invoices sub-tab"
+            }
+          ]
+        },
+        {
+          "id": "pa-tab-pipeline",
+          "label": "Pipeline tab",
+          "kind": "section",
+          "depth": 0,
+          "parent": null,
+          "route": "branch 4",
+          "gating": "always visible",
+          "summary": "The only tab present in both shells.",
+          "content": [
+            "Always-visible shell tab"
+          ],
+          "actions": [
+            "Open the pipeline"
+          ],
+          "states": [
+            "Always present"
+          ],
+          "goesTo": [
+            {
+              "to": "pa-pipeline",
+              "via": "select Pipeline"
+            }
+          ]
+        },
+        {
+          "id": "pa-pipeline",
+          "label": "Pipeline hub",
+          "kind": "page",
+          "depth": 1,
+          "parent": "pa-tab-pipeline",
+          "route": "pipeline",
+          "gating": "none; Leads sub-tab needs crmPros + prosAccess, Invoices sub-tab needs canViewPayments",
+          "summary": "Financing, Invoices and Leads sub-tabs. Split pane on tablet.",
+          "content": [
+            "Top tabs: Financing, Invoices, Leads",
+            "Financing has a Submitted and Pending segmented control over paginated loan cards",
+            "Invoices shows payments history",
+            "Leads has a search field over paginated lead cards",
+            "Tablet is a split pane with flex ratios per display mode"
+          ],
+          "actions": [
+            "Switch sub-tab and segment",
+            "Search",
+            "Submitted-loans filter sheet",
+            "Pull to refresh",
+            "Tap a card, which pushes a detail page on phone and swaps the right pane on tablet"
+          ],
+          "states": [
+            "First-page and next-page spinners",
+            "Error with Try again",
+            "Four distinct lead empty states: below-minimum search hint, no results with a clear action, no filter results, empty list",
+            "Submitted and pending empties",
+            "With only Financing available the tab bar collapses to a plain Pipeline title"
+          ],
+          "goesTo": [
+            {
+              "to": "pa-lead-details",
+              "via": "tap a lead card"
+            },
+            {
+              "to": "pa-financing-detail",
+              "via": "tap a loan card"
+            },
+            {
+              "to": "pa-payment-transaction-details",
+              "via": "tap an invoice row"
+            }
+          ]
+        },
+        {
+          "id": "pa-lead-details",
+          "label": "Lead details",
+          "kind": "page",
+          "depth": 2,
+          "parent": "pa-pipeline",
+          "route": "leadDetails",
+          "gating": "crmPros + prosAccess; sub-tabs gated by invoiceRead, proposalRead, measurementRead",
+          "summary": "Overview, Projects, Invoices and Loan tabs.",
+          "content": [
+            "Header with name and address",
+            "Assignments row",
+            "Segmented control over four tabs",
+            "Overview: contacts, notes",
+            "Projects: auto-generated roof measurements card with area, facets and pitch; proposals list or 2-up grid with status badges and amounts",
+            "Invoices: totals invoiced, paid and due; invoice rows; new-invoice CTA",
+            "Loan: active and past loan cards with amount and linked proposal"
+          ],
+          "actions": [
+            "Pull to refresh, invalidating lead, assignments, invoices, notes, proposals, financing and loan statuses",
+            "Map action in the app bar or on the address, opening native maps and Pendo-tracked",
+            "Tab switch",
+            "New proposal, only once measurements are ready",
+            "View more",
+            "Show and hide cancelled proposals",
+            "Add contact",
+            "Add note",
+            "Open assignments"
+          ],
+          "states": [
+            "Full-page spinner and error text",
+            "Measurements skeleton",
+            "Generating measurements info card with expected completion time",
+            "Measurements unavailable state that hides",
+            "Per-tab shimmer, empty and error-with-retry",
+            "A deep-linked tab falls back to Overview when hidden by permissions"
+          ],
+          "goesTo": [
+            {
+              "to": "pa-lead-contacts",
+              "via": "Add contact"
+            },
+            {
+              "to": "pa-lead-assignments",
+              "via": "Open assignments"
+            },
+            {
+              "to": "pa-lead-notes",
+              "via": "Add note"
+            },
+            {
+              "to": "pa-lead-invoices",
+              "via": "new invoice"
+            },
+            {
+              "to": "pa-measurements-detail",
+              "via": "measurements card"
+            },
+            {
+              "to": "pa-pricebook-selection",
+              "via": "New proposal"
+            },
+            {
+              "to": "pa-proposal",
+              "via": "open a proposal"
+            },
+            {
+              "to": "pa-lead-loan-details",
+              "via": "open a loan"
+            }
+          ]
+        },
+        {
+          "id": "pa-lead-contacts",
+          "label": "Lead contacts",
+          "kind": "page",
+          "depth": 3,
+          "parent": "pa-lead-details",
+          "route": "leadContacts, leadContactAdd, leadContactEdit",
+          "gating": "crmPros + prosAccess",
+          "summary": "Three pages. Primary contact and invoice-required fields.",
+          "content": [
+            "Contact list with primary marker, email, phone and relationship rows",
+            "Add and edit form"
+          ],
+          "actions": [
+            "Add",
+            "Edit",
+            "Mark primary",
+            "Save",
+            "A required-details page for fields an invoice needs"
+          ],
+          "states": [
+            "Spinner",
+            "Centred error text",
+            "Max-contacts toast"
+          ],
+          "goesTo": [
+            {
+              "to": "pa-lead-details",
+              "via": "back"
+            },
+            {
+              "to": "pa-lead-invoices",
+              "via": "reached from the invoice send flow"
+            }
+          ]
+        },
+        {
+          "id": "pa-lead-assignments",
+          "label": "Lead assignments",
+          "kind": "page",
+          "depth": 3,
+          "parent": "pa-lead-details",
+          "route": "leadAssignments, addAssignees",
+          "gating": "crmPros + prosAccess",
+          "summary": "Two pages. Undo on removal.",
+          "content": [
+            "Assignee count header and rows"
+          ],
+          "actions": [
+            "Add assignees",
+            "Remove with an undo toast",
+            "Save"
+          ],
+          "states": [
+            "Spinner",
+            "Cannot-remove-last-assignee toast",
+            "Saved and removed toasts"
+          ],
+          "goesTo": [
+            {
+              "to": "pa-lead-details",
+              "via": "back"
+            }
+          ]
+        },
+        {
+          "id": "pa-lead-notes",
+          "label": "Lead notes",
+          "kind": "page",
+          "depth": 3,
+          "parent": "pa-lead-details",
+          "route": "leadNoteAdd, leadNoteView, leadNoteLinkAdd",
+          "gating": "crmPros + prosAccess",
+          "summary": "Three pages. Rich text with link insertion.",
+          "content": [
+            "Rich-text compose body with a formatting toolbar",
+            "Note view with author header and markdown body"
+          ],
+          "actions": [
+            "Format text",
+            "Insert a link via a pushed link-entry page that returns a URL",
+            "Save",
+            "Cancel to a discard confirmation",
+            "Delete"
+          ],
+          "states": [
+            "Note-too-long and cap-exceeded toasts",
+            "Add and delete error toasts",
+            "Load error with retry",
+            "A legacy format notice"
+          ],
+          "goesTo": [
+            {
+              "to": "pa-lead-details",
+              "via": "back to Overview"
+            }
+          ]
+        },
+        {
+          "id": "pa-lead-invoices",
+          "label": "Lead invoices",
+          "kind": "page",
+          "depth": 3,
+          "parent": "pa-lead-details",
+          "route": "leadInvoiceContactPicker, leadInvoiceCreate, leadInvoiceEdit, leadInvoiceDetails",
+          "gating": "invoiceRead",
+          "summary": "Four pages. Served by payments_api, unlike web.",
+          "content": [
+            "Contact picker",
+            "Amount and bill-to form",
+            "Read-only details with amount, billed-to and created or paid date"
+          ],
+          "actions": [
+            "Pick a bill-to contact",
+            "Enter amount",
+            "Send now or Resend",
+            "Send later or Update and send later",
+            "Add missing contact details",
+            "Cancel invoice via confirmation"
+          ],
+          "states": [
+            "Contact-unavailable toast with an action link",
+            "Empty list",
+            "Error rows"
+          ],
+          "goesTo": [
+            {
+              "to": "pa-lead-contacts",
+              "via": "add missing details"
+            },
+            {
+              "to": "pa-lead-details",
+              "via": "back to Invoices tab"
+            }
+          ]
+        },
+        {
+          "id": "pa-measurements-detail",
+          "label": "Measurements detail",
+          "kind": "page",
+          "depth": 3,
+          "parent": "pa-lead-details",
+          "route": "measurementsDetail",
+          "gating": "measurementRead",
+          "summary": "Read-only sections. Only when status is Ready.",
+          "content": [
+            "Overview, Waste factor, Areas by pitch, Facet measurements, Edge measurements",
+            "Separate phone and tablet layouts"
+          ],
+          "actions": [
+            "Scroll and expand",
+            "Back"
+          ],
+          "states": [
+            "Only reachable when measurement status is Ready"
+          ],
+          "goesTo": [
+            {
+              "to": "pa-lead-details",
+              "via": "back to Projects tab"
+            }
+          ]
+        },
+        {
+          "id": "pa-pricebook-selection",
+          "label": "Pricebook selection and edit estimate",
+          "kind": "page",
+          "depth": 3,
+          "parent": "pa-lead-details",
+          "route": "pricebookSelection, proposalEditEstimate",
+          "gating": "proposalWrite",
+          "summary": "Two pages. Items and packages with filters.",
+          "content": [
+            "Items and Packages segmented control over searchable paginated catalog lists",
+            "Sticky footer with a Save or Continue subtitle",
+            "Estimate editor with line items and totals"
+          ],
+          "actions": [
+            "Search",
+            "Filters page and apply",
+            "Select items and packages",
+            "Save or continue",
+            "Add more items from the editor",
+            "Discard confirmation on leaving with changes"
+          ],
+          "states": [
+            "No-items and no-packages empties",
+            "Filter sheet",
+            "Save in flight",
+            "Empty estimate"
+          ],
+          "goesTo": [
+            {
+              "to": "pa-proposal",
+              "via": "save, replacing the route"
+            }
+          ]
+        },
+        {
+          "id": "pa-proposal",
+          "label": "Proposal",
+          "kind": "page",
+          "depth": 3,
+          "parent": "pa-lead-details",
+          "route": "proposal, proposalCustomerView",
+          "gating": "proposalRead; editing needs proposalWrite and an editable status",
+          "summary": "Estimate, payment options, send and change order.",
+          "content": [
+            "Header with editable title and interactive status badge",
+            "Contacts",
+            "Estimate: line items, modifiers, roof image card",
+            "Payment section: payment option cards, loan preview, active-financing loan comparison",
+            "Multiple-proposals and acceptance-blocked notices",
+            "Rep-only footer: Send, Resend, Initiate change order, more",
+            "Tablet puts the header in the left pane and the footer full-width"
+          ],
+          "actions": [
+            "Rename",
+            "Change status",
+            "Contacts picker",
+            "Add modifier",
+            "Edit estimate",
+            "Add and edit payment option",
+            "Send or Resend",
+            "Initiate change order with a success overlay",
+            "More-options overlay: Customer view, Accept, Continue to loan application which is currently a coming soon toast"
+          ],
+          "states": [
+            "Full spinner",
+            "API exception toast",
+            "Pull to refresh",
+            "Contact-validation alert",
+            "Acceptance-blocked notice linking to the blocking proposal",
+            "Customer view forces edit off and hides the footer"
+          ],
+          "goesTo": [
+            {
+              "to": "pa-pricebook-selection",
+              "via": "Edit estimate"
+            },
+            {
+              "to": "pa-proposal-payment-option",
+              "via": "Add payment option"
+            },
+            {
+              "to": "pa-lead-contacts",
+              "via": "Contacts picker"
+            }
+          ]
+        },
+        {
+          "id": "pa-proposal-payment-option",
+          "label": "Proposal payment option",
+          "kind": "page",
+          "depth": 4,
+          "parent": "pa-proposal",
+          "route": "proposalPaymentOption, proposalPaymentOptionPicker",
+          "gating": "proposalWrite",
+          "summary": "Two pages. Add, edit and cancel financing.",
+          "content": [
+            "Add and edit form: loan product, loan amount with over-max alert, cash, term and rate, monthly payment diff rows",
+            "Picker list with a footer hint"
+          ],
+          "actions": [
+            "Select product, term and rate",
+            "Add or Update",
+            "Cancel financing via confirmation, popping to Lead details or Pipeline",
+            "Cancel cash",
+            "Delete option",
+            "Accept",
+            "Continue to loan application"
+          ],
+          "states": [
+            "Generic error toasts",
+            "Coming soon toast",
+            "Over-max alert"
+          ],
+          "goesTo": [
+            {
+              "to": "pa-proposal",
+              "via": "back"
+            },
+            {
+              "to": "pa-lead-details",
+              "via": "cancel financing, to the Loan tab"
+            }
+          ]
+        },
+        {
+          "id": "pa-lead-loan-details",
+          "label": "Lead loan details",
+          "kind": "page",
+          "depth": 3,
+          "parent": "pa-lead-details",
+          "route": "leadLoanDetails",
+          "gating": "crmPros + prosAccess",
+          "summary": "Overview and Timeline. Renders in the tablet right pane.",
+          "content": [
+            "Overview and Timeline segmented control",
+            "Overview: loan figures and second-lender decision messaging by lender name",
+            "Timeline: status events"
+          ],
+          "actions": [
+            "Switch tabs",
+            "Back, which sets a tab request so the parent returns to Loan"
+          ],
+          "states": [
+            "Timeline loading",
+            "Error block"
+          ],
+          "goesTo": [
+            {
+              "to": "pa-lead-details",
+              "via": "back to Loan tab"
+            }
+          ]
+        },
+        {
+          "id": "pa-financing-detail",
+          "label": "Submitted, lease and pending financing detail",
+          "kind": "page",
+          "depth": 2,
+          "parent": "pa-pipeline",
+          "route": "loanDetails, leaseDetails, pendingLoanDetails",
+          "gating": "none; variant chosen by finance type and segment",
+          "summary": "Three variants. Task cards drive post-sale work.",
+          "content": [
+            "Overview and Timeline tabs",
+            "Borrower and party info",
+            "Loan or lease terms",
+            "Milestone status",
+            "Task cards: conditions, HIC, installation, activation, rebates, change order"
+          ],
+          "actions": [
+            "Capture or upload documents",
+            "Upload conditions and condition documents",
+            "Upload HIC",
+            "Verify identity via a Socure sheet",
+            "Verify installation",
+            "System activation documents",
+            "Rebates",
+            "Change order and lease change order",
+            "Email or sign documents",
+            "PDF viewer",
+            "Refresh"
+          ],
+          "states": [
+            "Error toast",
+            "Per-section loading",
+            "Pending-loan refresh handler"
+          ],
+          "goesTo": [
+            {
+              "to": "pa-pipeline",
+              "via": "back"
+            }
+          ]
+        },
+        {
+          "id": "pa-payment-transaction-details",
+          "label": "Payment transaction details",
+          "kind": "page",
+          "depth": 2,
+          "parent": "pa-pipeline",
+          "route": "paymentDetails",
+          "gating": "canViewPayments",
+          "summary": "Line items, method, history and refund.",
+          "content": [
+            "Amount with a dual-pricing bank-transfer subtitle and refunded-amount banner",
+            "Created date",
+            "Custom-charge or order-summary line items with unit and line prices",
+            "Payment details block: reference id, transaction id, type, method with card identifier, sales rep",
+            "Customer details",
+            "History event list"
+          ],
+          "actions": [
+            "Send refund",
+            "Open payments filters",
+            "Dispute-origin info message",
+            "View history"
+          ],
+          "states": [
+            "Loading widget",
+            "No history available",
+            "Error toasts"
+          ],
+          "goesTo": [
+            {
+              "to": "pa-pipeline",
+              "via": "back to Invoices sub-tab"
+            }
+          ]
+        },
+        {
+          "id": "pa-tab-more",
+          "label": "More tab",
+          "kind": "section",
+          "depth": 0,
+          "parent": null,
+          "route": "branch 5",
+          "gating": "always visible",
+          "summary": "Account, settings and hardware setup.",
+          "content": [
+            "Always-visible shell tab"
+          ],
+          "actions": [
+            "Open More"
+          ],
+          "states": [
+            "Always present"
+          ],
+          "goesTo": [
+            {
+              "to": "pa-more",
+              "via": "select More"
+            }
+          ]
+        },
+        {
+          "id": "pa-more",
+          "label": "More",
+          "kind": "page",
+          "depth": 1,
+          "parent": "pa-tab-more",
+          "route": "more",
+          "gating": "none",
+          "summary": "Profile header over a settings list.",
+          "content": [
+            "Header with name, avatar, Edit, verified badge and workspace switch",
+            "List: Sign in with biometrics toggle, Change password, In-person payments with a set-up badge, Save payment methods with an info message, Sales professional information, State licenses and compliance, Terms and conditions",
+            "Footer Sign out",
+            "SMS opt-in and unverified-account widgets"
+          ],
+          "actions": [
+            "Toggle biometrics",
+            "Tap a row",
+            "Switch workspace",
+            "Sign out",
+            "Edit profile",
+            "Open SMS opt-in terms"
+          ],
+          "states": [
+            "Unverified-account widget",
+            "Set-up badge when in-person payments is unconfigured",
+            "Permission-gated rows hidden"
+          ],
+          "goesTo": [
+            {
+              "to": "pa-account-settings",
+              "via": "account rows"
+            },
+            {
+              "to": "pa-inperson-settings",
+              "via": "In-person payments"
+            }
+          ]
+        },
+        {
+          "id": "pa-account-settings",
+          "label": "Account and security settings",
+          "kind": "page",
+          "depth": 2,
+          "parent": "pa-more",
+          "route": "editAccountInformation and siblings",
+          "gating": "none",
+          "summary": "Six pages. Profile, password, biometrics, terms.",
+          "content": [
+            "Editable account fields",
+            "Sales-professional licence information",
+            "Password change with rules",
+            "Biometrics explainer",
+            "SMS and general terms"
+          ],
+          "actions": [
+            "Edit and save",
+            "Change password",
+            "Enable or disable biometrics",
+            "Accept SMS terms"
+          ],
+          "states": [
+            "Validation errors",
+            "Save in flight",
+            "Success toasts"
+          ],
+          "goesTo": [
+            {
+              "to": "pa-more",
+              "via": "back"
+            }
+          ]
+        },
+        {
+          "id": "pa-inperson-settings",
+          "label": "In-person payments settings",
+          "kind": "page",
+          "depth": 2,
+          "parent": "pa-more",
+          "route": "collectPaymentSetup, tapToPaySettings, cardReaderSettings, pairCardReader, savePaymentMethod",
+          "gating": "payments claims; admin-only surfaces redirect",
+          "summary": "Five pages. Hardware pairing and saved methods.",
+          "content": [
+            "Setup list",
+            "Tap to Pay status and settings",
+            "Card reader list with status cards and battery and charge state",
+            "Pairing screen",
+            "Saved payment methods"
+          ],
+          "actions": [
+            "Set up Tap to Pay",
+            "Pair a reader over Bluetooth",
+            "Install reader firmware",
+            "Charge-reader guidance",
+            "Educational material",
+            "Remove a saved method"
+          ],
+          "states": [
+            "Setting-up",
+            "Enabled",
+            "Install update",
+            "System update",
+            "Charge reader",
+            "Spinner",
+            "Universal error",
+            "Admin-only"
+          ],
+          "goesTo": [
+            {
+              "to": "pa-more",
+              "via": "back"
+            },
+            {
+              "to": "pa-payment-capture-flow",
+              "via": "a reader set up here is used at collection"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "origin-payments",
+      "label": "Origin payments",
+      "spine": "Five shell routes mounting @goodleap/pay-mfe, from origin-shell/src/routes/prod.html",
+      "note": "Payments surface only. Origin has 24 shell routes across 15 MFEs; the other 14 are not cloned. Personas: Service Admin, Executive Service Admin, GoodLeap Back-Office.",
+      "nodes": [
+        {
+          "id": "or-payments",
+          "label": "Payments",
+          "kind": "section",
+          "depth": 0,
+          "parent": null,
+          "route": "/payments",
+          "gating": "GoodPay status plus per-tab POS claims, wrapped in a LaunchDarkly gate",
+          "summary": "Tabbed container. Four claim-gated tabs.",
+          "content": [
+            "Tab strip in fixed order: Transactions, Invoices, Payment schedules, Subscriptions",
+            "Payment schedules is flag and mock gated",
+            "Each tab claim-gated",
+            "Default is Transactions, else Invoices"
+          ],
+          "actions": [
+            "Click a tab, which navigates to /payments/<tab>",
+            "The tab id is read from the URL"
+          ],
+          "states": [
+            "Full-page spinner while GoodPay status fetches",
+            "An empty tab array renders a blank strip",
+            "Per-tab error boundary"
+          ],
+          "goesTo": [
+            {
+              "to": "or-transactions",
+              "via": "Transactions tab"
+            },
+            {
+              "to": "or-invoices",
+              "via": "Invoices tab"
+            },
+            {
+              "to": "or-subscriptions",
+              "via": "Subscriptions tab"
+            },
+            {
+              "to": "or-schedules",
+              "via": "Payment schedules tab"
+            }
+          ]
+        },
+        {
+          "id": "or-transactions",
+          "label": "Transactions list",
+          "kind": "page",
+          "depth": 1,
+          "parent": "or-payments",
+          "route": "/payments/transactions",
+          "gating": "POS payments claims; Export and the Disputed toggle need org-wide claims",
+          "summary": "Filterable table with a 65/35 detail panel and export.",
+          "content": [
+            "All and Disputed switcher",
+            "Search",
+            "Export button",
+            "Capital promo banner slot",
+            "Filter bar: count, organization filter for internal users, date preset plus custom range, status, category, payment method",
+            "Table columns: Created with schedule and line-item tooltip, Status badge, Txn ID, Reference ID, Customer, Email, Project address, Sales rep, Payment method with brand icon and last four, Amount right-aligned",
+            "65/35 detail panel: amount and status header, Date received, Amount, Refunded, Processing fees, Net, Description, Agent entered, Sales rep, Transaction ID, Reference ID, payment-method block, History timeline"
+          ],
+          "actions": [
+            "Row click opens the detail panel",
+            "500ms debounced search",
+            "Filter and clear",
+            "Sorting disabled",
+            "Manual pagination at 10 per page",
+            "Export drawer: report type radio between Transaction summary and Line item when pricebook is enabled, date range select, custom from and to pickers, Start export producing an async report plus an emailed link and a snackbar",
+            "Refund with a confirm and partial amount when refundable and org-wide claim present",
+            "Resend receipt on all but Failed",
+            "?reportId= auto-downloads",
+            "?transactionId= preselects a row"
+          ],
+          "states": [
+            "Spinners on list and detail",
+            "Error loading transaction details",
+            "Internal users with no org selected cannot click rows",
+            "Inline date validation",
+            "Export failure snackbar"
+          ],
+          "goesTo": [
+            {
+              "to": "or-disputed",
+              "via": "Disputed switcher"
+            },
+            {
+              "to": "or-report-download",
+              "via": "emailed export link"
+            }
+          ]
+        },
+        {
+          "id": "or-disputed",
+          "label": "Disputed transactions",
+          "kind": "embedded",
+          "depth": 2,
+          "parent": "or-transactions",
+          "route": "/payments/transactions?status=disputed",
+          "gating": "org-wide payments claims",
+          "summary": "Stripe ConnectPaymentDisputes. Not ours.",
+          "content": [
+            "Stripe ConnectPaymentDisputes only",
+            "No local filters, search or export; all suppressed in this view"
+          ],
+          "actions": [
+            "Respond to a dispute inside the embedded Stripe UI",
+            "All to leave"
+          ],
+          "states": [
+            "Nothing local; state owned by the Stripe Connect session wrapper"
+          ],
+          "goesTo": [
+            {
+              "to": "or-transactions",
+              "via": "All"
+            }
+          ],
+          "migration": "third-party"
+        },
+        {
+          "id": "or-invoices",
+          "label": "Invoices list",
+          "kind": "page",
+          "depth": 1,
+          "parent": "or-payments",
+          "route": "/payments/invoices",
+          "gating": "invoice claims; Partially paid status and schedule-augmented rows only under the payment-schedules mock",
+          "summary": "Global org-wide list with reminders and an AI banner.",
+          "content": [
+            "Search",
+            "Promo banner slot: Capital plus an AI smart-recommendation banner",
+            "Filter bar: count, organization internal-only, date quick filters with custom, status checkboxes",
+            "Columns: Created, Status badge, Due, Invoice no., Reference ID, Customer, Project address, Amount, dual-pricing aware",
+            "Detail panel: amount and status header with a bank-transfer subtitle, customer block, invoice banner, Reminder insights, invoice link with Copy, Overview with created, due or final payment date, Invoice ID, Schedule ID, Reference ID and sales rep, transaction and subscription breakdown, payment-method block, payment breakdown when schedule-backed, History"
+          ],
+          "actions": [
+            "Row click",
+            "Debounced search with a Pendo event",
+            "Server-side sort",
+            "Pagination",
+            "Resend invoice",
+            "Cancel invoice, danger confirm, Open only",
+            "Send reminder modal",
+            "Cancel reminder",
+            "Copy invoice link, disabled for internal users"
+          ],
+          "states": [
+            "Spinners",
+            "Failed to load invoice link",
+            "Date-range validation with the query disabled while invalid",
+            "Empty table"
+          ],
+          "goesTo": [
+            {
+              "to": "or-auto-reminders",
+              "via": "smart-recommendation banner"
+            },
+            {
+              "to": "or-capital",
+              "via": "Capital banner"
+            }
+          ]
+        },
+        {
+          "id": "or-subscriptions",
+          "label": "Subscriptions list",
+          "kind": "page",
+          "depth": 1,
+          "parent": "or-payments",
+          "route": "/payments/subscriptions",
+          "gating": "subscription claims",
+          "summary": "Plans and add-ons with a cancel drawer.",
+          "content": [
+            "Header with search",
+            "Capital promo banner",
+            "Filter bar: count, organization internal-only, status, plan name derived from results, frequency",
+            "Columns: Status badge, Customer, Project address, Plan, Add-ons, Price with dual pricing, Frequency",
+            "Detail panel: customer, price, frequency and status header, bank-transfer subtitle, plans table with base plan and add-ons, payment-method block, sales rep, billing start date, History"
+          ],
+          "actions": [
+            "Row click",
+            "Debounced search",
+            "Sort",
+            "Pagination",
+            "Cancel subscription drawer when status is not Cancelled, Pending or Processing"
+          ],
+          "states": [
+            "Spinners",
+            "No explicit error branch",
+            "Empty table"
+          ],
+          "goesTo": [
+            {
+              "to": "or-capital",
+              "via": "Capital banner"
+            }
+          ]
+        },
+        {
+          "id": "or-schedules",
+          "label": "Payment schedules list",
+          "kind": "page",
+          "depth": 1,
+          "parent": "or-payments",
+          "route": "/payments/payment-schedules",
+          "gating": "FLAGGED AND MOCK-BACKED: LaunchDarkly flag plus devint01 plus an org allowlist of two test orgs; the service layer is a mock seam",
+          "summary": "Installment billing. Barely real yet.",
+          "content": [
+            "Filter bar: count, organization internal-only, status checkboxes",
+            "Columns: Created, Status badge, Progress as a gradient bar with completed over total, Schedule ID, Start date, Customer, Next payment in days, Outstanding amount, Schedule total",
+            "Detail panel: total, status, bank-transfer subtitle, customer, failed-payment alert with the next attempt date, per-installment payment breakdown, schedule details, payment method, History"
+          ],
+          "actions": [
+            "Row click",
+            "Status filter",
+            "Sort, default Created descending",
+            "Pagination",
+            "Cancel schedule with a danger confirm quoting remaining payments and outstanding amount, for external users with manage-subscriptions and a cancelable status"
+          ],
+          "states": [
+            "Spinner",
+            "We couldn't load payment schedules. Please try again.",
+            "Empty",
+            "Detail error alert"
+          ],
+          "goesTo": [
+            {
+              "to": "or-payments",
+              "via": "back"
+            }
+          ],
+          "migration": "not-yet-real"
+        },
+        {
+          "id": "or-new-payment",
+          "label": "New payment",
+          "kind": "flow",
+          "depth": 0,
+          "parent": null,
+          "route": "/payments/create",
+          "gating": "private route; pricebook tab behind a flag plus org pricebook products; subscription tab requires existing plans",
+          "steps": 3,
+          "summary": "Customer, order, collect. Live receipt rail.",
+          "content": [
+            "A Next steps rail with per-step status icons and a live receipt showing customer summary, items or custom charge, and total with dual-pricing card price",
+            "Step 1: first and last name, email, phone with SMS consent, address lines, city, state, postal with autocomplete, reference number prefilled from ?ref=",
+            "Step 2: three order tabs, Charge an amount, Add products and services with a pricebook catalog including search, infinite scroll and manual price, Start a subscription with frequency, base plan and add-ons",
+            "Step 3: manual card entry, saved payment methods, invoice and link delivery, dual-pricing card versus bank totals"
+          ],
+          "actions": [
+            "Customer lookup and clear",
+            "Edit a completed step via a pencil",
+            "Switch order tab, which clears cart, amount, plan and transaction ids",
+            "Add and remove pricebook items and quantities",
+            "Override price",
+            "Select a saved method",
+            "Continue per step",
+            "Send invoice by email or copy the link",
+            "Charge",
+            "Enforced $0.50 minimum and an org max transaction limit that is policy-override aware"
+          ],
+          "states": [
+            "In-progress, complete and empty step icons",
+            "The receipt collapses with no data",
+            "Success screens for payment succeeded and invoice sent",
+            "Continue gated on validation",
+            "Saved-payment error component",
+            "Spinner during the pricebook probe"
+          ],
+          "goesTo": [
+            {
+              "to": "or-transactions",
+              "via": "payment success"
+            },
+            {
+              "to": "or-invoices",
+              "via": "invoice sent"
+            }
+          ]
+        },
+        {
+          "id": "or-capital",
+          "label": "Capital",
+          "kind": "embedded",
+          "depth": 0,
+          "parent": null,
+          "route": "/capital",
+          "gating": "capital permissions",
+          "summary": "Stripe CapitalFinancing. Five states.",
+          "content": [
+            "One of five states",
+            "Payments-not-enabled progress card with a step checklist and a Get started CTA",
+            "Payments-enabled-no-offer progress card",
+            "Offer-available Stripe CapitalFinancingPromotion",
+            "Financing states, application in progress, denied, active loan, past due, fully repaid, rendering embedded CapitalFinancing",
+            "Fully-repaid-with-offer split layout",
+            "Stripe Capital legal disclosure footnote"
+          ],
+          "actions": [
+            "Get started to Payment settings",
+            "Apply for financing inside the embedded Stripe session",
+            "Submitting invalidates the payment-party config cache"
+          ],
+          "states": [
+            "Spinner until GoodPay status and party config fetch",
+            "Error page when there is no organization id"
+          ],
+          "goesTo": [
+            {
+              "to": "or-payment-settings",
+              "via": "Get started"
+            }
+          ],
+          "migration": "later-wave"
+        },
+        {
+          "id": "or-admin",
+          "label": "Payments admin",
+          "kind": "section",
+          "depth": 0,
+          "parent": null,
+          "route": "/admin/payments",
+          "gating": "varies per page",
+          "summary": "Onboarding, business details, settings, policy.",
+          "content": [
+            "Shell route mounting pay-mfe for all admin payments pages"
+          ],
+          "actions": [
+            "Navigate to an admin page"
+          ],
+          "states": [
+            "Per-page gating"
+          ],
+          "goesTo": [
+            {
+              "to": "or-onboarding",
+              "via": "onboarding"
+            },
+            {
+              "to": "or-business-details",
+              "via": "business details"
+            },
+            {
+              "to": "or-payment-settings",
+              "via": "payment settings"
+            },
+            {
+              "to": "or-policy-overrides",
+              "via": "policy overrides"
+            }
+          ]
+        },
+        {
+          "id": "or-onboarding",
+          "label": "Payments onboarding",
+          "kind": "embedded",
+          "depth": 1,
+          "parent": "or-admin",
+          "route": "/admin/payments/onboarding",
+          "gating": "onboarding-mode redirect; ACH-only orgs get an upgrade variant",
+          "summary": "Five procedures. Embedded Stripe KYB.",
+          "content": [
+            "Five procedures in two sidebar groups",
+            "Business verification: business details, payout account, terms and conditions with an agreement disclaimer",
+            "Post-verification: Tap to Pay on iPhone, Enable GoodLeap Payments",
+            "Title is Just a few more steps to complete your setup, or Upgrade your payouts to ACH",
+            "A Questions? panel with payments support contacts, or the org's business development rep for ACH-only",
+            "Per-step actions bar"
+          ],
+          "actions": [
+            "Click a sidebar procedure to switch step",
+            "Complete Stripe KYB, payout bank account and terms inside embedded Connect components",
+            "Enable payments",
+            "A final screen on completion"
+          ],
+          "states": [
+            "Spinner during the mode check or an empty sidebar",
+            "Unauthorized error page without an organization id",
+            "The title hides once verification completes",
+            "An alert banner exists in code but is commented out"
+          ],
+          "goesTo": [
+            {
+              "to": "or-business-details",
+              "via": "business details step"
+            },
+            {
+              "to": "or-payment-settings",
+              "via": "completion"
+            }
+          ],
+          "migration": "third-party"
+        },
+        {
+          "id": "or-business-details",
+          "label": "Business details",
+          "kind": "embedded",
+          "depth": 1,
+          "parent": "or-admin",
+          "route": "/admin/payments/business-details",
+          "gating": "a flag switching Account Status for legacy Status Badges",
+          "summary": "Stripe AccountManagement plus payout account.",
+          "content": [
+            "Verification alert banner for pending-enabled and pending-disabled with a 1-5 days to process note",
+            "Account Status or Status Badges depending on the flag",
+            "A Stripe notification banner for incomplete or rejected accounts",
+            "Payout Account card in self-serve mode",
+            "A Business Details card wrapping Stripe AccountManagement for eventually-due and future requirements"
+          ],
+          "actions": [
+            "Edit or add a payout bank account",
+            "Update business profile fields in the embedded component",
+            "Resolve requirements from the notification banner"
+          ],
+          "states": [
+            "Spinner while fetching party config",
+            "Not-found error page on error",
+            "Unauthorized without an organization id",
+            "Cypress stubs stand in for the Stripe components"
+          ],
+          "goesTo": [
+            {
+              "to": "or-onboarding",
+              "via": "back"
+            },
+            {
+              "to": "or-payment-settings",
+              "via": "settings"
+            }
+          ],
+          "migration": "third-party"
+        },
+        {
+          "id": "or-payment-settings",
+          "label": "Payment settings",
+          "kind": "page",
+          "depth": 1,
+          "parent": "or-admin",
+          "route": "/admin/payments/payment-settings",
+          "gating": "per-card permissions plus several flags and dual-pricing eligibility",
+          "summary": "Card stack hub. Internal users search an org first.",
+          "content": [
+            "A card stack: Status badges when the self-serve flag is off, Pricebook integration, Enable invoice auto-reminders, Next-day card payouts, Dual pricing with an Enabled or Disabled state, Manage plans, QuickBooks connect, Tap to Pay, Order card reader, QuickBooks integration",
+            "ACH-only orgs with capital permission instead see a single Enable Payments card",
+            "Internal users get an org search bar first, Search by organization name or client ID, then the same stack for the selected contractor"
+          ],
+          "actions": [
+            "Toggle next-day payouts",
+            "Connect and disconnect QuickBooks",
+            "Enable Tap to Pay",
+            "Order card reader hardware",
+            "Navigate into Manage plans, Auto-reminders and Dual pricing",
+            "Enable Payments, disabled without capital permission",
+            "Internal org search and select"
+          ],
+          "states": [
+            "Spinner until GoodPay status and party config fetch",
+            "Per-card error boundary",
+            "Internal empty state: Select a contractor to see their Payment settings"
+          ],
+          "goesTo": [
+            {
+              "to": "or-manage-plans",
+              "via": "Manage plans"
+            },
+            {
+              "to": "or-auto-reminders",
+              "via": "Auto-reminders"
+            },
+            {
+              "to": "or-dual-pricing",
+              "via": "Dual pricing"
+            },
+            {
+              "to": "or-business-details",
+              "via": "Status badges"
+            },
+            {
+              "to": "or-capital",
+              "via": "Enable Payments"
+            }
+          ]
+        },
+        {
+          "id": "or-manage-plans",
+          "label": "Manage plans",
+          "kind": "page",
+          "depth": 2,
+          "parent": "or-payment-settings",
+          "route": "/admin/payments/payment-settings/manage-plans",
+          "gating": "product claims plus GoodPay enabled",
+          "summary": "Subscription product list with an add or edit drawer.",
+          "content": [
+            "Back-to-settings button",
+            "Create new plan for manage claims only",
+            "A plan list table of subscription products with price and frequency"
+          ],
+          "actions": [
+            "Create new plan via an add or edit drawer with name, price and frequency",
+            "Edit an existing plan",
+            "Return to settings"
+          ],
+          "states": [
+            "Returns null until GoodPay status fetches",
+            "A 401 error page when payments are disabled or claims are missing",
+            "View-only mode hides create"
+          ],
+          "goesTo": [
+            {
+              "to": "or-payment-settings",
+              "via": "back"
+            },
+            {
+              "to": "or-subscriptions",
+              "via": "plans in use"
+            }
+          ]
+        },
+        {
+          "id": "or-auto-reminders",
+          "label": "Auto-reminders",
+          "kind": "page",
+          "depth": 2,
+          "parent": "or-payment-settings",
+          "route": "/admin/payments/payment-settings/auto-reminders",
+          "gating": "an auto-reminders permission",
+          "summary": "Receivables agent. Schedule, method and tone.",
+          "content": [
+            "Back-to-settings button",
+            "A receivables-agent settings panel: reminder schedule, delivery method by email or SMS, tone selection, enable and disable state"
+          ],
+          "actions": [
+            "Enable or disable",
+            "Change schedule, tone and method",
+            "Save",
+            "Back"
+          ],
+          "states": [
+            "Owned by the settings component, with loading and save toasts"
+          ],
+          "goesTo": [
+            {
+              "to": "or-payment-settings",
+              "via": "back"
+            },
+            {
+              "to": "or-invoices",
+              "via": "reminders act on invoices"
+            }
+          ]
+        },
+        {
+          "id": "or-dual-pricing",
+          "label": "Dual pricing",
+          "kind": "page",
+          "depth": 2,
+          "parent": "or-payment-settings",
+          "route": "/admin/payments/payment-settings/dual-pricing",
+          "gating": "eligibility or internal, plus a card permission; edits need a manage permission",
+          "summary": "Markup percentage with a live price preview.",
+          "content": [
+            "Back to settings",
+            "A header card with an Enabled or Disabled badge and explanatory copy",
+            "A markup percentage input from 0.01% to a maximum with helper text",
+            "A live preview panel showing card versus bank price against a $1,000 bank price",
+            "A note that changes take effect immediately for new payments"
+          ],
+          "actions": [
+            "Edit markup",
+            "Save changes, where first-time enabling opens a consent modal",
+            "Cancel and reset",
+            "Disable as a danger action",
+            "Success and failure toasts"
+          ],
+          "states": [
+            "Body hidden until fetched and permitted",
+            "Markup read-only when enabled but not editing, or view-only",
+            "Save disabled when unchanged or out of range",
+            "Loading on enable and disable"
+          ],
+          "goesTo": [
+            {
+              "to": "or-payment-settings",
+              "via": "back"
+            }
+          ]
+        },
+        {
+          "id": "or-policy-overrides",
+          "label": "Policy overrides",
+          "kind": "page",
+          "depth": 1,
+          "parent": "or-admin",
+          "route": "/admin/payments/policy-overrides, /:contractorId",
+          "gating": "GoodLeap Back-Office only; internal only; edits need a manage permission",
+          "summary": "Internal staff tooling. Likely out of Pros scope.",
+          "content": [
+            "Search and select contractor to view and edit overrides",
+            "Contractor search",
+            "On selection: a header with a risk level badge",
+            "An override form with per-transaction limit, per-payout limit, next-day card payout eligibility and override reason, prefilled with effective values and showing default versus override sources",
+            "An override History timeline or an empty state",
+            "A Risk Level Qualifiers side panel"
+          ],
+          "actions": [
+            "Search and select a contractor, navigating to the id route",
+            "Edit any combination of override fields",
+            "Submit with a reason",
+            "View history descending"
+          ],
+          "states": [
+            "Spinner while context fetches",
+            "No contractor selected",
+            "A history-empty component that differs by whether an override is in effect",
+            "The form remounts per contractor id",
+            "Fields disabled without manage permission"
+          ],
+          "goesTo": [
+            {
+              "to": "or-payment-settings",
+              "via": "back"
+            }
+          ],
+          "migration": "out-of-scope"
+        },
+        {
+          "id": "or-report-download",
+          "label": "Report download",
+          "kind": "page",
+          "depth": 0,
+          "parent": null,
+          "route": "/reports/payments/download/:id",
+          "gating": "anyone holding the emailed link",
+          "summary": "Auto-download landing page. Expires.",
+          "content": [
+            "Minimal page: Your report will begin downloading shortly, while a client-side download is triggered"
+          ],
+          "actions": [
+            "Automatic download on load",
+            "An expired report shows a toast prompting a new export"
+          ],
+          "states": [
+            "Spinner while metadata loads",
+            "404 not-found",
+            "401 and 403 unauthorized",
+            "410 stays on the page with The report has expired. Please generate a new export.",
+            "Other errors show a default error page"
+          ],
+          "goesTo": [
+            {
+              "to": "or-transactions",
+              "via": "generate a new export"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "revision": "Normalised Pros Web route strings to full absolute paths and verified 1:1 against frontend/src/routeTree.gen.ts (40 routes, full coverage both directions). Added pw-root-redirect and pw-dev-sink. Expanded nodeMigration to four values and tagged six Origin nodes."
+}

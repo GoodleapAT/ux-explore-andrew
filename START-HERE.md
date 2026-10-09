@@ -158,6 +158,7 @@ which repository, which format, where things live.
 | Project | Folder | Status | What it is |
 |---|---|---|---|
 | **Upgrade to Pros** | `upgrade-to-pros/` | Live | Taking GoodLeap's contractor tooling from payments only into selling and operations. Current thread is entity and object modelling, moving into UI |
+| **Empowering UX, PM and FE** | `empowering-ux-pm-fe/` | Live | Design systems working together, and empowering non designers to design and non engineers to build, across Pros Web, the Pros App and the Origin migration. Restarting from the August work |
 | **Atlas** | not yet created | Dormant | Earlier work, currently still loose in the enclosing folder. Becomes a project folder when it is next picked up |
 
 Each project folder carries its own overview, sources, decisions, idea catalogue and vocabulary, then

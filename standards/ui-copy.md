@@ -38,6 +38,12 @@ repeat the year only when it changes. Times carry a zone and lowercase am or pm 
 
 ## The rest, condensed
 
+**Always: the serial comma, also called the Harvard or Oxford comma.** In any list of three or more,
+a comma goes before the final "and" or "or": "tedious, error-prone, and can add delay", "brand,
+model, serial, and age". This holds in mockups, slides, diagrams, sticky notes, and memos alike.
+Added 12 Nov 2026 at Andrew's request, after a pass over the Field Copilot canvas found 88 lists
+without one.
+
 **Always: American English inside a mockup.** Color, labor, organize, canceled, catalog. **The memo
 around it may be British**, which is the only place this file and `working-voice.md` appear to
 disagree and do not: one governs the product, the other governs the writing about it.
@@ -125,6 +131,10 @@ details. Loan, not financing. Due date. Email, one word. GoodLeap, one word, two
 - **21 Sep 2026.** The verb-first rule caught *New payment*, which Andrew had specified for an
   overflow menu. **Drawn as *Take a payment* with the alternatives listed under the mock** rather than
   silently changed, per the rule that suggested copy is judged on its own.
+- **7 Oct 2026.** **Broken again, on the U2P primer and the From Lead to Project memo**, because
+  `design-memo-format.md` still asked for an uppercase eyebrow and memo 12 was used as the style
+  model. The memo format standard now agrees with this one. **When copying an older memo's look, strip
+  monospace and caps first.**
 - **22 Sep 2026.** **Andrew: remove and never use monospace or all caps.** Both were throughout the
   UX Kit overview preview, in every diagram's labels and in each page note, because I had been using
   them as a quiet-label device. **The rule against all caps was already here and scoped to product

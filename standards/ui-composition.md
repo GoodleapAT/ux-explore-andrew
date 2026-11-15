@@ -53,6 +53,14 @@ goes in the cards this file arranges.
   near-empty blocks if given sections, and a link if not.
 - **Facts about the thing go in a card, not in a subtitle.** A subtitle is where content goes when
   there is nowhere for it. Two columns of label-above-value, no rules between them.
+- **On a live screen, what the person acts on goes at the top, and the running feed goes at the bottom.** During a recorded conversation the checklist or a pinned note leads, and the live transcript sits at the bottom, where a floating camera viewfinder may cover part of it. It rises a little above the viewfinder so it still reads as there. The feed is ambient; nobody reads it while talking
+
+- **On a landscape tablet, the capture control sits bottom right, and what the person reads sits to its left.** The live camera, pinned notes and transcript share the right-hand column with the camera at the foot of it, because that is where a right thumb rests holding a tablet; the checklist and photos take the wider left side. A shutter in the top left of a tablet is a reach every time
+
+- **In a list, counts and status sit in a right-aligned column, and a per-row action is a trailing icon, not a labelled button.** Anything placed after a title inherits the title's length, so nothing lines up from row to row; a right-hand column lines up by construction. One Edit button per row is a column of buttons competing with the content. Every row in the list gets the same trailing icon, or none do, so the column holds
+
+- **A scroll fade appears only while there is overflow on that edge.** Any scrolling area, a card, a sheet or a page, fades its top or bottom edge to say more content sits past it, and never fades an edge with nothing beyond it. A fade with nothing under it reads as content being cut off. Settled 14 Nov 2026; in a static mockup, draw the fade only on boards whose content actually overflows
+
 ### Prefer
 
 - **Group headings do not get a rule above them.** The cards below carry their own edges, so a rule
@@ -118,3 +126,7 @@ them minified. They have been inferred from the accent token families. This does
   instead, which is cheaper than drawing a question nobody can look at.
 - **13 Sep 2026.** Rigidity markers and a worked example added, because seven standards with no sense
   of how hard to hold any of them had become impossible to follow.
+- **12 Nov 2026.** Andrew moved the live transcript to the bottom of the sales visit screens (V5 to V7 in the Field Copilot canvas), under the viewfinder, so the checklist and pinned notes lead. The transcript had been drawn first because it was drawn first, not because it mattered most.
+- **14 Nov 2026.** Andrew moved the tablet sales boards' camera column from the left to the right, with the viewfinder at the bottom right, because that is the easy place to tap the capture button. The first draft had put the camera top left because it was drawn first.
+- **14 Nov 2026.** Andrew called the sales visit checklist board (V8) atrocious: the photo count and Scanned sat straight after each equipment name, so their position depended on the name's length, and every row carried an Edit button. Now right-aligned, with an edit icon at the far right of every row.
+- **14 Nov 2026.** Andrew, on the Field Copilot capture card: the bottom fade showed on a card with nothing to scroll. Ruled the fade a standard for every scrolling view, on whichever edge has overflow, and never otherwise.

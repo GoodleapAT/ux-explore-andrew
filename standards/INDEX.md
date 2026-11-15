@@ -35,6 +35,10 @@ rule, not a silent choice. A collision you resolve quietly is a collision nobody
 | **Default** | Segmented control in the card header to collapse several lists into one card |
 | **Default** | Detail that does not fit goes sideways into a sheet, not down into an accordion. **Two declared exceptions**: capture during a live call, where collapsible sections win with counts on the headers and one section open; and a **full screen takeover** for one named task that begins, ends and commits, where the cost of losing the page underneath is recorded |
 | **Default** | Small peer lists become links in the page header, not sections |
+| **Default** | On a live screen, what the person acts on goes at the top; a running feed such as a transcript goes at the bottom and may sit under a floating control |
+| **Default** | In a list, counts and status go in a right-aligned column; a per-row action is a trailing icon, on every row or none |
+| **Default** | A scroll fade shows only on an edge with content past it, top or bottom; never when nothing overflows |
+| **Default** | On a landscape tablet the capture control sits bottom right, with the reading content to its left |
 | **Default** | Facts about the thing go in a card, not in a subtitle |
 | **Default** | Parked content goes in one full-width list at the bottom, each item labelled not drawn |
 | **Prefer** | An icon may pair with text where it earns its place. Not one per row |
@@ -209,6 +213,9 @@ queue being visual is normal and means the structure is close enough to argue ab
 | **Always** | Never amend, rebase, force push, or touch a branch other than the one asked for |
 | **Default** | Every repository carries a gitignore from the first commit |
 | **Default** | Where a repository lives is a decision for the root decision log |
+| **Default** | Parallel sessions get different files. The session splitting the work names each one's files and runs overlapping pieces one after the other |
+| **Default** | New code, and above all new tests, goes in a new file rather than onto the end of a shared one |
+| **Default** | Merge small pull requests quickly. Check a new one is still clean, and clear a conflict by merging main in, never by rebasing |
 
 ---
 

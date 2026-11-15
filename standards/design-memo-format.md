@@ -13,7 +13,9 @@ why.
 
 - **Ask before building or rebuilding any memo.** Every time. Use the questions to settle scope
   first: which screens, what fidelity, and which parts should be real rather than placeholder.
-- **A small uppercase eyebrow line:** project, topic, and "mockup" with the date.
+- **A small eyebrow line in sentence case:** project, topic, and "mockup" with the date. **Never all
+  caps and never monospace**, per `ui-copy.md`. Older memos, memo 12 among them, use a monospace
+  uppercase eyebrow and labels; do not copy their styling.
 - **A title, then a short intro at a narrow measure** saying what the memo is testing.
 - **A settled card** listing what is being carried in, worded as settled *for the purposes of this
   memo* rather than settled in general, because these are usually working assumptions. Key phrase of
@@ -69,6 +71,11 @@ In this variant there is **no annotation inside the mockups at all**, so no `[i]
 declared. The list under the mock does the work the annotation used to.
 
 ## Learned from
+
+- **7 Oct 2026.** Andrew, on the U2P primer: never use all caps on monospace fonts, and make it a
+  ways-of-working rule. **The rule already existed in `ui-copy.md` from 22 Sep, but this file still
+  asked for an uppercase eyebrow**, and the primer copied memo 12, which predates the rule. Fixed here
+  so the two standards agree.
 
 - **10 Sep 2026.** Full-width layout chosen, and the to-decide card moved to the bottom, both at
   Andrew's request.

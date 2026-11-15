@@ -21,6 +21,8 @@
 - **Ask before building or rebuilding any artifact.** Every time, including rebuilds of something you
   built an hour ago.
 - Where a choice is uncomfortable or costly, say so rather than hiding it.
+- **Andrew often dictates.** Read "prose" as Pros (Pros Web, Pros App) and "DD" as DeDe, and write
+  the right word without remarking on it.
 
 ## Telling Andrew when a surface has gone stale
 
@@ -57,3 +59,5 @@ than getting them wrong in conversation, because the document outlives the corre
 - **11 Sep 2026.** Two changelog rows named Claude Design as stale and the reply did not mention it.
   Andrew had to ask whether he should go and tell it. The rule above exists because writing the row
   felt like discharging the obligation, on the same day the protocol was written.
+- **20 Oct 2026.** Andrew flagged that dictation turns "Pros" into "prose" and "DeDe" into "DD". The
+  bullet under "In conversation" exists so every surface reads it, not only one assistant's memory.

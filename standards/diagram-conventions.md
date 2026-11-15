@@ -4,13 +4,21 @@
 
 **Surfaces:** all.
 
-**How hard to hold this.** Orthogonal connectors and the `[i]` marker are **Always**. Everything else here is **Default**. Markers mean: **Always**, breaking it is a defect and you say so first. **Default**, do it unless you have a reason and say the reason. **Prefer**, a leaning.
+**How hard to hold this.** Orthogonal connectors, connectors leaving the centre of their origin node, and the `[i]` marker are **Always**. Everything else here is **Default**. Markers mean: **Always**, breaking it is a defect and you say so first. **Default**, do it unless you have a reason and say the reason. **Prefer**, a leaning.
 
 ---
 
 ## The rules
 
-- **Connectors are always orthogonal.** Right-angle corners, never curves. This holds everywhere.
+- **Connectors are always orthogonal.** Horizontal and vertical runs only, never diagonals or free
+  curves. This holds everywhere. **Default: round the corner where a connector turns**, with a small
+  radius, so the turn reads as a turn and not as two lines meeting.
+- **Always: a connector leaves the vertical centre of the node it comes from.** Move the node, not
+  the line, to make it straight. Where one node feeds two, one line leaves the centre and then
+  splits. Where two arrows run in opposite directions between the same pair of nodes, each still
+  leaves its own node's centre, so they land off centre on the far side and read as two lines.
+- **Default: give every turn room to be seen.** A run of under about 24 px before a corner hides
+  the corner. Move the nodes apart rather than squeezing the connector.
 - **A diagram is annotation throughout**, so it needs no `[i]` marker and no convention note. Only
   mockups need those, because in a mockup annotation could be mistaken for interface copy.
 - **Label the relationship on the connector**, not only the boxes. A line with no verb on it is an
@@ -86,3 +94,9 @@ rewrites that should have taken it out, and it keeps teaching the old framing to
   is kept as one positive sentence**, the rule that an object name may never appear in a core
   component. **The recovered space went to who contributes at each layer**, which is what the audience
   it is now being drawn for actually asks. The question was his; the rule is written from it.
+- **12 Nov 2026.** **Andrew, on the native redraw of the Field Copilot solution design:** the
+  Installer arrow left its box off centre, and a dashed loop turned so close to its boxes that the
+  corner could not be seen. Three rules came from it: connectors leave the vertical centre of their
+  origin node, corners are rounded, and a turn gets enough run to be visible. **Rounded corners
+  loosen the old wording**, "right-angle corners, never curves": routing stays orthogonal, only the
+  corner itself is softened.

@@ -208,9 +208,11 @@ queue being visual is normal and means the structure is close enough to argue ab
 
 | | Rule |
 |---|---|
-| **Always** | Check Xcode's own tools before saying a real iPhone cannot be seen or controlled |
-| **Default** | Drive a physical phone through Xcode's MCP server (`xcrun mcpbridge`): tap, swipe, type, screenshot, install and run |
-| **Default** | A screenshot needs nothing set up: `xcrun devicectl device capture screenshot` |
+| **Always** | Check Apple's own developer tools (`devicectl`, `xcodebuild`) before saying a real iPhone cannot be seen or controlled |
+| **Default** | Check the phone is unlocked before any run; a locked phone makes `xcodebuild` hang silently |
+| **Default** | Screenshots, install, launch with logs and file pulls need only `devicectl` |
+| **Default** | Tap and swipe with an XCUITest step driver run by `xcodebuild`. It can live in a separate small project pointed at the app's bundle ID |
+| **Default** | Tap by accessibility label, not coordinates |
 | **Default** | Check the phone yourself rather than asking Andrew to look. No iPhone Mirroring |
 
 ## Repositories

@@ -202,6 +202,17 @@ queue being visual is normal and means the structure is close enough to argue ab
 | **Default** | Verify carefully, then report what you found rather than the evidence for it |
 | **Default** | Markdown for anything durable. Bullets, tables and headings are wanted in documents |
 
+## iOS devices
+
+*From `ios-devices.md`.*
+
+| | Rule |
+|---|---|
+| **Always** | Check Xcode's own tools before saying a real iPhone cannot be seen or controlled |
+| **Default** | Drive a physical phone through Xcode's MCP server (`xcrun mcpbridge`): tap, swipe, type, screenshot, install and run |
+| **Default** | A screenshot needs nothing set up: `xcrun devicectl device capture screenshot` |
+| **Default** | Check the phone yourself rather than asking Andrew to look. No iPhone Mirroring |
+
 ## Repositories
 
 *From `repository-hygiene.md`.*
